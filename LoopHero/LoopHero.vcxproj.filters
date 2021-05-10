@@ -75,6 +75,9 @@
     <ClCompile Include="FieldTileMap.cpp">
       <Filter>소스 파일\LoopHero\Tile</Filter>
     </ClCompile>
+    <ClCompile Include="Card.cpp">
+      <Filter>소스 파일\LoopHero\Card</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LoopHero.h">
@@ -121,6 +124,9 @@
     </ClInclude>
     <ClInclude Include="FieldTileMap.h">
       <Filter>소스 파일\LoopHero\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Card.h">
+      <Filter>소스 파일\LoopHero\Card</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
