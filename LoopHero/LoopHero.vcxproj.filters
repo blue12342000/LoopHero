@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\LoopHero">
+      <UniqueIdentifier>{210bb0fc-62a0-4dc3-9e52-34db75c90ac6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Engine">
+      <UniqueIdentifier>{d7a64c19-d9ad-444f-ad49-5ea25838c8e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Engine\Manager">
+      <UniqueIdentifier>{c4a12912-7fc7-455a-9b63-839afae6461f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\LoopHero\Scene">
+      <UniqueIdentifier>{641491ba-bf17-48af-b8c1-ab22220fb26b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\LoopHero\UI">
+      <UniqueIdentifier>{3fff3f4f-4c83-467c-9f15-db1e74c62d44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\LoopHero\Unit">
+      <UniqueIdentifier>{7f6e746b-dc2e-41f6-aaab-175913dbacad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\LoopHero\Item">
+      <UniqueIdentifier>{9f85c001-8af9-45ae-bdcf-9c8257f7a5ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\LoopHero\Card">
+      <UniqueIdentifier>{10df509a-21b6-4ca1-b5d1-fef1b8f3d37e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\LoopHero\Tile">
+      <UniqueIdentifier>{6de12e75-7658-4b42-8ee7-4853899a02fd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>소스 파일\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>소스 파일\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageManager.cpp">
+      <Filter>소스 파일\Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyManager.cpp">
+      <Filter>소스 파일\Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame.cpp">
+      <Filter>소스 파일\LoopHero</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>소스 파일\Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="InGame.cpp">
+      <Filter>소스 파일\LoopHero\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="RendererManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>소스 파일\LoopHero\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="FieldTileMap.cpp">
+      <Filter>소스 파일\LoopHero\Tile</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="LoopHero.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>소스 파일\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>소스 파일\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageManager.h">
+      <Filter>소스 파일\Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyManager.h">
+      <Filter>소스 파일\Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame.h">
+      <Filter>소스 파일\LoopHero</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>소스 파일\Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>소스 파일\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="InGame.h">
+      <Filter>소스 파일\LoopHero\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUI.h">
+      <Filter>소스 파일\LoopHero\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>소스 파일\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>소스 파일\LoopHero</Filter>
+    </ClInclude>
+    <ClInclude Include="RendererManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>소스 파일\LoopHero\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="FieldTileMap.h">
+      <Filter>소스 파일\LoopHero\Tile</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
