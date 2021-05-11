@@ -14,7 +14,7 @@ double StackCalculate(string text)
 	{
 		switch (text[i])
 		{
-		case '*': case '%': case '-': case '+': case '(':
+		case '*': case '/': case '-': case '+': case '(':
 			while (!pfx.empty() && (pfx.back()[0] == '*' || pfx.back()[0] == '/'))
 			{
 				cal.push_back(pfx.back());
@@ -96,9 +96,9 @@ HRESULT MainGame::Init()
 	ImageManager::GetSingleton()->Init();
 	SceneManager::GetSingleton()->Init();
 
-	DataManager::GetSingleton()->LoadIniFile("Ini/lang_kor2.ini");
+	DataManager::GetSingleton()->LoadIniFile("Ini/tiles.ini");
 
-	double a = StackCalculate("-5.3*5+(18-10)+3");
+	// double a = StackCalculate("(4+5)+3");
 
 	timer = new Timer();
 	timer->Init();
