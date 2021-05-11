@@ -9,15 +9,17 @@
 
 #define FIELD_TILE_SIZE 50
 
+class Tile;
 struct FieldTile
 {
 	int x;
 	int y;
 	RECT rc;
 
+	int tileNo;
 	int frameX;
 	int frameY;
-	
+	Tile* lpTile;
 };
 
 class FieldTileMap : public GameObject

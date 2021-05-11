@@ -24,3 +24,4 @@ extern bool isDebugMode;
 #include "KeyManager.h"
 #include "ImageManager.h"
 #include "SceneManager.h"
+#include "DataManager.h"

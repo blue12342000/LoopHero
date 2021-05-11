@@ -75,8 +75,11 @@
     <ClCompile Include="FieldTileMap.cpp">
       <Filter>소스 파일\LoopHero\Tile</Filter>
     </ClCompile>
-    <ClCompile Include="Card.cpp">
+    <ClCompile Include="Deck.cpp">
       <Filter>소스 파일\LoopHero\Card</Filter>
+    </ClCompile>
+    <ClCompile Include="DataManager.cpp">
+      <Filter>소스 파일\Engine\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -125,8 +128,11 @@
     <ClInclude Include="FieldTileMap.h">
       <Filter>소스 파일\LoopHero\Tile</Filter>
     </ClInclude>
-    <ClInclude Include="Card.h">
+    <ClInclude Include="Deck.h">
       <Filter>소스 파일\LoopHero\Card</Filter>
+    </ClInclude>
+    <ClInclude Include="DataManager.h">
+      <Filter>소스 파일\Engine\Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

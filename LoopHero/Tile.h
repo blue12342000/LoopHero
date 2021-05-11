@@ -1,21 +1,28 @@
 #pragma once
 #include "GameObject.h"
 
-enum class TILE_TYPE
+enum class TILE_IMAGE_TYPE
 {
-
+	SELECT,
+	BUILD
 };
 
 class Image;
-class Tile : public GameObject
+struct Tile
 {
-private:
-	map<TILE_TYPE, Image*> mTileImages;
-
-public:
-	virtual void Init() override;
-	virtual void Release() override;
-	virtual void Update(float deltaTime) override;
-	virtual void Render(HDC hdc) override;
+	int no;
+	string name;
+	string desc;
+	string effect;
+	map<TILE_IMAGE_TYPE, Image*> mTileImages;
 };
 
+class TileTable
+{
+private:
+	vector<Tile*> vLpTiles;
+
+public:
+	void LoadTileList();
+
+};
