@@ -153,8 +153,9 @@
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="RendererManager.cpp" />
     <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="TileTable.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="Utill.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DataManager.h" />
@@ -172,8 +173,9 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />
-    <ClInclude Include="Tile.h" />
+    <ClInclude Include="TileTable.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="Utill.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

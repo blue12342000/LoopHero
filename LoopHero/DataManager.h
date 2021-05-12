@@ -32,5 +32,15 @@ public:
 		}
 		return "";
 	}
+
+	inline map<string, map<string, string>> GetData(string filePath)
+	{
+		auto fit = mDatas.find(filePath);
+		if (fit != mDatas.end())
+		{
+			return fit->second;
+		}
+		return map<string, map<string, string>>();
+	}
 };
 

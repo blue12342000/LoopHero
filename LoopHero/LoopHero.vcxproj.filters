@@ -69,7 +69,7 @@
     <ClCompile Include="RendererManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Tile.cpp">
+    <ClCompile Include="TileTable.cpp">
       <Filter>소스 파일\LoopHero\Tile</Filter>
     </ClCompile>
     <ClCompile Include="FieldTileMap.cpp">
@@ -80,6 +80,9 @@
     </ClCompile>
     <ClCompile Include="DataManager.cpp">
       <Filter>소스 파일\Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Utill.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -122,7 +125,7 @@
     <ClInclude Include="RendererManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Tile.h">
+    <ClInclude Include="TileTable.h">
       <Filter>소스 파일\LoopHero\Tile</Filter>
     </ClInclude>
     <ClInclude Include="FieldTileMap.h">
@@ -133,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="DataManager.h">
       <Filter>소스 파일\Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Utill.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

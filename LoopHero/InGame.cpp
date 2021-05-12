@@ -2,6 +2,7 @@
 #include "LoopHero.h"
 #include "Image.h"
 #include "FieldTileMap.h"
+#include "TileTable.h"
 
 HRESULT InGame::Init()
 {

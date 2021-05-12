@@ -3,6 +3,7 @@
 
 class Image;
 class FieldTileMap;
+class TileTable;
 class InGame : public Scene
 {
 private:

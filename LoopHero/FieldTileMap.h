@@ -16,21 +16,32 @@ struct FieldTile
 	int y;
 	RECT rc;
 
-	int tileNo;
+	Tile* lpTile;
 	int frameX;
 	int frameY;
-	Tile* lpTile;
+	int eventCount;
 };
 
+class TileTable;
 class FieldTileMap : public GameObject
 {
 private:
 	RECT rc;
 	FieldTile tiles[FIELD_TILE_Y][FIELD_TILE_X];
 
+	map<string, vector<FieldTile*>> mBuildTiles;
+
+	Tile* lpSelectedTile;
+	bool isPossibleBuild[FIELD_TILE_Y][FIELD_TILE_X];
+	TileTable* lpTileTable;
+
 public:
 	virtual void Init() override;
 	virtual void Release() override;
 	virtual void Update(float deltaTime) override;
 	virtual void Render(HDC hdc) override;
+
+	void SelectedTileValidation();
+
+	inline void SetTile(int x, int y, Tile* lpTile) { tiles[y][x].lpTile = lpTile; }
 };
