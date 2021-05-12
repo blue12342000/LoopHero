@@ -50,6 +50,22 @@ void FieldTileMap::Update(float deltaTime)
 
 			tiles[y][x].frameX += 1;
 			tiles[y][x].frameY += 1;
+
+			if (lpSelectedTile)
+			{
+				if (isPossibleBuild[y][x])
+				{
+					tiles[y][x].lpTile = lpSelectedTile;
+					tiles[y][x].vHistory.push_back(lpSelectedTile->name);
+					auto it = mBuildTiles.find(lpSelectedTile->name);
+					if (it == mBuildTiles.end())
+					{
+						mBuildTiles.insert(make_pair(lpSelectedTile->name, vector<FieldTile*>()));
+					}
+					mBuildTiles[lpSelectedTile->name].push_back(&tiles[y][x]);
+					SelectedTileValidation();
+				}
+			}
 		}
 	}
 	else
@@ -62,6 +78,7 @@ void FieldTileMap::Update(float deltaTime)
 				if (KeyManager::GetSingleton()->IsKeyDownOne(VK_LBUTTON))
 				{
 					lpSelectedTile = lpTileTable->GetTile(index);
+					SelectedTileValidation();
 				}
 				break;
 			}
@@ -77,11 +94,16 @@ void FieldTileMap::Render(HDC hdc)
 		for (int x = 0; x < FIELD_TILE_X; ++x)
 		{
 			Rectangle(hdc, tiles[y][x].rc.left, tiles[y][x].rc.top, tiles[y][x].rc.right, tiles[y][x].rc.bottom);
+			if (isPossibleBuild[y][x])
+			{
+				TextOut(hdc, tiles[y][x].rc.left, tiles[y][x].rc.top + 15, "O", 1);
+			}
 			if (tiles[y][x].lpTile)
 			{
 				string str = tiles[y][x].lpTile->name;
 				TextOut(hdc, tiles[y][x].rc.left, tiles[y][x].rc.top, str.c_str(), str.length());
 			}
+
 		}
 	}
 
@@ -95,6 +117,146 @@ void FieldTileMap::Render(HDC hdc)
 
 void FieldTileMap::SelectedTileValidation()
 {
+	map<FieldTile*, int> mCheckMap;
+	if (lpSelectedTile->nearCondition != -1)
+	{
+		if (lpSelectedTile->nearCondition == 0)
+		{
+			// 텅빈상태
+			for (int y = 0; y < FIELD_TILE_Y; ++y)
+			{
+				for (int x = 0; x < FIELD_TILE_X; ++x)
+				{
+					isPossibleBuild[y][x] = true;
+				}
+			}
+
+			for (string tileKey : lpSelectedTile->vNearTiles)
+			{
+				if (mBuildTiles.find(tileKey) == mBuildTiles.end()) continue;
+
+				for (FieldTile* lpFieldTile : mBuildTiles[tileKey])
+				{
+					isPossibleBuild[lpFieldTile->y][lpFieldTile->x] = false;
+
+					if (lpSelectedTile->checkTiles[2][1] && lpFieldTile->y - 1 > 0)
+					{
+						isPossibleBuild[lpFieldTile->y - 1][lpFieldTile->x] = false;
+					}
+					if (lpSelectedTile->checkTiles[1][2] && lpFieldTile->x - 1 > 0)
+					{
+						isPossibleBuild[lpFieldTile->y][lpFieldTile->x - 1] = false;
+					}
+					if (lpSelectedTile->checkTiles[0][1] && lpFieldTile->y + 1 < FIELD_TILE_Y)
+					{
+						isPossibleBuild[lpFieldTile->y + 1][lpFieldTile->x] = false;
+					}
+					if (lpSelectedTile->checkTiles[1][0] && lpFieldTile->x + 1 < FIELD_TILE_X)
+					{
+						isPossibleBuild[lpFieldTile->y][lpFieldTile->x + 1] = false;
+					}
+
+					// 대각선
+					if (lpSelectedTile->checkTiles[0][0] && lpFieldTile->y - 1 > 0 && lpFieldTile->x - 1 > 0)
+					{
+						isPossibleBuild[lpFieldTile->y - 1][lpFieldTile->x - 1] = false;
+					}
+					if (lpSelectedTile->checkTiles[2][2] && lpFieldTile->y + 1 < FIELD_TILE_Y && lpFieldTile->x + 1 < FIELD_TILE_X)
+					{
+						isPossibleBuild[lpFieldTile->y + 1][lpFieldTile->x + 1] = false;
+					}
+					if (lpSelectedTile->checkTiles[0][2] && lpFieldTile->y - 1 > 0 && lpFieldTile->x + 1 < FIELD_TILE_X)
+					{
+						isPossibleBuild[lpFieldTile->y = 1][lpFieldTile->x + 1] = false;
+					}
+					if (lpSelectedTile->checkTiles[2][0] && lpFieldTile->y + 1 < FIELD_TILE_Y && lpFieldTile->x - 1 > 0)
+					{
+						isPossibleBuild[lpFieldTile->y + 1][lpFieldTile->x - 1] = false;
+					}
+				}
+			}
+
+		}
+		else
+		{
+			// 텅비지 않은 상태
+			for (int y = 0; y < FIELD_TILE_Y; ++y)
+			{
+				for (int x = 0; x < FIELD_TILE_X; ++x)
+				{
+					isPossibleBuild[y][x] = false;
+				}
+			}
+
+			for (string tileKey : lpSelectedTile->vNearTiles)
+			{
+				if (mBuildTiles.find(tileKey) == mBuildTiles.end()) continue;
+
+				for (FieldTile* lpFieldTile : mBuildTiles[tileKey])
+				{
+					if (lpSelectedTile->checkTiles[2][1] && lpFieldTile->y - 1 > 0)
+					{
+						auto it = mCheckMap.find(&tiles[lpFieldTile->y - 1][lpFieldTile->x]);
+						if (!it->first->lpTile)
+						{
+							if (it == mCheckMap.end()) mCheckMap.insert(make_pair(&tiles[lpFieldTile->y-1][lpFieldTile->x], 1));
+							else ++(it->second);
+						}
+					}
+					if (lpSelectedTile->checkTiles[1][2] && lpFieldTile->x - 1 > 0)
+					{
+						auto it = mCheckMap.find(&tiles[lpFieldTile->y][lpFieldTile->x - 1]);
+						if (!it->first->lpTile)
+						{
+							if (it == mCheckMap.end()) mCheckMap.insert(make_pair(&tiles[lpFieldTile->y][lpFieldTile->x - 1], 1));
+							else ++(it->second);
+						}
+					}
+					if (lpSelectedTile->checkTiles[0][1] && lpFieldTile->y + 1 < FIELD_TILE_Y)
+					{
+						auto it = mCheckMap.find(&tiles[lpFieldTile->y + 1][lpFieldTile->x]);
+						if (!it->first->lpTile)
+						{
+							if (it == mCheckMap.end()) mCheckMap.insert(make_pair(&tiles[lpFieldTile->y + 1][lpFieldTile->x], 1));
+							else ++(it->second);
+						}
+					}
+					if (lpSelectedTile->checkTiles[1][0] && lpFieldTile->x + 1 < FIELD_TILE_X)
+					{
+						auto it = mCheckMap.find(&tiles[lpFieldTile->y][lpFieldTile->x + 1]);
+						if (!it->first->lpTile)
+						{
+							if (it == mCheckMap.end()) mCheckMap.insert(make_pair(&tiles[lpFieldTile->y][lpFieldTile->x + 1], 1));
+							else ++(it->second);
+						}
+					}
+				}
+			}
+
+			switch (lpSelectedTile->nearCondition)
+			{
+			case 1:
+				for (auto pair : mCheckMap)
+				{
+					if (pair.second > 0)
+					{
+						isPossibleBuild[pair.first->y][pair.first->x] = true;
+					}
+				}
+				break;
+			case 2:
+				for (auto pair : mCheckMap)
+				{
+					if (pair.second == lpSelectedTile->vNearTiles.size())
+					{
+						isPossibleBuild[pair.first->y][pair.first->x] = true;
+					}
+				}
+				break;
+			}
+		}
+	}
+
 	if (lpSelectedTile->selfCondition != -1)
 	{
 		// 본인타일에 조건이 있을경우
@@ -188,53 +350,4 @@ void FieldTileMap::SelectedTileValidation()
 		}
 	}
 
-	if (lpSelectedTile->nearCondition != -1)
-	{
-		// 근처타일에 대한 조건이 존재할경우
-		POINT delta[8] = { {-1, -1}, {0, -1}, {1, -1}, {-1, 0}, {1, 0}, {-1, 1}, {0, 1}, {1, 1} };
-		for (int y = 0; y < FIELD_TILE_Y; ++y)
-		{
-			for (int x = 0; x < FIELD_TILE_X; ++x)
-			{
-				if (!isPossibleBuild[y][x]) continue;
-
-				// 지을수 있는 타일의 근처만 확인
-				switch (lpSelectedTile->nearCondition)
-				{
-				case 0:
-					for (int ny = y - 1, dy = 0; dy < 3; ++ny, ++dy)
-					{
-						if (ny < 0 || ny >= FIELD_TILE_Y) continue;
-						for (int nx = x - 1, dx = 0; dy < 3; ++nx, ++dx)
-						{
-							if (nx < 0 || nx >= FIELD_TILE_X) continue;
-							if (dy == 1 && dx == 1) continue;
-
-							isPossibleBuild[y][x] = (tiles[ny][nx].lpTile == nullptr);
-						}
-						if (!isPossibleBuild[y][x]) break;
-					}
-					break;
-				case 1:
-					for (int ny = y - 1, dy = 0; dy < 3; ++ny, ++dy)
-					{
-						if (ny < 0 || ny >= FIELD_TILE_Y) continue;
-						for (int nx = x - 1, dx = 0; dy < 3; ++nx, ++dx)
-						{
-							if (nx < 0 || nx >= FIELD_TILE_X) continue;
-							if (dy == 1 && dx == 1) continue;
-
-							isPossibleBuild[y][x] = (tiles[ny][nx].lpTile == nullptr);
-						}
-						if (!isPossibleBuild[y][x]) break;
-					}
-					break;
-				case 2:
-					break;
-				case 99:
-					break;
-				}
-			}
-		}
-	}
 }

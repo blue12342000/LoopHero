@@ -20,6 +20,8 @@ struct FieldTile
 	int frameX;
 	int frameY;
 	int eventCount;
+
+	vector<string> vHistory;
 };
 
 class TileTable;
