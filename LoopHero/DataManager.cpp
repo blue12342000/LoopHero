@@ -1,9 +1,9 @@
 #include "DataManager.h"
 
-void DataManager::LoadIniFile(string filePath)
+void DataManager::LoadIniFile(string filePath, string tag)
 {
-	if (mDatas.find(filePath) != mDatas.end()) return;
-	mDatas.insert(make_pair(filePath, map<string, map<string, string>>()));
+	if (mDatas.find(tag) != mDatas.end()) return;
+	mDatas.insert(make_pair(tag, map<string, map<string, string>>()));
 
 	ifstream ifs;
 	ifs.open(filePath.c_str(), ios_base::in);
@@ -18,7 +18,7 @@ void DataManager::LoadIniFile(string filePath)
 			case '[':
 				getline(ifs, group);
 				group = group.substr(1, group.length() - 2);
-				if (mDatas[filePath].find(group) == mDatas[filePath].end()) mDatas[filePath].insert(make_pair(group, map<string, string>()));
+				if (mDatas[tag].find(group) == mDatas[tag].end()) mDatas[tag].insert(make_pair(group, map<string, string>()));
 				break;
 			case '#':
 			case '\n':
@@ -28,7 +28,7 @@ void DataManager::LoadIniFile(string filePath)
 				getline(ifs, key, '=');
 				getline(ifs, data);
 				if (!data.empty()) data = data.substr(1, data.length() - 2);
-				if (mDatas[filePath][group].find(key) == mDatas[filePath][group].end()) mDatas[filePath][group].insert(make_pair(key, data));
+				if (mDatas[tag][group].find(key) == mDatas[tag][group].end()) mDatas[tag][group].insert(make_pair(key, data));
 				break;
 			}
 		}

@@ -4,13 +4,18 @@
 class Image;
 class FieldTileMap;
 class TileTable;
+class Deck;
+class GameUI;
 class InGame : public Scene
 {
 private:
 	Image* lpBuffer;
 	Image* lpBackImage;
 
+	GameUI* lpRightMenu;
+
 	FieldTileMap* lpFieldTiles;
+	Deck* lpDeck;
 
 public:
 	virtual HRESULT Init() override;

@@ -6,13 +6,12 @@
 HRESULT MainGame::Init()
 {
 	hdc = GetDC(g_hWnd);
+	
+	hFont = CreateFont(12, 0, 0, 0, FW_LIGHT, 0, 0, 0, HANGEUL_CHARSET, OUT_DEVICE_PRECIS, 0, DEFAULT_QUALITY, VARIABLE_PITCH | FF_ROMAN, TEXT("±Ã¼­"));
+
 	KeyManager::GetSingleton()->Init();
 	ImageManager::GetSingleton()->Init();
 	SceneManager::GetSingleton()->Init();
-
-	DataManager::GetSingleton()->LoadIniFile("Ini/tiles.ini");
-
-	// double a = StackCalculate("(4+5)+3");
 
 	timer = new Timer();
 	timer->Init();

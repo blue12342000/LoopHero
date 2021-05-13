@@ -13,11 +13,11 @@ private:
 	map<string, map<string, map<string, string>>> mDatas;
 
 public:
-	void LoadIniFile(string filePath);
+	void LoadIniFile(string filePath, string tag);
 
-	inline string GetData(string filePath, string group, string key)
+	inline string GetData(string tag, string group, string key)
 	{
-		auto fit = mDatas.find(filePath);
+		auto fit = mDatas.find(tag);
 		if (fit != mDatas.end())
 		{
 			auto git = fit->second.find(group);
@@ -33,9 +33,9 @@ public:
 		return "";
 	}
 
-	inline map<string, map<string, string>> GetData(string filePath)
+	inline map<string, map<string, string>> GetData(string tag)
 	{
-		auto fit = mDatas.find(filePath);
+		auto fit = mDatas.find(tag);
 		if (fit != mDatas.end())
 		{
 			return fit->second;

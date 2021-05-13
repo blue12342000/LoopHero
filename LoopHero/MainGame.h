@@ -7,6 +7,7 @@ class MainGame
 {
 private:
 	HDC hdc;
+	HFONT hFont;
 	Timer* timer;
 
 public:

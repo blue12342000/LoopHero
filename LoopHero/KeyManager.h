@@ -17,9 +17,9 @@ private:
 public:
 	HRESULT Init();
 
-	bool IsKeyDownOne(int input);
-	bool IsKeyUpOne(int input);
-	bool IsKeyDownStay(int input);
+	bool IsKeyOnceDown(int input);
+	bool IsKeyOnceUp(int input);
+	bool IsKeyStayDown(int input);
 
 	inline void SetMousePoint(int x, int y) { mousePoint.x = x; mousePoint.y = y; }
 	inline POINT GetMousePoint() { return mousePoint; }

@@ -7,13 +7,14 @@
 #include <map>
 #include <ctime>
 #include <random>
+#include <functional>
 
 using namespace std;
 
 #define WINPOS_STARTX 100
 #define WINPOS_STARTY 100
-#define WINSIZE_WIDTH 1288
-#define WINSIZE_HEIGHT 728
+#define WINSIZE_WIDTH 1280
+#define WINSIZE_HEIGHT 720
 
 #define PI 3.141592f
 

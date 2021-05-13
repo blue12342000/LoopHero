@@ -1,41 +1,21 @@
 #pragma once
 #include "GameObject.h"
 
-enum class CARD_KIND
-{
-	BATTLEFIELD,
-	BLOODGROVE,
-	CEMETERY,
-	CRYSTAL,
-	GROVE,
-	LANTERN,
-	MEADOM,
-	MOUNTAIN,
-	ROCK,
-	OBLIVION,
-	SPIDER,
-	SWAMP,
-	TRESURY,
-	VILLAGE,
-	NONE
-};
-
-const char* CARD_NAME[(int)CARD_KIND::NONE] = {
-	"battlefield",
-	"bloodgrove",
-};
-
-class Image;
-struct Card
-{
-	Image* lpIconImg;
-	Image* lpCardImg;
-
-	string name;
-	string desc;
-};
-
+class Card;
+enum class CARD_TYPE;
 class Deck : GameObject
 {
+private:
+	map<CARD_TYPE, vector<Card*>> mCardList;
+
+public:
+	virtual void Init() override;
+	virtual void Release() override;
+	virtual void Update(float deltaTime) override;
+	virtual void Render(HDC hdc) override;
+
+private:
+	void LoadCardData();
+
 
 };

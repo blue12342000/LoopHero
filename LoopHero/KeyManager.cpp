@@ -7,7 +7,7 @@ HRESULT KeyManager::Init()
     return S_OK;
 }
 
-bool KeyManager::IsKeyDownOne(int input)
+bool KeyManager::IsKeyOnceDown(int input)
 {
     if (GetAsyncKeyState(input) & 0x8000)
     {
@@ -24,7 +24,7 @@ bool KeyManager::IsKeyDownOne(int input)
     return false;
 }
 
-bool KeyManager::IsKeyUpOne(int input)
+bool KeyManager::IsKeyOnceUp(int input)
 {
     if (GetAsyncKeyState(input) & 0x8000)
     {
@@ -41,7 +41,7 @@ bool KeyManager::IsKeyUpOne(int input)
     return false;
 }
 
-bool KeyManager::IsKeyDownStay(int input)
+bool KeyManager::IsKeyStayDown(int input)
 {
     if (GetAsyncKeyState(input) & 0x8000)
     {

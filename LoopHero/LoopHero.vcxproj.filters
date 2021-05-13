@@ -40,6 +40,12 @@
     <Filter Include="소스 파일\LoopHero\Tile">
       <UniqueIdentifier>{6de12e75-7658-4b42-8ee7-4853899a02fd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\LoopHero\UI\InGame">
+      <UniqueIdentifier>{d4fb85fe-1021-4348-8eb6-e9cb6663f6c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\LoopHero\UI\Super">
+      <UniqueIdentifier>{bf6d2c68-3cea-4b31-b883-933db09fdb17}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -66,9 +72,6 @@
     <ClCompile Include="InGame.cpp">
       <Filter>소스 파일\LoopHero\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="RendererManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="TileTable.cpp">
       <Filter>소스 파일\LoopHero\Tile</Filter>
     </ClCompile>
@@ -83,6 +86,18 @@
     </ClCompile>
     <ClCompile Include="Utill.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Card.cpp">
+      <Filter>소스 파일\LoopHero\Card</Filter>
+    </ClCompile>
+    <ClCompile Include="ProgressBar.cpp">
+      <Filter>소스 파일\LoopHero\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="InGameRightMenu.cpp">
+      <Filter>소스 파일\LoopHero\UI\InGame</Filter>
+    </ClCompile>
+    <ClCompile Include="InGameEventTimer.cpp">
+      <Filter>소스 파일\LoopHero\UI\InGame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -119,12 +134,6 @@
     <ClInclude Include="Singleton.h">
       <Filter>소스 파일\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>소스 파일\LoopHero</Filter>
-    </ClInclude>
-    <ClInclude Include="RendererManager.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="TileTable.h">
       <Filter>소스 파일\LoopHero\Tile</Filter>
     </ClInclude>
@@ -139,6 +148,21 @@
     </ClInclude>
     <ClInclude Include="Utill.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Card.h">
+      <Filter>소스 파일\LoopHero\Card</Filter>
+    </ClInclude>
+    <ClInclude Include="ProgressBar.h">
+      <Filter>소스 파일\LoopHero\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="InGameRightMenu.h">
+      <Filter>소스 파일\LoopHero\UI\InGame</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>소스 파일\LoopHero\UI\Super</Filter>
+    </ClInclude>
+    <ClInclude Include="InGameEventTimer.h">
+      <Filter>소스 파일\LoopHero\UI\InGame</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

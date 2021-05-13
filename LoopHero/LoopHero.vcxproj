@@ -142,22 +142,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Card.cpp" />
     <ClCompile Include="DataManager.cpp" />
     <ClCompile Include="Deck.cpp" />
     <ClCompile Include="FieldTileMap.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="InGame.cpp" />
+    <ClCompile Include="InGameEventTimer.cpp" />
+    <ClCompile Include="InGameRightMenu.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />
-    <ClCompile Include="RendererManager.cpp" />
+    <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="TileTable.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Utill.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Card.h" />
     <ClInclude Include="DataManager.h" />
     <ClInclude Include="Deck.h" />
     <ClInclude Include="FieldTileMap.h" />
@@ -166,10 +170,12 @@
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="InGame.h" />
+    <ClInclude Include="InGameEventTimer.h" />
+    <ClInclude Include="InGameRightMenu.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="LoopHero.h" />
     <ClInclude Include="MainGame.h" />
-    <ClInclude Include="RendererManager.h" />
+    <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />

@@ -5,6 +5,7 @@
 class Image;
 struct Tile
 {
+	string id;
 	string name;
 	string desc;
 	vector<string> vEtc;
@@ -25,7 +26,7 @@ private:
 	vector<RECT> vRects;
 
 public:
-	void LoadTileData();
+	void Init();
 	void Release();
 	void Update();
 	void Render(HDC hdc);
@@ -34,4 +35,7 @@ public:
 	inline vector<pair<string, Tile*>> GetVMapList() { vector<pair<string, Tile*>> vList(mLpTiles.begin(), mLpTiles.end()); return vList; };
 	inline Tile* GetTile(int index) { return (index < mLpTiles.size()) ? next(mLpTiles.begin(), index)->second : nullptr; }
 	inline Tile* GetTile(string key) { return (mLpTiles.find(key) != mLpTiles.end()) ? mLpTiles[key] : nullptr; }
+
+private:
+	void LoadTileData();
 };
