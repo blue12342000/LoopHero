@@ -5,6 +5,7 @@
 
 using namespace std;
 
+class Card;
 class Deck;
 class GameData : public Singleton<GameData>
 {
@@ -17,6 +18,6 @@ public:
 	void Save() {}
 	void Load() {}
 
-	inline Card* PickCard() { return lpDeck->GetRandomCard(); }
+	Card* PickCard();
 };
 

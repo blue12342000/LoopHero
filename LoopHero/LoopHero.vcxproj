@@ -148,6 +148,7 @@
     <ClCompile Include="Deck.cpp" />
     <ClCompile Include="FieldTileMap.cpp" />
     <ClCompile Include="GameData.cpp" />
+    <ClCompile Include="HrizontalScroll.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="InGame.cpp" />
@@ -161,6 +162,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="TileTable.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="UICard.cpp" />
     <ClCompile Include="Utill.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -171,6 +173,7 @@
     <ClInclude Include="GameData.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameUI.h" />
+    <ClInclude Include="HrizontalScroll.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="InGame.h" />
@@ -186,6 +189,7 @@
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="TileTable.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="UICard.h" />
     <ClInclude Include="Utill.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

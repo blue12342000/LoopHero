@@ -39,24 +39,24 @@ protected:
 		switch (anchor)
 		{
 		case UI_ANCHOR::RIGHT_TOP:
-			origin = { view.right, view.top };
+			origin = { (float)view.right, (float)view.top };
 			SetRect(&rc, view.right - pos.x - width, view.top + pos.y, view.right - pos.x, view.top + pos.y + height);
 			break;
 		case UI_ANCHOR::LEFT_BOTTOM:
-			origin = { view.left, view.bottom };
+			origin = { (float)view.left, (float)view.bottom };
 			SetRect(&rc, view.left + pos.x, view.bottom - pos.y - height, view.left + pos.x + width, view.bottom - pos.y);
 			break;
 		case UI_ANCHOR::RIGHT_BOTTOM:
-			origin = { view.right, view.bottom };
+			origin = { (float)view.right, (float)view.bottom };
 			SetRect(&rc, view.right - pos.x - width, view.bottom - pos.y - height, view.right - pos.x, view.bottom - pos.y);
 			break;
 		case UI_ANCHOR::MIDDLE:
-			origin = { (view.right + view.left) / 2, (view.top + view.bottom) / 2 };
+			origin = { (view.right + view.left) / 2.0f, (view.top + view.bottom) / 2.0f };
 			SetRect(&rc, (view.right + view.left) / 2 + pos.x - width / 2, (view.top + view.bottom) / 2 + pos.y - height / 2, (view.right + view.left) / 2 + pos.x + width / 2, (view.top + view.bottom) / 2 + pos.y + height / 2);
 			break;
 		case UI_ANCHOR::LEFT_TOP:
 		default:
-			origin = { view.left, view.top };
+			origin = { (float)view.left, (float)view.top };
 			SetRect(&rc, view.left + pos.x, view.top + pos.y, view.left + pos.x + width, view.top + pos.y + height);
 			break;
 		}
@@ -93,9 +93,9 @@ public:
 	}
 
 	template<typename T>
-	static GameUI* CreateUI()
+	static T* CreateUI()
 	{
-		GameUI* lpGameUI = new T;
+		T* lpGameUI = new T;
 		lpGameUI->lpParent = nullptr;
 		lpGameUI->onClick = bind(&GameUI::OnClick, lpGameUI, placeholders::_1);
 		return lpGameUI;

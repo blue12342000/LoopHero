@@ -8,3 +8,8 @@ HRESULT GameData::Init()
 
     return S_OK;
 }
+
+Card* GameData::PickCard()
+{
+    return lpDeck->GetRandomCard();
+}

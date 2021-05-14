@@ -105,11 +105,14 @@
     <ClCompile Include="GameData.cpp">
       <Filter>소스 파일\LoopHero</Filter>
     </ClCompile>
+    <ClCompile Include="UICard.cpp">
+      <Filter>소스 파일\LoopHero\UI\InGame</Filter>
+    </ClCompile>
+    <ClCompile Include="HrizontalScroll.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="LoopHero.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Image.h">
       <Filter>소스 파일\Engine</Filter>
     </ClInclude>
@@ -175,6 +178,15 @@
     </ClInclude>
     <ClInclude Include="GameData.h">
       <Filter>소스 파일\LoopHero</Filter>
+    </ClInclude>
+    <ClInclude Include="LoopHero.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="UICard.h">
+      <Filter>소스 파일\LoopHero\UI\InGame</Filter>
+    </ClInclude>
+    <ClInclude Include="HrizontalScroll.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
