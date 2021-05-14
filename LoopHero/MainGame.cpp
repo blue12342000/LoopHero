@@ -2,7 +2,6 @@
 #include "InGame.h"
 #include "Timer.h"
 
-
 HRESULT MainGame::Init()
 {
 	hdc = GetDC(g_hWnd);
@@ -12,6 +11,7 @@ HRESULT MainGame::Init()
 	KeyManager::GetSingleton()->Init();
 	ImageManager::GetSingleton()->Init();
 	SceneManager::GetSingleton()->Init();
+	GameData::GetSingleton()->Init();
 
 	timer = new Timer();
 	timer->Init();

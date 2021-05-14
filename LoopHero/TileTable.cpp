@@ -8,7 +8,8 @@ void TileTable::Init()
 	int index = 0;
 	for (RECT& rc : vRects)
 	{
-		SetRect(&rc, WINSIZE_WIDTH - 100, 20 + (index++) * 25, WINSIZE_WIDTH, 20 + (index) * 25);
+		SetRect(&rc, WINSIZE_WIDTH - 100, 20 + (index) * 25, WINSIZE_WIDTH, 20 + (index + 1) * 25);
+		++index;
 	}
 }
 
@@ -32,8 +33,14 @@ void TileTable::Render(HDC hdc)
 	for (auto p : mLpTiles)
 	{
 		TextOut(hdc, WINSIZE_WIDTH - 100, 20 + (index++) * 25, p.second->name.c_str(), p.second->name.length());
+		
 	}
 	SetBkMode(hdc, TRANSPARENT);
+
+	//for (int i = 0; i < vRects.size(); ++i)
+	//{
+	//	Rectangle(hdc, vRects[i].left, vRects[i].top, vRects[i].right, vRects[i].bottom);
+	//}
 }
 
 void TileTable::LoadTileData()

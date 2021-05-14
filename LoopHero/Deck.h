@@ -3,10 +3,16 @@
 
 class Card;
 enum class CARD_TYPE;
+enum class CARD_RARE;
 class Deck : GameObject
 {
 private:
-	map<CARD_TYPE, vector<Card*>> mCardList;
+	vector<Card*> vCardList;
+	map<CARD_TYPE, vector<Card*>> mCardListByType;
+	map<CARD_RARE, vector<Card*>> mCardListByRare;
+
+	vector<Card*> vActiveCards;
+	vector<Card*> vDeactiveCards;
 
 public:
 	virtual void Init() override;
@@ -14,8 +20,10 @@ public:
 	virtual void Update(float deltaTime) override;
 	virtual void Render(HDC hdc) override;
 
-private:
-	void LoadCardData();
+	Card* GetRandomCard();
 
+private:
+	Card* CreateCard(string cardId);
+	void LoadCardData();
 
 };

@@ -26,3 +26,4 @@ extern bool isDebugMode;
 #include "ImageManager.h"
 #include "SceneManager.h"
 #include "DataManager.h"
+#include "GameData.h"

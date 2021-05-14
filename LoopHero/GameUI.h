@@ -11,13 +11,6 @@ enum class UI_ANCHOR
 	NONE
 };
 
-enum class UI_EVENT_CAPTURE
-{
-	BLOCK,
-	PASS,
-	NONE
-};
-
 class GameUI
 {
 private:
@@ -27,16 +20,16 @@ private:
 
 protected:
 	UI_ANCHOR anchor;
-	UI_EVENT_CAPTURE eventCapture;
 	int width;
 	int height;
-	POINT pos;
+	POINTFLOAT origin;
+	POINTFLOAT pos;
 	RECT rc;
 
 protected:
 	GameUI() {}
 
-	virtual bool OnClick(POINT pos) { return false; }
+	virtual bool OnClick(POINT point) { return PtInRect(&rc, point); }
 	inline void Refresh()
 	{
 		RECT view;
@@ -46,19 +39,24 @@ protected:
 		switch (anchor)
 		{
 		case UI_ANCHOR::RIGHT_TOP:
+			origin = { view.right, view.top };
 			SetRect(&rc, view.right - pos.x - width, view.top + pos.y, view.right - pos.x, view.top + pos.y + height);
 			break;
 		case UI_ANCHOR::LEFT_BOTTOM:
-			SetRect(&rc, view.left + pos.x, view.top - pos.y - height, view.left + pos.x + width, view.top - pos.y);
+			origin = { view.left, view.bottom };
+			SetRect(&rc, view.left + pos.x, view.bottom - pos.y - height, view.left + pos.x + width, view.bottom - pos.y);
 			break;
 		case UI_ANCHOR::RIGHT_BOTTOM:
-			SetRect(&rc, view.right - pos.x - width, view.top - pos.y - height, view.right - pos.x, view.top - pos.y);
+			origin = { view.right, view.bottom };
+			SetRect(&rc, view.right - pos.x - width, view.bottom - pos.y - height, view.right - pos.x, view.bottom - pos.y);
 			break;
 		case UI_ANCHOR::MIDDLE:
+			origin = { (view.right + view.left) / 2, (view.top + view.bottom) / 2 };
 			SetRect(&rc, (view.right + view.left) / 2 + pos.x - width / 2, (view.top + view.bottom) / 2 + pos.y - height / 2, (view.right + view.left) / 2 + pos.x + width / 2, (view.top + view.bottom) / 2 + pos.y + height / 2);
 			break;
 		case UI_ANCHOR::LEFT_TOP:
 		default:
+			origin = { view.left, view.top };
 			SetRect(&rc, view.left + pos.x, view.top + pos.y, view.left + pos.x + width, view.top + pos.y + height);
 			break;
 		}
@@ -67,7 +65,15 @@ protected:
 public:
 	virtual ~GameUI() {}
 
-	virtual void Init(UI_ANCHOR anchor, UI_EVENT_CAPTURE eventCapture, POINT pos, int width, int height) {}
+	virtual void Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
+	{
+		this->anchor = anchor;
+		this->pos = pos;
+		this->width = width;
+		this->height = height;
+
+		Refresh();
+	}
 	virtual void Release()
 	{
 		for (auto lpChild : vChildUI)
@@ -77,11 +83,7 @@ public:
 		}
 		vChildUI.clear();
 	}
-	virtual void Update(float deltaTime) final
-	{
-		// 이벤트 버블링 처리
-		// child의 애들부터 확인해서 onclick발생시 block이 발생할때까지 처리
-	}
+	virtual void Update(float deltaTime) {}
 	virtual void Render(HDC hdc)
 	{
 		for (auto lpChild : vChildUI)

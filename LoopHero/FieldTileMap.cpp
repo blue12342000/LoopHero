@@ -107,7 +107,7 @@ void FieldTileMap::Render(HDC hdc)
 		}
 	}
 
-	//lpTileTable->Render(hdc);
+	lpTileTable->Render(hdc);
 
 	if (lpSelectedTile)
 	{
@@ -427,6 +427,7 @@ void FieldTileMap::SelectedTileValidation()
 			case 2:
 				for (auto pair : mCheckMap)
 				{
+					// Æ²¸²
 					if (pair.second == lpSelectedTile->vNearTiles.size())
 					{
 						isPossibleBuild[pair.first->y][pair.first->x] = true;

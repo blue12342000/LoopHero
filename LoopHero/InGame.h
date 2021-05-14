@@ -4,7 +4,6 @@
 class Image;
 class FieldTileMap;
 class TileTable;
-class Deck;
 class GameUI;
 class InGame : public Scene
 {
@@ -13,9 +12,9 @@ private:
 	Image* lpBackImage;
 
 	GameUI* lpRightMenu;
+	GameUI* lpHandCards;
 
 	FieldTileMap* lpFieldTiles;
-	Deck* lpDeck;
 
 public:
 	virtual HRESULT Init() override;

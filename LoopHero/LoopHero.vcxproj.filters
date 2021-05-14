@@ -99,6 +99,12 @@
     <ClCompile Include="InGameEventTimer.cpp">
       <Filter>소스 파일\LoopHero\UI\InGame</Filter>
     </ClCompile>
+    <ClCompile Include="InGameHandCard.cpp">
+      <Filter>소스 파일\LoopHero\UI\InGame</Filter>
+    </ClCompile>
+    <ClCompile Include="GameData.cpp">
+      <Filter>소스 파일\LoopHero</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LoopHero.h">
@@ -128,9 +134,6 @@
     <ClInclude Include="InGame.h">
       <Filter>소스 파일\LoopHero\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="GameUI.h">
-      <Filter>소스 파일\LoopHero\UI</Filter>
-    </ClInclude>
     <ClInclude Include="Singleton.h">
       <Filter>소스 파일\Engine</Filter>
     </ClInclude>
@@ -158,11 +161,20 @@
     <ClInclude Include="InGameRightMenu.h">
       <Filter>소스 파일\LoopHero\UI\InGame</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>소스 파일\LoopHero\UI\Super</Filter>
-    </ClInclude>
     <ClInclude Include="InGameEventTimer.h">
       <Filter>소스 파일\LoopHero\UI\InGame</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUI.h">
+      <Filter>소스 파일\LoopHero\UI\Super</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>소스 파일\LoopHero</Filter>
+    </ClInclude>
+    <ClInclude Include="InGameHandCard.h">
+      <Filter>소스 파일\LoopHero\UI\InGame</Filter>
+    </ClInclude>
+    <ClInclude Include="GameData.h">
+      <Filter>소스 파일\LoopHero</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

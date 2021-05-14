@@ -18,6 +18,7 @@ void Card::Init()
 
 void Card::Release()
 {
+	DeleteObject(hFont);
 }
 
 void Card::Update(float deltaTime)
@@ -36,15 +37,4 @@ void Card::Render(HDC hdc)
 		SelectObject(hdc, hOldFont);
 	}
 	SetTextAlign(hdc, TA_LEFT);
-}
-
-void Card::LoadCardInfo(CARD_TYPE type, string card, string tileKey)
-{
-	this->type = type;
-	this->tileKey = tileKey;
-	this->id = card;
-	this->name = DataManager::GetSingleton()->GetSingleton()->GetData("tiles", tileKey, "name");
-	this->desc = DataManager::GetSingleton()->GetSingleton()->GetData("tiles", tileKey, "desc");
-	this->lpIconImg = ImageManager::GetSingleton()->FindImage(card + "_icon");
-	this->lpCardImg = ImageManager::GetSingleton()->FindImage(card + "_card");
 }
