@@ -7,11 +7,18 @@ enum class HSCROLL_ALIGN
 	RIGHT
 };
 
+enum class HS_ARGS_INSERT
+{
+	BEFORE,
+	AFTER
+};
+
 class GameUI;
 class UIHorizontalScroll : public GameUI
 {
 private:
 	HSCROLL_ALIGN align;
+	HS_ARGS_INSERT insert;
 	int maxItems;
 
 	float padding;
@@ -22,7 +29,7 @@ private:
 public:
 	virtual ~UIHorizontalScroll() {}
 
-	virtual void Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height, HSCROLL_ALIGN align = HSCROLL_ALIGN::LEFT, int maxItems = 0, int padding = 4);
+	virtual void Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height, HSCROLL_ALIGN align = HSCROLL_ALIGN::LEFT, HS_ARGS_INSERT insert = HS_ARGS_INSERT::BEFORE, int maxItems = 0, int padding = 4);
 	virtual void Update(float deltaTime) override;
 	virtual void Render(HDC hdc) override;
 

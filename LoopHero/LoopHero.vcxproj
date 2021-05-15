@@ -148,6 +148,7 @@
     <ClCompile Include="Deck.cpp" />
     <ClCompile Include="FieldTileMap.cpp" />
     <ClCompile Include="GameData.cpp" />
+    <ClCompile Include="GameUI.cpp" />
     <ClCompile Include="UIHorizontalScroll.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageManager.cpp" />

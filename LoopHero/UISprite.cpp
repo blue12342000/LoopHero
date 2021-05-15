@@ -8,7 +8,7 @@ void UISprite::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
 {
 	GameUI::Init(anchor, pos, width, height);
 
-	lpImage = ImageManager::GetSingleton()->AddImage("UI_SPRITE_" + to_string((__int64)this), width, height, true, RGB(0, 170, 255));
+	lpImage = ImageManager::GetSingleton()->AddImage("UI_SPRITE_" + to_string(width) + "_" + to_string(height), width, height, true, RGB(0, 170, 255));
 }
 
 void UISprite::Render(HDC hdc)

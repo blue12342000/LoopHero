@@ -114,6 +114,9 @@
     <ClCompile Include="UIHorizontalScroll.cpp">
       <Filter>소스 파일\LoopHero\UI\Base</Filter>
     </ClCompile>
+    <ClCompile Include="GameUI.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Image.h">

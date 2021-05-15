@@ -14,14 +14,9 @@ void InGameHandCard::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int heigh
 	vDropCards.reserve(13);
 
 	UIHorizontalScroll* lpUIHScroll = GameUI::CreateUI<UIHorizontalScroll>();
-	lpUIHScroll->Init(UI_ANCHOR::LEFT_BOTTOM, { 0.0f, 0.0f }, WINSIZE_WIDTH - 296, 58 * 2, HSCROLL_ALIGN::LEFT, 18);
+	lpUIHScroll->Init(UI_ANCHOR::LEFT_BOTTOM, { 0.0f, 0.0f }, WINSIZE_WIDTH - 296, 58 * 2, HSCROLL_ALIGN::LEFT, HS_ARGS_INSERT::AFTER, 18);
 	lpHScrollView = lpUIHScroll;
 	AddChildUI(lpHScrollView);
-
-	UISprite* lpSprite = GameUI::CreateUI<UISprite>();
-	lpSprite->Init(UI_ANCHOR::LEFT_TOP, { 0.0f, 0.0f }, 41 * 2, 58 * 2);
-	lpSprite->SetObject(GameData::GetSingleton()->PickCard());
-	lpHScrollView->AddChildUI(lpSprite);
 }
 
 void InGameHandCard::Release()
