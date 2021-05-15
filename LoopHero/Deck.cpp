@@ -112,5 +112,4 @@ void Deck::LoadCardData()
 		mCardListByType[type].push_back(lpCard);
 		mCardListByRare[rare].push_back(lpCard);
 	}
-
 }

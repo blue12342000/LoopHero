@@ -105,16 +105,13 @@
     <ClCompile Include="GameData.cpp">
       <Filter>소스 파일\LoopHero</Filter>
     </ClCompile>
-    <ClCompile Include="UICard.cpp">
-      <Filter>소스 파일\LoopHero\UI\InGame</Filter>
-    </ClCompile>
-    <ClCompile Include="UIHrizontalScroll.cpp">
-      <Filter>소스 파일\LoopHero\UI\Base</Filter>
-    </ClCompile>
     <ClCompile Include="UIProgressBar.cpp">
       <Filter>소스 파일\LoopHero\UI\Base</Filter>
     </ClCompile>
     <ClCompile Include="UISprite.cpp">
+      <Filter>소스 파일\LoopHero\UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="UIHorizontalScroll.cpp">
       <Filter>소스 파일\LoopHero\UI\Base</Filter>
     </ClCompile>
   </ItemGroup>
@@ -185,16 +182,13 @@
     <ClInclude Include="LoopHero.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="UICard.h">
-      <Filter>소스 파일\LoopHero\UI\InGame</Filter>
-    </ClInclude>
-    <ClInclude Include="UIHrizontalScroll.h">
-      <Filter>소스 파일\LoopHero\UI\Base</Filter>
-    </ClInclude>
     <ClInclude Include="UIProgressBar.h">
       <Filter>소스 파일\LoopHero\UI\Base</Filter>
     </ClInclude>
     <ClInclude Include="UISprite.h">
+      <Filter>소스 파일\LoopHero\UI\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="UIHorizontalScroll.h">
       <Filter>소스 파일\LoopHero\UI\Base</Filter>
     </ClInclude>
   </ItemGroup>

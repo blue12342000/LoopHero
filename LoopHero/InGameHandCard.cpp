@@ -1,6 +1,8 @@
 #include "InGameHandCard.h"
 #include "Card.h"
 #include "Deck.h"
+#include "UIHorizontalScroll.h"
+#include "UISprite.h"
 
 void InGameHandCard::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
 {
@@ -10,6 +12,21 @@ void InGameHandCard::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int heigh
 
 	vHandCards.reserve(13);
 	vDropCards.reserve(13);
+
+	UIHorizontalScroll* lpUIHScroll = GameUI::CreateUI<UIHorizontalScroll>();
+	lpUIHScroll->Init(UI_ANCHOR::LEFT_BOTTOM, { 0.0f, 0.0f }, WINSIZE_WIDTH - 296, 58 * 2, HSCROLL_ALIGN::LEFT, 18);
+	lpHScrollView = lpUIHScroll;
+	AddChildUI(lpHScrollView);
+
+	UISprite* lpSprite = GameUI::CreateUI<UISprite>();
+	lpSprite->Init(UI_ANCHOR::LEFT_TOP, { 0.0f, 0.0f }, 41 * 2, 58 * 2);
+	lpSprite->SetObject(GameData::GetSingleton()->PickCard());
+	lpHScrollView->AddChildUI(lpSprite);
+}
+
+void InGameHandCard::Release()
+{
+	GameUI::Release();
 }
 
 void InGameHandCard::Update(float deltaTime)
@@ -17,6 +34,22 @@ void InGameHandCard::Update(float deltaTime)
 	if (KeyManager::GetSingleton()->IsKeyOnceDown('M'))
 	{
 		vHandCards.push_back(GameData::GetSingleton()->PickCard());
+	}
+
+	if (KeyManager::GetSingleton()->IsKeyOnceDown('I'))
+	{
+		for (int i = 0; i < 20; ++i)
+		{
+			UISprite* lpSprite = GameUI::CreateUI<UISprite>();
+			lpSprite->Init(UI_ANCHOR::LEFT_TOP, { 0.0f, 0.0f }, 41 * 2, 58 * 2);
+			lpSprite->SetObject(GameData::GetSingleton()->PickCard());
+			lpHScrollView->AddChildUI(lpSprite);
+		}
+	}
+
+	if (KeyManager::GetSingleton()->IsKeyOnceDown('O'))
+	{
+		((UIHorizontalScroll*)lpHScrollView)->RemoveChildUI(rand() % 10);
 	}
 
 	if (PtInRect(&rc, KeyManager::GetSingleton()->GetMousePoint()))
@@ -34,14 +67,10 @@ void InGameHandCard::Update(float deltaTime)
 		Refresh();
 	}
 
-	for (int i = 0; i < vHandCards.size(); ++i)
-	{
-		
-	}
+	GameUI::Update(deltaTime);
 }
 
 void InGameHandCard::Render(HDC hdc)
 {
-	Rectangle(hdc, rc.left, rc.top, rc.right, rc.bottom);
-
+	GameUI::Render(hdc);
 }

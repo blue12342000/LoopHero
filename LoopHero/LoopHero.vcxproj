@@ -148,7 +148,7 @@
     <ClCompile Include="Deck.cpp" />
     <ClCompile Include="FieldTileMap.cpp" />
     <ClCompile Include="GameData.cpp" />
-    <ClCompile Include="UIHrizontalScroll.cpp" />
+    <ClCompile Include="UIHorizontalScroll.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="InGame.cpp" />
@@ -162,7 +162,6 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="TileTable.cpp" />
     <ClCompile Include="Timer.cpp" />
-    <ClCompile Include="UICard.cpp" />
     <ClCompile Include="UISprite.cpp" />
     <ClCompile Include="Utill.cpp" />
   </ItemGroup>
@@ -174,7 +173,7 @@
     <ClInclude Include="GameData.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameUI.h" />
-    <ClInclude Include="UIHrizontalScroll.h" />
+    <ClInclude Include="UIHorizontalScroll.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="InGame.h" />
@@ -190,7 +189,6 @@
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="TileTable.h" />
     <ClInclude Include="Timer.h" />
-    <ClInclude Include="UICard.h" />
     <ClInclude Include="UISprite.h" />
     <ClInclude Include="Utill.h" />
   </ItemGroup>

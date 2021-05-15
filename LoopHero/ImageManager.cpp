@@ -16,7 +16,7 @@ HRESULT ImageManager::Init()
     mLpImages["ingame_bosstimer_background"]->Init("Image/UI/InGame/ingame_bosstimer_background.bmp", 121 * 2, 27 * 2);
 
     mLpImages.insert(make_pair("ingame_info_background", new Image()));
-    mLpImages["ingame_info_background"]->Init("Image/UI/InGame/ingame_info_background.bmp", 300 * 2, 364 * 2, 2, 1, 2, true, RGB(0, 170, 255));
+    mLpImages["ingame_info_background"]->Init("Image/UI/InGame/ingame_info_background.bmp", 296 * 2, 360 * 2, 2, 1, 2, true, RGB(0, 170, 255));
 
     mLpImages.insert(make_pair("spider_icon", new Image()));
     mLpImages["spider_icon"]->Init("Image/Icon/spider_icon.bmp", 29 * 2, 29 * 2);

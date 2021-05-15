@@ -5,6 +5,8 @@
 #include "TileTable.h"
 #include "InGameRightMenu.h"
 #include "InGameHandCard.h"
+#include "UISprite.h"
+#include "Card.h"
 
 HRESULT InGame::Init()
 {
@@ -12,7 +14,7 @@ HRESULT InGame::Init()
     lpBackImage = ImageManager::GetSingleton()->FindImage("InGame_BackGround");
 
     lpRightMenu = GameUI::CreateUI<InGameRightMenu>();
-    lpRightMenu->Init(UI_ANCHOR::RIGHT_TOP, { 0.0f, 0.0f }, 300, WINSIZE_HEIGHT);
+    lpRightMenu->Init(UI_ANCHOR::RIGHT_TOP, { 0.0f, 0.0f }, 296, WINSIZE_HEIGHT);
 
     lpHandCards = GameUI::CreateUI<InGameHandCard>();
     lpHandCards->Init(UI_ANCHOR::LEFT_BOTTOM, { 0.0f, -48.0f  }, WINSIZE_WIDTH - 300, 58 * 2);
@@ -46,6 +48,7 @@ void InGame::Release()
         delete lpHandCards;
         lpHandCards = nullptr;
     }
+
 }
 
 void InGame::Update(float deltaTime)

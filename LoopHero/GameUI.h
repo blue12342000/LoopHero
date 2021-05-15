@@ -7,17 +7,23 @@ enum class UI_ANCHOR
 	RIGHT_TOP,
 	LEFT_BOTTOM,
 	RIGHT_BOTTOM,
+	LEFT_MIDDLE,
+	RIGHT_MIDDLE,
+	TOP_MIDDLE,
+	BOTTOM_MIDDLE,
 	MIDDLE,
 	NONE
 };
 
-class GameUI
+class UIEventHandler
 {
-private:
-	GameUI* lpParent;
-	vector<GameUI*> vChildUI;
+protected:
 	function<bool(POINT)> onClick;
+	function<void()> onChildRemove;
+};
 
+class GameUI : private UIEventHandler
+{
 protected:
 	bool isVisible;
 	UI_ANCHOR anchor;
@@ -26,6 +32,9 @@ protected:
 	POINTFLOAT origin;
 	POINTFLOAT pos;
 	RECT rc;
+
+	GameUI* lpParent;
+	vector<GameUI*> vChildUI;
 
 protected:
 	GameUI() {}
@@ -41,19 +50,35 @@ protected:
 		{
 		case UI_ANCHOR::RIGHT_TOP:
 			origin = { (float)view.right, (float)view.top };
-			SetRect(&rc, view.right - pos.x - width, view.top + pos.y, view.right - pos.x, view.top + pos.y + height);
+			SetRect(&rc, origin.x - pos.x - width, origin.y + pos.y, origin.x - pos.x, origin.y + pos.y + height);
 			break;
 		case UI_ANCHOR::LEFT_BOTTOM:
 			origin = { (float)view.left, (float)view.bottom };
-			SetRect(&rc, view.left + pos.x, view.bottom - pos.y - height, view.left + pos.x + width, view.bottom - pos.y);
+			SetRect(&rc, origin.x + pos.x, origin.y - pos.y - height, origin.x + pos.x + width, origin.y - pos.y);
 			break;
 		case UI_ANCHOR::RIGHT_BOTTOM:
 			origin = { (float)view.right, (float)view.bottom };
-			SetRect(&rc, view.right - pos.x - width, view.bottom - pos.y - height, view.right - pos.x, view.bottom - pos.y);
+			SetRect(&rc, origin.x - pos.x - width, origin.y - pos.y - height, origin.x - pos.x, origin.y - pos.y);
 			break;
 		case UI_ANCHOR::MIDDLE:
 			origin = { (view.right + view.left) / 2.0f, (view.top + view.bottom) / 2.0f };
-			SetRect(&rc, (view.right + view.left) / 2 + pos.x - width / 2, (view.top + view.bottom) / 2 + pos.y - height / 2, (view.right + view.left) / 2 + pos.x + width / 2, (view.top + view.bottom) / 2 + pos.y + height / 2);
+			SetRect(&rc, origin.x + pos.x - width / 2, origin.y + pos.y - height / 2, origin.x + pos.x + width / 2, origin.y + pos.y + height / 2);
+			break;
+		case UI_ANCHOR::LEFT_MIDDLE:
+			origin = { (float)view.left, (view.top + view.bottom) / 2.0f };
+			SetRect(&rc, origin.x + pos.x, origin.y + pos.y - height / 2, origin.x + pos.x + width, origin.y + pos.y + height / 2);
+			break;
+		case UI_ANCHOR::RIGHT_MIDDLE:
+			origin = { (float)view.right, (view.top + view.bottom) / 2.0f };
+			SetRect(&rc, origin.x - pos.x - width, origin.y + pos.y - height / 2, origin.x - pos.x, origin.y + pos.y + height / 2);
+			break;
+		case UI_ANCHOR::TOP_MIDDLE:
+			origin = { (view.right + view.left) / 2.0f, (float)view.top };
+			SetRect(&rc, origin.x + pos.x - width / 2, origin.y + pos.y, origin.x + pos.x + width / 2, origin.y + pos.y + height);
+			break;
+		case UI_ANCHOR::BOTTOM_MIDDLE:
+			origin = { (view.right + view.left) / 2.0f, (float)view.bottom };
+			SetRect(&rc, origin.x + pos.x - width / 2, origin.y + pos.y - height, origin.x + pos.x + width / 2, origin.y + pos.y);
 			break;
 		case UI_ANCHOR::LEFT_TOP:
 		default:
@@ -90,7 +115,16 @@ public:
 		}
 		vChildUI.clear();
 	}
-	virtual void Update(float deltaTime) {}
+	virtual void Update(float deltaTime)
+	{
+		if (isVisible)
+		{
+			for (int i = 0; i < vChildUI.size(); ++i)
+			{
+				vChildUI[i]->Update(deltaTime);
+			}
+		}
+	}
 	virtual void Render(HDC hdc)
 	{
 		if (isVisible)
@@ -111,13 +145,21 @@ public:
 		return lpGameUI;
 	}
 
-	virtual GameUI* AddChildUI(GameUI* lpChild)
+	virtual void AddChildUI(GameUI* lpChild)
 	{
 		lpChild->lpParent = this;
 		lpChild->Refresh();
 		vChildUI.push_back(lpChild);
-		return lpChild;
 	}
+	virtual void RemoveChildUI(int index = 0)
+	{
+		if (index > -1 && index < vChildUI.size())
+		{
+			vChildUI.erase(vChildUI.begin() + index);
+		}
+	}
+
+	virtual inline void SetOnChildRemove(function<void()>& func) { onChildRemove = move(func); }
 
 	virtual inline void SetAnchor(UI_ANCHOR anchor) { this->anchor = anchor; }
 	virtual inline void SetPos(POINTFLOAT pos) final { this->pos = pos; Refresh(); }

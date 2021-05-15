@@ -99,3 +99,11 @@ vector<string> StringSplit(string str, char token)
 	if (!str.empty()) vString.push_back(str.substr(preOffset, str.size() - preOffset));
 	return vString;
 }
+
+void RenderRectangle(HDC hdc, RECT rc, COLORREF color)
+{
+	HBRUSH hBrudh = CreateSolidBrush(color), hOldBrush;
+	hOldBrush = (HBRUSH)SelectObject(hdc, hBrudh);
+	Rectangle(hdc, rc.left, rc.top, rc.right, rc.bottom);
+	DeleteObject(SelectObject(hdc, hOldBrush));
+}

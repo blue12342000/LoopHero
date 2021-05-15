@@ -1,5 +1,6 @@
 #include "GameData.h"
 #include "Deck.h"
+#include "Card.h"
 
 HRESULT GameData::Init()
 {

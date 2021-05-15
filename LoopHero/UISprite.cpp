@@ -2,6 +2,7 @@
 #include "ImageManager.h"
 #include "Image.h"
 #include "GameObject.h"
+#include "Utill.h"
 
 void UISprite::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
 {
@@ -14,7 +15,10 @@ void UISprite::Render(HDC hdc)
 {
 	if (lpObject)
 	{
+		lpImage->Fill();
 		lpObject->Render(lpImage->GetMemDC());
 	}
 	lpImage->Render(hdc, rc.left, rc.top);
+	unsigned int rgb = ((unsigned int)this) * 10;
+	RenderRectangle(hdc, rc, RGB((rgb % 150), (rgb % 150), (rgb % 150)));
 }
