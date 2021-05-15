@@ -46,6 +46,9 @@
     <Filter Include="소스 파일\LoopHero\UI\Super">
       <UniqueIdentifier>{bf6d2c68-3cea-4b31-b883-933db09fdb17}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\LoopHero\UI\Base">
+      <UniqueIdentifier>{2b7f02f5-eba8-45ed-a66e-af89ac5d2dec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -90,9 +93,6 @@
     <ClCompile Include="Card.cpp">
       <Filter>소스 파일\LoopHero\Card</Filter>
     </ClCompile>
-    <ClCompile Include="ProgressBar.cpp">
-      <Filter>소스 파일\LoopHero\UI</Filter>
-    </ClCompile>
     <ClCompile Include="InGameRightMenu.cpp">
       <Filter>소스 파일\LoopHero\UI\InGame</Filter>
     </ClCompile>
@@ -108,8 +108,14 @@
     <ClCompile Include="UICard.cpp">
       <Filter>소스 파일\LoopHero\UI\InGame</Filter>
     </ClCompile>
-    <ClCompile Include="HrizontalScroll.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="UIHrizontalScroll.cpp">
+      <Filter>소스 파일\LoopHero\UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="UIProgressBar.cpp">
+      <Filter>소스 파일\LoopHero\UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="UISprite.cpp">
+      <Filter>소스 파일\LoopHero\UI\Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -158,9 +164,6 @@
     <ClInclude Include="Card.h">
       <Filter>소스 파일\LoopHero\Card</Filter>
     </ClInclude>
-    <ClInclude Include="ProgressBar.h">
-      <Filter>소스 파일\LoopHero\UI</Filter>
-    </ClInclude>
     <ClInclude Include="InGameRightMenu.h">
       <Filter>소스 파일\LoopHero\UI\InGame</Filter>
     </ClInclude>
@@ -185,8 +188,14 @@
     <ClInclude Include="UICard.h">
       <Filter>소스 파일\LoopHero\UI\InGame</Filter>
     </ClInclude>
-    <ClInclude Include="HrizontalScroll.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="UIHrizontalScroll.h">
+      <Filter>소스 파일\LoopHero\UI\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="UIProgressBar.h">
+      <Filter>소스 파일\LoopHero\UI\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="UISprite.h">
+      <Filter>소스 파일\LoopHero\UI\Base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -29,6 +29,7 @@ public:
 
 		bool isTransparent;
 		COLORREF transColor;
+		HBRUSH hBrush;
 
 		ImageInfo()
 		{
@@ -59,12 +60,14 @@ private:
 	BlendInfo* lpBlendInfo;
 
 public:
-	HRESULT Init(int width, int height);
+	HRESULT Init(int width, int height, bool isTransparent = false, COLORREF transColor = RGB(255, 0, 255));
 	HRESULT Init(string fileName, int width, int height, bool isTransparent = false, COLORREF transColor = RGB(255, 0, 255));
 	HRESULT Init(string fileName, int width, int height, int maxFrameX, int maxFrameY, int totalFrame, bool isTransparent = false, COLORREF transColor = RGB(255, 0, 255));
 	HRESULT RotateInit(string fileName, int width, int height, int maxFrameX, int maxFrameY, int totalFrame, int splitAngle);
 
 	HRESULT Reverse(const Image& target);
+
+	void Fill();
 
 	void Render(HDC hdc, int destX = 0, int destY = 0, int frame = 0, UINT uFlag = 0);
 	void AlphaRender(HDC hdc, int destX, int destY);

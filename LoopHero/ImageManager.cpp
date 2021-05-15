@@ -105,6 +105,17 @@ void ImageManager::Release()
     mLpImages.clear();
 }
 
+Image* ImageManager::AddImage(string key, int width, int height, bool isTrans, COLORREF transColor)
+{
+    auto it = mLpImages.find(key);
+    if (it != mLpImages.end()) return it->second;
+
+    mLpImages.insert(make_pair(key, new Image()));
+    mLpImages[key]->Init(width, height, isTrans, transColor);
+
+    return mLpImages[key];
+}
+
 Image* ImageManager::FindImage(string key)
 {
     if (mLpImages.find(key) == mLpImages.end())

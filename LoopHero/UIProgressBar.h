@@ -1,6 +1,7 @@
 #pragma once
 #include "GameUI.h"
-class ProgressBar : public GameUI
+
+class UIProgressBar : public GameUI
 {
 };
 

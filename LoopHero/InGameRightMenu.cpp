@@ -15,6 +15,7 @@ void InGameRightMenu::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int heig
 
 void InGameRightMenu::Render(HDC hdc)
 {
-	lpBackground->Render(hdc, rc.left, rc.top, 0);
+	if (isVisible) lpBackground->Render(hdc, rc.left, rc.top, 0);
+
 	GameUI::Render(hdc);
 }

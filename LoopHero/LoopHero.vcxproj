@@ -148,7 +148,7 @@
     <ClCompile Include="Deck.cpp" />
     <ClCompile Include="FieldTileMap.cpp" />
     <ClCompile Include="GameData.cpp" />
-    <ClCompile Include="HrizontalScroll.cpp" />
+    <ClCompile Include="UIHrizontalScroll.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="InGame.cpp" />
@@ -158,11 +158,12 @@
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />
-    <ClCompile Include="ProgressBar.cpp" />
+    <ClCompile Include="UIProgressBar.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="TileTable.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="UICard.cpp" />
+    <ClCompile Include="UISprite.cpp" />
     <ClCompile Include="Utill.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -173,7 +174,7 @@
     <ClInclude Include="GameData.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameUI.h" />
-    <ClInclude Include="HrizontalScroll.h" />
+    <ClInclude Include="UIHrizontalScroll.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="InGame.h" />
@@ -183,13 +184,14 @@
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="LoopHero.h" />
     <ClInclude Include="MainGame.h" />
-    <ClInclude Include="ProgressBar.h" />
+    <ClInclude Include="UIProgressBar.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="TileTable.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="UICard.h" />
+    <ClInclude Include="UISprite.h" />
     <ClInclude Include="Utill.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,6 +1,6 @@
 #include "Image.h"
 
-HRESULT Image::Init(int width, int height)
+HRESULT Image::Init(int width, int height, bool isTransparent, COLORREF transColor)
 {
     HDC hdc = GetDC(g_hWnd);
 
@@ -30,12 +30,13 @@ HRESULT Image::Init(int width, int height)
         return E_FAIL;
     }
 
-    lpImageInfo->isTransparent = false;
-    lpImageInfo->transColor = 0;
+    lpImageInfo->isTransparent = isTransparent;
+    lpImageInfo->transColor = transColor;
 
     lpBlendInfo = nullptr;
 
-
+    HBRUSH hBrush, hOldBrush;
+    PatBlt(lpImageInfo->vHMemDC[0], 0, 0, width, height, WHITENESS);
     return S_OK;
 }
 
@@ -287,6 +288,16 @@ HRESULT Image::Reverse(const Image& target)
     }
 
     return S_OK;
+}
+
+void Image::Fill()
+{
+    for (int i = 0; i < splitAngle; ++i)
+    {
+        HBRUSH hOldBrush = (HBRUSH)SelectObject(lpImageInfo->vHMemDC[i], lpImageInfo->hBrush);
+        PatBlt(lpImageInfo->vHMemDC[i], 0, 0, lpImageInfo->width, lpImageInfo->height, lpImageInfo->transColor);
+        SelectObject(lpImageInfo->vHMemDC[i], hOldBrush);
+    }
 }
 
 void Image::Render(HDC hdc, int destX, int destY, int frame, UINT uFlag)

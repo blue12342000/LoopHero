@@ -19,6 +19,7 @@ private:
 	function<bool(POINT)> onClick;
 
 protected:
+	bool isVisible;
 	UI_ANCHOR anchor;
 	int width;
 	int height;
@@ -60,6 +61,11 @@ protected:
 			SetRect(&rc, view.left + pos.x, view.top + pos.y, view.left + pos.x + width, view.top + pos.y + height);
 			break;
 		}
+
+		for (int i = 0; i < vChildUI.size(); ++i)
+		{
+			vChildUI[i]->Refresh();
+		}
 	}
 
 public:
@@ -67,6 +73,7 @@ public:
 
 	virtual void Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
 	{
+		this->isVisible = true;
 		this->anchor = anchor;
 		this->pos = pos;
 		this->width = width;
@@ -76,19 +83,22 @@ public:
 	}
 	virtual void Release()
 	{
-		for (auto lpChild : vChildUI)
+		for (int i = 0; i < vChildUI.size(); ++i)
 		{
-			lpChild->Release();
-			delete lpChild;
+			vChildUI[i]->Release();
+			delete vChildUI[i];
 		}
 		vChildUI.clear();
 	}
 	virtual void Update(float deltaTime) {}
 	virtual void Render(HDC hdc)
 	{
-		for (auto lpChild : vChildUI)
+		if (isVisible)
 		{
-			lpChild->Render(hdc);
+			for (int i = 0; i < vChildUI.size(); ++i)
+			{
+				if (vChildUI[i]->isVisible) vChildUI[i]->Render(hdc);
+			}
 		}
 	}
 
@@ -101,11 +111,19 @@ public:
 		return lpGameUI;
 	}
 
-	GameUI* AddChildUI(GameUI* lpChild)
+	virtual GameUI* AddChildUI(GameUI* lpChild)
 	{
 		lpChild->lpParent = this;
 		lpChild->Refresh();
 		vChildUI.push_back(lpChild);
 		return lpChild;
 	}
+
+	virtual inline void SetAnchor(UI_ANCHOR anchor) { this->anchor = anchor; }
+	virtual inline void SetPos(POINTFLOAT pos) final { this->pos = pos; Refresh(); }
+	virtual inline void SetVisible(bool isVisible) final { this->isVisible = isVisible; }
+	virtual inline POINTFLOAT GetPos() final { return pos; }
+	virtual inline RECT GetRect() final { return rc; }
+	virtual inline int GetWidth() final { return width; }
+	virtual inline int GetHeight() final { return height; }
 };

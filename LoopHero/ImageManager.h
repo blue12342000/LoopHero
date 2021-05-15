@@ -12,6 +12,8 @@ public:
 	HRESULT Init();
 	void Release();
 
+	Image* AddImage(string key, int width, int height, bool isTrans = false, COLORREF transColor = NULL);
+
 	Image* FindImage(string key);
 };
 
