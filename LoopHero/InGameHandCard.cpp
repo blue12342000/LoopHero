@@ -2,6 +2,7 @@
 #include "Card.h"
 #include "Deck.h"
 #include "UIHorizontalScroll.h"
+#include "UIProgressBar.h"
 #include "UISprite.h"
 
 void InGameHandCard::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
@@ -10,13 +11,18 @@ void InGameHandCard::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int heigh
 	moveSpeed = 200;
 	initPos = pos;
 
-	vHandCards.reserve(13);
-	vDropCards.reserve(13);
+	//vHandCards.reserve(13);
+	//vDropCards.reserve(13);
 
-	UIHorizontalScroll* lpUIHScroll = GameUI::CreateUI<UIHorizontalScroll>();
+	UIHorizontalScroll* lpUIHScroll = GameUI::CreateUI<UIHorizontalScroll>(this);
 	lpUIHScroll->Init(UI_ANCHOR::LEFT_BOTTOM, { 0.0f, 0.0f }, WINSIZE_WIDTH - 296, 58 * 2, HSCROLL_ALIGN::LEFT, HS_ARGS_INSERT::AFTER, 18);
 	lpHScrollView = lpUIHScroll;
-	AddChildUI(lpHScrollView);
+
+	lpProgressBar = GameUI::CreateUI<UIProgressBar>(this);
+	lpProgressBar->Init(UI_ANCHOR::LEFT_BOTTOM, { 100.0f, 400.0f }, 50, 4, UI_BAR_TYPE::HORIZON, "battle_unit_statusbar_action", "battle_unit_statusbar_hp");
+
+	auto func = bind([](GameUI* target)->float {return (float)target->GetChildCount(); }, lpHScrollView);
+	lpProgressBar->SetTrackingVariable(func, 18);
 }
 
 void InGameHandCard::Release()
@@ -26,10 +32,10 @@ void InGameHandCard::Release()
 
 void InGameHandCard::Update(float deltaTime)
 {
-	if (KeyManager::GetSingleton()->IsKeyOnceDown('M'))
-	{
-		vHandCards.push_back(GameData::GetSingleton()->PickCard());
-	}
+	//if (KeyManager::GetSingleton()->IsKeyOnceDown('M'))
+	//{
+	//	vHandCards.push_back(GameData::GetSingleton()->PickCard());
+	//}
 
 	if (KeyManager::GetSingleton()->IsKeyOnceDown('I'))
 	{

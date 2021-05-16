@@ -71,7 +71,7 @@ void FieldTileMap::Update(float deltaTime)
 	else
 	{
 		int index = 0;
-		for (RECT trc : lpTileTable->GetVRects())
+		for (const RECT& trc : lpTileTable->GetVRects())
 		{
 			if (PtInRect(&trc, KeyManager::GetSingleton()->GetMousePoint()))
 			{

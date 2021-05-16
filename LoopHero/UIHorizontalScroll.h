@@ -21,8 +21,9 @@ private:
 	HS_ARGS_INSERT insert;
 	int maxItems;
 
-	float padding;
-	float destPadding;
+	float margin;
+	float maxMargin;
+	float destMargin;
 
 	float totalItemWidth;
 

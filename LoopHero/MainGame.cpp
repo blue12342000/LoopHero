@@ -28,6 +28,17 @@ void MainGame::Release()
 	delete timer;
 	timer = nullptr;
 
+	KeyManager::GetSingleton()->ReleaseSingleton();
+
+	ImageManager::GetSingleton()->Release();
+	ImageManager::GetSingleton()->ReleaseSingleton();
+
+	SceneManager::GetSingleton()->Release();
+	SceneManager::GetSingleton()->ReleaseSingleton();
+
+	GameData::GetSingleton()->Release();
+	GameData::GetSingleton()->ReleaseSingleton();
+
 	ReleaseDC(g_hWnd, hdc);
 }
 

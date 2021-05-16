@@ -191,7 +191,7 @@ POINTFLOAT GameUI::GetRealationPos(GameUI* lpOtherUI)
 		break;
 	case UI_ANCHOR::BOTTOM_MIDDLE:
 	case UI_ANCHOR::LEFT_BOTTOM:
-		thisPos.x = inRect.left - thisPos.x;
+		thisPos.x = thisPos.x - inRect.left;
 		thisPos.y = inRect.bottom - thisPos.y;
 		break;
 	case UI_ANCHOR::RIGHT_BOTTOM:

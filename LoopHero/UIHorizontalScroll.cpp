@@ -1,25 +1,26 @@
 #include "UIHorizontalScroll.h"
 #include "Utill.h"
 
-void UIHorizontalScroll::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height, HSCROLL_ALIGN align, HS_ARGS_INSERT insert, int maxItems, int padding)
+void UIHorizontalScroll::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height, HSCROLL_ALIGN align, HS_ARGS_INSERT insert, int maxItems, int margin)
 {
 	GameUI::Init(anchor, pos, width, height);
 	this->align = align;
 	this->insert = insert;
 	this->maxItems = maxItems;
 
-	this->padding = padding;
-	this->destPadding = padding;
+	this->margin = margin;
+	this->maxMargin = margin;
+	this->destMargin = margin;
 	this->totalItemWidth = 0;
 }
 
 void UIHorizontalScroll::Update(float deltaTime)
 {
-	if (abs(padding - destPadding) > FLT_EPSILON)
+	if (abs(margin - destMargin) > FLT_EPSILON)
 	{
 		// 마진값 당기는 애니메이션 진행
-		padding += (destPadding - padding) * 10 * deltaTime;
-		if (abs(padding - destPadding) < FLT_EPSILON) padding = destPadding;
+		margin += (destMargin - margin) * 10 * deltaTime;
+		if (abs(margin - destMargin) < FLT_EPSILON) margin = destMargin;
 	}
 
 	POINTFLOAT currPos, destPos = { 0.0f, 0.0f }, newPos;
@@ -29,11 +30,15 @@ void UIHorizontalScroll::Update(float deltaTime)
 		currPos = vChildUI[i]->GetPos();
 		newPos = currPos;
 		newPos.x += (destPos.x - currPos.x) * 10 * deltaTime;
+		if (abs(newPos.x - destPos.x) < 0.01f) newPos.x = destPos.x;
 		newPos.y += (destPos.y - currPos.y) * 10 * deltaTime;
+		if (abs(newPos.y - destPos.y) < 0.01f) newPos.y = destPos.y;
 
 		vChildUI[i]->SetPos(newPos);
-		destPos.x += vChildUI[i]->GetWidth() + destPadding;
+		destPos.x += vChildUI[i]->GetWidth() + destMargin;
 	}
+
+	GameUI::Update(deltaTime);
 }
 
 void UIHorizontalScroll::Render(HDC hdc)
@@ -72,8 +77,8 @@ void UIHorizontalScroll::AddChildUI(GameUI* lpChild)
 	float diff = totalItemWidth - width;
 	if (diff > 0)
 	{
-		destPadding = (width - totalItemWidth) / vChildUI.size();
-		if (destPadding > padding) destPadding = padding;
+		destMargin = (width - totalItemWidth) / vChildUI.size();
+		if (destMargin > maxMargin) destMargin = maxMargin;
 	}
 
 	if (insert == HS_ARGS_INSERT::AFTER) GameUI::InsertChildId(lpChild, vChildUI.size());
@@ -90,8 +95,8 @@ void UIHorizontalScroll::RemoveChildUI(int index)
 
 		if (vChildUI.size() > 1)
 		{
-			destPadding = (width - totalItemWidth) / (vChildUI.size() - 1);
-			if (destPadding > padding) destPadding = padding;
+			destMargin = (width - totalItemWidth) / (vChildUI.size() - 1);
+			if (destMargin > maxMargin) destMargin = maxMargin;
 		}
 
 		OnRemoveChild(item);

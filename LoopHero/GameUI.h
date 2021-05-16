@@ -54,12 +54,13 @@ public:
 	virtual void Render(HDC hdc);
 
 	template<typename T>
-	static T* CreateUI()
+	static T* CreateUI(GameUI* lpParent = nullptr)
 	{
 		T* lpGameUI = new T;
-		lpGameUI->lpParent = nullptr;
+		lpGameUI->lpParent = lpParent;
 		lpGameUI->onClick = bind(&GameUI::OnClick, lpGameUI, placeholders::_1);
 		lpGameUI->onChildRemove = nullptr;
+		if (lpParent) lpParent->vChildUI.push_back(lpGameUI);
 		return lpGameUI;
 	}
 
@@ -79,4 +80,5 @@ public:
 	virtual inline RECT GetRect() final { return rc; }
 	virtual inline int GetWidth() final { return width; }
 	virtual inline int GetHeight() final { return height; }
+	virtual inline int GetChildCount() final { return vChildUI.size(); }
 };

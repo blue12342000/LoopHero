@@ -146,9 +146,13 @@
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="DataManager.cpp" />
     <ClCompile Include="Deck.cpp" />
+    <ClCompile Include="EquipItem.cpp" />
+    <ClCompile Include="EquipTable.cpp" />
     <ClCompile Include="FieldTileMap.cpp" />
     <ClCompile Include="GameData.cpp" />
     <ClCompile Include="GameUI.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="TraitsTable.cpp" />
     <ClCompile Include="UIHorizontalScroll.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageManager.cpp" />
@@ -159,21 +163,27 @@
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="UIItemSlot.cpp" />
     <ClCompile Include="UIProgressBar.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="TileTable.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="UISprite.cpp" />
+    <ClCompile Include="Unit.cpp" />
     <ClCompile Include="Utill.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Card.h" />
     <ClInclude Include="DataManager.h" />
     <ClInclude Include="Deck.h" />
+    <ClInclude Include="EquipItem.h" />
+    <ClInclude Include="EquipTable.h" />
     <ClInclude Include="FieldTileMap.h" />
     <ClInclude Include="GameData.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameUI.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="TraitsTable.h" />
     <ClInclude Include="UIHorizontalScroll.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageManager.h" />
@@ -184,6 +194,7 @@
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="LoopHero.h" />
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="UIItemSlot.h" />
     <ClInclude Include="UIProgressBar.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
@@ -191,6 +202,7 @@
     <ClInclude Include="TileTable.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="UISprite.h" />
+    <ClInclude Include="Unit.h" />
     <ClInclude Include="Utill.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

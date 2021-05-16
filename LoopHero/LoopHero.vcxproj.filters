@@ -49,6 +49,9 @@
     <Filter Include="소스 파일\LoopHero\UI\Base">
       <UniqueIdentifier>{2b7f02f5-eba8-45ed-a66e-af89ac5d2dec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\LoopHero\Unit\Traits">
+      <UniqueIdentifier>{619876bc-0c67-4457-a879-00a5881d71e2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -116,6 +119,24 @@
     </ClCompile>
     <ClCompile Include="GameUI.cpp">
       <Filter>소스 파일\LoopHero\UI\Super</Filter>
+    </ClCompile>
+    <ClCompile Include="UIItemSlot.cpp">
+      <Filter>소스 파일\LoopHero\UI\InGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>소스 파일\LoopHero\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit.cpp">
+      <Filter>소스 파일\LoopHero\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="TraitsTable.cpp">
+      <Filter>소스 파일\LoopHero\Unit\Traits</Filter>
+    </ClCompile>
+    <ClCompile Include="EquipItem.cpp">
+      <Filter>소스 파일\LoopHero\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="EquipTable.cpp">
+      <Filter>소스 파일\LoopHero\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -193,6 +214,24 @@
     </ClInclude>
     <ClInclude Include="UIHorizontalScroll.h">
       <Filter>소스 파일\LoopHero\UI\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="UIItemSlot.h">
+      <Filter>소스 파일\LoopHero\UI\InGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>소스 파일\LoopHero\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Unit.h">
+      <Filter>소스 파일\LoopHero\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="TraitsTable.h">
+      <Filter>소스 파일\LoopHero\Unit\Traits</Filter>
+    </ClInclude>
+    <ClInclude Include="EquipItem.h">
+      <Filter>소스 파일\LoopHero\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="EquipTable.h">
+      <Filter>소스 파일\LoopHero\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

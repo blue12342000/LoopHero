@@ -6,6 +6,7 @@
 #include "InGameRightMenu.h"
 #include "InGameHandCard.h"
 #include "UISprite.h"
+#include "UIProgressBar.h"
 #include "Card.h"
 
 HRESULT InGame::Init()

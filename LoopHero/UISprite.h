@@ -5,11 +5,13 @@ class Image;
 class GameObject;
 class UISprite : public GameUI
 {
-private:
+protected:
 	Image* lpImage;
 	GameObject* lpObject;
 
 public:
+	virtual ~UISprite() {}
+
 	virtual void Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height);
 	virtual void Render(HDC hdc) override;
 

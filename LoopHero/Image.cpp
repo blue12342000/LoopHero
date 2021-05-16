@@ -381,6 +381,46 @@ void Image::SplitRender(HDC hdc, POINT dest, int splitX, int splitY, int splitIn
     }
 }
 
+void Image::PatternRender(HDC hdc, int destX, int destY, int width, int height, int frame)
+{
+    int limitX = destX + width;
+    int limitY = destY - height;
+    int drawX, drawY;
+
+    if (lpImageInfo->isTransparent)
+    {
+        for (int y = destY; y > limitY; y -= lpImageInfo->height)
+        {
+            for (int x = destX; x < limitX; x += lpImageInfo->width)
+            {
+                if (x + lpImageInfo->width <= limitX) { drawX = lpImageInfo->width; }
+                else { drawX = width % lpImageInfo->width; }
+                if (y - lpImageInfo->height >= limitY) { drawY = lpImageInfo->height; }
+                else { drawY = height % lpImageInfo->height; }
+
+                GdiTransparentBlt(hdc, x, y, drawX, -drawY,
+                    lpImageInfo->vHMemDC[0], lpImageInfo->width * (frame % lpImageInfo->maxFrameX), lpImageInfo->height * (frame / lpImageInfo->maxFrameX), drawX, drawY, lpImageInfo->transColor);
+            }
+        }
+    }
+    else
+    {
+        for (int y = destY; y > limitY; y -= lpImageInfo->height)
+        {
+            for (int x = destX; x < limitX; x += lpImageInfo->width)
+            {
+                if (x + lpImageInfo->width <= limitX) { drawX = lpImageInfo->width; }
+                else { drawX = width % lpImageInfo->width; }
+                if (y - lpImageInfo->height >= limitY) { drawY = lpImageInfo->height; }
+                else { drawY = height % lpImageInfo->height; }
+
+                StretchBlt(hdc, x, y, drawX, -drawY,
+                    lpImageInfo->vHMemDC[0], lpImageInfo->width * (frame % lpImageInfo->maxFrameX), lpImageInfo->height * (frame / lpImageInfo->maxFrameX), drawX, drawY, SRCCOPY);
+            }
+        }
+    }
+}
+
 void Image::Release()
 {
     if (lpImageInfo)

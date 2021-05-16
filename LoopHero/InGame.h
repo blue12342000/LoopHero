@@ -13,7 +13,6 @@ private:
 
 	GameUI* lpRightMenu;
 	GameUI* lpHandCards;
-	
 
 	FieldTileMap* lpFieldTiles;
 
