@@ -115,7 +115,7 @@
       <Filter>소스 파일\LoopHero\UI\Base</Filter>
     </ClCompile>
     <ClCompile Include="GameUI.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\LoopHero\UI\Super</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

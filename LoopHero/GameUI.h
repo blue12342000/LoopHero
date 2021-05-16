@@ -63,13 +63,14 @@ public:
 		return lpGameUI;
 	}
 
+	void InsertChildId(GameUI* lpChild, int index);
 	virtual void AddChildUI(GameUI* lpChild);
 	virtual void RemoveChildUI(int index = 0);
 
 	virtual inline void SetOnChildRemove(function<void(GameUI*)>* func) { if(func) onChildRemove = move(*func); }
 
 	virtual POINTFLOAT GetWorldPos() final;
-	virtual POINTFLOAT GetRealationPos(GameUI* lpGameUI) final;
+	virtual POINTFLOAT GetRealationPos(GameUI* lpOtherUI) final;
 
 	virtual inline void SetAnchor(UI_ANCHOR anchor) { this->anchor = anchor; }
 	virtual inline void SetPos(POINTFLOAT pos) final { this->pos = pos; Refresh(); }

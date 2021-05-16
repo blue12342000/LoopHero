@@ -107,6 +107,13 @@ void GameUI::Render(HDC hdc)
 	}
 }
 
+void GameUI::InsertChildId(GameUI* lpChild, int index)
+{
+	lpChild->SetPos(lpChild->GetRealationPos(this));
+	lpChild->lpParent = this;
+	vChildUI.insert(vChildUI.begin() + index, lpChild);
+}
+
 void GameUI::AddChildUI(GameUI* lpChild)
 {
 	lpChild->SetPos(lpChild->GetRealationPos(this));
@@ -163,33 +170,33 @@ inline POINTFLOAT GameUI::GetWorldPos()
 	return worldPos;
 }
 
-POINTFLOAT GameUI::GetRealationPos(GameUI* lpGameUI)
+POINTFLOAT GameUI::GetRealationPos(GameUI* lpOtherUI)
 {
 	POINTFLOAT thisPos = GetWorldPos();
-	POINTFLOAT otherPos = lpGameUI->GetWorldPos();
+	RECT inRect = lpOtherUI->GetRect();
 
-	switch (lpGameUI->anchor)
+	switch (anchor)
 	{
 	case UI_ANCHOR::TOP_MIDDLE:
 	case UI_ANCHOR::LEFT_MIDDLE:
 	case UI_ANCHOR::LEFT_TOP:
 	case UI_ANCHOR::MIDDLE:
-		thisPos.x = thisPos.x - otherPos.x;
-		thisPos.y = thisPos.y - otherPos.y;
+		thisPos.x = thisPos.x - inRect.left;
+		thisPos.y = thisPos.y - inRect.top;
 		break;
 	case UI_ANCHOR::RIGHT_MIDDLE:
 	case UI_ANCHOR::RIGHT_TOP:
-		thisPos.x = otherPos.x - thisPos.x;
-		thisPos.y = thisPos.y - otherPos.y;
+		thisPos.x = inRect.right - thisPos.x;
+		thisPos.y = thisPos.y - inRect.top;
 		break;
 	case UI_ANCHOR::BOTTOM_MIDDLE:
 	case UI_ANCHOR::LEFT_BOTTOM:
-		thisPos.x = thisPos.x - otherPos.x;
-		thisPos.y = otherPos.y - thisPos.y;
+		thisPos.x = inRect.left - thisPos.x;
+		thisPos.y = inRect.bottom - thisPos.y;
 		break;
 	case UI_ANCHOR::RIGHT_BOTTOM:
-		thisPos.x = otherPos.x - thisPos.x;
-		thisPos.y = otherPos.y - thisPos.y;
+		thisPos.x = inRect.right - thisPos.x;
+		thisPos.y = inRect.bottom - thisPos.y;
 		break;
 	}
 

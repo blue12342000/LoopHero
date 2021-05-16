@@ -23,6 +23,7 @@ void UIHorizontalScroll::Update(float deltaTime)
 	}
 
 	POINTFLOAT currPos, destPos = { 0.0f, 0.0f }, newPos;
+
 	for (int i = 0; i < vChildUI.size(); ++i)
 	{
 		currPos = vChildUI[i]->GetPos();
@@ -75,7 +76,8 @@ void UIHorizontalScroll::AddChildUI(GameUI* lpChild)
 		if (destPadding > padding) destPadding = padding;
 	}
 
-	GameUI::AddChildUI(lpChild);
+	if (insert == HS_ARGS_INSERT::AFTER) GameUI::InsertChildId(lpChild, vChildUI.size());
+	else GameUI::InsertChildId(lpChild, 0);
 }
 
 void UIHorizontalScroll::RemoveChildUI(int index)
