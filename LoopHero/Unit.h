@@ -3,6 +3,7 @@
 
 enum class UNIT_STATUS
 {
+	DMG,
 	MIN_DMG,
 	MAX_DMG,
 	DEF,
@@ -73,6 +74,7 @@ public:
 	virtual void Render(HDC hdc);
 
 	inline float GetCurrHp() { return currHp; }
+	inline const Traits* GetTraits() { return lpTraits; }
 
 	friend class TraitsTable;
 };

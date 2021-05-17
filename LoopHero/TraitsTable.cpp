@@ -8,7 +8,6 @@ void TraitsTable::LoadTraitsData()
 {
 	DataManager::GetSingleton()->LoadIniFile("Ini/traits.ini", "traits");
 
-
 	string slotKey;
 	map<string, UNIT_SLOT> mUnitSlot;
 	for (int i = 0; i < (int)UNIT_SLOT::NONE; ++i)

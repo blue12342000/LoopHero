@@ -322,6 +322,20 @@ void Image::Render(HDC hdc, int destX, int destY, int frame, UINT uFlag)
     }
 }
 
+void Image::Render(HDC hdc, int destX, int destY, POINT frame)
+{
+    if (lpImageInfo->isTransparent)
+    {
+        GdiTransparentBlt(hdc, destX, destY, lpImageInfo->width, lpImageInfo->height,
+            lpImageInfo->vHMemDC[0], lpImageInfo->width * frame.x, lpImageInfo->height * frame.y, lpImageInfo->width, lpImageInfo->height, lpImageInfo->transColor);
+    }
+    else
+    {
+        BitBlt(hdc, destX, destY, lpImageInfo->width, lpImageInfo->height,
+            lpImageInfo->vHMemDC[0], lpImageInfo->width * frame.x, lpImageInfo->height * frame.y, SRCCOPY);
+    }
+}
+
 void Image::AlphaRender(HDC hdc, int destX, int destY)
 {
     BitBlt(lpBlendInfo->hBlendDC, 0, 0, lpImageInfo->width, lpImageInfo->height, hdc, destX, destY, SRCCOPY);

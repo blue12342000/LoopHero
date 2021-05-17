@@ -8,6 +8,10 @@
 #include "UISprite.h"
 #include "UIProgressBar.h"
 #include "Card.h"
+#include "EquipItem.h"
+#include "EquipTable.h"
+#include "Unit.h"
+#include "TraitsTable.h"
 
 HRESULT InGame::Init()
 {
@@ -22,6 +26,11 @@ HRESULT InGame::Init()
 
     lpFieldTiles = new FieldTileMap();
     lpFieldTiles->Init();
+
+    lpUnit = GameData::GetSingleton()->GetTraitTable()->CreateUnit("Warrior");
+    lpEquipItem = EquipItem::CreateEquip(lpUnit->GetTraits());
+
+    GameData::GetSingleton()->SetUnit(lpUnit);
 
     SetBkMode(lpBuffer->GetMemDC(), TRANSPARENT);
     return S_OK;
@@ -50,6 +59,19 @@ void InGame::Release()
         lpHandCards = nullptr;
     }
 
+    if (lpUnit)
+    {
+        lpUnit->Release();
+        delete lpUnit;
+        lpUnit = nullptr;
+    }
+
+    if (lpEquipItem)
+    {
+        lpEquipItem->Release();
+        delete lpEquipItem;
+        lpEquipItem = nullptr;
+    }
 }
 
 void InGame::Update(float deltaTime)
@@ -69,6 +91,9 @@ void InGame::Render(HDC hdc)
     lpRightMenu->Render(hMemDC);
     lpFieldTiles->Render(hMemDC);
     lpHandCards->Render(hMemDC);
+
+    lpUnit->Render(hMemDC);
+    //lpEquipItem->Render(hMemDC);
 
     lpBuffer->Render(hdc);
 }

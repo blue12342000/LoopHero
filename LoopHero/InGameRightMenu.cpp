@@ -3,6 +3,9 @@
 #include "InGameEventTimer.h"
 #include "UIHorizontalScroll.h"
 #include "UISprite.h"
+#include "EquipItem.h"
+#include "Unit.h"
+#include "TileTable.h"
 #include "LoopHero.h"
 
 void InGameRightMenu::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
@@ -33,6 +36,7 @@ void InGameRightMenu::Update(float deltaTime)
 	{
 		UISprite* lpSprite = GameUI::CreateUI<UISprite>();
 		lpSprite->Init(UI_ANCHOR::LEFT_TOP, { 0.0f, 0.0f }, 23 * 2, 23 * 2);
+		lpSprite->SetObject(EquipItem::CreateEquip(GameData::GetSingleton()->GetUnit()->GetTraits()));
 		lpHScroll[0]->AddChildUI(lpSprite);
 	}
 

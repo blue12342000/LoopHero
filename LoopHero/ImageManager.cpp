@@ -97,6 +97,12 @@ HRESULT ImageManager::Init()
     mLpImages.insert(make_pair("tresury_card", new Image()));
     mLpImages["tresury_card"]->Init("Image/Cards/tresury_card.bmp", 41 * 2, 58 * 2, true, RGB(0, 170, 255));
 
+    mLpImages.insert(make_pair("item", new Image()));
+    mLpImages["item"]->Init("Image/Item/item.bmp", 375 * 2, 325 * 2, 15, 13, 15*13, true, RGB(0, 170, 255));
+
+    mLpImages.insert(make_pair("item_rank", new Image()));
+    mLpImages["item_rank"]->Init("Image/Item/item_rank.bmp", 92 * 2, 23 * 2, 4, 1, 4, true, RGB(0, 170, 255));
+
     return S_OK;
 }
 

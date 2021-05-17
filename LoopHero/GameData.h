@@ -9,6 +9,7 @@ class Card;
 class Deck;
 class TraitsTable;
 class EquipTable;
+class Unit;
 class GameData : public Singleton<GameData>
 {
 private:
@@ -16,6 +17,8 @@ private:
 	TraitsTable* lpTraitTable;
 	EquipTable* lpEquipTable;
 	int loopLevel;
+
+	Unit* lpUnit;
 
 public:
 	HRESULT Init();
@@ -26,5 +29,9 @@ public:
 
 	Card* PickCard();
 	inline int GetLoopLevel() { return loopLevel; }
+	inline EquipTable* GetEquipTable() { return lpEquipTable; }
+	inline TraitsTable* GetTraitTable() { return lpTraitTable; }
+	inline void SetUnit(Unit* lpUnit) { this->lpUnit = lpUnit; }
+	inline Unit* GetUnit() { return lpUnit; }
 };
 

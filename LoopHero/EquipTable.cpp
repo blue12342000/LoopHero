@@ -116,12 +116,12 @@ void EquipTable::LoadEquipData()
 		vStrData = StringSplit(group.second["main_status"], ',');
 		for (int i = 0; i < vStrData.size(); ++i)
 		{
-			equipInfo.vMainStatus.push_back(mUnitStatus[vStrData[i]]);
+			equipInfo.sMainStatus.insert(mUnitStatus[vStrData[i]]);
 		}
 		vStrData = StringSplit(group.second["bonus_status"], ',');
 		for (int i = 0; i < vStrData.size(); ++i)
 		{
-			equipInfo.vBonusStatus.push_back(mUnitStatus[vStrData[i]]);
+			equipInfo.sBonusStatus.insert(mUnitStatus[vStrData[i]]);
 		}
 		mEquipInfo.insert(make_pair(mUnitEquip[group.first], equipInfo));
 	}

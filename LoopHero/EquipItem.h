@@ -21,6 +21,7 @@ class Traits;
 class EquipItem : public Item
 {
 private:
+	int no;
 	int level;
 	EQUIP_PARTS parts;
 	map<UNIT_STATUS, float> mStatus;
@@ -28,13 +29,15 @@ private:
 private:
 	EquipItem() {}
 
+	void SetItemStatus(UNIT_STATUS status, int itemPower);
+	
 public:
 	virtual void Init();
 	virtual void Release();
 	virtual void Update(float deltaTime);
 	virtual void Render(HDC hdc);
 
-	static EquipItem* CreateEquip(Traits* lpTraits);
+	static EquipItem* CreateEquip(const Traits* lpTraits);
 
 };
 

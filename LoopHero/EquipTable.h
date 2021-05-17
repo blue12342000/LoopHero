@@ -1,5 +1,6 @@
 #pragma once
 #include <map>
+#include <set>
 #include <vector>
 #include <string>
 
@@ -10,8 +11,8 @@ struct EquipInfo
 {
 	int count;
 	vector<string> vName;
-	vector<UNIT_STATUS> vMainStatus;
-	vector<UNIT_STATUS> vBonusStatus;
+	set<UNIT_STATUS> sMainStatus;
+	set<UNIT_STATUS> sBonusStatus;
 };
 
 enum class EQUIP_PARTS;

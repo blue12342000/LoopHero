@@ -5,6 +5,8 @@ class Image;
 class FieldTileMap;
 class TileTable;
 class GameUI;
+class EquipItem;
+class Unit;
 class InGame : public Scene
 {
 private:
@@ -15,6 +17,9 @@ private:
 	GameUI* lpHandCards;
 
 	FieldTileMap* lpFieldTiles;
+
+	Unit* lpUnit;
+	EquipItem* lpEquipItem;
 
 public:
 	virtual HRESULT Init() override;

@@ -70,6 +70,7 @@ public:
 	void Fill();
 
 	void Render(HDC hdc, int destX = 0, int destY = 0, int frame = 0, UINT uFlag = 0);
+	void Render(HDC hdc, int destX, int destY, POINT frame);
 	void AlphaRender(HDC hdc, int destX, int destY);
 	void RotateRender(HDC hdc, int destX, int destY, float angle, int frame);
 	void SplitRender(HDC hdc, POINT dest, int splitX, int splitY, int splitIndex, int frame = 0, UINT uFlag = 0);
