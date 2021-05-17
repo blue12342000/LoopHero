@@ -11,4 +11,6 @@ void InGameEventTimer::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int hei
 void InGameEventTimer::Render(HDC hdc)
 {
 	lpBackground->Render(hdc, rc.left, rc.top);
+
+	GameUI::Render(hdc);
 }

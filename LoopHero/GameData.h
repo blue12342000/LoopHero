@@ -8,11 +8,13 @@ using namespace std;
 class Card;
 class Deck;
 class TraitsTable;
+class EquipTable;
 class GameData : public Singleton<GameData>
 {
 private:
 	Deck* lpDeck;
 	TraitsTable* lpTraitTable;
+	EquipTable* lpEquipTable;
 	int loopLevel;
 
 public:

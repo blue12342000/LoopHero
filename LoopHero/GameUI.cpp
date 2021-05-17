@@ -130,6 +130,37 @@ void GameUI::RemoveChildUI(int index)
 	}
 }
 
+void GameUI::SetWorldPos(POINT pos)
+{
+	POINTFLOAT thisPos = GetWorldPos();
+
+	switch (anchor)
+	{
+	case UI_ANCHOR::TOP_MIDDLE:
+	case UI_ANCHOR::LEFT_MIDDLE:
+	case UI_ANCHOR::LEFT_TOP:
+	case UI_ANCHOR::MIDDLE:
+		thisPos.x = thisPos.x - pos.x;
+		thisPos.y = thisPos.y - pos.y;
+		break;
+	case UI_ANCHOR::RIGHT_MIDDLE:
+	case UI_ANCHOR::RIGHT_TOP:
+		thisPos.x = pos.x - thisPos.x;
+		thisPos.y = thisPos.y - pos.y;
+		break;
+	case UI_ANCHOR::BOTTOM_MIDDLE:
+	case UI_ANCHOR::LEFT_BOTTOM:
+		thisPos.x = thisPos.x - pos.x;
+		thisPos.y = pos.y - thisPos.y;
+		break;
+	case UI_ANCHOR::RIGHT_BOTTOM:
+		thisPos.x = pos.x - thisPos.x;
+		thisPos.y = pos.y - thisPos.y;
+		break;
+	}
+	SetPos(thisPos);
+}
+
 inline POINTFLOAT GameUI::GetWorldPos()
 {
 	POINTFLOAT worldPos;

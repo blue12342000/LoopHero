@@ -21,4 +21,19 @@ void UISprite::Render(HDC hdc)
 	lpImage->Render(hdc, rc.left, rc.top);
 	unsigned int rgb = ((unsigned int)this) * 10;
 	RenderRectangle(hdc, rc, RGB((rgb % 150), (rgb % 150), (rgb % 150)));
+
+	GameUI::Render(hdc);
+}
+
+bool UISprite::OnClick(POINT pos)
+{
+	if (PtInRect(&rc, KeyManager::GetSingleton()->GetMousePoint()))
+	{
+		if (KeyManager::GetSingleton()->IsKeyOnceDown(VK_LBUTTON))
+		{
+			GetRealationPos()
+		}
+	}
+
+	return false;
 }

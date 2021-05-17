@@ -29,12 +29,14 @@ private:
 	float lastVar;
 
 public:
+	virtual ~UIProgressBar() {}
+
 	virtual void Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height, UI_BAR_TYPE type, string back, string bar);
 
 	virtual void Update(float deltaTime) override;
 	virtual void Render(HDC hdc) override;
 
-	void SetTrackingVariable(float* lpTargetVar, float maxVar);
-	void SetTrackingVariable(function<float()> lpTargetFunc, float maxVar);
+	void SetTrackingData(float* lpTargetVar, float maxVar);
+	void SetTrackingData(function<float()> lpTargetFunc, float maxVar);
 };
 

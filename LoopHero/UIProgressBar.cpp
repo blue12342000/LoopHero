@@ -16,6 +16,7 @@ void UIProgressBar::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height
 
 void UIProgressBar::Update(float deltaTime)
 {
+	GameUI::Update(deltaTime);
 }
 
 void UIProgressBar::Render(HDC hdc)
@@ -74,9 +75,11 @@ void UIProgressBar::Render(HDC hdc)
 			}
 		}
 	}
+
+	GameUI::Render(hdc);
 }
 
-void UIProgressBar::SetTrackingVariable(float* lpTargetVar, float maxVar)
+void UIProgressBar::SetTrackingData(float* lpTargetVar, float maxVar)
 {
 	if (lpTargetVar)
 	{
@@ -87,7 +90,7 @@ void UIProgressBar::SetTrackingVariable(float* lpTargetVar, float maxVar)
 	}
 }
 
-void UIProgressBar::SetTrackingVariable(function<float()> lpTargetFunc, float maxVar)
+void UIProgressBar::SetTrackingData(function<float()> lpTargetFunc, float maxVar)
 {
 	if (lpTargetFunc)
 	{

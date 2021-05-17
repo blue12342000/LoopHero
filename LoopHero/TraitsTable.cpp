@@ -30,6 +30,9 @@ void TraitsTable::LoadTraitsData()
 		case UNIT_SLOT::BELTS:
 			slotKey = "BELTS";
 			break;
+		case UNIT_SLOT::GLOVES:
+			slotKey = "GLOVES";
+			break;
 		case UNIT_SLOT::BOOTS:
 			slotKey = "BOOTS";
 			break;

@@ -26,6 +26,7 @@ enum class UNIT_SLOT
 	HELMET,
 	ARMOR,
 	BELTS,
+	GLOVES,
 	BOOTS,
 	LEFT_RING,
 	RIGHT_RING,
@@ -47,7 +48,7 @@ class EquipItem;
 enum class EQUIP_PARTS;
 struct EquipSlot
 {
-	EQUIP_PARTS kind;
+	EQUIP_PARTS parts;
 	EquipItem* lpEquip;
 };
 

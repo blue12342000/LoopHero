@@ -19,10 +19,10 @@ void InGameHandCard::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int heigh
 	lpHScrollView = lpUIHScroll;
 
 	lpProgressBar = GameUI::CreateUI<UIProgressBar>(this);
-	lpProgressBar->Init(UI_ANCHOR::LEFT_BOTTOM, { 100.0f, 400.0f }, 50, 4, UI_BAR_TYPE::HORIZON, "battle_unit_statusbar_action", "battle_unit_statusbar_hp");
+	lpProgressBar->Init(UI_ANCHOR::LEFT_BOTTOM, { 100.0f, 400.0f }, 200, 20, UI_BAR_TYPE::HORIZON, "battle_unit_statusbar_action", "battle_unit_statusbar_hp");
 
 	auto func = bind([](GameUI* target)->float {return (float)target->GetChildCount(); }, lpHScrollView);
-	lpProgressBar->SetTrackingVariable(func, 18);
+	lpProgressBar->SetTrackingData(func, 18);
 }
 
 void InGameHandCard::Release()

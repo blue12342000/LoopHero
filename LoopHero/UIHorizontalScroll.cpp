@@ -44,10 +44,7 @@ void UIHorizontalScroll::Update(float deltaTime)
 void UIHorizontalScroll::Render(HDC hdc)
 {
 	RenderRectangle(hdc, rc, RGB(200, 200, 200));
-	for (int i = 0; i < vChildUI.size(); ++i)
-	{
-		vChildUI[i]->Render(hdc);
-	}
+	GameUI::Render(hdc);
 }
 
 void UIHorizontalScroll::AddChildUI(GameUI* lpChild)

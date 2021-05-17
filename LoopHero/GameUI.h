@@ -42,7 +42,7 @@ protected:
 	GameUI() {}
 
 	void Refresh();
-	bool OnClick(POINT point) { return PtInRect(&rc, point); }
+	virtual bool OnClick(POINT point) { return PtInRect(&rc, point); }
 	void OnRemoveChild(GameUI* lpChild);
 
 public:
@@ -68,8 +68,9 @@ public:
 	virtual void AddChildUI(GameUI* lpChild);
 	virtual void RemoveChildUI(int index = 0);
 
-	virtual inline void SetOnChildRemove(function<void(GameUI*)>* func) { if(func) onChildRemove = move(*func); }
+	virtual inline void SetOnChildRemove(function<void(GameUI*)>* func) final { if(func) onChildRemove = move(*func); }
 
+	virtual void SetWorldPos(POINT pos) final;
 	virtual POINTFLOAT GetWorldPos() final;
 	virtual POINTFLOAT GetRealationPos(GameUI* lpOtherUI) final;
 

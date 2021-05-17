@@ -2,6 +2,7 @@
 #include "Deck.h"
 #include "Card.h"
 #include "TraitsTable.h"
+#include "EquipTable.h"
 
 HRESULT GameData::Init()
 {
@@ -10,6 +11,9 @@ HRESULT GameData::Init()
 
     lpTraitTable = new TraitsTable();
     lpTraitTable->LoadTraitsData();
+
+    lpEquipTable = new EquipTable();
+    lpEquipTable->LoadEquipData();
 
     return S_OK;
 }
@@ -27,6 +31,12 @@ void GameData::Release()
     {
         delete lpTraitTable;
         lpTraitTable = nullptr;
+    }
+
+    if (lpEquipTable)
+    {
+        delete lpEquipTable;
+        lpEquipTable = nullptr;
     }
 }
 
