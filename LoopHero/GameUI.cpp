@@ -1,4 +1,6 @@
 #include "GameUI.h"
+#include "EventHandler.h"
+#include <functional>
 
 void GameUI::Refresh()
 {
@@ -53,17 +55,6 @@ void GameUI::Refresh()
 	}
 }
 
-void GameUI::OnRemoveChild(GameUI* lpChild)
-{
-	lpChild->lpParent = nullptr;
-	if (onChildRemove) onChildRemove(lpChild);
-	else
-	{
-		lpChild->Release();
-		delete lpChild;
-	}
-}
-
 void GameUI::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
 {
 	this->isVisible = true;
@@ -71,6 +62,8 @@ void GameUI::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
 	this->pos = pos;
 	this->width = width;
 	this->height = height;
+
+	function<void(EventHandler*)> onmouseup = bind([](EventHandler* caller) { ((GameUI*)(caller))->Test(); }, this);
 
 	Refresh();
 }
@@ -125,8 +118,10 @@ void GameUI::RemoveChildUI(int index)
 {
 	if (index > -1 && index < vChildUI.size())
 	{
-		OnRemoveChild(*(vChildUI.begin() + index));
+		GameUI* lpGame = (*vChildUI.begin());
+		lpGame->Release();
 		vChildUI.erase(vChildUI.begin() + index);
+		delete lpGame;
 	}
 }
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "GameUI.h"
+#include <set>
 
 enum class HSCROLL_ALIGN
 {
@@ -13,13 +14,22 @@ enum class HS_ARGS_INSERT
 	AFTER
 };
 
+enum class HSCROLL_MULTILINE
+{
+	ALIGN,
+	ZIGZAG
+};
+
 class GameUI;
 class UIHorizontalScroll : public GameUI
 {
 private:
+
 	HSCROLL_ALIGN align;
 	HS_ARGS_INSERT insert;
+	HSCROLL_MULTILINE multiLineType;
 	int maxItems;
+	int cols;
 
 	float margin;
 	float maxMargin;
@@ -27,6 +37,8 @@ private:
 
 	float totalItemWidth;
 
+	set<GameUI*, function<bool(GameUI*, GameUI*)>> sHeightSort;
+	set<GameUI*, function<bool(GameUI*, GameUI*)>> sWidthSort;
 public:
 	virtual ~UIHorizontalScroll() {}
 
@@ -36,5 +48,8 @@ public:
 
 	virtual void AddChildUI(GameUI* lpChild) final;
 	virtual void RemoveChildUI(int index = 0) final;
+	
+	bool ChildUIMaxHeight(GameUI* a, GameUI* b) {}
+	void SetMultiLineType(HSCROLL_MULTILINE multiLineType, int cols);
 };
 

@@ -8,10 +8,10 @@ class InGameRightMenu : public GameUI
 private:
 	Image* lpBackground;
 
+
+	UIHorizontalScroll* lpHScroll;
+
 	vector<string> desc;
-
-	UIHorizontalScroll* lpHScroll[3];
-
 public:
 	virtual void Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height) override;
 	virtual void Update(float deltaTime) override;

@@ -17,27 +17,23 @@ void InGameRightMenu::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int heig
 	GameUI* lpEvent = GameUI::CreateUI<InGameEventTimer>(this);
 	lpEvent->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ WINSIZE_WIDTH - 121.0f * 2, 0.0f }, 121 * 2, 27 * 2);
 
-	for (int i = 0; i < 3; ++i)
-	{
-		lpHScroll[i] = GameUI::CreateUI<UIHorizontalScroll>(this);
-		lpHScroll[i]->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ 8.0f * 2, 129.0f * 2 + 50 * i }, 100 * 2 - 4, 23 * 2, (HSCROLL_ALIGN)(i % 2), HS_ARGS_INSERT::BEFORE, 4);
-	}
-
-	for (int i = 0; i < 2; ++i)
-	{
-		function<void(GameUI*)> func = bind(&GameUI::AddChildUI, lpHScroll[i + 1], placeholders::_1);
-		lpHScroll[i]->SetOnChildRemove(&func);
-	}
+	lpHScroll = GameUI::CreateUI<UIHorizontalScroll>(this);
+	lpHScroll->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ 8.0f * 2, 129.0f * 2 }, 100 * 2 - 4, 23 * 2 * 3 + 4 * 2, HSCROLL_ALIGN::LEFT, HS_ARGS_INSERT::BEFORE, 12);
+	lpHScroll->SetMultiLineType(HSCROLL_MULTILINE::ZIGZAG, 4);
 }
 
 void InGameRightMenu::Update(float deltaTime)
 {
 	if (KeyManager::GetSingleton()->IsKeyOnceDown('P'))
 	{
-		UISprite* lpSprite = GameUI::CreateUI<UISprite>();
-		lpSprite->Init(UI_ANCHOR::LEFT_TOP, { 0.0f, 0.0f }, 23 * 2, 23 * 2);
-		lpSprite->SetObject(EquipItem::CreateEquip(GameData::GetSingleton()->GetUnit()->GetTraits()));
-		lpHScroll[0]->AddChildUI(lpSprite);
+		EquipItem* lpEquipItem = EquipItem::CreateEquip(GameData::GetSingleton()->GetUnit()->GetTraits());
+		if (lpEquipItem)
+		{
+			UISprite* lpSprite = GameUI::CreateUI<UISprite>();
+			lpSprite->Init(UI_ANCHOR::LEFT_TOP, { 0.0f, 0.0f }, 23 * 2, 23 * 2);
+			lpSprite->SetObject(lpEquipItem);
+			lpHScroll->AddChildUI(lpSprite);
+		}
 	}
 
 	GameUI::Update(deltaTime);

@@ -7,7 +7,7 @@
 
 using namespace std;
 
-class KeyManager :public Singleton<KeyManager>
+class KeyManager : public Singleton<KeyManager>
 {
 private:
 	POINT mousePoint;

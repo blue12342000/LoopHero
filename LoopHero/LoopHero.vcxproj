@@ -148,8 +148,11 @@
     <ClCompile Include="Deck.cpp" />
     <ClCompile Include="EquipItem.cpp" />
     <ClCompile Include="EquipTable.cpp" />
+    <ClCompile Include="EventHandler.cpp" />
+    <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="FieldTileMap.cpp" />
     <ClCompile Include="GameData.cpp" />
+    <ClCompile Include="GameEvent.cpp" />
     <ClCompile Include="GameUI.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="TraitsTable.cpp" />
@@ -178,8 +181,11 @@
     <ClInclude Include="Deck.h" />
     <ClInclude Include="EquipItem.h" />
     <ClInclude Include="EquipTable.h" />
+    <ClInclude Include="EventHandler.h" />
+    <ClInclude Include="EventManager.h" />
     <ClInclude Include="FieldTileMap.h" />
     <ClInclude Include="GameData.h" />
+    <ClInclude Include="GameEvent.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameUI.h" />
     <ClInclude Include="Item.h" />

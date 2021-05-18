@@ -1,5 +1,6 @@
 #pragma once
 #include "LoopHero.h"
+#include "EventHandler.h"
 
 enum class UI_ANCHOR
 {
@@ -15,16 +16,7 @@ enum class UI_ANCHOR
 	NONE
 };
 
-class GameUI;
-class UIEventHandler
-{
-protected:
-	function<bool(POINT)> onClick;
-	function<void()> onHover;
-	function<void(GameUI*)> onChildRemove;
-};
-
-class GameUI : private UIEventHandler
+class GameUI : public EventHandler
 {
 protected:
 	bool isVisible;
@@ -42,8 +34,6 @@ protected:
 	GameUI() {}
 
 	void Refresh();
-	virtual bool OnClick(POINT point) { return PtInRect(&rc, point); }
-	void OnRemoveChild(GameUI* lpChild);
 
 public:
 	virtual ~GameUI() {}
@@ -58,17 +48,25 @@ public:
 	{
 		T* lpGameUI = new T;
 		lpGameUI->lpParent = lpParent;
-		lpGameUI->onClick = bind(&GameUI::OnClick, lpGameUI, placeholders::_1);
-		lpGameUI->onChildRemove = nullptr;
+
+		function<void(EventHandler*)> onmousedown = bind([](EventHandler* caller) { ((GameUI*)caller)->Test(); }, lpGameUI);
+		lpGameUI->AddGameEvent("__onMouseDown", onmousedown);
+		function<void(EventHandler*)> onmouseup = bind([](EventHandler* caller) { ((GameUI*)caller)->Test(); }, lpGameUI);
+		lpGameUI->AddGameEvent("__onMouseUp", onmouseup);
+
 		if (lpParent) lpParent->vChildUI.push_back(lpGameUI);
 		return lpGameUI;
 	}
+
+	void Test() { MessageBox(g_hWnd, "테스트", "성공?", MB_OK); }
 
 	void InsertChildId(GameUI* lpChild, int index);
 	virtual void AddChildUI(GameUI* lpChild);
 	virtual void RemoveChildUI(int index = 0);
 
-	virtual inline void SetOnChildRemove(function<void(GameUI*)>* func) final { if(func) onChildRemove = move(*func); }
+	virtual void OnClick() {}
+	virtual void OnDrag() {}
+	virtual void OnHover() {}
 
 	virtual void SetWorldPos(POINT pos) final;
 	virtual POINTFLOAT GetWorldPos() final;

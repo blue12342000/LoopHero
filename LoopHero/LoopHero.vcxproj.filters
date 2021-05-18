@@ -52,6 +52,15 @@
     <Filter Include="소스 파일\LoopHero\Unit\Traits">
       <UniqueIdentifier>{619876bc-0c67-4457-a879-00a5881d71e2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Engine\Event">
+      <UniqueIdentifier>{6629fdd2-6d16-4140-b9b6-37f6e22eab9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Engine\Event\Handler">
+      <UniqueIdentifier>{b6e8fb65-126d-4812-9395-07b71d44dc74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Engine\Event\Base">
+      <UniqueIdentifier>{184737c9-ad7d-4991-9002-c5eacc1833c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -137,6 +146,15 @@
     </ClCompile>
     <ClCompile Include="EquipTable.cpp">
       <Filter>소스 파일\LoopHero\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="EventManager.cpp">
+      <Filter>소스 파일\Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="EventHandler.cpp">
+      <Filter>소스 파일\Engine\Event\Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEvent.cpp">
+      <Filter>소스 파일\Engine\Event\Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +250,15 @@
     </ClInclude>
     <ClInclude Include="EquipTable.h">
       <Filter>소스 파일\LoopHero\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="EventManager.h">
+      <Filter>소스 파일\Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="EventHandler.h">
+      <Filter>소스 파일\Engine\Event\Handler</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEvent.h">
+      <Filter>소스 파일\Engine\Event\Base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
