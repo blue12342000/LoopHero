@@ -150,6 +150,9 @@
     <ClCompile Include="EventSystem.cpp">
       <Filter>소스 파일\Engine\Event</Filter>
     </ClCompile>
+    <ClCompile Include="UIGrid.cpp">
+      <Filter>소스 파일\LoopHero\UI\Base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Image.h">
@@ -259,6 +262,9 @@
     </ClInclude>
     <ClInclude Include="IDropHandler.h">
       <Filter>소스 파일\Engine\Event\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="UIGrid.h">
+      <Filter>소스 파일\LoopHero\UI\Base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
