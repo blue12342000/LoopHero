@@ -1,6 +1,7 @@
 #include "InGameRightMenu.h"
 #include "Image.h"
 #include "InGameEventTimer.h"
+#include "UIItemSlot.h"
 #include "UIHorizontalScroll.h"
 #include "UISprite.h"
 #include "EquipItem.h"
@@ -16,6 +17,10 @@ void InGameRightMenu::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int heig
 
 	GameUI* lpEvent = GameUI::CreateUI<InGameEventTimer>(this);
 	lpEvent->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ WINSIZE_WIDTH - 121.0f * 2, 0.0f }, 121 * 2, 27 * 2);
+
+	lpItemSlot = GameUI::CreateUI<UIHorizontalScroll>(this);
+	lpItemSlot->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ 5.0f * 2, 27.0f * 2 }, 104 * 2, 77 * 2, HSCROLL_ALIGN::LEFT, HS_ARGS_INSERT::BEFORE, 12);
+	lpItemSlot->SetMultiLineType(HSCROLL_MULTILINE::ALIGN, 2);
 
 	lpHScroll = GameUI::CreateUI<UIHorizontalScroll>(this);
 	lpHScroll->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ 8.0f * 2, 129.0f * 2 }, 100 * 2 - 4, 23 * 2 * 3 + 4 * 2, HSCROLL_ALIGN::LEFT, HS_ARGS_INSERT::BEFORE, 12);

@@ -1,7 +1,8 @@
 #pragma once
 #include "LoopHero.h"
+#include "EventTrigger.h"
 
-class GameObject
+class GameObject : public EventTrigger
 {
 public:
 	virtual ~GameObject() {}

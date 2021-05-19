@@ -20,11 +20,19 @@ enum class HSCROLL_MULTILINE
 	ZIGZAG
 };
 
+
 class GameUI;
 class UIHorizontalScroll : public GameUI
 {
 private:
+	struct ItemSlot
+	{
+		POINTFLOAT pos;
+		POINTFLOAT worldPos;
+		RECT rc;
+	};
 
+private:
 	HSCROLL_ALIGN align;
 	HS_ARGS_INSERT insert;
 	HSCROLL_MULTILINE multiLineType;
@@ -37,12 +45,18 @@ private:
 
 	float totalItemWidth;
 
+	vector<ItemSlot> vItemSlots;
 	set<GameUI*, function<bool(GameUI*, GameUI*)>> sHeightSort;
 	set<GameUI*, function<bool(GameUI*, GameUI*)>> sWidthSort;
+
+	GameUI* lpSelected;
+	int selectedIndex;
+	int dragNextIndex;
+
 public:
 	virtual ~UIHorizontalScroll() {}
 
-	virtual void Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height, HSCROLL_ALIGN align = HSCROLL_ALIGN::LEFT, HS_ARGS_INSERT insert = HS_ARGS_INSERT::BEFORE, int maxItems = 0, int padding = 4);
+	virtual void Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height, HSCROLL_ALIGN align = HSCROLL_ALIGN::LEFT, HS_ARGS_INSERT insert = HS_ARGS_INSERT::BEFORE, int maxItems = 0, int margin = 4);
 	virtual void Update(float deltaTime) override;
 	virtual void Render(HDC hdc) override;
 
@@ -51,5 +65,12 @@ public:
 	
 	bool ChildUIMaxHeight(GameUI* a, GameUI* b) {}
 	void SetMultiLineType(HSCROLL_MULTILINE multiLineType, int cols);
+
+	virtual void OnClick(EventData& data) override;
+	virtual void OnDrag(EventData& data) override;
+	virtual void OnEndDrag(EventData& data) override;
+
+private:
+	void SlotResize();
 };
 

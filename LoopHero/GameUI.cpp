@@ -1,5 +1,4 @@
 #include "GameUI.h"
-#include "EventHandler.h"
 #include <functional>
 
 void GameUI::Refresh()
@@ -48,11 +47,6 @@ void GameUI::Refresh()
 		SetRect(&rc, view.left + pos.x, view.top + pos.y, view.left + pos.x + width, view.top + pos.y + height);
 		break;
 	}
-
-	for (int i = 0; i < vChildUI.size(); ++i)
-	{
-		vChildUI[i]->Refresh();
-	}
 }
 
 void GameUI::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
@@ -62,8 +56,6 @@ void GameUI::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
 	this->pos = pos;
 	this->width = width;
 	this->height = height;
-
-	function<void(EventHandler*)> onmouseup = bind([](EventHandler* caller) { ((GameUI*)(caller))->Test(); }, this);
 
 	Refresh();
 }
@@ -85,6 +77,18 @@ void GameUI::Update(float deltaTime)
 		for (int i = 0; i < vChildUI.size(); ++i)
 		{
 			vChildUI[i]->Update(deltaTime);
+		}
+	}
+}
+
+void GameUI::LateUpdate(float deltaTime)
+{
+	if (isVisible)
+	{
+		Refresh();
+		for (int i = 0; i < vChildUI.size(); ++i)
+		{
+			vChildUI[i]->LateUpdate(deltaTime);
 		}
 	}
 }
@@ -127,7 +131,7 @@ void GameUI::RemoveChildUI(int index)
 
 void GameUI::SetWorldPos(POINT pos)
 {
-	POINTFLOAT thisPos = GetWorldPos();
+	POINTFLOAT thisPos = origin;
 
 	switch (anchor)
 	{
@@ -135,22 +139,22 @@ void GameUI::SetWorldPos(POINT pos)
 	case UI_ANCHOR::LEFT_MIDDLE:
 	case UI_ANCHOR::LEFT_TOP:
 	case UI_ANCHOR::MIDDLE:
-		thisPos.x = thisPos.x - pos.x;
-		thisPos.y = thisPos.y - pos.y;
+		thisPos.x = pos.x - thisPos.x;
+		thisPos.y = pos.y - thisPos.y;
 		break;
 	case UI_ANCHOR::RIGHT_MIDDLE:
 	case UI_ANCHOR::RIGHT_TOP:
-		thisPos.x = pos.x - thisPos.x;
-		thisPos.y = thisPos.y - pos.y;
-		break;
-	case UI_ANCHOR::BOTTOM_MIDDLE:
-	case UI_ANCHOR::LEFT_BOTTOM:
 		thisPos.x = thisPos.x - pos.x;
 		thisPos.y = pos.y - thisPos.y;
 		break;
-	case UI_ANCHOR::RIGHT_BOTTOM:
+	case UI_ANCHOR::BOTTOM_MIDDLE:
+	case UI_ANCHOR::LEFT_BOTTOM:
 		thisPos.x = pos.x - thisPos.x;
-		thisPos.y = pos.y - thisPos.y;
+		thisPos.y = thisPos.y - pos.y;
+		break;
+	case UI_ANCHOR::RIGHT_BOTTOM:
+		thisPos.x = thisPos.x - pos.x;
+		thisPos.y = thisPos.y - pos.y;
 		break;
 	}
 	SetPos(thisPos);
@@ -227,4 +231,43 @@ POINTFLOAT GameUI::GetRealationPos(GameUI* lpOtherUI)
 	}
 
 	return thisPos;
+}
+
+void GameUI::SetAnchor(UI_ANCHOR anchor)
+{
+	if (this->anchor == anchor) return;
+
+	this->anchor = anchor;
+
+	//switch (anchor)
+	//{
+	//case UI_ANCHOR::RIGHT_TOP:
+	//	SetWorldPos({ rc.right, rc.top });
+	//	break;
+	//case UI_ANCHOR::LEFT_BOTTOM:
+	//	SetWorldPos({ rc.left, rc.bottom });
+	//	break;
+	//case UI_ANCHOR::RIGHT_BOTTOM:
+	//	SetWorldPos({ rc.right, rc.bottom });
+	//	break;
+	//case UI_ANCHOR::MIDDLE:
+	//	SetWorldPos({ (rc.right + rc.left) / 2, (rc.top + rc.bottom) / 2 });
+	//	break;
+	//case UI_ANCHOR::LEFT_MIDDLE:
+	//	SetWorldPos({ rc.left, (rc.top + rc.bottom) / 2 });
+	//	break;
+	//case UI_ANCHOR::RIGHT_MIDDLE:
+	//	SetWorldPos({ rc.right, (rc.top + rc.bottom) / 2 });
+	//	break;
+	//case UI_ANCHOR::TOP_MIDDLE:
+	//	SetWorldPos({ (rc.right + rc.left) / 2, rc.top });
+	//	break;
+	//case UI_ANCHOR::BOTTOM_MIDDLE:
+	//	SetWorldPos({ (rc.right + rc.left) / 2, rc.bottom });
+	//	break;
+	//case UI_ANCHOR::LEFT_TOP:
+	//default:
+	//	SetWorldPos({ rc.left, rc.top });
+	//	break;
+	//}
 }

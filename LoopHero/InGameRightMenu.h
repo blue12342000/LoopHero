@@ -8,7 +8,7 @@ class InGameRightMenu : public GameUI
 private:
 	Image* lpBackground;
 
-
+	UIHorizontalScroll* lpItemSlot;
 	UIHorizontalScroll* lpHScroll;
 
 	vector<string> desc;

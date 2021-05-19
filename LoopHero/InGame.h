@@ -7,19 +7,21 @@ class TileTable;
 class GameUI;
 class EquipItem;
 class Unit;
+class EventSystem;
 class InGame : public Scene
 {
 private:
 	Image* lpBuffer;
 	Image* lpBackImage;
 
-	GameUI* lpRightMenu;
-	GameUI* lpHandCards;
+	GameUI* lpCanvus;
 
 	FieldTileMap* lpFieldTiles;
 
 	Unit* lpUnit;
 	EquipItem* lpEquipItem;
+
+	EventSystem* lpEventSystem;
 
 public:
 	virtual HRESULT Init() override;

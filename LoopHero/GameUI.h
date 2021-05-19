@@ -1,6 +1,6 @@
 #pragma once
 #include "LoopHero.h"
-#include "EventHandler.h"
+#include "EventTrigger.h"
 
 enum class UI_ANCHOR
 {
@@ -16,10 +16,11 @@ enum class UI_ANCHOR
 	NONE
 };
 
-class GameUI : public EventHandler
+class GameUI : public EventTrigger
 {
 protected:
 	bool isVisible;
+	int depth;
 	UI_ANCHOR anchor;
 	int width;
 	int height;
@@ -41,6 +42,7 @@ public:
 	virtual void Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height);
 	virtual void Release();
 	virtual void Update(float deltaTime);
+	virtual void LateUpdate(float deltaTime) final;
 	virtual void Render(HDC hdc);
 
 	template<typename T>
@@ -48,13 +50,15 @@ public:
 	{
 		T* lpGameUI = new T;
 		lpGameUI->lpParent = lpParent;
-
-		function<void(EventHandler*)> onmousedown = bind([](EventHandler* caller) { ((GameUI*)caller)->Test(); }, lpGameUI);
-		lpGameUI->AddGameEvent("__onMouseDown", onmousedown);
-		function<void(EventHandler*)> onmouseup = bind([](EventHandler* caller) { ((GameUI*)caller)->Test(); }, lpGameUI);
-		lpGameUI->AddGameEvent("__onMouseUp", onmouseup);
-
-		if (lpParent) lpParent->vChildUI.push_back(lpGameUI);
+		if (!lpParent)
+		{
+			lpGameUI->depth = 0;
+		}
+		else
+		{
+			lpGameUI->depth = lpParent->depth + 1;
+			lpParent->vChildUI.push_back(lpGameUI);
+		}
 		return lpGameUI;
 	}
 
@@ -71,13 +75,16 @@ public:
 	virtual void SetWorldPos(POINT pos) final;
 	virtual POINTFLOAT GetWorldPos() final;
 	virtual POINTFLOAT GetRealationPos(GameUI* lpOtherUI) final;
+	virtual void SetAnchor(UI_ANCHOR anchor) final;
 
-	virtual inline void SetAnchor(UI_ANCHOR anchor) { this->anchor = anchor; }
-	virtual inline void SetPos(POINTFLOAT pos) final { this->pos = pos; Refresh(); }
+	virtual inline void SetPos(POINTFLOAT pos) final { this->pos = pos; }
 	virtual inline void SetVisible(bool isVisible) final { this->isVisible = isVisible; }
 	virtual inline POINTFLOAT GetPos() final { return pos; }
 	virtual inline RECT GetRect() final { return rc; }
 	virtual inline int GetWidth() final { return width; }
 	virtual inline int GetHeight() final { return height; }
 	virtual inline int GetChildCount() final { return vChildUI.size(); }
+	virtual inline int GetDepth() final { return depth; }
+	virtual inline vector<GameUI*> GetChilds() final { return vChildUI; }
+	virtual inline bool IsVisible() final { return isVisible; }
 };

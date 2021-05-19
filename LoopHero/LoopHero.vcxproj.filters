@@ -55,11 +55,8 @@
     <Filter Include="소스 파일\Engine\Event">
       <UniqueIdentifier>{6629fdd2-6d16-4140-b9b6-37f6e22eab9d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Engine\Event\Handler">
-      <UniqueIdentifier>{b6e8fb65-126d-4812-9395-07b71d44dc74}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Engine\Event\Base">
-      <UniqueIdentifier>{184737c9-ad7d-4991-9002-c5eacc1833c4}</UniqueIdentifier>
+    <Filter Include="소스 파일\Engine\Event\Interface">
+      <UniqueIdentifier>{92cee2ad-87f0-44e0-8b7b-34f9f6ade760}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -147,14 +144,11 @@
     <ClCompile Include="EquipTable.cpp">
       <Filter>소스 파일\LoopHero\Item</Filter>
     </ClCompile>
-    <ClCompile Include="EventManager.cpp">
-      <Filter>소스 파일\Engine\Manager</Filter>
+    <ClCompile Include="EventTrigger.cpp">
+      <Filter>소스 파일\Engine\Event</Filter>
     </ClCompile>
-    <ClCompile Include="EventHandler.cpp">
-      <Filter>소스 파일\Engine\Event\Handler</Filter>
-    </ClCompile>
-    <ClCompile Include="GameEvent.cpp">
-      <Filter>소스 파일\Engine\Event\Base</Filter>
+    <ClCompile Include="EventSystem.cpp">
+      <Filter>소스 파일\Engine\Event</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -251,14 +245,20 @@
     <ClInclude Include="EquipTable.h">
       <Filter>소스 파일\LoopHero\Item</Filter>
     </ClInclude>
-    <ClInclude Include="EventManager.h">
-      <Filter>소스 파일\Engine\Manager</Filter>
+    <ClInclude Include="EventTrigger.h">
+      <Filter>소스 파일\Engine\Event</Filter>
     </ClInclude>
-    <ClInclude Include="EventHandler.h">
-      <Filter>소스 파일\Engine\Event\Handler</Filter>
+    <ClInclude Include="IClickHandler.h">
+      <Filter>소스 파일\Engine\Event\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="GameEvent.h">
-      <Filter>소스 파일\Engine\Event\Base</Filter>
+    <ClInclude Include="EventSystem.h">
+      <Filter>소스 파일\Engine\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="IDragHandler.h">
+      <Filter>소스 파일\Engine\Event\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="IDropHandler.h">
+      <Filter>소스 파일\Engine\Event\Interface</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
