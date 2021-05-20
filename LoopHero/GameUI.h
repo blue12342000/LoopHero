@@ -76,6 +76,7 @@ public:
 	virtual POINTFLOAT GetWorldPos() final;
 	virtual POINTFLOAT GetRealationPos(GameUI* lpOtherUI) final;
 	virtual void SetAnchor(UI_ANCHOR anchor) final;
+	virtual void SetParernt(GameUI* lpParent) final;
 
 	virtual inline void SetPos(POINTFLOAT pos) final { this->pos = pos; }
 	virtual inline void SetVisible(bool isVisible) final { this->isVisible = isVisible; }

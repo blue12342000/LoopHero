@@ -1,7 +1,7 @@
 #pragma once
 
 struct EventData;
-interface IClickHandler
+class IClickHandler
 {
 public:
 	virtual void OnClick(EventData& data) = 0;

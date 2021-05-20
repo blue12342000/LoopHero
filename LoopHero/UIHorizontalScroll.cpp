@@ -106,8 +106,8 @@ void UIHorizontalScroll::RemoveChildUI(int index)
 
 		SlotResize();
 
-		item->Release();
-		delete item;
+		//item->Release();
+		//delete item;
 	}
 }
 
@@ -186,6 +186,8 @@ void UIHorizontalScroll::OnEndDrag(EventData& data)
 			vChildUI.insert(vChildUI.begin() + (dragNextIndex + 1), lpSelected);
 			vChildUI.erase(vChildUI.begin() + selectedIndex);
 		}
+		data.lpTarget = lpSelected;
+
 		lpSelected = nullptr;
 		selectedIndex = -1;
 		dragNextIndex = -1;
@@ -194,6 +196,8 @@ void UIHorizontalScroll::OnEndDrag(EventData& data)
 
 void UIHorizontalScroll::SlotResize()
 {
+	if (vChildUI.empty()) return;
+
 	int slotWidth = (*sWidthSort.begin())->GetWidth();
 	int slotHeight = (*sHeightSort.begin())->GetHeight();
 

@@ -113,8 +113,7 @@ void GameUI::InsertChildId(GameUI* lpChild, int index)
 
 void GameUI::AddChildUI(GameUI* lpChild)
 {
-	lpChild->SetPos(lpChild->GetRealationPos(this));
-	lpChild->lpParent = this;
+	lpChild->SetParernt(this);
 	vChildUI.push_back(lpChild);
 }
 
@@ -123,9 +122,9 @@ void GameUI::RemoveChildUI(int index)
 	if (index > -1 && index < vChildUI.size())
 	{
 		GameUI* lpGame = (*vChildUI.begin());
-		lpGame->Release();
+		//lpGame->Release();
 		vChildUI.erase(vChildUI.begin() + index);
-		delete lpGame;
+		//delete lpGame;
 	}
 }
 
@@ -203,7 +202,9 @@ inline POINTFLOAT GameUI::GetWorldPos()
 POINTFLOAT GameUI::GetRealationPos(GameUI* lpOtherUI)
 {
 	POINTFLOAT thisPos = GetWorldPos();
-	RECT inRect = lpOtherUI->GetRect();
+	RECT inRect;
+	if (lpOtherUI) inRect = lpOtherUI->GetRect();
+	else inRect = { 0, 0, WINSIZE_WIDTH, WINSIZE_HEIGHT };
 
 	switch (anchor)
 	{
@@ -238,36 +239,23 @@ void GameUI::SetAnchor(UI_ANCHOR anchor)
 	if (this->anchor == anchor) return;
 
 	this->anchor = anchor;
+}
 
-	//switch (anchor)
-	//{
-	//case UI_ANCHOR::RIGHT_TOP:
-	//	SetWorldPos({ rc.right, rc.top });
-	//	break;
-	//case UI_ANCHOR::LEFT_BOTTOM:
-	//	SetWorldPos({ rc.left, rc.bottom });
-	//	break;
-	//case UI_ANCHOR::RIGHT_BOTTOM:
-	//	SetWorldPos({ rc.right, rc.bottom });
-	//	break;
-	//case UI_ANCHOR::MIDDLE:
-	//	SetWorldPos({ (rc.right + rc.left) / 2, (rc.top + rc.bottom) / 2 });
-	//	break;
-	//case UI_ANCHOR::LEFT_MIDDLE:
-	//	SetWorldPos({ rc.left, (rc.top + rc.bottom) / 2 });
-	//	break;
-	//case UI_ANCHOR::RIGHT_MIDDLE:
-	//	SetWorldPos({ rc.right, (rc.top + rc.bottom) / 2 });
-	//	break;
-	//case UI_ANCHOR::TOP_MIDDLE:
-	//	SetWorldPos({ (rc.right + rc.left) / 2, rc.top });
-	//	break;
-	//case UI_ANCHOR::BOTTOM_MIDDLE:
-	//	SetWorldPos({ (rc.right + rc.left) / 2, rc.bottom });
-	//	break;
-	//case UI_ANCHOR::LEFT_TOP:
-	//default:
-	//	SetWorldPos({ rc.left, rc.top });
-	//	break;
-	//}
+void GameUI::SetParernt(GameUI* lpParent)
+{
+	if (this->lpParent)
+	{
+		auto it = find(this->lpParent->vChildUI.begin(), this->lpParent->vChildUI.end(), this);
+		this->lpParent->RemoveChildUI(it - this->lpParent->vChildUI.begin());
+	}
+	this->lpParent = lpParent;
+	if (lpParent)
+	{
+		this->depth = lpParent->depth + 1;
+	}
+	else
+	{
+		this->depth = 0;
+	}
+	SetPos(GetRealationPos(lpParent));
 }

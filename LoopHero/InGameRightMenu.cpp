@@ -4,6 +4,8 @@
 #include "UIItemSlot.h"
 #include "UIHorizontalScroll.h"
 #include "UISprite.h"
+#include "UIGrid.h"
+#include "UIItemSlot.h"
 #include "EquipItem.h"
 #include "Unit.h"
 #include "TileTable.h"
@@ -18,9 +20,16 @@ void InGameRightMenu::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int heig
 	GameUI* lpEvent = GameUI::CreateUI<InGameEventTimer>(this);
 	lpEvent->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ WINSIZE_WIDTH - 121.0f * 2, 0.0f }, 121 * 2, 27 * 2);
 
-	lpItemSlot = GameUI::CreateUI<UIHorizontalScroll>(this);
-	lpItemSlot->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ 5.0f * 2, 27.0f * 2 }, 104 * 2, 77 * 2, HSCROLL_ALIGN::LEFT, HS_ARGS_INSERT::BEFORE, 12);
-	lpItemSlot->SetMultiLineType(HSCROLL_MULTILINE::ALIGN, 2);
+
+	lpItemSlot = GameUI::CreateUI<UIGrid>(this);
+	lpItemSlot->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ 5.0f * 2, 27.0f * 2 }, 104 * 2, 77 * 2, 3, 4, { 2, 2 });
+	GameUI* lpUISprite = GameUI::CreateUI<UISprite>();
+	lpUISprite->Init(UI_ANCHOR::LEFT_TOP, POINTFLOAT{ 0, 0 }, 25 * 2, 25 * 2);
+	lpItemSlot->SetItemObject(2, 1, lpUISprite);
+
+	GameUI* lpItem = GameUI::CreateUI<UIItemSlot>();
+	lpItem->Init(UI_ANCHOR::LEFT_TOP, POINTFLOAT{ 0, 0 }, 25 * 2, 25 * 2);
+	lpItemSlot->SetItemObject(1, 1, lpItem);
 
 	lpHScroll = GameUI::CreateUI<UIHorizontalScroll>(this);
 	lpHScroll->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ 8.0f * 2, 129.0f * 2 }, 100 * 2 - 4, 23 * 2 * 3 + 4 * 2, HSCROLL_ALIGN::LEFT, HS_ARGS_INSERT::BEFORE, 12);

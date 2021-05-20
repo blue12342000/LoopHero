@@ -26,6 +26,9 @@ HRESULT InGame::Init()
     GameUI* lpHandCards = GameUI::CreateUI<InGameHandCard>(lpCanvus);
     lpHandCards->Init(UI_ANCHOR::LEFT_BOTTOM, { 0.0f, -48.0f }, WINSIZE_WIDTH - 300, 58 * 2);
 
+   // UIProgressBar* lpProgressBar = GameUI::CreateUI<UIProgressBar>(lpCanvus);
+   // lpProgressBar->Init(UI_ANCHOR::LEFT_BOTTOM, { 100.0f, 400.0f }, 200, 20, UI_BAR_TYPE::HORIZON, "battle_unit_statusbar_action", "battle_unit_statusbar_hp");
+
     lpFieldTiles = new FieldTileMap();
     lpFieldTiles->Init();
 

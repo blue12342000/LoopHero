@@ -2,13 +2,14 @@
 #include "GameUI.h"
 
 class Image;
+class UIGrid;
 class UIHorizontalScroll;
 class InGameRightMenu : public GameUI
 {
 private:
 	Image* lpBackground;
 
-	UIHorizontalScroll* lpItemSlot;
+	UIGrid* lpItemSlot;
 	UIHorizontalScroll* lpHScroll;
 
 	vector<string> desc;

@@ -100,6 +100,13 @@ vector<string> StringSplit(string str, char token)
 	return vString;
 }
 
+RECT MakeRect(POINTFLOAT pos, int width, int height)
+{
+	int x = (int)pos.x;
+	int y = (int)pos.y;
+	return RECT{ x, y, x + width, y + height };
+}
+
 void RenderRectangle(HDC hdc, RECT rc, COLORREF color)
 {
 	HBRUSH hBrudh = CreateSolidBrush(color), hOldBrush;

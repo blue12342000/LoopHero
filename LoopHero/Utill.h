@@ -8,7 +8,7 @@ using namespace std;
 
 double StackCalculate(string text);
 vector<string> StringSplit(string str, char token);
-
+RECT MakeRect(POINTFLOAT pos, int width, int height);
 void RenderRectangle(HDC hdc, RECT rc, COLORREF color = RGB(255, 255, 255));
 
 template <typename T>

@@ -100,3 +100,8 @@ void UIProgressBar::SetTrackingData(function<float()> lpTargetFunc, float maxVar
 		this->maxVar = (maxVar < 1) ? 1 : maxVar;
 	}
 }
+
+void UIProgressBar::OnClick(EventData& data)
+{
+	MessageBox(g_hWnd, "AAA", "BBB", MB_OK);
+}

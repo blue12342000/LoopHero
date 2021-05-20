@@ -7,7 +7,7 @@ void EventSystem::InitEventData()
 	lpData->type = EVENT_TYPE::NONE;
 	lpData->isUsed = false;
 	lpData->lpTarget = nullptr;
-	auto compare = [](GameUI* a, GameUI* b) { if (a->GetDepth() == b->GetDepth()) { return a > b; } else { return a->GetDepth() > b->GetDepth(); } };
+	auto compare = [](GameUI* a, GameUI* b) { if (a->GetDepth() == b->GetDepth()) { return a < b; } else { return a->GetDepth() < b->GetDepth(); } };
 	qlpGameUIByDepth = decltype(qlpGameUIByDepth)(compare);
 }
 

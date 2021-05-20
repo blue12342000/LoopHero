@@ -1,7 +1,7 @@
 #pragma once
 
 struct EventData;
-interface IDragHandler
+class IDragHandler
 {
 public:
 	virtual void OnBeginDrag(EventData& data) = 0;
