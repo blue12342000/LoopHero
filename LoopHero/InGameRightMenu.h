@@ -9,7 +9,7 @@ class InGameRightMenu : public GameUI
 private:
 	Image* lpBackground;
 
-	UIGrid* lpItemSlot;
+	UIGrid* lpHeroEquip;
 	UIHorizontalScroll* lpHScroll;
 
 	vector<string> desc;

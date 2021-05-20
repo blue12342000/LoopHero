@@ -1,6 +1,7 @@
 #pragma once
 #include "LoopHero.h"
 #include "EventTrigger.h"
+#include "ObserverHandler.h"
 
 enum class UI_ANCHOR
 {
@@ -16,7 +17,7 @@ enum class UI_ANCHOR
 	NONE
 };
 
-class GameUI : public EventTrigger
+class GameUI : public EventTrigger, public ObserverHandler
 {
 protected:
 	bool isVisible;
@@ -67,10 +68,6 @@ public:
 	void InsertChildId(GameUI* lpChild, int index);
 	virtual void AddChildUI(GameUI* lpChild);
 	virtual void RemoveChildUI(int index = 0);
-
-	virtual void OnClick() {}
-	virtual void OnDrag() {}
-	virtual void OnHover() {}
 
 	virtual void SetWorldPos(POINT pos) final;
 	virtual POINTFLOAT GetWorldPos() final;

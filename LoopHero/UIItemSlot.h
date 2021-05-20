@@ -2,12 +2,14 @@
 #include "GameUI.h"
 
 enum class EQUIP_PARTS;
+class EquipItem;
 class UISprite;
 class UIItemSlot : public GameUI
 {
 private:
 	EQUIP_PARTS parts;
-	UISprite* lpItem;
+	EquipItem* lpItem;
+	UISprite* lpSprite;
 
 public:
 	virtual void Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height, EQUIP_PARTS parts);
@@ -18,5 +20,6 @@ public:
 	virtual void RemoveChildUI(int index = 0) final;
 
 	virtual void OnDrop(EventData& data) override;
+	virtual void OnMouseOver(EventData& data) override;
 };
 

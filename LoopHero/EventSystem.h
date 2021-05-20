@@ -12,13 +12,18 @@ struct EventData;
 class EventSystem
 {
 private:
-	EventData* lpData;
+	EventData* lpPoint;
+	EventData* lpBase;
+
 	GameUI* lpGameUI;
+
+	GameUI* lpFindTop;
+	function<bool(GameUI*, GameUI*)> lpCompareFunc;
 	priority_queue<GameUI*, vector<GameUI*>, function<bool(GameUI*, GameUI*)>> qlpGameUIByDepth;
 
 private:
 	// 이벤트 데이터 초기화
-	void InitEventData();
+	void InitEventData(EventData& data);
 	// UI이벤트 대상 찾기
 	GameUI* FindDispatcherUI(GameUI* lpCurrUI);
 

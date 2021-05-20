@@ -1,8 +1,9 @@
 #pragma once
 #include "LoopHero.h"
 #include "EventTrigger.h"
+#include "ObserverHandler.h"
 
-class GameObject : public EventTrigger
+class GameObject : public EventTrigger, public ObserverHandler
 {
 public:
 	virtual ~GameObject() {}

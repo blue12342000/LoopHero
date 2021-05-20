@@ -30,17 +30,19 @@ void UIGrid::Update(float deltaTime)
 
 void UIGrid::Render(HDC hdc)
 {
-	RenderRectangle(hdc, rc);
-	int cWidth = (width - spacing.x * (cols - 1)) / cols;
-	int cHeight = (height - spacing.y * (rows - 1)) / rows;
-	for (int y = 0; y < rows; ++y)
-	{
-		for (int x = 0; x < cols; ++x)
-		{
-			RenderRectangle(hdc, MakeRect(vCells[y][x].pos, cWidth, cHeight), RGB(200, 0, 0));
-		}
-	}
 	GameUI::Render(hdc);
+
+	//int cWidth = (width - spacing.x * (cols - 1)) / cols;
+	//int cHeight = (height - spacing.y * (rows - 1)) / rows;
+	//for (int y = 0; y < rows; ++y)
+	//{
+	//	for (int x = 0; x < cols; ++x)
+	//	{
+	//		if (vCells[y][x].lpGameUI == nullptr) continue;
+	//
+	//		RenderRectangle(hdc, MakeRect({ rc.left + vCells[y][x].pos.x, rc.top + vCells[y][x].pos.y }, cWidth, cHeight));
+	//	}
+	//}
 }
 
 void UIGrid::Resize(int rows, int cols)
@@ -58,46 +60,51 @@ void UIGrid::Resize(int rows, int cols)
 		vCells[y].resize(cols);
 		for (int x = 0; x < cols; ++x)
 		{
-			switch (anchor)
-			{
-			case UI_ANCHOR::RIGHT_TOP:
-				vCells[y][x].pos.x = (width - cWidth) - (cWidth + spacing.x) * x;
-				vCells[y][x].pos.y = (cHeight + spacing.y) * y;
-				break;
-			case UI_ANCHOR::LEFT_BOTTOM:
-				vCells[y][x].pos.x = (cWidth + spacing.x) * x;
-				vCells[y][x].pos.y = (height - cHeight) - (cHeight + spacing.y) * y;
-				break;
-			case UI_ANCHOR::RIGHT_BOTTOM:
-				vCells[y][x].pos.x = (width - cWidth) - (cWidth + spacing.x) * x;
-				vCells[y][x].pos.y = (height - cHeight) - (cHeight + spacing.y) * y;
-				break;
-			case UI_ANCHOR::LEFT_MIDDLE:
-				vCells[y][x].pos.x = (cWidth + spacing.x) * x;
-				vCells[y][x].pos.y = (cHeight + spacing.y) * y - height / 2;
-				break;
-			case UI_ANCHOR::RIGHT_MIDDLE:
-				vCells[y][x].pos.x = (width - cWidth) - (cWidth + spacing.x) * x;
-				vCells[y][x].pos.y = (cHeight + spacing.y) * y - height / 2;
-				break;
-			case UI_ANCHOR::TOP_MIDDLE:
-				vCells[y][x].pos.x = (cWidth + spacing.x) * x - width / 2;
-				vCells[y][x].pos.y = (cHeight + spacing.y) * y;
-				break;
-			case UI_ANCHOR::BOTTOM_MIDDLE:
-				vCells[y][x].pos.x = (cWidth + spacing.x) * x - width / 2;
-				vCells[y][x].pos.y = (height - cHeight) - (cHeight + spacing.y) * y;
-				break;
-			case UI_ANCHOR::MIDDLE:
-				vCells[y][x].pos.x = (cWidth + spacing.x) * x - width / 2;
-				vCells[y][x].pos.y = (cHeight + spacing.y) * y - height / 2;
-				break;
-			case UI_ANCHOR::LEFT_TOP:
-			default:
-				vCells[y][x].pos.x = (cWidth + spacing.x) * x;
-				vCells[y][x].pos.y = (cHeight + spacing.y) * y;
-				break;
-			}
+			vCells[y][x].pos.x = (cWidth + spacing.x) * x;
+			vCells[y][x].pos.y = (cHeight + spacing.y) * y;
+//			앵커와는 무관하다
+//			switch (anchor)
+//			{
+//			case UI_ANCHOR::RIGHT_TOP:
+//				vCells[y][x].pos.x = (width - cWidth) - (cWidth + spacing.x) * x;
+//				vCells[y][x].pos.y = (cHeight + spacing.y) * y;
+//				//vCells[y][x].pos.x = (cWidth + spacing.x) * x;
+//				//vCells[y][x].pos.y = (cHeight + spacing.y) * y;
+//				break;
+//			case UI_ANCHOR::LEFT_BOTTOM:
+//				vCells[y][x].pos.x = (cWidth + spacing.x) * x;
+//				vCells[y][x].pos.y = (height - cHeight) - (cHeight + spacing.y) * y;
+//				break;
+//			case UI_ANCHOR::RIGHT_BOTTOM:
+//				vCells[y][x].pos.x = (width - cWidth) - (cWidth + spacing.x) * x;
+//				vCells[y][x].pos.y = (height - cHeight) - (cHeight + spacing.y) * y;
+//				break;
+//			case UI_ANCHOR::LEFT_MIDDLE:
+//				vCells[y][x].pos.x = (cWidth + spacing.x) * x;
+//				vCells[y][x].pos.y = (cHeight + spacing.y) * y - height / 2;
+//				break;
+//			case UI_ANCHOR::RIGHT_MIDDLE:
+//				vCells[y][x].pos.x = (width - cWidth) - (cWidth + spacing.x) * x;
+//				vCells[y][x].pos.y = (cHeight + spacing.y) * y - height / 2;
+//				break;
+//			case UI_ANCHOR::TOP_MIDDLE:
+//				vCells[y][x].pos.x = (cWidth + spacing.x) * x - width / 2;
+//				vCells[y][x].pos.y = (cHeight + spacing.y) * y;
+//				break;
+//			case UI_ANCHOR::BOTTOM_MIDDLE:
+//				vCells[y][x].pos.x = (cWidth + spacing.x) * x - width / 2;
+//				vCells[y][x].pos.y = (height - cHeight) - (cHeight + spacing.y) * y;
+//				break;
+//			case UI_ANCHOR::MIDDLE:
+//				vCells[y][x].pos.x = (cWidth + spacing.x) * x - width / 2;
+//				vCells[y][x].pos.y = (cHeight + spacing.y) * y - height / 2;
+//				break;
+//			case UI_ANCHOR::LEFT_TOP:
+//			default:
+//				vCells[y][x].pos.x = (cWidth + spacing.x) * x;
+//				vCells[y][x].pos.y = (cHeight + spacing.y) * y;
+//				break;
+//			}
 		}
 	}
 }
@@ -153,9 +160,4 @@ void UIGrid::RemoveChildUI(int index)
 			}
 		}
 	}
-}
-
-void UIGrid::OnDrop(EventData& data)
-{
-	MessageBox(g_hWnd, "드롭!", "", MB_OK);
 }

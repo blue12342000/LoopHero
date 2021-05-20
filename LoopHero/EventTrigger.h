@@ -2,6 +2,7 @@
 #include "IClickHandler.h"
 #include "IDragHandler.h"
 #include "IDropHandler.h"
+#include "IHoverHandler.h"
 #include <Windows.h>
 
 enum class EVENT_TYPE
@@ -10,6 +11,9 @@ enum class EVENT_TYPE
 	BEGIN_DRAG,
 	DRAG,
 	END_DRAG,
+	MOUSE_ENTER,
+	MOUSE_OVER,
+	MOUSE_OUT,
 	NONE
 };
 
@@ -23,7 +27,7 @@ struct EventData
 	EventTrigger* lpTarget;
 };
 
-class EventTrigger : public IClickHandler, IDragHandler, IDropHandler
+class EventTrigger : public IClickHandler, IDragHandler, IDropHandler, IHoverHandler
 {
 public:
 	virtual void OnClick(EventData& data) override { data.isUsed = false; }
@@ -31,5 +35,8 @@ public:
 	virtual void OnDrag(EventData& data) override { data.isUsed = false; }
 	virtual void OnEndDrag(EventData& data) override { }
 	virtual void OnDrop(EventData& data) override { data.isUsed = false; }
+	virtual void OnMouseEnter(EventData& data) {  };
+	virtual void OnMouseOver(EventData& data) {  };
+	virtual void OnMouseOut(EventData& data) {  };
 };
 

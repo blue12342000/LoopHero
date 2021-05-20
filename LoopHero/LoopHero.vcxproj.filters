@@ -58,6 +58,9 @@
     <Filter Include="소스 파일\Engine\Event\Interface">
       <UniqueIdentifier>{92cee2ad-87f0-44e0-8b7b-34f9f6ade760}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Engine\Observer">
+      <UniqueIdentifier>{00294e2c-3998-4875-891a-529eedbbbf6e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -152,6 +155,12 @@
     </ClCompile>
     <ClCompile Include="UIGrid.cpp">
       <Filter>소스 파일\LoopHero\UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="ObserverManager.cpp">
+      <Filter>소스 파일\Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="ObserverHandler.cpp">
+      <Filter>소스 파일\Engine\Observer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -265,6 +274,15 @@
     </ClInclude>
     <ClInclude Include="UIGrid.h">
       <Filter>소스 파일\LoopHero\UI\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="IHoverHandler.h">
+      <Filter>소스 파일\Engine\Event\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="ObserverManager.h">
+      <Filter>소스 파일\Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="ObserverHandler.h">
+      <Filter>소스 파일\Engine\Observer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -7,10 +7,12 @@
 #include "UIProgressBar.h"
 #include "InGameRightMenu.h"
 #include "InGameHandCard.h"
+#include "InGameEventTimer.h"
 #include "Card.h"
 #include "Unit.h"
 #include "TraitsTable.h"
 #include "EventSystem.h"
+#include <functional>
 
 HRESULT InGame::Init()
 {
@@ -20,14 +22,14 @@ HRESULT InGame::Init()
     lpCanvus = GameUI::CreateUI<GameUI>();
     lpCanvus->Init(UI_ANCHOR::LEFT_TOP, { 0.0f, 0.0f }, WINSIZE_WIDTH, WINSIZE_HEIGHT);
 
-    GameUI* lpRightMenu = GameUI::CreateUI<InGameRightMenu>(lpCanvus);
+    InGameRightMenu* lpRightMenu = GameUI::CreateUI<InGameRightMenu>(lpCanvus);
     lpRightMenu->Init(UI_ANCHOR::RIGHT_TOP, { 0.0f, 0.0f }, 296, WINSIZE_HEIGHT);
 
-    GameUI* lpHandCards = GameUI::CreateUI<InGameHandCard>(lpCanvus);
+    InGameHandCard* lpHandCards = GameUI::CreateUI<InGameHandCard>(lpCanvus);
     lpHandCards->Init(UI_ANCHOR::LEFT_BOTTOM, { 0.0f, -48.0f }, WINSIZE_WIDTH - 300, 58 * 2);
 
-   // UIProgressBar* lpProgressBar = GameUI::CreateUI<UIProgressBar>(lpCanvus);
-   // lpProgressBar->Init(UI_ANCHOR::LEFT_BOTTOM, { 100.0f, 400.0f }, 200, 20, UI_BAR_TYPE::HORIZON, "battle_unit_statusbar_action", "battle_unit_statusbar_hp");
+    InGameEventTimer* lpEvent = GameUI::CreateUI<InGameEventTimer>(lpCanvus);
+    lpEvent->Init(UI_ANCHOR::LEFT_TOP, POINTFLOAT{ 0.0f, 0.0f }, 121 * 2, 27 * 2);
 
     lpFieldTiles = new FieldTileMap();
     lpFieldTiles->Init();

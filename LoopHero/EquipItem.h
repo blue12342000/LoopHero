@@ -39,5 +39,6 @@ public:
 
 	static EquipItem* CreateEquip(const Traits* lpTraits);
 
+	inline EQUIP_PARTS GetParts() { return parts; }
 };
 

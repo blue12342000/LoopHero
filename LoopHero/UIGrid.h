@@ -17,7 +17,6 @@ private:
 
 	vector<vector<UICell>> vCells;
 
-
 public:
 	virtual ~UIGrid() {}
 
@@ -31,7 +30,5 @@ public:
 
 	virtual void AddChildUI(GameUI* lpChild) final;
 	virtual void RemoveChildUI(int index = 0) final;
-
-	virtual void OnDrop(EventData& data) override;
 };
 

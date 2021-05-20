@@ -24,7 +24,7 @@ enum class HSCROLL_MULTILINE
 class GameUI;
 class UIHorizontalScroll : public GameUI
 {
-private:
+protected:
 	struct ItemSlot
 	{
 		POINTFLOAT pos;
@@ -32,7 +32,7 @@ private:
 		RECT rc;
 	};
 
-private:
+protected:
 	HSCROLL_ALIGN align;
 	HS_ARGS_INSERT insert;
 	HSCROLL_MULTILINE multiLineType;

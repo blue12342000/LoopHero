@@ -15,9 +15,7 @@ public:
 	virtual void Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height);
 	virtual void Render(HDC hdc) override;
 
-	inline void SetObject(GameObject* lpObject)
-	{
-		this->lpObject = lpObject;
-	}
+	inline void SetGameObject(GameObject* lpObject) { this->lpObject = lpObject; }
+	inline GameObject* GetGameObject() { return lpObject; }
 };
 

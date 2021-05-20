@@ -4,15 +4,13 @@
 class Card;
 class UIProgressBar;
 class UISprite;
+class ObserverHandler;
 class InGameHandCard : public GameUI
 {
 private:
 	int moveSpeed;
 	POINTFLOAT initPos;
 	
-	//vector<Card*> vHandCards;
-	//vector<Card*> vDropCards;
-
 	GameUI* lpHScrollView;
 	UIProgressBar* lpProgressBar;
 
@@ -23,5 +21,7 @@ public:
 	virtual void Release();
 	virtual void Update(float deltaTime) override;
 	virtual void Render(HDC hdc) override;
+
+	void UICardLoot(ObserverHandler& observer);
 };
 

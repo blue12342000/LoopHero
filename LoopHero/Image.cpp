@@ -32,6 +32,7 @@ HRESULT Image::Init(int width, int height, bool isTransparent, COLORREF transCol
 
     lpImageInfo->isTransparent = isTransparent;
     lpImageInfo->transColor = transColor;
+    lpImageInfo->hBrush = CreateSolidBrush(transColor);
 
     lpBlendInfo = nullptr;
 
@@ -72,6 +73,7 @@ HRESULT Image::Init(string fileName, int width, int height, bool isTransparent, 
 
     lpImageInfo->isTransparent = isTransparent;
     lpImageInfo->transColor = transColor;
+    lpImageInfo->hBrush = CreateSolidBrush(transColor);
 
     lpBlendInfo = new BlendInfo();
     lpBlendInfo->blendFunc.AlphaFormat = 0;
@@ -114,6 +116,7 @@ HRESULT Image::Init(string fileName, int width, int height, int maxFrameX, int m
 
     lpImageInfo->isTransparent = isTransparent;
     lpImageInfo->transColor = transColor;
+    lpImageInfo->hBrush = CreateSolidBrush(transColor);
 
     lpBlendInfo = new BlendInfo();
     lpBlendInfo->blendFunc.AlphaFormat = 0;
@@ -295,7 +298,7 @@ void Image::Fill()
     for (int i = 0; i < splitAngle; ++i)
     {
         HBRUSH hOldBrush = (HBRUSH)SelectObject(lpImageInfo->vHMemDC[i], lpImageInfo->hBrush);
-        PatBlt(lpImageInfo->vHMemDC[i], 0, 0, lpImageInfo->width, lpImageInfo->height, lpImageInfo->transColor);
+        PatBlt(lpImageInfo->vHMemDC[i], 0, 0, lpImageInfo->width, lpImageInfo->height, PATCOPY);
         SelectObject(lpImageInfo->vHMemDC[i], hOldBrush);
     }
 }

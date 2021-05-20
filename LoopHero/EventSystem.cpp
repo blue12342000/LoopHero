@@ -2,20 +2,18 @@
 #include "EventTrigger.h"
 #include "GameUI.h"
 
-void EventSystem::InitEventData()
+void EventSystem::InitEventData(EventData& data)
 {
-	lpData->type = EVENT_TYPE::NONE;
-	lpData->isUsed = false;
-	lpData->lpTarget = nullptr;
-	auto compare = [](GameUI* a, GameUI* b) { if (a->GetDepth() == b->GetDepth()) { return a < b; } else { return a->GetDepth() < b->GetDepth(); } };
-	qlpGameUIByDepth = decltype(qlpGameUIByDepth)(compare);
+	data.type = EVENT_TYPE::NONE;
+	data.isUsed = false;
+	data.lpTarget = nullptr;
 }
 
 GameUI* EventSystem::FindDispatcherUI(GameUI* lpCurrUI)
 {
 	RECT rc = lpCurrUI->GetRect();
 	GameUI* lpEventTarget = nullptr, *lpFindTarget;
-	if (PtInRect(&rc, lpData->point))
+	if (PtInRect(&rc, lpPoint->point))
 	{
 		lpEventTarget = lpCurrUI;
 		qlpGameUIByDepth.push(lpCurrUI);
@@ -33,84 +31,108 @@ GameUI* EventSystem::FindDispatcherUI(GameUI* lpCurrUI)
 
 HRESULT EventSystem::Init()
 {
-	lpData = new EventData();
+	lpPoint = new EventData();
+	lpBase = new EventData();
+	lpCompareFunc = [](GameUI* a, GameUI* b) { if (a->GetDepth() == b->GetDepth()) { return a < b; } else { return a->GetDepth() < b->GetDepth(); } };
 	return S_OK;
 }
 
 void EventSystem::Release()
 {
-	if (lpData)
+	if (lpPoint)
 	{
-		delete lpData;
-		lpData = nullptr;
+		delete lpPoint;
+		lpPoint = nullptr;
+	}
+
+	if (lpBase)
+	{
+		delete lpBase;
+		lpBase = nullptr;
 	}
 }
 
 void EventSystem::Update(float deltaTime)
 {
+	qlpGameUIByDepth = decltype(qlpGameUIByDepth)(lpCompareFunc);
+
+	lpPoint->point = KeyManager::GetSingleton()->GetMousePoint();
+	if ((lpFindTop = FindDispatcherUI(lpGameUI)) != nullptr && lpFindTop != lpBase->lpTarget)
+	{
+		lpBase->isUsed = true;
+		lpBase->deltaTime = deltaTime;
+		lpBase->point = lpPoint->point;
+		if (lpBase->lpTarget)
+		{
+			lpBase->type = EVENT_TYPE::MOUSE_OUT;
+			lpBase->lpTarget->OnMouseOut(*lpBase);
+		}
+
+		lpBase->lpTarget = lpFindTop;
+		lpBase->type = EVENT_TYPE::MOUSE_ENTER;
+		lpBase->lpTarget->OnMouseEnter(*lpBase);
+	}
+	else if (lpBase->lpTarget)
+	{
+		lpBase->deltaTime = deltaTime;
+		lpBase->type = EVENT_TYPE::MOUSE_OVER;
+		lpBase->point = lpPoint->point;
+		lpBase->lpTarget->OnMouseOver(*lpBase);
+	}
+
 	if (KeyManager::GetSingleton()->IsKeyOnceDown(VK_LBUTTON))
 	{
-		InitEventData();
-		lpData->type = EVENT_TYPE::CLICK;
-		lpData->point = KeyManager::GetSingleton()->GetMousePoint();
-		lpData->deltaTime = deltaTime;
+		InitEventData(*lpPoint);
+		lpPoint->type = EVENT_TYPE::CLICK;
+		lpPoint->deltaTime = deltaTime;
 
-		if (FindDispatcherUI(lpGameUI))
+		while (!lpPoint->isUsed && !qlpGameUIByDepth.empty())
 		{
-			while (!lpData->isUsed && !qlpGameUIByDepth.empty())
-			{
-				lpData->isUsed = true;
-				lpData->lpTarget = qlpGameUIByDepth.top();
-				lpData->lpTarget->OnClick(*lpData);
-				qlpGameUIByDepth.pop();
-				if (!lpData->isUsed) lpData->lpTarget = nullptr;
-			}
+			lpPoint->isUsed = true;
+			lpPoint->lpTarget = qlpGameUIByDepth.top();
+			lpPoint->lpTarget->OnClick(*lpPoint);
+			qlpGameUIByDepth.pop();
+			if (!lpPoint->isUsed) lpPoint->lpTarget = nullptr;
 		}
 	}
 	else if (KeyManager::GetSingleton()->IsKeyOnceUp(VK_LBUTTON))
 	{
-		if (lpData->type == EVENT_TYPE::DRAG && lpData->lpTarget)
+		if (lpPoint->type == EVENT_TYPE::DRAG && lpPoint->lpTarget)
 		{
-			lpData->type = EVENT_TYPE::END_DRAG;
-			lpData->point = KeyManager::GetSingleton()->GetMousePoint();
-			lpData->deltaTime = deltaTime;
-			lpData->lpTarget->OnEndDrag(*lpData);
+			lpPoint->type = EVENT_TYPE::END_DRAG;
+			lpPoint->deltaTime = deltaTime;
+			lpPoint->lpTarget->OnEndDrag(*lpPoint);
 
-			if (FindDispatcherUI(lpGameUI))
+			while (!lpPoint->isUsed && !qlpGameUIByDepth.empty())
 			{
-				while (!lpData->isUsed && !qlpGameUIByDepth.empty())
-				{
-					lpData->isUsed = true;
-					qlpGameUIByDepth.top()->OnDrop(*lpData);
-					qlpGameUIByDepth.pop();
-				}
+				lpPoint->isUsed = true;
+				qlpGameUIByDepth.top()->OnDrop(*lpPoint);
+				qlpGameUIByDepth.pop();
 			}
 
-			InitEventData();
+			InitEventData(*lpPoint);
 		}
 	}
 	else if (KeyManager::GetSingleton()->IsKeyStayDown(VK_LBUTTON))
 	{
-		if (lpData->type == EVENT_TYPE::CLICK)
+		if (lpPoint->type == EVENT_TYPE::CLICK)
 		{
-			if (lpData->lpTarget)
+			if (lpPoint->lpTarget)
 			{
 				// 클릭상태였으면서
 				// 드레그 처음시작
-				lpData->type = EVENT_TYPE::BEGIN_DRAG;
-				lpData->point = KeyManager::GetSingleton()->GetMousePoint();
-				lpData->deltaTime = deltaTime;
-				lpData->lpTarget->OnBeginDrag(*lpData);
+				lpPoint->type = EVENT_TYPE::BEGIN_DRAG;
+				lpPoint->deltaTime = deltaTime;
+				lpPoint->lpTarget->OnBeginDrag(*lpPoint);
 			}
 		}
-		else if ((lpData->type == EVENT_TYPE::BEGIN_DRAG || lpData->type == EVENT_TYPE::DRAG)
-			&& lpData->lpTarget)
+		else if ((lpPoint->type == EVENT_TYPE::BEGIN_DRAG || lpPoint->type == EVENT_TYPE::DRAG)
+			&& lpPoint->lpTarget)
 		{
 			// 드래그 시작 상태였거나 그래그 중이면서 Target이 존재
-			lpData->type = EVENT_TYPE::DRAG;
-			lpData->point = KeyManager::GetSingleton()->GetMousePoint();
-			lpData->deltaTime = deltaTime;
-			lpData->lpTarget->OnDrag(*lpData);
+			lpPoint->type = EVENT_TYPE::DRAG;
+			lpPoint->deltaTime = deltaTime;
+			lpPoint->lpTarget->OnDrag(*lpPoint);
 		}
 	}
 }
@@ -118,13 +140,13 @@ void EventSystem::Update(float deltaTime)
 void EventSystem::Render(HDC hdc)
 {
 	SetBkMode(hdc, OPAQUE);
-	if (lpData)
+	if (lpPoint)
 	{
-		if (lpData->lpTarget)
+		if (lpPoint->lpTarget)
 		{
-			string text = to_string(lpData->point.x) + ", " + to_string(lpData->point.y) + " : " + to_string((__int64)(lpData->lpTarget)) + " / " + to_string((int)lpData->type) + " / " + to_string(lpData->deltaTime);
+			string text = to_string(lpPoint->point.x) + ", " + to_string(lpPoint->point.y) + " : " + to_string((__int64)(lpPoint->lpTarget)) + " / " + to_string((int)lpPoint->type) + " / " + to_string(lpPoint->deltaTime);
 			TextOut(hdc, 300, 10, text.c_str(), text.length());
-			text = to_string(((GameUI*)lpData->lpTarget)->GetPos().x) + ", " + to_string(((GameUI*)lpData->lpTarget)->GetPos().y);
+			text = to_string(((GameUI*)lpPoint->lpTarget)->GetPos().x) + ", " + to_string(((GameUI*)lpPoint->lpTarget)->GetPos().y);
 			TextOut(hdc, 300, 25, text.c_str(), text.length());
 		}
 	}

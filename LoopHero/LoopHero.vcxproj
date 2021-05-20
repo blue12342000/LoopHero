@@ -154,6 +154,8 @@
     <ClCompile Include="GameData.cpp" />
     <ClCompile Include="GameUI.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ObserverHandler.cpp" />
+    <ClCompile Include="ObserverManager.cpp" />
     <ClCompile Include="TraitsTable.cpp" />
     <ClCompile Include="UIHorizontalScroll.cpp" />
     <ClCompile Include="Image.cpp" />
@@ -190,7 +192,10 @@
     <ClInclude Include="IClickHandler.h" />
     <ClInclude Include="IDragHandler.h" />
     <ClInclude Include="IDropHandler.h" />
+    <ClInclude Include="IHoverHandler.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="ObserverHandler.h" />
+    <ClInclude Include="ObserverManager.h" />
     <ClInclude Include="TraitsTable.h" />
     <ClInclude Include="UIHorizontalScroll.h" />
     <ClInclude Include="Image.h" />

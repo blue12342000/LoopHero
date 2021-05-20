@@ -53,13 +53,7 @@ void UIHorizontalScroll::Update(float deltaTime)
 
 void UIHorizontalScroll::Render(HDC hdc)
 {
-	RenderRectangle(hdc, rc, RGB(200, 200, 200));
 	GameUI::Render(hdc);
-
-	//for (int i = 0; i < vItemSlots.size(); ++i)
-	//{
-	//	RenderRectangle(hdc, vItemSlots[i].rc, RGB(100, 100, 100));
-	//}
 }
 
 void UIHorizontalScroll::AddChildUI(GameUI* lpChild)
@@ -105,9 +99,6 @@ void UIHorizontalScroll::RemoveChildUI(int index)
 		sWidthSort.erase(item);
 
 		SlotResize();
-
-		//item->Release();
-		//delete item;
 	}
 }
 
@@ -116,6 +107,7 @@ void UIHorizontalScroll::SetMultiLineType(HSCROLL_MULTILINE multiLineType, int c
 	this->multiLineType = multiLineType;
 	this->cols = cols;
 }
+
 
 void UIHorizontalScroll::OnClick(EventData& data)
 {
@@ -129,7 +121,6 @@ void UIHorizontalScroll::OnClick(EventData& data)
 			lpSelected = vChildUI[i];
 			lpSelected->SetAnchor(UI_ANCHOR::MIDDLE);
 			lpSelected->SetPos(lpSelected->GetRealationPos(this));
-			//lpSelected->SetWorldPos(data.point);
 			selectedIndex = i;
 			dragNextIndex = i;
 			break;

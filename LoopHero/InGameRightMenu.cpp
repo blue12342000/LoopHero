@@ -3,9 +3,8 @@
 #include "InGameEventTimer.h"
 #include "UIItemSlot.h"
 #include "UIHorizontalScroll.h"
-#include "UISprite.h"
 #include "UIGrid.h"
-#include "UIItemSlot.h"
+#include "UISprite.h"
 #include "EquipItem.h"
 #include "Unit.h"
 #include "TileTable.h"
@@ -17,19 +16,28 @@ void InGameRightMenu::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int heig
 
 	lpBackground = ImageManager::GetSingleton()->FindImage("ingame_info_background");
 
-	GameUI* lpEvent = GameUI::CreateUI<InGameEventTimer>(this);
-	lpEvent->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ WINSIZE_WIDTH - 121.0f * 2, 0.0f }, 121 * 2, 27 * 2);
+	lpHeroEquip = GameUI::CreateUI<UIGrid>(this);
+	lpHeroEquip->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ 5.0f * 2, 27.0f * 2 }, 104 * 2, 77 * 2, 3, 4, { 2, 2 });
 
+	UIItemSlot* lpItemSlot1 = GameUI::CreateUI<UIItemSlot>();
+	lpItemSlot1->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ 0, 0 }, 25 * 2, 25 * 2, EQUIP_PARTS::SWORD);
+	lpHeroEquip->SetItemObject(0, 0, lpItemSlot1);
 
-	lpItemSlot = GameUI::CreateUI<UIGrid>(this);
-	lpItemSlot->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ 5.0f * 2, 27.0f * 2 }, 104 * 2, 77 * 2, 3, 4, { 2, 2 });
-	GameUI* lpUISprite = GameUI::CreateUI<UISprite>();
-	lpUISprite->Init(UI_ANCHOR::LEFT_TOP, POINTFLOAT{ 0, 0 }, 25 * 2, 25 * 2);
-	lpItemSlot->SetItemObject(2, 1, lpUISprite);
-
-	GameUI* lpItem = GameUI::CreateUI<UIItemSlot>();
-	lpItem->Init(UI_ANCHOR::LEFT_TOP, POINTFLOAT{ 0, 0 }, 25 * 2, 25 * 2);
-	lpItemSlot->SetItemObject(1, 1, lpItem);
+	UIItemSlot* lpItemSlot2 = GameUI::CreateUI<UIItemSlot>();
+	lpItemSlot2->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ 0, 0 }, 25 * 2, 25 * 2, EQUIP_PARTS::HELMET);
+	lpHeroEquip->SetItemObject(0, 1, lpItemSlot2);
+	
+	UIItemSlot* lpItemSlot3 = GameUI::CreateUI<UIItemSlot>();
+	lpItemSlot3->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ 0, 0 }, 25 * 2, 25 * 2, EQUIP_PARTS::RING);
+	lpHeroEquip->SetItemObject(1, 0, lpItemSlot3);
+	
+	UIItemSlot* lpItemSlot4 = GameUI::CreateUI<UIItemSlot>();
+	lpItemSlot4->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ 0, 0 }, 25 * 2, 25 * 2, EQUIP_PARTS::SHIELD);
+	lpHeroEquip->SetItemObject(2, 0, lpItemSlot4);
+	
+	UIItemSlot* lpItemSlot5 = GameUI::CreateUI<UIItemSlot>();
+	lpItemSlot5->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ 0, 0 }, 25 * 2, 25 * 2, EQUIP_PARTS::ARMOR);
+	lpHeroEquip->SetItemObject(2, 1, lpItemSlot5);
 
 	lpHScroll = GameUI::CreateUI<UIHorizontalScroll>(this);
 	lpHScroll->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ 8.0f * 2, 129.0f * 2 }, 100 * 2 - 4, 23 * 2 * 3 + 4 * 2, HSCROLL_ALIGN::LEFT, HS_ARGS_INSERT::BEFORE, 12);
@@ -45,7 +53,7 @@ void InGameRightMenu::Update(float deltaTime)
 		{
 			UISprite* lpSprite = GameUI::CreateUI<UISprite>();
 			lpSprite->Init(UI_ANCHOR::LEFT_TOP, { 0.0f, 0.0f }, 23 * 2, 23 * 2);
-			lpSprite->SetObject(lpEquipItem);
+			lpSprite->SetGameObject(lpEquipItem);
 			lpHScroll->AddChildUI(lpSprite);
 		}
 	}

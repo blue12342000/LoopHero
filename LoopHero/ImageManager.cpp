@@ -103,6 +103,9 @@ HRESULT ImageManager::Init()
     mLpImages.insert(make_pair("item_rank", new Image()));
     mLpImages["item_rank"]->Init("Image/Item/item_rank.bmp", 92 * 2, 23 * 2, 4, 1, 4, true, RGB(0, 170, 255));
 
+    mLpImages.insert(make_pair("selection_33", new Image()));
+    mLpImages["selection_33"]->Init("Image/UI/Common/selection_33.bmp", 66 * 2, 33 * 2, 2, 1, 2, true, RGB(0, 170, 255));
+
     return S_OK;
 }
 
