@@ -60,7 +60,7 @@ void EquipItem::Render(HDC hdc)
 
 EquipItem* EquipItem::CreateEquip(const Traits* lpTraits)
 {
-	EquipItem* lpEquip = new EquipItem();
+	EquipItem* lpEquip = GameObject::Create<EquipItem>();
 	lpEquip->Init();
 
 	lpEquip->parts = lpTraits->vEquips[rand() % lpTraits->vEquips.size()];

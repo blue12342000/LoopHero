@@ -27,8 +27,6 @@ private:
 	map<UNIT_STATUS, float> mStatus;
 
 private:
-	EquipItem() {}
-
 	void SetItemStatus(UNIT_STATUS status, int itemPower);
 	
 public:

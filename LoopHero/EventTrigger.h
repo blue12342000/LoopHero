@@ -33,10 +33,10 @@ public:
 	virtual void OnClick(EventData& data) override { data.isUsed = false; }
 	virtual void OnBeginDrag(EventData& data) override { data.isUsed = false; }
 	virtual void OnDrag(EventData& data) override { data.isUsed = false; }
-	virtual void OnEndDrag(EventData& data) override { }
+	virtual void OnEndDrag(EventData& data) override { data.isUsed = false; }
 	virtual void OnDrop(EventData& data) override { data.isUsed = false; }
-	virtual void OnMouseEnter(EventData& data) {  };
-	virtual void OnMouseOver(EventData& data) {  };
-	virtual void OnMouseOut(EventData& data) {  };
+	virtual void OnMouseEnter(EventData& data) { data.isUsed = false; };
+	virtual void OnMouseOver(EventData& data) { data.isUsed = false; };
+	virtual void OnMouseOut(EventData& data) { data.isUsed = false; };
 };
 

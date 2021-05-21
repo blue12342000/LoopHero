@@ -1,9 +1,7 @@
 #pragma once
 #include "GameUI.h"
 
-class Card;
-class UIProgressBar;
-class UISprite;
+class UIHorizontalScroll;
 class ObserverHandler;
 class InGameHandCard : public GameUI
 {
@@ -11,10 +9,7 @@ private:
 	int moveSpeed;
 	POINTFLOAT initPos;
 	
-	GameUI* lpHScrollView;
-	UIProgressBar* lpProgressBar;
-
-	vector<UISprite*> vDeactiveSprites;
+	UIHorizontalScroll* lpHScrollView;
 
 public:
 	virtual void Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height) override;
@@ -23,5 +18,7 @@ public:
 	virtual void Render(HDC hdc) override;
 
 	void UICardLoot(ObserverHandler& observer);
+
+
 };
 

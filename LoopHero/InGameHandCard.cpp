@@ -12,9 +12,10 @@ void InGameHandCard::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int heigh
 	moveSpeed = 200;
 	initPos = pos;
 
-	UIHorizontalScroll* lpUIHScroll = GameUI::CreateUI<UIHorizontalScroll>(this);
-	lpUIHScroll->Init(UI_ANCHOR::LEFT_BOTTOM, { 0.0f, 0.0f }, WINSIZE_WIDTH - 296, 58 * 2, HSCROLL_ALIGN::LEFT, HS_ARGS_INSERT::AFTER, 18);
-	lpHScrollView = lpUIHScroll;
+	lpHScrollView = GameUI::CreateUI<UIHorizontalScroll>(this);
+	lpHScrollView->Init(UI_ANCHOR::LEFT_BOTTOM, { 0.0f, 0.0f }, WINSIZE_WIDTH - 296, 58 * 2, HSCROLL_ALIGN::LEFT, HS_ARGS_INSERT::AFTER, 18);
+	lpHScrollView->SetHScrollControl(HSCROLL_ITEM_CONTROL::DRAG);
+	lpHScrollView->SetHScrollEscape(HSCROLL_ITEM_ESCAPE::HIDE);
 
 	ObserverManager::GetSingleton()->RegisterObserver(this);
 	AddOEventHandler("DropCard", bind(&InGameHandCard::UICardLoot, this, placeholders::_1));

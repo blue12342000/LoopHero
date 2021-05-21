@@ -152,6 +152,7 @@
     <ClCompile Include="EventTrigger.cpp" />
     <ClCompile Include="FieldTileMap.cpp" />
     <ClCompile Include="GameData.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameUI.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ObserverHandler.cpp" />

@@ -162,6 +162,9 @@
     <ClCompile Include="ObserverHandler.cpp">
       <Filter>소스 파일\Engine\Observer</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>소스 파일\LoopHero</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Image.h">

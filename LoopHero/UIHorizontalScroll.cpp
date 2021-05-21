@@ -21,6 +21,9 @@ void UIHorizontalScroll::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int h
 	auto compareHeight = [](GameUI* a, GameUI* b) { if (a->GetHeight() == b->GetHeight()) { return a > b; } else { return a->GetHeight() > b->GetHeight(); } };
 	sHeightSort = decltype(sHeightSort)(compareHeight);
 
+	control = HSCROLL_ITEM_CONTROL::FIXED;
+	escape = HSCROLL_ITEM_ESCAPE::DRAW;
+
 	lpSelected = nullptr;
 	selectedIndex = -1;
 	dragNextIndex = -1;
@@ -36,7 +39,10 @@ void UIHorizontalScroll::Update(float deltaTime)
 			--idx;
 			continue;
 		}
-		if (lpSelected == vChildUI[idx]) ++idx;
+		if (lpSelected == vChildUI[idx])
+		{
+			++idx;
+		}
 
 		currPos = vChildUI[idx]->GetPos();
 		newPos = currPos;
@@ -47,13 +53,27 @@ void UIHorizontalScroll::Update(float deltaTime)
 
 		vChildUI[idx]->SetPos(newPos);
 	}
+	if (lpSelected && escape == HSCROLL_ITEM_ESCAPE::HIDE)
+	{
+		lpSelected->SetVisible(PtInRect(&rc, KeyManager::GetSingleton()->GetMousePoint()));
+	}
 
 	GameUI::Update(deltaTime);
 }
 
 void UIHorizontalScroll::Render(HDC hdc)
 {
-	GameUI::Render(hdc);
+	if (isVisible)
+	{
+		for (int i = 0; i < vChildUI.size(); ++i)
+		{
+			if (vChildUI[i]->IsVisible())
+			{
+				
+				vChildUI[i]->Render(hdc);
+			}
+		}
+	}
 }
 
 void UIHorizontalScroll::AddChildUI(GameUI* lpChild)
@@ -93,6 +113,20 @@ void UIHorizontalScroll::RemoveChildUI(int index)
 {
 	if (index > -1 && index < vChildUI.size())
 	{
+		if (index == selectedIndex)
+		{
+			selectedIndex = -1;
+			dragNextIndex = -1;
+			lpSelected = nullptr;
+		}
+		else if (lpSelected && index < selectedIndex)
+		{
+			--dragNextIndex;
+			--selectedIndex;
+			if (dragNextIndex < 0) dragNextIndex = selectedIndex;
+			if (selectedIndex < 0) lpSelected = nullptr;
+		}
+
 		GameUI* item = *(vChildUI.begin() + index);
 		vChildUI.erase(vChildUI.begin() + index);
 		sHeightSort.erase(item);
@@ -111,6 +145,12 @@ void UIHorizontalScroll::SetMultiLineType(HSCROLL_MULTILINE multiLineType, int c
 
 void UIHorizontalScroll::OnClick(EventData& data)
 {
+	if (control == HSCROLL_ITEM_CONTROL::FIXED)
+	{
+		data.isUsed = false;
+		return;
+	}
+
 	lpSelected = nullptr;
 	RECT childRc;
 	for (int i = vChildUI.size() - 1; i >= 0; --i)
@@ -130,9 +170,21 @@ void UIHorizontalScroll::OnClick(EventData& data)
 
 void UIHorizontalScroll::OnDrag(EventData& data)
 {
+	if (control == HSCROLL_ITEM_CONTROL::FIXED)
+	{
+		data.isUsed = false;
+		return;
+	}
+
 	if (lpSelected)
 	{
 		lpSelected->SetWorldPos(data.point);
+
+		if (control == HSCROLL_ITEM_CONTROL::DRAG)
+		{
+			data.isUsed = false;
+			return;
+		}
 
 		int swapChildPos = -1;
 		for (int i = 0; i < vItemSlots.size(); ++i)
@@ -178,7 +230,7 @@ void UIHorizontalScroll::OnEndDrag(EventData& data)
 			vChildUI.erase(vChildUI.begin() + selectedIndex);
 		}
 		data.lpTarget = lpSelected;
-
+		lpSelected->SetVisible(true);
 		lpSelected = nullptr;
 		selectedIndex = -1;
 		dragNextIndex = -1;

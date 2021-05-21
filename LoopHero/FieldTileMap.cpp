@@ -521,3 +521,16 @@ void FieldTileMap::SelectedTileValidation()
 		}
 	}
 }
+
+void FieldTileMap::OnMouseEnter(EventData& data)
+{
+	MessageBox(g_hWnd, "SelectedTileValidation ½ÇÇà!~", "", MB_OK);
+}
+
+void FieldTileMap::OnMouseOver(EventData& data)
+{
+}
+
+void FieldTileMap::OnDrop(EventData& data)
+{
+}

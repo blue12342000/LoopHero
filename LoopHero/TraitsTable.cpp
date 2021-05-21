@@ -178,7 +178,7 @@ Unit* TraitsTable::CreateUnit(string traitKey)
 	auto it = mLpTraits.find(traitKey);
 	if (it == mLpTraits.end()) return nullptr;
 
-	Unit* lpUnit = new Unit();
+	Unit* lpUnit = GameObject::Create<Unit>();
 	lpUnit->lpTraits = it->second;
 	lpUnit->Init();
 

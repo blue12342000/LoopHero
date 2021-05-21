@@ -31,7 +31,7 @@ HRESULT InGame::Init()
     InGameEventTimer* lpEvent = GameUI::CreateUI<InGameEventTimer>(lpCanvus);
     lpEvent->Init(UI_ANCHOR::LEFT_TOP, POINTFLOAT{ 0.0f, 0.0f }, 121 * 2, 27 * 2);
 
-    lpFieldTiles = new FieldTileMap();
+    lpFieldTiles = GameObject::Create<FieldTileMap>();
     lpFieldTiles->Init();
 
     lpUnit = GameData::GetSingleton()->GetTraitTable()->CreateUnit("Warrior");
@@ -76,6 +76,8 @@ void InGame::Release()
         delete lpEventSystem;
         lpEventSystem = nullptr;
     }
+
+    ObserverManager::GetSingleton()->Release();
 }
 
 void InGame::Update(float deltaTime)

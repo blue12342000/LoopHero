@@ -31,9 +31,6 @@ protected:
 	ITEM_RANK rank;
 	string name;
 
-protected:
-	Item() {}
-
 public:
 	virtual void Init();
 	virtual void Release();

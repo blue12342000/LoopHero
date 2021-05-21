@@ -42,6 +42,7 @@ void InGameRightMenu::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int heig
 	lpHScroll = GameUI::CreateUI<UIHorizontalScroll>(this);
 	lpHScroll->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ 8.0f * 2, 129.0f * 2 }, 100 * 2 - 4, 23 * 2 * 3 + 4 * 2, HSCROLL_ALIGN::LEFT, HS_ARGS_INSERT::BEFORE, 12);
 	lpHScroll->SetMultiLineType(HSCROLL_MULTILINE::ZIGZAG, 4);
+	lpHScroll->SetHScrollControl(HSCROLL_ITEM_CONTROL::DRAG_SWAP);
 }
 
 void InGameRightMenu::Update(float deltaTime)

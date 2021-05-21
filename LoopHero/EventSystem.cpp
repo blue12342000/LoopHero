@@ -9,7 +9,7 @@ void EventSystem::InitEventData(EventData& data)
 	data.lpTarget = nullptr;
 }
 
-GameUI* EventSystem::FindDispatcherUI(GameUI* lpCurrUI)
+EventTrigger* EventSystem::FindDispatcherUI(GameUI* lpCurrUI)
 {
 	RECT rc = lpCurrUI->GetRect();
 	GameUI* lpEventTarget = nullptr, *lpFindTarget;
@@ -22,7 +22,7 @@ GameUI* EventSystem::FindDispatcherUI(GameUI* lpCurrUI)
 		{
 			if (!vLpChild[i]->IsVisible()) continue;
 
-			lpFindTarget = FindDispatcherUI(vLpChild[i]);
+			lpFindTarget = (GameUI*)FindDispatcherUI(vLpChild[i]);
 			if (lpFindTarget && lpEventTarget->GetDepth() < lpFindTarget->GetDepth()) lpEventTarget = lpFindTarget;
 		}
 	}
@@ -33,7 +33,7 @@ HRESULT EventSystem::Init()
 {
 	lpPoint = new EventData();
 	lpBase = new EventData();
-	lpCompareFunc = [](GameUI* a, GameUI* b) { if (a->GetDepth() == b->GetDepth()) { return a < b; } else { return a->GetDepth() < b->GetDepth(); } };
+	lpCompareUIFunc = [](GameUI* a, GameUI* b) { if (a->GetDepth() == b->GetDepth()) { return a < b; } else { return a->GetDepth() < b->GetDepth(); } };
 	return S_OK;
 }
 
@@ -54,7 +54,7 @@ void EventSystem::Release()
 
 void EventSystem::Update(float deltaTime)
 {
-	qlpGameUIByDepth = decltype(qlpGameUIByDepth)(lpCompareFunc);
+	qlpGameUIByDepth = decltype(qlpGameUIByDepth)(lpCompareUIFunc);
 
 	lpPoint->point = KeyManager::GetSingleton()->GetMousePoint();
 	if ((lpFindTop = FindDispatcherUI(lpGameUI)) != nullptr && lpFindTop != lpBase->lpTarget)
@@ -71,6 +71,26 @@ void EventSystem::Update(float deltaTime)
 		lpBase->lpTarget = lpFindTop;
 		lpBase->type = EVENT_TYPE::MOUSE_ENTER;
 		lpBase->lpTarget->OnMouseEnter(*lpBase);
+
+		// UI 체크후 처리
+		//if (!lpBase->isUsed)
+		//{
+		//	if ((lpFindTop = FindDispatcherObject(lpGameObject)) != nullptr && lpFindTop != lpBase->lpTarget)
+		//	{
+		//		lpBase->isUsed = true;
+		//		lpBase->deltaTime = deltaTime;
+		//		lpBase->point = lpPoint->point;
+		//		if (lpBase->lpTarget)
+		//		{
+		//			lpBase->type = EVENT_TYPE::MOUSE_OUT;
+		//			lpBase->lpTarget->OnMouseOut(*lpBase);
+		//		}
+		//
+		//		lpBase->lpTarget = lpFindTop;
+		//		lpBase->type = EVENT_TYPE::MOUSE_ENTER;
+		//		lpBase->lpTarget->OnMouseEnter(*lpBase);
+		//	}
+		//}
 	}
 	else if (lpBase->lpTarget)
 	{

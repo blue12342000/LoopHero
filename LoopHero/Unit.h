@@ -64,9 +64,6 @@ private:
 
 	float currHp;
 
-private:
-	Unit() {}
-
 public:
 	virtual void Init();
 	virtual void Release();

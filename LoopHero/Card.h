@@ -41,10 +41,6 @@ private:
 	HFONT hFont;
 	HFONT hOldFont;
 
-private:
-	Card():hFont(NULL) {}
-	Card(const Card& other) = default;
-
 public:
 	virtual void Init() override;
 	virtual void Release() override;
@@ -53,7 +49,6 @@ public:
 
 	inline Image* GetIconImg() { return lpIconImg; }
 	inline Image* GetCardImg() { return lpCardImg; }
-	inline void SetPos(POINTFLOAT pos) { this->pos = pos; }
 
 	friend class Deck;
 };

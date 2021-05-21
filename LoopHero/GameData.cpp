@@ -6,7 +6,7 @@
 
 HRESULT GameData::Init()
 {
-    lpDeck = new Deck();
+    lpDeck = GameObject::Create<Deck>();
     lpDeck->Init();
 
     lpTraitTable = new TraitsTable();

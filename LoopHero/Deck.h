@@ -4,7 +4,7 @@
 class Card;
 enum class CARD_TYPE;
 enum class CARD_RARE;
-class Deck : GameObject
+class Deck : public GameObject
 {
 private:
 	vector<Card*> vCardList;

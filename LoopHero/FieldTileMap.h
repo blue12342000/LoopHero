@@ -38,6 +38,8 @@ private:
 	TileTable* lpTileTable;
 
 public:
+	virtual ~FieldTileMap() {}
+
 	virtual void Init() override;
 	virtual void Release() override;
 	virtual void Update(float deltaTime) override;
@@ -46,4 +48,8 @@ public:
 	void SelectedTileValidation();
 
 	inline void SetTile(int x, int y, Tile* lpTile) { tiles[y][x].lpTile = lpTile; }
+
+	virtual void OnMouseEnter(EventData& data) override;
+	virtual void OnMouseOver(EventData& data) override;
+	virtual void OnDrop(EventData& data) override;
 };

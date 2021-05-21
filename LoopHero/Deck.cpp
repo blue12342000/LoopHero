@@ -79,7 +79,7 @@ Card* Deck::GetRandomCard()
 
 Card* Deck::CreateCard(string cardId)
 {
-	Card* lpCard = new Card();
+	Card* lpCard = GameObject::Create<Card>();
 
 	lpCard->Init();
 	lpCard->id = cardId;

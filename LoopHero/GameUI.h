@@ -35,6 +35,7 @@ protected:
 protected:
 	GameUI() {}
 
+protected:
 	void Refresh();
 
 public:
@@ -62,8 +63,6 @@ public:
 		}
 		return lpGameUI;
 	}
-
-	void Test() { MessageBox(g_hWnd, "테스트", "성공?", MB_OK); }
 
 	void InsertChildId(GameUI* lpChild, int index);
 	virtual void AddChildUI(GameUI* lpChild);

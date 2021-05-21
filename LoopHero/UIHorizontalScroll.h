@@ -20,6 +20,18 @@ enum class HSCROLL_MULTILINE
 	ZIGZAG
 };
 
+enum class HSCROLL_ITEM_CONTROL
+{
+	FIXED,
+	DRAG,
+	DRAG_SWAP
+};
+
+enum class HSCROLL_ITEM_ESCAPE
+{
+	DRAW,
+	HIDE
+};
 
 class GameUI;
 class UIHorizontalScroll : public GameUI
@@ -36,6 +48,8 @@ protected:
 	HSCROLL_ALIGN align;
 	HS_ARGS_INSERT insert;
 	HSCROLL_MULTILINE multiLineType;
+	HSCROLL_ITEM_CONTROL control;
+	HSCROLL_ITEM_ESCAPE escape;
 	int maxItems;
 	int cols;
 
@@ -69,6 +83,9 @@ public:
 	virtual void OnClick(EventData& data) override;
 	virtual void OnDrag(EventData& data) override;
 	virtual void OnEndDrag(EventData& data) override;
+
+	inline void SetHScrollControl(HSCROLL_ITEM_CONTROL control) { this->control = control; }
+	inline void SetHScrollEscape(HSCROLL_ITEM_ESCAPE escape) { this->escape = escape; }
 
 private:
 	void SlotResize();

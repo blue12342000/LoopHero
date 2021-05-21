@@ -3,6 +3,7 @@
 
 void ObserverManager::Release()
 {
+	sObservers.clear();
 }
 
 void ObserverManager::RegisterObserver(ObserverHandler* lpObserver)
