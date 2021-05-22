@@ -51,6 +51,7 @@ public:
 
 	inline void SetTile(int x, int y, Tile* lpTile) { tiles[y][x].lpTile = lpTile; }
 
+	virtual void OnClick(EventData& data) override;
 	virtual void OnMouseEnter(EventData& data) override;
 	virtual void OnMouseOver(EventData& data) override;
 	virtual void OnMouseOut(EventData& data) override;

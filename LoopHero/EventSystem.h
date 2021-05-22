@@ -26,7 +26,6 @@ class EventTrigger;
 struct EventData
 {
 	bitset<(int)EVENT_TYPE::NONE> message;
-	bitset<(int)EVENT_TYPE::NONE> isRemain;
 	float deltaTime;
 	EVENT_TYPE type;
 	POINT point;
@@ -40,10 +39,10 @@ struct EventData
 	POINT dragPoint;
 	bool isDragging;
 
-	void Use() { isRemain[(int)type] = false; }
-	void Reset() { isRemain[(int)type] = true; }
-	bool IsRemain() { return isRemain.any(); }
-	bool IsRemain(EVENT_TYPE type) { return isRemain[(int)type]; }
+	void Use() { message[(int)type] = false; }
+	void Reset() { message[(int)type] = true; }
+	bool IsRemain() { return message.any(); }
+	bool IsRemain(EVENT_TYPE type) { return message[(int)type]; }
 };
 
 class GameUI;

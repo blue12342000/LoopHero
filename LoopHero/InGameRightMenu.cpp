@@ -1,6 +1,7 @@
 #include "InGameRightMenu.h"
 #include "Image.h"
 #include "InGameEventTimer.h"
+#include "UIButton.h"
 #include "UIItemSlot.h"
 #include "UIHorizontalScroll.h"
 #include "UIGrid.h"
@@ -43,6 +44,11 @@ void InGameRightMenu::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int heig
 	lpHScroll->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ 8.0f * 2, 129.0f * 2 }, 100 * 2 - 4, 23 * 2 * 3 + 4 * 2, HSCROLL_ALIGN::LEFT, HS_ARGS_INSERT::BEFORE, 12);
 	lpHScroll->SetMultiLineType(HSCROLL_MULTILINE::ZIGZAG, 4);
 	lpHScroll->SetHScrollControl(HSCROLL_ITEM_CONTROL::DRAG_SWAP);
+
+	lpButton = GameUI::CreateUI<UIButton>(this);
+	lpButton->Init(UI_ANCHOR::LEFT_BOTTOM, POINTFLOAT{ 3.0f * 2, 4.0f * 2 }, 35 * 2, 29 * 2, UI_BUTTON_TYPE::BUTTON);
+	lpButton->SetButtonImage("button_exit");
+	lpButton->PushBackFunc(bind([](HWND hWnd) {MessageBox(hWnd, "테스트", "클릭", MB_OK); }, g_hWnd));
 }
 
 void InGameRightMenu::Update(float deltaTime)

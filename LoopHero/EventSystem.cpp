@@ -29,7 +29,6 @@ void EventSystem::InitEventData(EventData& data)
 	data.message[(int)EVENT_TYPE::MOUSE_OUT] = true;
 
 	data.type = EVENT_TYPE::NONE;
-	data.isRemain = data.message;
 	data.slpLastTargets.clear();
 	for (int i = 0; i < data.vlpTargets.size(); ++i)
 	{
@@ -102,7 +101,7 @@ GameObject* EventSystem::FindDispatcherObject(vector<EventTrigger*>& vTargets, G
 void EventSystem::EventProcess()
 {
 	// OnMouseEnter
-	if (eventData.isRemain[(int)EVENT_TYPE::MOUSE_ENTER])
+	if (eventData.message[(int)EVENT_TYPE::MOUSE_ENTER])
 	{
 		eventData.type = EVENT_TYPE::MOUSE_ENTER;
 		for (int i = 0; i < eventData.vlpTargets.size(); ++i)
@@ -119,7 +118,7 @@ void EventSystem::EventProcess()
 	}
 
 	// OnMouseOver
-	if (eventData.isRemain[(int)EVENT_TYPE::MOUSE_OVER])
+	if (eventData.message[(int)EVENT_TYPE::MOUSE_OVER])
 	{
 		eventData.type = EVENT_TYPE::MOUSE_OVER;
 		for (int i = 0; i < eventData.vlpTargets.size(); ++i)
@@ -136,7 +135,7 @@ void EventSystem::EventProcess()
 	}
 
 	// OnMouseOut
-	if (eventData.isRemain[(int)EVENT_TYPE::MOUSE_OUT])
+	if (eventData.message[(int)EVENT_TYPE::MOUSE_OUT])
 	{
 		eventData.type = EVENT_TYPE::MOUSE_OUT;
 		for (int i = 0; i < eventData.vlpTargets.size(); ++i)
@@ -158,7 +157,7 @@ void EventSystem::EventProcess()
 	}
 	
 	// OnClick
-	if (eventData.isRemain[(int)EVENT_TYPE::CLICK])
+	if (eventData.message[(int)EVENT_TYPE::CLICK])
 	{
 		eventData.lpLastTarget = nullptr;
 		eventData.type = EVENT_TYPE::CLICK;
@@ -173,7 +172,7 @@ void EventSystem::EventProcess()
 	}
 
 	// OnEndDrag & OnDrop
-	if (eventData.isRemain[(int)EVENT_TYPE::END_DRAG] && eventData.isRemain[(int)EVENT_TYPE::DROP])
+	if (eventData.message[(int)EVENT_TYPE::END_DRAG] && eventData.message[(int)EVENT_TYPE::DROP])
 	{
 		if (eventData.isDragging)
 		{
@@ -200,7 +199,7 @@ void EventSystem::EventProcess()
 	}
 	
 	// OnDrag || OnBeginDrag
-	if (eventData.isRemain[(int)EVENT_TYPE::DRAG] || eventData.isRemain[(int)EVENT_TYPE::BEGIN_DRAG])
+	if (eventData.message[(int)EVENT_TYPE::DRAG] || eventData.message[(int)EVENT_TYPE::BEGIN_DRAG])
 	{
 		if (eventData.isDragging)
 		{
@@ -270,7 +269,7 @@ void EventSystem::Render(HDC hdc)
 			text = string(typeid(*(eventData.vlpTargets[i])).name()) + ", " + to_string(eventData.vlpTargets[i]->IsCanPassEvent());
 			TextOut(hdc, 300, lineHeight, text.c_str(), text.length());
 		}
-		text = eventData.isRemain.to_string();
+		text = eventData.message.to_string();
 		TextOut(hdc, 300, lineHeight, text.c_str(), text.length());
 	}
 	SetBkMode(hdc, TRANSPARENT);

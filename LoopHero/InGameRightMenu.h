@@ -4,6 +4,7 @@
 class Image;
 class UIGrid;
 class UIHorizontalScroll;
+class UIButton;
 class InGameRightMenu : public GameUI
 {
 private:
@@ -11,6 +12,7 @@ private:
 
 	UIGrid* lpHeroEquip;
 	UIHorizontalScroll* lpHScroll;
+	UIButton* lpButton;
 
 	vector<string> desc;
 public:

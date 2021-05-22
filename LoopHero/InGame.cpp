@@ -25,6 +25,7 @@ HRESULT InGame::Init()
 
     InGameRightMenu* lpRightMenu = GameUI::CreateUI<InGameRightMenu>(lpCanvus);
     lpRightMenu->Init(UI_ANCHOR::RIGHT_TOP, { 0.0f, 0.0f }, 296, WINSIZE_HEIGHT);
+    lpRightMenu->SetEventCatch(EVENT_CATCH::BLOCK_PASS);
 
     InGameHandCard* lpHandCards = GameUI::CreateUI<InGameHandCard>(lpCanvus);
     lpHandCards->Init(UI_ANCHOR::LEFT_BOTTOM, { 0.0f, -48.0f }, WINSIZE_WIDTH - 300, 58 * 2);

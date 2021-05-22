@@ -47,7 +47,21 @@ void FieldTileMap::Release()
 }
 
 void FieldTileMap::Update(float deltaTime)
-{/*
+{
+	if (KeyManager::GetSingleton()->IsKeyOnceDown('T'))
+	{
+		if (lpSelectedTile)
+		{
+			DeselectCard(this);
+		}
+		else
+		{
+			lpSelectedTile = lpTileTable->GetTile("road");
+			if (lpSelectedTile) SelectedTileValidation();
+		}
+	}
+	
+	/*
 	if (PtInRect(&rc, KeyManager::GetSingleton()->GetMousePoint()))
 	{
 		if (KeyManager::GetSingleton()->IsKeyStayDown(VK_LBUTTON))
@@ -143,6 +157,7 @@ bool FieldTileMap::BuildTile(int x, int y, Tile* lpTile)
 			return true;
 		}
 	}
+	DeselectCard(this);
 	return false;
 }
 
@@ -572,6 +587,16 @@ void FieldTileMap::DeselectCard(ObserverHandler* lpObserver)
 		{
 			isPossibleBuild[y][x] = false;
 		}
+	}
+}
+
+void FieldTileMap::OnClick(EventData& data)
+{
+	if (lpSelectedTile)
+	{
+		int x = (data.point.x - FIELD_START_X) / FIELD_TILE_SIZE;
+		int y = (data.point.y - FIELD_START_Y) / FIELD_TILE_SIZE;
+		BuildTile(x, y, lpSelectedTile);
 	}
 }
 

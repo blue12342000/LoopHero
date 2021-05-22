@@ -106,6 +106,9 @@ HRESULT ImageManager::Init()
     mLpImages.insert(make_pair("selection_33", new Image()));
     mLpImages["selection_33"]->Init("Image/UI/Common/selection_33.bmp", 66 * 2, 33 * 2, 2, 1, 2, true, RGB(0, 170, 255));
 
+    mLpImages.insert(make_pair("button_exit", new Image()));
+    mLpImages["button_exit"]->Init("Image/UI/InGame/Button/button_exit.bmp", 35 * 2, 87 * 2, 1, 3, 3, true, RGB(0, 170, 255));
+
     return S_OK;
 }
 
