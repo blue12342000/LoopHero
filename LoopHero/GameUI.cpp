@@ -128,6 +128,18 @@ void GameUI::RemoveChildUI(int index)
 	}
 }
 
+void GameUI::RemoveChildUI(GameUI* lpChild)
+{
+	for (int i = 0; i < vChildUI.size(); ++i)
+	{
+		if (vChildUI[i] == lpChild)
+		{
+			RemoveChildUI(i);
+			break;
+		}
+	}
+}
+
 void GameUI::SetWorldPos(POINT pos)
 {
 	POINTFLOAT thisPos = origin;

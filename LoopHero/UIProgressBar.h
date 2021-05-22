@@ -38,7 +38,5 @@ public:
 
 	void SetTrackingData(float* lpTargetVar, float maxVar);
 	void SetTrackingData(function<float()> lpTargetFunc, float maxVar);
-
-	virtual void OnClick(EventData& data) override;
 };
 

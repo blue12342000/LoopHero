@@ -1,5 +1,9 @@
 #include "FieldTileMap.h"
 #include "TileTable.h"
+#include "UIHorizontalScroll.h"
+#include "UISprite.h"
+#include "Card.h"
+#include "LoopHero.h"
 
 void FieldTileMap::Init()
 {
@@ -26,6 +30,10 @@ void FieldTileMap::Init()
 	lpTileTable->Init();
 
 	lpSelectedTile = nullptr;
+
+	ObserverManager::GetSingleton()->RegisterObserver(this);
+	AddOEventHandler("SelectedCard", bind(&FieldTileMap::SelectedCard, this, placeholders::_1));
+	AddOEventHandler("DeselectCard", bind(&FieldTileMap::DeselectCard, this, placeholders::_1));
 }
 
 void FieldTileMap::Release()
@@ -39,7 +47,7 @@ void FieldTileMap::Release()
 }
 
 void FieldTileMap::Update(float deltaTime)
-{
+{/*
 	if (PtInRect(&rc, KeyManager::GetSingleton()->GetMousePoint()))
 	{
 		if (KeyManager::GetSingleton()->IsKeyStayDown(VK_LBUTTON))
@@ -84,7 +92,7 @@ void FieldTileMap::Update(float deltaTime)
 			}
 			++index;
 		}
-	}
+	}*/
 }
 
 void FieldTileMap::Render(HDC hdc)
@@ -113,6 +121,29 @@ void FieldTileMap::Render(HDC hdc)
 	{
 		TextOut(hdc, 200, 10, lpSelectedTile->name.c_str(), lpSelectedTile->name.length());
 	}
+
+	//RenderRectangle(hdc, rc, RGB(255, 0, 255));
+}
+
+bool FieldTileMap::BuildTile(int x, int y, Tile* lpTile)
+{
+	if (lpTile)
+	{
+		if (isPossibleBuild[y][x])
+		{
+			tiles[y][x].lpTile = lpTile;
+			tiles[y][x].vHistory.push_back(lpTile->id);
+			auto it = mBuildTiles.find(lpTile->id);
+			if (it == mBuildTiles.end())
+			{
+				mBuildTiles.insert(make_pair(lpTile->id, vector<FieldTile*>()));
+			}
+			mBuildTiles[lpTile->id].push_back(&tiles[y][x]);
+			DeselectCard(this);
+			return true;
+		}
+	}
+	return false;
 }
 
 void FieldTileMap::SelectedTileValidation()
@@ -522,15 +553,72 @@ void FieldTileMap::SelectedTileValidation()
 	}
 }
 
+void FieldTileMap::SelectedCard(ObserverHandler* lpObserver)
+{
+	if (typeid(*lpObserver) == typeid(Card))
+	{
+		Card* lpCard = (Card*)(lpObserver);
+		lpSelectedTile = lpTileTable->GetTile(lpCard->GetTileKey());
+		SelectedTileValidation();
+	}
+}
+
+void FieldTileMap::DeselectCard(ObserverHandler* lpObserver)
+{
+	lpSelectedTile = nullptr;
+	for (int y = 0; y < FIELD_TILE_Y; ++y)
+	{
+		for (int x = 0; x < FIELD_TILE_X; ++x)
+		{
+			isPossibleBuild[y][x] = false;
+		}
+	}
+}
+
 void FieldTileMap::OnMouseEnter(EventData& data)
 {
-	MessageBox(g_hWnd, "SelectedTileValidation ½ÇÇà!~", "", MB_OK);
+	if (data.lpDragTarget)
+	{
+		if (typeid(*data.lpDragTarget) == typeid(UIHorizontalScroll))
+		{
+			UIHorizontalScroll* lpHandCard = (UIHorizontalScroll*)data.lpDragTarget;
+			GameUI* lpObject = lpHandCard->GetSelectedObject();
+			if (lpObject && typeid(*lpObject) == typeid(UISprite))
+			{
+				UISprite* lpSprite = (UISprite*)lpObject;
+				Card* lpObject = (Card*)lpSprite->GetGameObject();
+				if (lpObject) SelectedCard(lpObject);
+			}
+		}
+	}
 }
 
 void FieldTileMap::OnMouseOver(EventData& data)
 {
+	//MessageBox(g_hWnd, "OnMouseOver", "", MB_OK);
+}
+
+void FieldTileMap::OnMouseOut(EventData& data)
+{
+	//MessageBox(g_hWnd, "OnMouseOut", "", MB_OK);
+	if (lpSelectedTile) DeselectCard(this);
 }
 
 void FieldTileMap::OnDrop(EventData& data)
 {
+	if (data.lpDragTarget)
+	{
+		if (typeid(*data.lpDragTarget) == typeid(UISprite))
+		{
+			if (lpSelectedTile)
+			{
+				int x = (data.point.x - FIELD_START_X) / FIELD_TILE_SIZE;
+				int y = (data.point.y - FIELD_START_Y) / FIELD_TILE_SIZE;
+				if (BuildTile(x, y, lpSelectedTile))
+				{
+					ObserverManager::GetSingleton()->Notify("UseCard", (UISprite*)data.lpDragTarget);
+				}
+			}
+		}
+	}
 }

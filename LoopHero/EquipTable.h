@@ -26,5 +26,6 @@ public:
 	const EquipInfo* GetEquipInfo(EQUIP_PARTS parts);
 
 	void LoadEquipData();
+
 };
 

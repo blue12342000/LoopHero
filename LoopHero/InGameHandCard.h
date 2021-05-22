@@ -17,8 +17,9 @@ public:
 	virtual void Update(float deltaTime) override;
 	virtual void Render(HDC hdc) override;
 
-	void UICardLoot(ObserverHandler& observer);
-
-
+	void UICardLoot(ObserverHandler* observer);
+	void UseCard(ObserverHandler* observer);
+	
+	virtual void OnMouseEnter(EventData& data) override;
 };
 

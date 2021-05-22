@@ -86,6 +86,8 @@ public:
 
 	inline void SetHScrollControl(HSCROLL_ITEM_CONTROL control) { this->control = control; }
 	inline void SetHScrollEscape(HSCROLL_ITEM_ESCAPE escape) { this->escape = escape; }
+	inline GameUI* GetSelectedObject() { return lpSelected; }
+	inline int GetSelectedIndex() { return selectedIndex; }
 
 private:
 	void SlotResize();

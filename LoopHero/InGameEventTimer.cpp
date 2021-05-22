@@ -14,7 +14,8 @@ void InGameEventTimer::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int hei
 
 	lpBossTimer = GameUI::CreateUI<UIProgressBar>(this);
 	lpBossTimer->Init(UI_ANCHOR::LEFT_TOP, { 17.0f * 2, 22.0f * 2 }, 200, 4, UI_BAR_TYPE::HORIZON, "", "battle_unit_statusbar_hp");
-	lpBossTimer->SetTrackingData(&bossTimer, 10);
+	//lpBossTimer->SetTrackingData(&bossTimer, 10);
+	lpBossTimer->SetTrackingData(bind(&InGameEventTimer::GetBossTimer, this), 10);
 
 	ObserverManager::GetSingleton()->RegisterObserver(this);
 }
@@ -24,7 +25,7 @@ void InGameEventTimer::Update(float deltaTime)
 	dailyTimer += deltaTime;
 	if (dailyTimer > 3)
 	{
-		ObserverManager::GetSingleton()->Notify("DropCard", *this);
+		ObserverManager::GetSingleton()->Notify("DropCard", this);
 		dailyTimer = 0;
 	}
 

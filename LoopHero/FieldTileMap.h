@@ -28,7 +28,6 @@ class TileTable;
 class FieldTileMap : public GameObject
 {
 private:
-	RECT rc;
 	FieldTile tiles[FIELD_TILE_Y][FIELD_TILE_X];
 
 	map<string, vector<FieldTile*>> mBuildTiles;
@@ -45,11 +44,15 @@ public:
 	virtual void Update(float deltaTime) override;
 	virtual void Render(HDC hdc) override;
 
+	bool BuildTile(int x, int y, Tile* lpTile);
 	void SelectedTileValidation();
+	void SelectedCard(ObserverHandler* lpObserver);
+	void DeselectCard(ObserverHandler* lpObserver);
 
 	inline void SetTile(int x, int y, Tile* lpTile) { tiles[y][x].lpTile = lpTile; }
 
 	virtual void OnMouseEnter(EventData& data) override;
 	virtual void OnMouseOver(EventData& data) override;
+	virtual void OnMouseOut(EventData& data) override;
 	virtual void OnDrop(EventData& data) override;
 };

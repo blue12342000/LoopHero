@@ -147,7 +147,7 @@ void UIHorizontalScroll::OnClick(EventData& data)
 {
 	if (control == HSCROLL_ITEM_CONTROL::FIXED)
 	{
-		data.isUsed = false;
+		data.Reset();
 		return;
 	}
 
@@ -172,7 +172,7 @@ void UIHorizontalScroll::OnDrag(EventData& data)
 {
 	if (control == HSCROLL_ITEM_CONTROL::FIXED)
 	{
-		data.isUsed = false;
+		data.Reset();
 		return;
 	}
 
@@ -182,7 +182,7 @@ void UIHorizontalScroll::OnDrag(EventData& data)
 
 		if (control == HSCROLL_ITEM_CONTROL::DRAG)
 		{
-			data.isUsed = false;
+			data.Reset();
 			return;
 		}
 
@@ -202,6 +202,12 @@ void UIHorizontalScroll::OnDrag(EventData& data)
 
 void UIHorizontalScroll::OnEndDrag(EventData& data)
 {
+	if (control == HSCROLL_ITEM_CONTROL::FIXED)
+	{
+		data.Reset();
+		return;
+	}
+
 	if (lpSelected)
 	{
 		switch (align)
@@ -229,7 +235,7 @@ void UIHorizontalScroll::OnEndDrag(EventData& data)
 			vChildUI.insert(vChildUI.begin() + (dragNextIndex + 1), lpSelected);
 			vChildUI.erase(vChildUI.begin() + selectedIndex);
 		}
-		data.lpTarget = lpSelected;
+		data.lpDragTarget = lpSelected;
 		lpSelected->SetVisible(true);
 		lpSelected = nullptr;
 		selectedIndex = -1;

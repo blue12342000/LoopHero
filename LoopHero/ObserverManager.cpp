@@ -16,12 +16,12 @@ void ObserverManager::RemoveObserver(ObserverHandler* lpObserver)
 	sObservers.erase(lpObserver);
 }
 
-void ObserverManager::Notify(string message, ObserverHandler& caller)
+void ObserverManager::Notify(string message, ObserverHandler* lpCaller)
 {
-	for (auto& lpObserver : sObservers)
+	for (auto lpObserver : sObservers)
 	{
-		if (lpObserver == &caller) continue;
+		if (lpObserver == lpCaller) continue;
 
-		lpObserver->Notify(message, caller);
+		lpObserver->Notify(message, lpCaller);
 	}
 }

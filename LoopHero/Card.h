@@ -49,6 +49,7 @@ public:
 
 	inline Image* GetIconImg() { return lpIconImg; }
 	inline Image* GetCardImg() { return lpCardImg; }
+	inline string GetTileKey() { return tileKey; }
 
 	friend class Deck;
 };

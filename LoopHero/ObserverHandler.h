@@ -8,12 +8,14 @@ using namespace std;
 class ObserverHandler
 {
 private:
-	map<string, function<void(ObserverHandler&)>> mOEvents;
+	map<string, function<void(ObserverHandler*)>> mOEvents;
 
 public:
-	void AddOEventHandler(string message, function<void(ObserverHandler&)>);
+	virtual ~ObserverHandler() {}
+
+	void AddOEventHandler(string message, function<void(ObserverHandler*)>);
 	void RemoveOEventHandler(string message);
 
-	void Notify(string message, ObserverHandler& caller);
+	void Notify(string message, ObserverHandler* lpCaller);
 };
 

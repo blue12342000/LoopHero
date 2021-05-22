@@ -21,6 +21,7 @@ HRESULT InGame::Init()
 
     lpCanvus = GameUI::CreateUI<GameUI>();
     lpCanvus->Init(UI_ANCHOR::LEFT_TOP, { 0.0f, 0.0f }, WINSIZE_WIDTH, WINSIZE_HEIGHT);
+    lpCanvus->SetEventCatch(EVENT_CATCH::PASS);
 
     InGameRightMenu* lpRightMenu = GameUI::CreateUI<InGameRightMenu>(lpCanvus);
     lpRightMenu->Init(UI_ANCHOR::RIGHT_TOP, { 0.0f, 0.0f }, 296, WINSIZE_HEIGHT);
@@ -42,6 +43,7 @@ HRESULT InGame::Init()
     lpEventSystem = new EventSystem();
     lpEventSystem->Init();
     lpEventSystem->SetGameUI(lpCanvus);
+    lpEventSystem->SetGameObject(lpFieldTiles);
 
     SetBkMode(lpBuffer->GetMemDC(), TRANSPARENT);
     return S_OK;

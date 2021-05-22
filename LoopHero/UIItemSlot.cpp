@@ -1,5 +1,6 @@
 #include "UIItemSlot.h"
 #include "EquipItem.h"
+#include "UIHorizontalScroll.h"
 #include "UISprite.h"
 #include "Utill.h"
 
@@ -44,9 +45,9 @@ void UIItemSlot::RemoveChildUI(int index)
 
 void UIItemSlot::OnDrop(EventData& data)
 {
-	if (typeid(*data.lpTarget) == typeid(UISprite))
+	if (typeid(*data.lpDragTarget) == typeid(UISprite))
 	{
-		UISprite* lpGameUI = (UISprite*)data.lpTarget;
+		UISprite* lpGameUI = (UISprite*)data.lpDragTarget;
 		if (lpGameUI->GetGameObject() && typeid(*lpGameUI->GetGameObject()) == typeid(EquipItem))
 		{
 			EquipItem* lpEquipItem = (EquipItem*)lpGameUI->GetGameObject();

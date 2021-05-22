@@ -55,6 +55,7 @@ void InGameRightMenu::Update(float deltaTime)
 			UISprite* lpSprite = GameUI::CreateUI<UISprite>();
 			lpSprite->Init(UI_ANCHOR::LEFT_TOP, { 0.0f, 0.0f }, 23 * 2, 23 * 2);
 			lpSprite->SetGameObject(lpEquipItem);
+			lpSprite->SetEventCatch(EVENT_CATCH::BLOCK_PASS);
 			lpHScroll->AddChildUI(lpSprite);
 		}
 	}

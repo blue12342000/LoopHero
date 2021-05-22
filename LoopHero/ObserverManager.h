@@ -16,6 +16,6 @@ public:
 
 	void RegisterObserver(ObserverHandler* lpObserver);
 	void RemoveObserver(ObserverHandler* lpObserver);
-	void Notify(string message, ObserverHandler& caller);
+	void Notify(string message, ObserverHandler* lpCaller);
 };
 

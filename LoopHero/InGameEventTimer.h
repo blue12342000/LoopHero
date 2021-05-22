@@ -16,5 +16,7 @@ public:
 	virtual void Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height) override;
 	virtual void Update(float deltaTime);
 	virtual void Render(HDC hdc) override;
+
+	inline float GetBossTimer() { return bossTimer; }
 };
 

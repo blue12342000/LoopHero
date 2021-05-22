@@ -1,42 +1,39 @@
 #pragma once
+#include "EventSystem.h"
 #include "IClickHandler.h"
 #include "IDragHandler.h"
 #include "IDropHandler.h"
 #include "IHoverHandler.h"
 #include <Windows.h>
 
-enum class EVENT_TYPE
+enum class EVENT_CATCH
 {
-	CLICK,
-	BEGIN_DRAG,
-	DRAG,
-	END_DRAG,
-	MOUSE_ENTER,
-	MOUSE_OVER,
-	MOUSE_OUT,
-	NONE
+	BLOCK,
+	BLOCK_PASS,
+	PASS
 };
 
-class EventTrigger;
-struct EventData
+class EventTrigger : public IClickHandler, public IDragHandler, public IDropHandler, public IHoverHandler
 {
-	bool isUsed;
-	float deltaTime;
-	EVENT_TYPE type;
-	POINT point;
-	EventTrigger* lpTarget;
-};
+private:
+	EVENT_CATCH eventCatch;
 
-class EventTrigger : public IClickHandler, IDragHandler, IDropHandler, IHoverHandler
-{
 public:
-	virtual void OnClick(EventData& data) override { data.isUsed = false; }
-	virtual void OnBeginDrag(EventData& data) override { data.isUsed = false; }
-	virtual void OnDrag(EventData& data) override { data.isUsed = false; }
-	virtual void OnEndDrag(EventData& data) override { data.isUsed = false; }
-	virtual void OnDrop(EventData& data) override { data.isUsed = false; }
-	virtual void OnMouseEnter(EventData& data) { data.isUsed = false; };
-	virtual void OnMouseOver(EventData& data) { data.isUsed = false; };
-	virtual void OnMouseOut(EventData& data) { data.isUsed = false; };
+	EventTrigger():eventCatch(EVENT_CATCH::BLOCK) {}
+	virtual ~EventTrigger() {}
+
+	virtual void OnClick(EventData& data) override { data.Reset(); }
+	virtual void OnBeginDrag(EventData& data) override { data.Reset(); }
+	virtual void OnDrag(EventData& data) override { data.Reset(); }
+	virtual void OnEndDrag(EventData& data) override { data.Reset(); }
+	virtual void OnDrop(EventData& data) override { data.Reset(); }
+	virtual void OnMouseEnter(EventData& data) override { data.Reset(); };
+	virtual void OnMouseOver(EventData& data) override { data.Reset(); };
+	virtual void OnMouseOut(EventData& data) override { data.Reset(); };
+
+	inline bool IsCanCatchEvent() { return eventCatch != EVENT_CATCH::PASS; }
+	inline bool IsCanPassEvent() { return eventCatch != EVENT_CATCH::BLOCK; }
+	inline bool IsAllCatchEvent() { return eventCatch == EVENT_CATCH::BLOCK; }
+	inline void SetEventCatch(EVENT_CATCH eventCatch) { this->eventCatch = eventCatch; }
 };
 

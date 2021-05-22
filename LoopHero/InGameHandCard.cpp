@@ -19,6 +19,7 @@ void InGameHandCard::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int heigh
 
 	ObserverManager::GetSingleton()->RegisterObserver(this);
 	AddOEventHandler("DropCard", bind(&InGameHandCard::UICardLoot, this, placeholders::_1));
+	AddOEventHandler("UseCard", bind(&InGameHandCard::UseCard, this, placeholders::_1));
 }
 
 void InGameHandCard::Release()
@@ -35,6 +36,7 @@ void InGameHandCard::Update(float deltaTime)
 			UISprite* lpSprite = GameUI::CreateUI<UISprite>();
 			lpSprite->Init(UI_ANCHOR::LEFT_TOP, { 0.0f, 0.0f }, 41 * 2, 58 * 2);
 			lpSprite->SetGameObject(GameData::GetSingleton()->PickCard());
+			lpSprite->SetEventCatch(EVENT_CATCH::BLOCK_PASS);
 			lpHScrollView->AddChildUI(lpSprite);
 		}
 	}
@@ -67,10 +69,25 @@ void InGameHandCard::Render(HDC hdc)
 	GameUI::Render(hdc);
 }
 
-void InGameHandCard::UICardLoot(ObserverHandler& observer)
+void InGameHandCard::UICardLoot(ObserverHandler* observer)
 {
 	UISprite* lpSprite = GameUI::CreateUI<UISprite>();
 	lpSprite->Init(UI_ANCHOR::LEFT_TOP, { 0.0f, 0.0f }, 41 * 2, 58 * 2);
 	lpSprite->SetGameObject(GameData::GetSingleton()->PickCard());
+	lpSprite->SetEventCatch(EVENT_CATCH::BLOCK_PASS);
 	lpHScrollView->AddChildUI(lpSprite);
+}
+
+void InGameHandCard::UseCard(ObserverHandler* observer)
+{
+	GameUI* lpGameUI = dynamic_cast<GameUI*>(observer);
+	if (lpGameUI)
+	{
+		((GameUI*)lpHScrollView)->RemoveChildUI(lpGameUI);
+	}
+}
+
+void InGameHandCard::OnMouseEnter(EventData& data)
+{
+	ObserverManager::GetSingleton()->Notify("DeselectCard", this);
 }

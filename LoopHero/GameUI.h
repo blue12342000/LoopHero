@@ -66,7 +66,8 @@ public:
 
 	void InsertChildId(GameUI* lpChild, int index);
 	virtual void AddChildUI(GameUI* lpChild);
-	virtual void RemoveChildUI(int index = 0);
+	virtual void RemoveChildUI(int index);
+	virtual void RemoveChildUI(GameUI* lpChild) final;
 
 	virtual void SetWorldPos(POINT pos) final;
 	virtual POINTFLOAT GetWorldPos() final;
@@ -84,4 +85,5 @@ public:
 	virtual inline int GetDepth() final { return depth; }
 	virtual inline vector<GameUI*> GetChilds() final { return vChildUI; }
 	virtual inline bool IsVisible() final { return isVisible; }
+	virtual inline GameUI* GetParent() { return lpParent; }
 };
