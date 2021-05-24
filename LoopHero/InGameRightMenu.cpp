@@ -6,9 +6,10 @@
 #include "UIHorizontalScroll.h"
 #include "UIGrid.h"
 #include "UISprite.h"
+#include "UITextField.h"
 #include "EquipItem.h"
 #include "Unit.h"
-#include "TileTable.h"
+#include "Trait.h"
 #include "LoopHero.h"
 
 void InGameRightMenu::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
@@ -48,14 +49,19 @@ void InGameRightMenu::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int heig
 	lpButton = GameUI::CreateUI<UIButton>(this);
 	lpButton->Init(UI_ANCHOR::LEFT_BOTTOM, POINTFLOAT{ 3.0f * 2, 4.0f * 2 }, 35 * 2, 29 * 2, UI_BUTTON_TYPE::BUTTON);
 	lpButton->SetButtonImage("button_exit");
-	lpButton->PushBackFunc(bind([](HWND hWnd) {MessageBox(hWnd, "테스트", "클릭", MB_OK); }, g_hWnd));
+	//lpButton->PushBackFunc(bind([](HWND hWnd) {MessageBox(hWnd, "테스트", "클릭", MB_OK); }, g_hWnd));
+
+	UITextField* lpTextField = GameUI::CreateUI<UITextField>(this);
+	lpTextField->Init(UI_ANCHOR::RIGHT_BOTTOM, { 105.0f * 2, 145.0f * 2 }, 200, 50);
+	lpTextField->SetFont(UI_TEXT_HALIGN::CENTER, UI_TEXT_VALIGN::MIDDLE, UI_TEXT_STYLE::BOLD, UI_TEXT_LINE::MULTI, 20, RGB(0, 0, 0), "돋움");
+	lpTextField->SetEventCatch(EVENT_CATCH::BLOCK_PASS);
 }
 
 void InGameRightMenu::Update(float deltaTime)
 {
 	if (KeyManager::GetSingleton()->IsKeyOnceDown('P'))
 	{
-		EquipItem* lpEquipItem = EquipItem::CreateEquip(GameData::GetSingleton()->GetUnit()->GetTraits());
+		EquipItem* lpEquipItem = GameData::GetSingleton()->GetUnit()->GetTrait()->CreateEquip();
 		if (lpEquipItem)
 		{
 			UISprite* lpSprite = GameUI::CreateUI<UISprite>();

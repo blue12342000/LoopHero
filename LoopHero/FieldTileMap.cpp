@@ -1,5 +1,4 @@
 #include "FieldTileMap.h"
-#include "TileTable.h"
 #include "UIHorizontalScroll.h"
 #include "UISprite.h"
 #include "Card.h"
@@ -26,9 +25,6 @@ void FieldTileMap::Init()
 
 	SetRect(&rc, FIELD_START_X, FIELD_START_Y, FIELD_START_X + FIELD_TILE_SIZE * FIELD_TILE_X, FIELD_START_Y + FIELD_TILE_SIZE * FIELD_TILE_Y);
 
-	lpTileTable = new TileTable();
-	lpTileTable->Init();
-
 	lpSelectedTile = nullptr;
 
 	ObserverManager::GetSingleton()->RegisterObserver(this);
@@ -38,12 +34,6 @@ void FieldTileMap::Init()
 
 void FieldTileMap::Release()
 {
-	if (lpTileTable)
-	{
-		lpTileTable->Release();
-		delete lpTileTable;
-		lpTileTable = nullptr;
-	}
 }
 
 void FieldTileMap::Update(float deltaTime)
@@ -56,57 +46,10 @@ void FieldTileMap::Update(float deltaTime)
 		}
 		else
 		{
-			lpSelectedTile = lpTileTable->GetTile("road");
+			lpSelectedTile = GameData::GetSingleton()->GetTile("road");
 			if (lpSelectedTile) SelectedTileValidation();
 		}
 	}
-	
-	/*
-	if (PtInRect(&rc, KeyManager::GetSingleton()->GetMousePoint()))
-	{
-		if (KeyManager::GetSingleton()->IsKeyStayDown(VK_LBUTTON))
-		{
-			POINT mPoint = KeyManager::GetSingleton()->GetMousePoint();
-			int x = (mPoint.x - FIELD_START_X) / FIELD_TILE_SIZE;
-			int y = (mPoint.y - FIELD_START_Y) / FIELD_TILE_SIZE;
-
-			tiles[y][x].frameX += 1;
-			tiles[y][x].frameY += 1;
-
-			if (lpSelectedTile)
-			{
-				if (isPossibleBuild[y][x])
-				{
-					tiles[y][x].lpTile = lpSelectedTile;
-					tiles[y][x].vHistory.push_back(lpSelectedTile->id);
-					auto it = mBuildTiles.find(lpSelectedTile->id);
-					if (it == mBuildTiles.end())
-					{
-						mBuildTiles.insert(make_pair(lpSelectedTile->id, vector<FieldTile*>()));
-					}
-					mBuildTiles[lpSelectedTile->id].push_back(&tiles[y][x]);
-					SelectedTileValidation();
-				}
-			}
-		}
-	}
-	else
-	{
-		int index = 0;
-		for (const RECT& trc : lpTileTable->GetVRects())
-		{
-			if (PtInRect(&trc, KeyManager::GetSingleton()->GetMousePoint()))
-			{
-				if (KeyManager::GetSingleton()->IsKeyOnceDown(VK_LBUTTON))
-				{
-					lpSelectedTile = lpTileTable->GetTile(index);
-					SelectedTileValidation();
-				}
-				break;
-			}
-			++index;
-		}
-	}*/
 }
 
 void FieldTileMap::Render(HDC hdc)
@@ -129,7 +72,7 @@ void FieldTileMap::Render(HDC hdc)
 		}
 	}
 
-	lpTileTable->Render(hdc);
+	//lpTileTable->Render(hdc);
 
 	if (lpSelectedTile)
 	{
@@ -573,7 +516,7 @@ void FieldTileMap::SelectedCard(ObserverHandler* lpObserver)
 	if (typeid(*lpObserver) == typeid(Card))
 	{
 		Card* lpCard = (Card*)(lpObserver);
-		lpSelectedTile = lpTileTable->GetTile(lpCard->GetTileKey());
+		lpSelectedTile = GameData::GetSingleton()->GetTile(lpCard->GetTileKey());
 		SelectedTileValidation();
 	}
 }
@@ -588,6 +531,11 @@ void FieldTileMap::DeselectCard(ObserverHandler* lpObserver)
 			isPossibleBuild[y][x] = false;
 		}
 	}
+}
+
+void FieldTileMap::SetTile(int x, int y, Tile* lpTile)
+{
+	tiles[y][x].lpTile = lpTile;
 }
 
 void FieldTileMap::OnClick(EventData& data)

@@ -24,7 +24,6 @@ struct FieldTile
 	vector<string> vHistory;
 };
 
-class TileTable;
 class FieldTileMap : public GameObject
 {
 private:
@@ -34,7 +33,6 @@ private:
 
 	Tile* lpSelectedTile;
 	bool isPossibleBuild[FIELD_TILE_Y][FIELD_TILE_X];
-	TileTable* lpTileTable;
 
 public:
 	virtual ~FieldTileMap() {}
@@ -49,7 +47,7 @@ public:
 	void SelectedCard(ObserverHandler* lpObserver);
 	void DeselectCard(ObserverHandler* lpObserver);
 
-	inline void SetTile(int x, int y, Tile* lpTile) { tiles[y][x].lpTile = lpTile; }
+	void SetTile(int x, int y, Tile* lpTile);
 
 	virtual void OnClick(EventData& data) override;
 	virtual void OnMouseEnter(EventData& data) override;

@@ -38,8 +38,8 @@ public:
 	void PushBackFunc(function<void()> func);
 	void PopFunc();
 
-	virtual void OnClick(EventData& data) override;
-	virtual void OnMouseOver(EventData& data) override;
-	virtual void OnMouseOut(EventData& data) override;
+	virtual void OnClick(EventData& data) final;
+	virtual void OnMouseOver(EventData& data) final;
+	virtual void OnMouseOut(EventData& data) final;
 };
 

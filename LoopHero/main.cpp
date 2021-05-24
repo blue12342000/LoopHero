@@ -17,8 +17,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPreInstance, LPSTR lpCmdLin
 	wndClass.cbClsExtra = 0;
 	wndClass.cbWndExtra = 0;
 	wndClass.hbrBackground = (HBRUSH)GetStockObject(WHITENESS);
-	wndClass.hCursor = LoadCursor(g_hInstance, IDC_ARROW);
-	wndClass.hIcon = LoadIcon(g_hInstance, IDI_APPLICATION);
+	wndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
 	wndClass.hInstance = g_hInstance;
 	wndClass.lpfnWndProc = WndProc;
 	wndClass.lpszClassName = g_lpszClass;

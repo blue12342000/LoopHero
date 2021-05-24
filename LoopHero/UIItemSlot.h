@@ -4,12 +4,17 @@
 enum class EQUIP_PARTS;
 class EquipItem;
 class UISprite;
+class Image;
 class UIItemSlot : public GameUI
 {
 private:
 	EQUIP_PARTS parts;
 	EquipItem* lpItem;
 	UISprite* lpSprite;
+
+	bool isHover;
+	float frame;
+	Image* lpHighlight;
 
 public:
 	virtual void Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height, EQUIP_PARTS parts);
@@ -21,5 +26,6 @@ public:
 
 	virtual void OnDrop(EventData& data) override;
 	virtual void OnMouseOver(EventData& data) override;
+	virtual void OnMouseOut(EventData& data) override;
 };
 

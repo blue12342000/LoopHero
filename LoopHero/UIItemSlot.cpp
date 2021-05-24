@@ -3,6 +3,7 @@
 #include "UIHorizontalScroll.h"
 #include "UISprite.h"
 #include "Utill.h"
+#include "Image.h"
 
 void UIItemSlot::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height, EQUIP_PARTS parts)
 {
@@ -11,6 +12,9 @@ void UIItemSlot::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height, E
 	this->parts = parts;
 	this->lpItem = nullptr;
 	this->lpSprite = nullptr;
+
+	isHover = false;
+	lpHighlight = ImageManager::GetSingleton()->FindImage("selection_33");
 }
 
 void UIItemSlot::Update(float deltaTime)
@@ -21,7 +25,11 @@ void UIItemSlot::Update(float deltaTime)
 		newPos.x += -lpSprite->GetPos().x * 10 * deltaTime;
 		newPos.y += -lpSprite->GetPos().y * 10 * deltaTime;
 		lpSprite->SetPos(newPos);
+
+		frame += 10 * deltaTime;
+		if (frame >= lpHighlight->GetTotalFrame()) frame = 0;
 	}
+
 	GameUI::Update(deltaTime);
 }
 
@@ -29,6 +37,11 @@ void UIItemSlot::Render(HDC hdc)
 {
 	//RenderRectangle(hdc, rc);
 	GameUI::Render(hdc);
+
+	if (isHover)
+	{
+		lpHighlight->Render(hdc, GetCenter().x, GetCenter().y, (int)frame, IMAGE_ALIGN::CENTER);
+	}
 }
 
 void UIItemSlot::AddChildUI(GameUI* lpChild)
@@ -66,4 +79,13 @@ void UIItemSlot::OnDrop(EventData& data)
 
 void UIItemSlot::OnMouseOver(EventData& data)
 {
+	if (!data.isDragging && lpSprite)
+	{
+		isHover = true;
+	}
+}
+
+void UIItemSlot::OnMouseOut(EventData& data)
+{
+	isHover = false;
 }

@@ -42,6 +42,7 @@ void UIButton::OnClick()
 void UIButton::CallBack(ObserverHandler* lpCaller)
 {
 	OnClick();
+	state = UI_BUTTON_STATE::NORMAL;
 }
 
 void UIButton::PushBackFunc(function<void()> func)

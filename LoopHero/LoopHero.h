@@ -28,3 +28,4 @@ extern bool isDebugMode;
 #include "DataManager.h"
 #include "GameData.h"
 #include "ObserverManager.h"
+#include "PoolingManager.h"

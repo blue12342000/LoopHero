@@ -17,7 +17,7 @@ enum class EQUIP_PARTS
 };
 
 enum class UNIT_STATUS;
-class Traits;
+class Trait;
 class EquipItem : public Item
 {
 private:
@@ -35,8 +35,8 @@ public:
 	virtual void Update(float deltaTime);
 	virtual void Render(HDC hdc);
 
-	static EquipItem* CreateEquip(const Traits* lpTraits);
-
 	inline EQUIP_PARTS GetParts() { return parts; }
+
+	friend class Trait;
 };
 

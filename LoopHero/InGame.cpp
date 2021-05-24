@@ -2,15 +2,15 @@
 #include "LoopHero.h"
 #include "Image.h"
 #include "FieldTileMap.h"
-#include "TileTable.h"
 #include "UISprite.h"
 #include "UIProgressBar.h"
 #include "InGameRightMenu.h"
 #include "InGameHandCard.h"
 #include "InGameEventTimer.h"
+#include "UIBattleWindow.h"
 #include "Card.h"
 #include "Unit.h"
-#include "TraitsTable.h"
+#include "Trait.h"
 #include "EventSystem.h"
 #include <functional>
 
@@ -36,10 +36,14 @@ HRESULT InGame::Init()
     lpFieldTiles = GameObject::Create<FieldTileMap>();
     lpFieldTiles->Init();
 
-    lpUnit = GameData::GetSingleton()->GetTraitTable()->CreateUnit("Warrior");
+    lpUnit = Trait::NewUnit("Warrior");
+    lpUnit->SetPos({ WINSIZE_WIDTH / 2.0f, WINSIZE_HEIGHT / 2.0f });
     //lpEquipItem = EquipItem::CreateEquip(lpUnit->GetTraits());
 
     GameData::GetSingleton()->SetUnit(lpUnit);
+
+    lpBattleWindow = GameUI::CreateUI<UIBattleWindow>(lpCanvus);
+    lpBattleWindow->Init(UI_ANCHOR::MIDDLE, { -100, 0.0f }, 301 * 2, 257 * 2);
 
     lpEventSystem = new EventSystem();
     lpEventSystem->Init();
@@ -85,11 +89,20 @@ void InGame::Release()
 
 void InGame::Update(float deltaTime)
 {
+    ObserverManager::GetSingleton()->ProcessingMessage();
+
+    if (KeyManager::GetSingleton()->IsKeyOnceDown('B'))
+    {
+
+    }
+
     lpEventSystem->Update(deltaTime);
     lpCanvus->Update(deltaTime);
     lpFieldTiles->Update(deltaTime);
 
     lpCanvus->LateUpdate(deltaTime);
+
+    lpUnit->Update(deltaTime);
 }
 
 void InGame::Render(HDC hdc)
@@ -101,11 +114,11 @@ void InGame::Render(HDC hdc)
     //UI
     lpFieldTiles->Render(hMemDC);
 
-    lpUnit->Render(hMemDC);
     lpCanvus->Render(hMemDC);
 
     // µð¹ö±×
     lpEventSystem->Render(hMemDC);
+    lpUnit->Render(hMemDC);
 
     lpBuffer->Render(hdc);
 }

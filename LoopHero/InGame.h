@@ -8,6 +8,7 @@ class GameUI;
 class EquipItem;
 class Unit;
 class EventSystem;
+class UIBattleWindow;
 class InGame : public Scene
 {
 private:
@@ -20,6 +21,8 @@ private:
 
 	Unit* lpUnit;
 	EquipItem* lpEquipItem;
+
+	UIBattleWindow* lpBattleWindow;
 
 	EventSystem* lpEventSystem;
 

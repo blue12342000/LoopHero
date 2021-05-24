@@ -303,8 +303,15 @@ void Image::Fill()
     }
 }
 
-void Image::Render(HDC hdc, int destX, int destY, int frame, UINT uFlag)
+void Image::Render(HDC hdc, int destX, int destY, int frame, IMAGE_ALIGN align)
 {
+    switch (align)
+    {
+    case IMAGE_ALIGN::CENTER:
+        destX -= lpImageInfo->width / 2;
+        destY -= lpImageInfo->height / 2;
+    }
+
     //switch (uFlag)
     //{
     //case U_IA_CENTER:

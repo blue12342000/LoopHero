@@ -109,6 +109,19 @@ HRESULT ImageManager::Init()
     mLpImages.insert(make_pair("button_exit", new Image()));
     mLpImages["button_exit"]->Init("Image/UI/InGame/Button/button_exit.bmp", 35 * 2, 87 * 2, 1, 3, 3, true, RGB(0, 170, 255));
 
+    mLpImages.insert(make_pair("Warrior_icon", new Image()));
+    mLpImages["Warrior_icon"]->Init("Image/ObjectIcon/hero_icon.bmp", 56 * 2, 14 * 2, 4, 1, 4, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("Warrior_idle", new Image()));
+    mLpImages["Warrior_idle"]->Init("Image/Hero/Warrior/hero_idle.bmp", 60 * 2, 39 * 2, 1, 1, 1, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("Warrior_attack", new Image()));
+    mLpImages["Warrior_attack"]->Init("Image/Hero/Warrior/hero_attack.bmp", 300 * 2, 39 * 2, 5, 1, 5, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("Warrior_hurt", new Image()));
+    mLpImages["Warrior_hurt"]->Init("Image/Hero/Warrior/hero_hurt.bmp", 240 * 2, 39 * 2, 4, 1, 4, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("Warrior_death", new Image()));
+    mLpImages["Warrior_death"]->Init("Image/Hero/Warrior/hero_death.bmp", 300 * 2, 39 * 2, 5, 1, 5, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("Warrior_revive", new Image()));
+    mLpImages["Warrior_revive"]->Init("Image/Hero/Warrior/hero_revive.bmp", 360 * 2, 39 * 2, 6, 1, 6, true, RGB(0, 170, 255));
+
     return S_OK;
 }
 

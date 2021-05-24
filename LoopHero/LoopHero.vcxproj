@@ -143,13 +143,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Card.cpp" />
+    <ClCompile Include="Character.cpp" />
     <ClCompile Include="DataManager.cpp" />
     <ClCompile Include="Deck.cpp" />
     <ClCompile Include="EquipItem.cpp" />
-    <ClCompile Include="EquipTable.cpp" />
     <ClCompile Include="EventSystem.cpp" />
     <ClCompile Include="EventTrigger.cpp" />
+    <ClCompile Include="FieldTile.cpp" />
     <ClCompile Include="FieldTileMap.cpp" />
     <ClCompile Include="GameData.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -157,7 +159,9 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ObserverHandler.cpp" />
     <ClCompile Include="ObserverManager.cpp" />
-    <ClCompile Include="TraitsTable.cpp" />
+    <ClCompile Include="PoolingManager.cpp" />
+    <ClCompile Include="Trait.cpp" />
+    <ClCompile Include="UIBattleWindow.cpp" />
     <ClCompile Include="UIButton.cpp" />
     <ClCompile Include="UIHorizontalScroll.cpp" />
     <ClCompile Include="Image.cpp" />
@@ -172,24 +176,28 @@
     <ClCompile Include="UIItemSlot.cpp" />
     <ClCompile Include="UIProgressBar.cpp" />
     <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="TileTable.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="UISprite.cpp" />
     <ClCompile Include="UIGrid.cpp" />
+    <ClCompile Include="UITextField.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="Utill.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
     <ClInclude Include="Card.h" />
+    <ClInclude Include="Character.h" />
     <ClInclude Include="DataManager.h" />
     <ClInclude Include="Deck.h" />
     <ClInclude Include="EquipItem.h" />
-    <ClInclude Include="EquipTable.h" />
     <ClInclude Include="EventSystem.h" />
     <ClInclude Include="EventTrigger.h" />
+    <ClInclude Include="FieldTile.h" />
     <ClInclude Include="FieldTileMap.h" />
     <ClInclude Include="GameData.h" />
+    <ClInclude Include="GameNode.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="PoolingManager.h" />
     <ClInclude Include="GameUI.h" />
     <ClInclude Include="IClickHandler.h" />
     <ClInclude Include="IDragHandler.h" />
@@ -198,7 +206,8 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="ObserverHandler.h" />
     <ClInclude Include="ObserverManager.h" />
-    <ClInclude Include="TraitsTable.h" />
+    <ClInclude Include="Trait.h" />
+    <ClInclude Include="UIBattleWindow.h" />
     <ClInclude Include="UIButton.h" />
     <ClInclude Include="UIHorizontalScroll.h" />
     <ClInclude Include="Image.h" />
@@ -215,12 +224,15 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />
-    <ClInclude Include="TileTable.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="UISprite.h" />
     <ClInclude Include="UIGrid.h" />
+    <ClInclude Include="UITextField.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="Utill.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -2,20 +2,17 @@
 #include "LoopHero.h"
 #include "EventTrigger.h"
 #include "ObserverHandler.h"
+#include "GameNode.h"
 
-class GameObject : public EventTrigger, public ObserverHandler
+class GameObject : public GameNode, public EventTrigger, public ObserverHandler
 {
 protected:
 	bool isVisible;
-	int depth;
 	POINTFLOAT pos;
 	RECT rc;
 
 	GameObject* lpParent;
 	vector<GameObject*> vChilds;
-
-protected:
-	GameObject() {}
 
 public:
 	virtual ~GameObject() {}
@@ -29,17 +26,11 @@ public:
 	template<typename T>
 	static T* Create(GameObject* lpParent = nullptr)
 	{
-		T* lpGameObject = new T;
+		T* lpGameObject = PoolingManager::GetSingleton()->GetClass<T>();
+		if (!lpGameObject) lpGameObject = new T;
+
 		lpGameObject->lpParent = lpParent;
-		if (!lpParent)
-		{
-			lpGameObject->depth = 0;
-		}
-		else
-		{
-			lpGameObject->depth = lpParent->depth + 1;
-			lpParent->vChilds.push_back(lpGameObject);
-		}
+		if (lpParent) lpParent->vChilds.push_back(lpGameObject);
 		return lpGameObject;
 	}
 
@@ -58,7 +49,6 @@ public:
 	virtual inline POINTFLOAT GetPos() final { return pos; }
 	virtual inline RECT GetRect() final { return rc; }
 	virtual inline int GetChildCount() final { return vChilds.size(); }
-	virtual inline int GetDepth() final { return depth; }
 	virtual inline vector<GameObject*> GetChilds() final { return vChilds; }
 	virtual inline bool IsVisible() final { return isVisible; }
 };

@@ -35,16 +35,6 @@ enum class UNIT_SLOT
 	NONE
 };
 
-enum class UNIT_STATE
-{
-	ICON,
-	IDLE,
-	ATTACK,
-	DEATH,
-	HURT,
-	REVIVE
-};
-
 class EquipItem;
 enum class EQUIP_PARTS;
 struct EquipSlot
@@ -53,16 +43,23 @@ struct EquipSlot
 	EquipItem* lpEquip;
 };
 
-class Traits;
+class Trait;
+class Animation;
+class Character;
 class Unit : public GameObject
 {
 private:
-	map<UNIT_STATE, Image*> mStateImages;
+	string name;
+	float currHp;
+
+	Animation* lpIcon;
+	Character* lpCharacter;
+
+	Trait* lpTrait;
 	map<UNIT_STATUS, float> mStatus;
 	map<UNIT_SLOT, EquipSlot> mEquip;
-	Traits* lpTraits;
 
-	float currHp;
+	vector<EquipItem*> vEquipInven;
 
 public:
 	virtual void Init();
@@ -70,9 +67,15 @@ public:
 	virtual void Update(float deltaTime);
 	virtual void Render(HDC hdc);
 
-	inline float GetCurrHp() { return currHp; }
-	inline const Traits* GetTraits() { return lpTraits; }
+	void Idle();
+	void Hit(float dmg);
+	void Attack();
+	void Revive();
+	void Death();
 
-	friend class TraitsTable;
+	void SetTrait(Trait& trait);
+
+	inline float GetCurrHp() { return currHp; }
+	inline Trait* GetTrait() { return lpTrait; }
 };
 

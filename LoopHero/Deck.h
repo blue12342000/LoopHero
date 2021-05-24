@@ -25,5 +25,4 @@ public:
 private:
 	Card* CreateCard(string cardId);
 	void LoadCardData();
-
 };

@@ -2,6 +2,7 @@
 #include "LoopHero.h"
 #include "EventTrigger.h"
 #include "ObserverHandler.h"
+#include "GameNode.h"
 
 enum class UI_ANCHOR
 {
@@ -17,7 +18,7 @@ enum class UI_ANCHOR
 	NONE
 };
 
-class GameUI : public EventTrigger, public ObserverHandler
+class GameUI : public GameNode, public EventTrigger, public ObserverHandler
 {
 protected:
 	bool isVisible;
@@ -50,17 +51,11 @@ public:
 	template<typename T>
 	static T* CreateUI(GameUI* lpParent = nullptr)
 	{
-		T* lpGameUI = new T;
+		T* lpGameUI = PoolingManager::GetSingleton()->GetClass<T>();
+		if (!lpGameUI) lpGameUI = new T;
+
 		lpGameUI->lpParent = lpParent;
-		if (!lpParent)
-		{
-			lpGameUI->depth = 0;
-		}
-		else
-		{
-			lpGameUI->depth = lpParent->depth + 1;
-			lpParent->vChildUI.push_back(lpGameUI);
-		}
+		if (lpParent) lpParent->vChildUI.push_back(lpGameUI);
 		return lpGameUI;
 	}
 
@@ -86,4 +81,5 @@ public:
 	virtual inline vector<GameUI*> GetChilds() final { return vChildUI; }
 	virtual inline bool IsVisible() final { return isVisible; }
 	virtual inline GameUI* GetParent() { return lpParent; }
+	virtual inline POINT GetCenter() final { return { (rc.left + rc.right) / 2, (rc.top + rc.bottom) / 2 }; }
 };

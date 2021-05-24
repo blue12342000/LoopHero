@@ -1,6 +1,13 @@
 #pragma once
 #include "LoopHero.h"
 
+enum class IMAGE_ALIGN
+{
+	LEFT_TOP,
+	CENTER,
+	MIDDLE_BOTTOM,
+};
+
 class Image
 {
 public:
@@ -69,7 +76,7 @@ public:
 
 	void Fill();
 
-	void Render(HDC hdc, int destX = 0, int destY = 0, int frame = 0, UINT uFlag = 0);
+	void Render(HDC hdc, int destX = 0, int destY = 0, int frame = 0, IMAGE_ALIGN align = IMAGE_ALIGN::LEFT_TOP);
 	void Render(HDC hdc, int destX, int destY, POINT frame);
 	void AlphaRender(HDC hdc, int destX, int destY);
 	void RotateRender(HDC hdc, int destX, int destY, float angle, int frame);

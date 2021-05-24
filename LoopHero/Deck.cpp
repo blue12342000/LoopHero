@@ -80,7 +80,6 @@ Card* Deck::GetRandomCard()
 Card* Deck::CreateCard(string cardId)
 {
 	Card* lpCard = GameObject::Create<Card>();
-
 	lpCard->Init();
 	lpCard->id = cardId;
 	lpCard->lpIconImg = ImageManager::GetSingleton()->FindImage(cardId + "_icon");
