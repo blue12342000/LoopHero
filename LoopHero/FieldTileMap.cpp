@@ -3,6 +3,7 @@
 #include "UISprite.h"
 #include "Card.h"
 #include "LoopHero.h"
+#include "Image.h"
 
 void FieldTileMap::Init()
 {
@@ -58,15 +59,17 @@ void FieldTileMap::Render(HDC hdc)
 	{
 		for (int x = 0; x < FIELD_TILE_X; ++x)
 		{
-			Rectangle(hdc, tiles[y][x].rc.left, tiles[y][x].rc.top, tiles[y][x].rc.right, tiles[y][x].rc.bottom);
+			//Rectangle(hdc, tiles[y][x].rc.left, tiles[y][x].rc.top, tiles[y][x].rc.right, tiles[y][x].rc.bottom);
 			if (isPossibleBuild[y][x])
 			{
-				TextOut(hdc, tiles[y][x].rc.left, tiles[y][x].rc.top + 30, "O", 1);
+				//TextOut(hdc, tiles[y][x].rc.left, tiles[y][x].rc.top + 30, "O", 1);
+				ImageManager::GetSingleton()->FindImage("possible_tile")->Render(hdc, tiles[y][x].rc.left, tiles[y][x].rc.top);
 			}
 			if (tiles[y][x].lpTile)
 			{
 				string str = tiles[y][x].lpTile->name;
-				TextOut(hdc, tiles[y][x].rc.left, tiles[y][x].rc.top, str.c_str(), str.length());
+				//TextOut(hdc, tiles[y][x].rc.left, tiles[y][x].rc.top, str.c_str(), str.length());
+				tiles[y][x].lpTile->mLpImage[TILE_TYPE::TILE]->Render(hdc, (tiles[y][x].rc.left + tiles[y][x].rc.right) / 2, tiles[y][x].rc.bottom, POINT{0, 0}, IMAGE_ALIGN::MIDDLE_BOTTOM);
 			}
 
 		}
@@ -76,7 +79,9 @@ void FieldTileMap::Render(HDC hdc)
 
 	if (lpSelectedTile)
 	{
-		TextOut(hdc, 200, 10, lpSelectedTile->name.c_str(), lpSelectedTile->name.length());
+		POINT mPos = KeyManager::GetSingleton()->GetMousePoint();
+		lpSelectedTile->mLpImage[TILE_TYPE::SELECT]->Render(hdc, mPos.x, mPos.y, POINT{ 0, 0 }, IMAGE_ALIGN::CENTER);
+		//TextOut(hdc, 200, 10, lpSelectedTile->name.c_str(), lpSelectedTile->name.length());
 	}
 
 	//RenderRectangle(hdc, rc, RGB(255, 0, 255));

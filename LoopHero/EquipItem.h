@@ -37,6 +37,8 @@ public:
 
 	inline EQUIP_PARTS GetParts() { return parts; }
 
+	string ToString() override;
+
 	friend class Trait;
 };
 

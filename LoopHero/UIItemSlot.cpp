@@ -77,6 +77,10 @@ void UIItemSlot::OnDrop(EventData& data)
 	}
 }
 
+void UIItemSlot::OnMouseEnter(EventData& data)
+{
+}
+
 void UIItemSlot::OnMouseOver(EventData& data)
 {
 	if (!data.isDragging && lpSprite)

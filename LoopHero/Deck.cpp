@@ -50,7 +50,22 @@ void Deck::Render(HDC hdc)
 
 Card* Deck::GetRandomCard()
 {
-	CARD_RARE rare = CARD_RARE::NORMAL;
+	CARD_RARE rare = (CARD_RARE)(rand() % (int)CARD_RARE::NONE);
+	int randRank = rand() % 100;
+	if (randRank < 70)
+	{
+		rare = CARD_RARE::NORMAL;
+	}
+	else if (randRank < 95)
+	{
+		rare = CARD_RARE::RARE;
+	}
+	else if (randRank < 100)
+	{
+		rare = CARD_RARE::UNIQUE;
+	}
+
+	//CARD_RARE rare = CARD_RARE::UNIQUE;
 	vector<Card*> vCards = mCardListByRare[rare];
 	if (!vCards.empty())
 	{

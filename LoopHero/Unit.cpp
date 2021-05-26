@@ -4,12 +4,10 @@
 #include "EquipItem.h"
 #include "Image.h"
 #include "Animation.h"
-#include "Character.h"
 
 void Unit::Init()
 {
 	lpIcon = nullptr;
-	lpCharacter = nullptr;
 }
 
 void Unit::Release()
@@ -21,31 +19,16 @@ void Unit::Release()
 		delete lpIcon;
 		lpIcon = nullptr;
 	}
-
-	if (lpCharacter)
-	{
-		lpCharacter->Release();
-		delete lpCharacter;
-		lpCharacter = nullptr;
-	}
 }
 
 void Unit::Update(float deltaTime)
 {
-	if (KeyManager::GetSingleton()->IsKeyOnceDown('H'))
-	{
-		lpCharacter->Attack();
-		lpIcon->Play();
-	}
-
 	if (lpIcon) lpIcon->Update(deltaTime);
-	if (lpCharacter) lpCharacter->Update(deltaTime);
 }
 
 void Unit::Render(HDC hdc)
 {
 	if (lpIcon) lpIcon->Render(hdc, pos.x, pos.y);
-	if (lpCharacter) lpCharacter->Render(hdc, pos.x + 100, pos.y);
 }
 
 void Unit::Idle()
@@ -54,18 +37,22 @@ void Unit::Idle()
 
 void Unit::Hit(float dmg)
 {
+
 }
 
 void Unit::Attack()
 {
+
 }
 
 void Unit::Revive()
 {
+
 }
 
 void Unit::Death()
 {
+
 }
 
 void Unit::SetTrait(Trait& trait)
@@ -81,7 +68,25 @@ void Unit::SetTrait(Trait& trait)
 	}
 	lpIcon = new Animation();
 	lpIcon->Init(name + "_icon", ANIMATION_TYPE::LOOP, 5);
+}
 
-	lpCharacter = new Character();
-	lpCharacter->Init(name);
+string Unit::ToString()
+{
+	string desc = "";
+
+	int n = (int)UNIT_STATUS::NONE;
+	UNIT_STATUS status;
+	string var, content = "";
+	for (int i = 0; i < n; ++i)
+	{
+		status = (UNIT_STATUS)i;
+		if (mStatus.find(status) != mStatus.end())
+		{
+			if (content.size() > 0) content += "\n";
+			var = to_string(mStatus[status]);
+			content += GameData::GetSingleton()->GetLang(status) + ": " + var.substr(0, var.find_first_of('.') + 2);
+		}
+	}
+
+	return name + "|" + content;
 }

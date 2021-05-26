@@ -6,7 +6,7 @@
 #include "UIHorizontalScroll.h"
 #include "UIGrid.h"
 #include "UISprite.h"
-#include "UITextField.h"
+#include "UIInGameInfo.h"
 #include "EquipItem.h"
 #include "Unit.h"
 #include "Trait.h"
@@ -51,10 +51,10 @@ void InGameRightMenu::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int heig
 	lpButton->SetButtonImage("button_exit");
 	//lpButton->PushBackFunc(bind([](HWND hWnd) {MessageBox(hWnd, "테스트", "클릭", MB_OK); }, g_hWnd));
 
-	UITextField* lpTextField = GameUI::CreateUI<UITextField>(this);
-	lpTextField->Init(UI_ANCHOR::RIGHT_BOTTOM, { 105.0f * 2, 145.0f * 2 }, 200, 50);
-	lpTextField->SetFont(UI_TEXT_HALIGN::CENTER, UI_TEXT_VALIGN::MIDDLE, UI_TEXT_STYLE::BOLD, UI_TEXT_LINE::MULTI, 20, RGB(0, 0, 0), "돋움");
-	lpTextField->SetEventCatch(EVENT_CATCH::BLOCK_PASS);
+	lpGameInfo = GameUI::CreateUI<UIInGameInfo>(this);
+	lpGameInfo->Init(UI_ANCHOR::RIGHT_BOTTOM, { 15.0f, 10.0f }, 195, 285);
+	lpGameInfo->SetTitle("LoopHero");
+	lpGameInfo->SetContent("유닛 설명 & 타일 설명 & 아이템 설명");
 }
 
 void InGameRightMenu::Update(float deltaTime)

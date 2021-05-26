@@ -17,6 +17,13 @@ struct EquipInfo
 	set<UNIT_STATUS> sBonusStatus;
 };
 
+enum class TILE_TYPE
+{
+	TILE,
+	SELECT,
+	WHITE
+};
+
 class Image;
 struct Tile
 {
@@ -24,6 +31,7 @@ struct Tile
 	string name;
 	string desc;
 	vector<string> vEtc;
+	map<TILE_TYPE, Image*> mLpImage;
 
 	// 설치할수 있는 정보
 	bool checkTiles[3][3];
@@ -36,17 +44,19 @@ struct Tile
 enum class UNIT_SLOT;
 enum class EQUIP_PARTS;
 class EquipItem;
-
 class Card;
 class Deck;
-class TraitsTable;
-class EquipTable;
 class Unit;
 class Trait;
-class Tile;
 class GameData : public Singleton<GameData>
 {
 private:
+	// 타입별 글자
+	map<UNIT_SLOT, string> mUnitSlotLang;
+	map<UNIT_STATUS, string> mUnitStatusLang;
+	map<EQUIP_PARTS, string> mEquipPartsLang;
+
+	// 키값
 	map<string, UNIT_SLOT> mUnitSlot;
 	map<string, UNIT_STATUS> mUnitStatus;
 	map<string, EQUIP_PARTS> mEquipParts;
@@ -79,6 +89,10 @@ public:
 
 	const EquipInfo* GetEquipInfo(EQUIP_PARTS parts);
 	Trait* GetTrait(string traitKey);
+
+	string GetLang(UNIT_SLOT slot);
+	string GetLang(UNIT_STATUS status);
+	string GetLang(EQUIP_PARTS parts);
 
 	inline vector<pair<string, Tile*>> GetVMapList() { vector<pair<string, Tile*>> vList(mLpTiles.begin(), mLpTiles.end()); return vList; };
 	inline Tile* GetTile(int index) { return (index < mLpTiles.size()) ? next(mLpTiles.begin(), index)->second : nullptr; }

@@ -13,6 +13,7 @@ enum class ANIMATION_TYPE
 	ONCE
 };
 
+enum class IMAGE_ALIGN;
 class Image;
 class Animation
 {
@@ -33,12 +34,15 @@ public:
 	void Init(string imageKey, ANIMATION_TYPE type, float fps);
 
 	void Update(float deltaTime);
-	void Render(HDC hdc, int x, int y);
+	void Render(HDC hdc, int x, int y, IMAGE_ALIGN align = (IMAGE_ALIGN)0);
 
 	void Play(int startFrame = 0, int endFrame = -1);
 	void Resume();
 	void Stop();
 
 	void SetCallBack(function<void()> func);
+
+	int GetWidth();
+	int GetHeight();
 };
 

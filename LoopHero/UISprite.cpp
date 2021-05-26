@@ -25,3 +25,17 @@ void UISprite::Render(HDC hdc)
 
 	GameUI::Render(hdc);
 }
+
+void UISprite::OnMouseOver(EventData& data)
+{
+	if (!data.isDragging && lpObject)
+	{
+		ObserverManager::GetSingleton()->Notify("ViewInfo", lpObject);
+	}
+}
+
+void UISprite::OnMouseOut(EventData& data)
+{
+	ObserverManager::GetSingleton()->Notify("HideInfo", this);
+}
+

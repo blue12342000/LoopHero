@@ -45,7 +45,6 @@ struct EquipSlot
 
 class Trait;
 class Animation;
-class Character;
 class Unit : public GameObject
 {
 private:
@@ -53,7 +52,6 @@ private:
 	float currHp;
 
 	Animation* lpIcon;
-	Character* lpCharacter;
 
 	Trait* lpTrait;
 	map<UNIT_STATUS, float> mStatus;
@@ -75,7 +73,10 @@ public:
 
 	void SetTrait(Trait& trait);
 
+	string ToString() override;
+
 	inline float GetCurrHp() { return currHp; }
 	inline Trait* GetTrait() { return lpTrait; }
+	inline float GetStatus(UNIT_STATUS status) { if (mStatus.find(status) == mStatus.end()) { return 0.0f; } else { return mStatus[status]; } }
 };
 

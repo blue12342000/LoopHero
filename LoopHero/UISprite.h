@@ -17,5 +17,8 @@ public:
 
 	inline void SetGameObject(GameObject* lpObject) { this->lpObject = lpObject; }
 	inline GameObject* GetGameObject() { return lpObject; }
+
+	void OnMouseOver(EventData& data);
+	void OnMouseOut(EventData& data);
 };
 

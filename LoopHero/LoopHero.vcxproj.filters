@@ -61,14 +61,14 @@
     <Filter Include="소스 파일\Engine\Observer">
       <UniqueIdentifier>{00294e2c-3998-4875-891a-529eedbbbf6e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\LoopHero\Unit\Character">
-      <UniqueIdentifier>{f489a64b-67fe-4ef9-802b-677ce28a3313}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\LoopHero\GameData">
       <UniqueIdentifier>{00566c59-d141-420c-a397-4d14000faa0c}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\LoopHero\Battle">
       <UniqueIdentifier>{f3e92928-d8c3-40d5-a721-4a0576e284c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\LoopHero\Battle\Character">
+      <UniqueIdentifier>{f489a64b-67fe-4ef9-802b-677ce28a3313}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -171,9 +171,6 @@
     <ClCompile Include="Animation.cpp">
       <Filter>소스 파일\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Character.cpp">
-      <Filter>소스 파일\LoopHero\Unit\Character</Filter>
-    </ClCompile>
     <ClCompile Include="PoolingManager.cpp">
       <Filter>소스 파일\Engine\Manager</Filter>
     </ClCompile>
@@ -188,6 +185,18 @@
     </ClCompile>
     <ClCompile Include="UIBattleWindow.cpp">
       <Filter>소스 파일\LoopHero\UI\InGame</Filter>
+    </ClCompile>
+    <ClCompile Include="BattleField.cpp">
+      <Filter>소스 파일\LoopHero\Battle</Filter>
+    </ClCompile>
+    <ClCompile Include="UIBattleUnit.cpp">
+      <Filter>소스 파일\LoopHero\UI\InGame</Filter>
+    </ClCompile>
+    <ClCompile Include="UIInGameInfo.cpp">
+      <Filter>소스 파일\LoopHero\UI\InGame</Filter>
+    </ClCompile>
+    <ClCompile Include="BattleUnit.cpp">
+      <Filter>소스 파일\LoopHero\Battle\Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -308,9 +317,6 @@
     <ClInclude Include="Animation.h">
       <Filter>소스 파일\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Character.h">
-      <Filter>소스 파일\LoopHero\Unit\Character</Filter>
-    </ClInclude>
     <ClInclude Include="PoolingManager.h">
       <Filter>소스 파일\Engine\Manager</Filter>
     </ClInclude>
@@ -328,6 +334,18 @@
     </ClInclude>
     <ClInclude Include="UIBattleWindow.h">
       <Filter>소스 파일\LoopHero\UI\InGame</Filter>
+    </ClInclude>
+    <ClInclude Include="BattleField.h">
+      <Filter>소스 파일\LoopHero\Battle</Filter>
+    </ClInclude>
+    <ClInclude Include="UIBattleUnit.h">
+      <Filter>소스 파일\LoopHero\UI\InGame</Filter>
+    </ClInclude>
+    <ClInclude Include="UIInGameInfo.h">
+      <Filter>소스 파일\LoopHero\UI\InGame</Filter>
+    </ClInclude>
+    <ClInclude Include="BattleUnit.h">
+      <Filter>소스 파일\LoopHero\Battle\Character</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

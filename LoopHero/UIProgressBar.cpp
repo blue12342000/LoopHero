@@ -8,7 +8,9 @@ void UIProgressBar::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height
 
 	this->type = type;
 	this->target = UI_BAR_TARGET::VARIABLE;
-	this->maxVar = 1;
+	this->maxTarget = UI_BAR_TARGET::VARIABLE;
+	this->lpTargetVar = nullptr;
+	this->lpMaxVar = nullptr;
 
 	lpBackground = ImageManager::GetSingleton()->FindImage(back);
 	lpBar = ImageManager::GetSingleton()->FindImage(bar);
@@ -36,67 +38,73 @@ void UIProgressBar::Render(HDC hdc)
 
 	if (lpBar)
 	{
-		if (target == UI_BAR_TARGET::VARIABLE)
+		float targetVar, maxVar;
+		switch (target)
 		{
-			if (!lpTargetVar) { lpBar->PatternRender(hdc, rc.left, rc.top, width, height); }
-			else
-			{
-				float ratio = (*lpTargetVar) / maxVar;
-				if (ratio > 1) ratio = 1;
-
-				switch (type)
-				{
-				case UI_BAR_TYPE::HORIZON:
-					lpBar->PatternRender(hdc, rc.left, rc.top, (int)(width * ratio), height);
-					break;
-				case UI_BAR_TYPE::VERTICAL:
-					lpBar->PatternRender(hdc, rc.left, rc.bottom, width, (int)(height * ratio));
-					break;
-				}
-			}
+		case UI_BAR_TARGET::VARIABLE:
+			if (lpTargetVar) targetVar = *lpTargetVar;
+			else targetVar = 1;
+			break;
+		case UI_BAR_TARGET::FUNC:
+			if (lpTargetFunc) targetVar = lpTargetFunc();
+			else targetVar = 1;
+			break;
 		}
-		else
+		switch (maxTarget)
 		{
-			if (!lpTargetFunc) { lpBar->PatternRender(hdc, rc.left, rc.top, width, height); }
-			else
-			{
-				float ratio = lpTargetFunc() / maxVar;
-				if (ratio > 1) ratio = 1;
+		case UI_BAR_TARGET::VARIABLE:
+			if (lpMaxVar) maxVar = *lpMaxVar;
+			else maxVar = 1;
+			break;
+		case UI_BAR_TARGET::FUNC:
+			if (lpMaxFunc) maxVar = lpMaxFunc();
+			else maxVar = 1;
+			break;
+		}
 
-				switch (type)
-				{
-				case UI_BAR_TYPE::HORIZON:
-					lpBar->PatternRender(hdc, rc.left, rc.top, (int)(width * ratio), height);
-					break;
-				case UI_BAR_TYPE::VERTICAL:
-					lpBar->PatternRender(hdc, rc.left, rc.bottom, width, (int)(height * ratio));
-					break;
-				}
-			}
+		float ratio = targetVar / maxVar;
+		if (ratio > 1) ratio = 1;
+
+		switch (type)
+		{
+		case UI_BAR_TYPE::HORIZON:
+			lpBar->PatternRender(hdc, rc.left, rc.top, (int)(width * ratio), height);
+			break;
+		case UI_BAR_TYPE::VERTICAL:
+			lpBar->PatternRender(hdc, rc.left, rc.bottom, width, (int)(height * ratio));
+			break;
 		}
 	}
 
 	GameUI::Render(hdc);
 }
 
-void UIProgressBar::SetTrackingData(float* lpTargetVar, float maxVar)
+void UIProgressBar::SetTrackingData(float& lpTargetVar)
 {
-	if (lpTargetVar)
-	{
-		target = UI_BAR_TARGET::VARIABLE;
-		this->lpTargetVar = lpTargetVar;
-		this->lastVar = *lpTargetVar;
-		this->maxVar = (maxVar < 1) ? 1 : maxVar;
-	}
+	target = UI_BAR_TARGET::VARIABLE;
+	this->lpTargetVar = &lpTargetVar;
 }
 
-void UIProgressBar::SetTrackingData(function<float()> lpTargetFunc, float maxVar)
+void UIProgressBar::SetTrackingData(function<float()> lpTargetFunc)
 {
 	if (lpTargetFunc)
 	{
 		target = UI_BAR_TARGET::FUNC;
 		this->lpTargetFunc = move(lpTargetFunc);
-		this->lastVar = this->lpTargetFunc();
-		this->maxVar = (maxVar < 1) ? 1 : maxVar;
+	}
+}
+
+void UIProgressBar::SetTrackingMaxData(float& lpTargetVar)
+{
+	maxTarget = UI_BAR_TARGET::VARIABLE;
+	this->lpMaxVar = &lpTargetVar;
+}
+
+void UIProgressBar::SetTrackingMaxData(function<float()> lpTargetFunc)
+{
+	if (lpTargetFunc)
+	{
+		maxTarget = UI_BAR_TARGET::FUNC;
+		this->lpMaxFunc = move(lpTargetFunc);
 	}
 }

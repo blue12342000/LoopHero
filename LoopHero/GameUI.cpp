@@ -39,7 +39,7 @@ void GameUI::Refresh()
 		break;
 	case UI_ANCHOR::BOTTOM_MIDDLE:
 		origin = { (view.right + view.left) / 2.0f, (float)view.bottom };
-		SetRect(&rc, origin.x + pos.x - width / 2, origin.y + pos.y - height, origin.x + pos.x + width / 2, origin.y + pos.y);
+		SetRect(&rc, origin.x + pos.x - width / 2, origin.y - pos.y - height, origin.x + pos.x + width / 2, origin.y - pos.y);
 		break;
 	case UI_ANCHOR::LEFT_TOP:
 	default:
@@ -68,6 +68,8 @@ void GameUI::Release()
 		delete vChildUI[i];
 	}
 	vChildUI.clear();
+
+	PoolingManager::GetSingleton()->AddClass(this);
 }
 
 void GameUI::Update(float deltaTime)

@@ -3,12 +3,12 @@
 
 class Image;
 class FieldTileMap;
-class TileTable;
 class GameUI;
 class EquipItem;
 class Unit;
 class EventSystem;
 class UIBattleWindow;
+class BattleField;
 class InGame : public Scene
 {
 private:
@@ -20,8 +20,10 @@ private:
 	FieldTileMap* lpFieldTiles;
 
 	Unit* lpUnit;
+	Unit* lpEnemy;
 	EquipItem* lpEquipItem;
 
+	BattleField* lpBattleField;
 	UIBattleWindow* lpBattleWindow;
 
 	EventSystem* lpEventSystem;

@@ -19,14 +19,16 @@ class UIProgressBar : public GameUI
 private:
 	UI_BAR_TYPE type;
 	UI_BAR_TARGET target;
+	UI_BAR_TARGET maxTarget;
 
 	Image* lpBackground;
 	Image* lpBar;
 
 	function<float()> lpTargetFunc;
 	float* lpTargetVar;
-	float maxVar;
-	float lastVar;
+	
+	function<float()> lpMaxFunc;
+	float* lpMaxVar;
 
 public:
 	virtual ~UIProgressBar() {}
@@ -36,7 +38,9 @@ public:
 	virtual void Update(float deltaTime) override;
 	virtual void Render(HDC hdc) override;
 
-	void SetTrackingData(float* lpTargetVar, float maxVar);
-	void SetTrackingData(function<float()> lpTargetFunc, float maxVar);
+	void SetTrackingData(float& lpTargetVar);
+	void SetTrackingData(function<float()> lpTargetFunc);
+	void SetTrackingMaxData(float& lpTargetVar);
+	void SetTrackingMaxData(function<float()> lpTargetFunc);
 };
 

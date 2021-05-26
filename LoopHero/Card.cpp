@@ -40,3 +40,8 @@ void Card::Render(HDC hdc)
 	SetBkMode(hdc, OPAQUE);
 	SetTextAlign(hdc, TA_LEFT);
 }
+
+string Card::ToString()
+{
+	return name + "|" + desc;
+}

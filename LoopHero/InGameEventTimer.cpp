@@ -8,14 +8,18 @@ void InGameEventTimer::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int hei
 
 	lpBackground = ImageManager::GetSingleton()->FindImage("ingame_bosstimer_background");
 
+	maxDailyTimer = 3;
+	maxBossTimer = 10;
+
 	lpDailyTimer = GameUI::CreateUI<UIProgressBar>(this);
 	lpDailyTimer->Init(UI_ANCHOR::LEFT_TOP, { 17.0f * 2, 7.0f * 2 }, 200, 4, UI_BAR_TYPE::HORIZON, "", "battle_unit_statusbar_hp");
-	lpDailyTimer->SetTrackingData(&dailyTimer, 3);
+	lpDailyTimer->SetTrackingData(dailyTimer);
+	lpDailyTimer->SetTrackingMaxData(maxDailyTimer);
 
 	lpBossTimer = GameUI::CreateUI<UIProgressBar>(this);
 	lpBossTimer->Init(UI_ANCHOR::LEFT_TOP, { 17.0f * 2, 22.0f * 2 }, 200, 4, UI_BAR_TYPE::HORIZON, "", "battle_unit_statusbar_hp");
-	//lpBossTimer->SetTrackingData(&bossTimer, 10);
-	lpBossTimer->SetTrackingData(bind(&InGameEventTimer::GetBossTimer, this), 10);
+	lpBossTimer->SetTrackingData(bind(&InGameEventTimer::GetBossTimer, this));
+	lpBossTimer->SetTrackingMaxData(maxBossTimer);
 
 	ObserverManager::GetSingleton()->RegisterObserver(this);
 }
@@ -23,14 +27,14 @@ void InGameEventTimer::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int hei
 void InGameEventTimer::Update(float deltaTime)
 {
 	dailyTimer += deltaTime;
-	if (dailyTimer > 3)
+	if (dailyTimer > maxDailyTimer)
 	{
 		ObserverManager::GetSingleton()->Notify("DropCard", this);
 		dailyTimer = 0;
 	}
 
 	bossTimer += deltaTime;
-	if (bossTimer > 10) bossTimer = 0;
+	if (bossTimer > maxBossTimer) bossTimer = 0;
 
 	GameUI::Update(deltaTime);
 }

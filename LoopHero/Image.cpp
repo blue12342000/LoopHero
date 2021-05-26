@@ -310,15 +310,15 @@ void Image::Render(HDC hdc, int destX, int destY, int frame, IMAGE_ALIGN align)
     case IMAGE_ALIGN::CENTER:
         destX -= lpImageInfo->width / 2;
         destY -= lpImageInfo->height / 2;
+        break;
+    case IMAGE_ALIGN::MIDDLE_BOTTOM:
+        destX -= lpImageInfo->width / 2;
+        destY -= lpImageInfo->height;
+        break;
+    case IMAGE_ALIGN::MIDDLE_TOP:
+        destX -= lpImageInfo->width / 2;
+        break;
     }
-
-    //switch (uFlag)
-    //{
-    //case U_IA_CENTER:
-    //    destX -= lpImageInfo->width / 2;
-    //    destY -= lpImageInfo->height / 2;
-    //    break;
-    //}
 
     if (lpImageInfo->isTransparent)
     {
@@ -332,8 +332,23 @@ void Image::Render(HDC hdc, int destX, int destY, int frame, IMAGE_ALIGN align)
     }
 }
 
-void Image::Render(HDC hdc, int destX, int destY, POINT frame)
+void Image::Render(HDC hdc, int destX, int destY, POINT frame, IMAGE_ALIGN align)
 {
+    switch (align)
+    {
+    case IMAGE_ALIGN::CENTER:
+        destX -= lpImageInfo->width / 2;
+        destY -= lpImageInfo->height / 2;
+        break;
+    case IMAGE_ALIGN::MIDDLE_BOTTOM:
+        destX -= lpImageInfo->width / 2;
+        destY -= lpImageInfo->height;
+        break;
+    case IMAGE_ALIGN::MIDDLE_TOP:
+        destX -= lpImageInfo->width / 2;
+        break;
+    }
+
     if (lpImageInfo->isTransparent)
     {
         GdiTransparentBlt(hdc, destX, destY, lpImageInfo->width, lpImageInfo->height,

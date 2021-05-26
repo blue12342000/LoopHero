@@ -7,7 +7,9 @@ class InGameEventTimer : public GameUI
 private:
 	Image* lpBackground;
 	float dailyTimer;
+	float maxDailyTimer;
 	float bossTimer;
+	float maxBossTimer;
 
 	UIProgressBar* lpDailyTimer;
 	UIProgressBar* lpBossTimer;

@@ -15,7 +15,7 @@ void PoolingManager::Release()
 
 void PoolingManager::AddClass(GameNode* lpClass)
 {
-	string name = typeid(lpClass).name();
+	string name = typeid(*lpClass).name();
 	auto it = mlLpClass.find(name);
 	if (it == mlLpClass.end())
 	{

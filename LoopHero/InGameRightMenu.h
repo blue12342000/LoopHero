@@ -5,6 +5,7 @@ class Image;
 class UIGrid;
 class UIHorizontalScroll;
 class UIButton;
+class UIInGameInfo;
 class InGameRightMenu : public GameUI
 {
 private:
@@ -13,8 +14,8 @@ private:
 	UIGrid* lpHeroEquip;
 	UIHorizontalScroll* lpHScroll;
 	UIButton* lpButton;
+	UIInGameInfo* lpGameInfo;
 
-	vector<string> desc;
 public:
 	virtual void Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height) override;
 	virtual void Update(float deltaTime) override;

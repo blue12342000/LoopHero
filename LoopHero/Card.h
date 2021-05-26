@@ -51,6 +51,8 @@ public:
 	inline Image* GetCardImg() { return lpCardImg; }
 	inline string GetTileKey() { return tileKey; }
 
+	string ToString() override;
+
 	friend class Deck;
 };
 

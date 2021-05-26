@@ -144,8 +144,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="BattleField.cpp" />
     <ClCompile Include="Card.cpp" />
-    <ClCompile Include="Character.cpp" />
+    <ClCompile Include="BattleUnit.cpp" />
     <ClCompile Include="DataManager.cpp" />
     <ClCompile Include="Deck.cpp" />
     <ClCompile Include="EquipItem.cpp" />
@@ -161,6 +162,7 @@
     <ClCompile Include="ObserverManager.cpp" />
     <ClCompile Include="PoolingManager.cpp" />
     <ClCompile Include="Trait.cpp" />
+    <ClCompile Include="UIBattleUnit.cpp" />
     <ClCompile Include="UIBattleWindow.cpp" />
     <ClCompile Include="UIButton.cpp" />
     <ClCompile Include="UIHorizontalScroll.cpp" />
@@ -173,6 +175,7 @@
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="UIInGameInfo.cpp" />
     <ClCompile Include="UIItemSlot.cpp" />
     <ClCompile Include="UIProgressBar.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -185,8 +188,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="BattleField.h" />
     <ClInclude Include="Card.h" />
-    <ClInclude Include="Character.h" />
+    <ClInclude Include="BattleUnit.h" />
     <ClInclude Include="DataManager.h" />
     <ClInclude Include="Deck.h" />
     <ClInclude Include="EquipItem.h" />
@@ -207,6 +211,7 @@
     <ClInclude Include="ObserverHandler.h" />
     <ClInclude Include="ObserverManager.h" />
     <ClInclude Include="Trait.h" />
+    <ClInclude Include="UIBattleUnit.h" />
     <ClInclude Include="UIBattleWindow.h" />
     <ClInclude Include="UIButton.h" />
     <ClInclude Include="UIHorizontalScroll.h" />
@@ -219,6 +224,7 @@
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="LoopHero.h" />
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="UIInGameInfo.h" />
     <ClInclude Include="UIItemSlot.h" />
     <ClInclude Include="UIProgressBar.h" />
     <ClInclude Include="Scene.h" />

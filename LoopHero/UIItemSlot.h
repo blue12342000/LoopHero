@@ -25,6 +25,7 @@ public:
 	virtual void RemoveChildUI(int index = 0) final;
 
 	virtual void OnDrop(EventData& data) override;
+	virtual void OnMouseEnter(EventData& data) override;
 	virtual void OnMouseOver(EventData& data) override;
 	virtual void OnMouseOut(EventData& data) override;
 };

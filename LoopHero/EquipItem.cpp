@@ -56,3 +56,24 @@ void EquipItem::Render(HDC hdc)
 		lpItemImage->Render(hdc, (int)pos.x, (int)pos.y, { no, (int)parts });
 	}
 }
+
+string EquipItem::ToString()
+{
+	string desc = "";
+
+	int n = (int)UNIT_STATUS::NONE;
+	UNIT_STATUS status;
+	string var, content = "";
+	for (int i = 0; i < n; ++i)
+	{
+		status = (UNIT_STATUS)i;
+		if (mStatus.find(status) != mStatus.end())
+		{
+			if (content.size() > 0) content += "\n";
+			var = to_string(mStatus[status]);
+			content += GameData::GetSingleton()->GetLang(status) + ": " + var.substr(0, var.find_first_of('.') + 2);
+		}
+	}
+
+	return name + "|" + content;
+}

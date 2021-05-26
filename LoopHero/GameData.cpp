@@ -53,6 +53,9 @@ void GameData::LoadTiles()
 	for (auto group : mDatas)
 	{
 		mLpTiles.insert(make_pair(group.first, new Tile()));
+		mLpTiles[group.first]->mLpImage.insert(make_pair(TILE_TYPE::TILE, ImageManager::GetSingleton()->FindImage(group.first + "_tile")));
+		mLpTiles[group.first]->mLpImage.insert(make_pair(TILE_TYPE::SELECT, ImageManager::GetSingleton()->FindImage(group.first + "_tile_select")));
+		mLpTiles[group.first]->mLpImage.insert(make_pair(TILE_TYPE::WHITE, ImageManager::GetSingleton()->FindImage(group.first + "_tile_white")));
 		mLpTiles[group.first]->id = group.first;
 		mLpTiles[group.first]->name = mDatas[group.first]["name"];
 		mLpTiles[group.first]->desc = mDatas[group.first]["desc"];
@@ -107,42 +110,53 @@ HRESULT GameData::Init()
     lpDeck = new Deck();
     lpDeck->Init();
 
-	string key;
+	string key, lang;
 	for (int i = 0; i < (int)UNIT_SLOT::NONE; ++i)
 	{
 		switch ((UNIT_SLOT)i)
 		{
 		case UNIT_SLOT::LEFT_HAND:
 			key = "LEFT_HAND";
+			lang = "¿Þ¼Õ";
 			break;
 		case UNIT_SLOT::RIGHT_HAND:
 			key = "RIGHT_HAND";
+			lang = "¿À¸¥¼Õ";
 			break;
 		case UNIT_SLOT::HELMET:
 			key = "HELMET";
+			lang = "Çï¸Ë";
 			break;
 		case UNIT_SLOT::ARMOR:
 			key = "ARMOR";
+			lang = "°©¿Ê";
 			break;
 		case UNIT_SLOT::BELTS:
 			key = "BELTS";
+			lang = "¹ëÆ®";
 			break;
 		case UNIT_SLOT::GLOVES:
 			key = "GLOVES";
+			lang = "Àå°©";
 			break;
 		case UNIT_SLOT::BOOTS:
 			key = "BOOTS";
+			lang = "ºÎÃ÷";
 			break;
 		case UNIT_SLOT::LEFT_RING:
 			key = "LEFT_RING";
+			lang = "¿ÞÂÊ¹ÝÁö";
 			break;
 		case UNIT_SLOT::RIGHT_RING:
 			key = "RIGHT_RING";
+			lang = "¿À¸¥ÂÊ¹ÝÁö";
 			break;
 		case UNIT_SLOT::ARMULET:
 			key = "ARMULET";
+			lang = "¸ñ°ÉÀÌ";
 			break;
 		}
+		mUnitSlotLang.insert(make_pair((UNIT_SLOT)i, lang));
 		mUnitSlot.insert(make_pair(key, (UNIT_SLOT)i));
 	}
 	
@@ -150,46 +164,64 @@ HRESULT GameData::Init()
 	{
 		switch ((UNIT_STATUS)i)
 		{
+		case UNIT_STATUS::DMG:
+			key = "DMG";
+			lang = "°ø°Ý·Â";
+			break;
 		case UNIT_STATUS::MIN_DMG:
 			key = "MIN_DMG";
+			lang = "ÃÖ¼Ò °ø°Ý·Â";
 			break;
 		case UNIT_STATUS::MAX_DMG:
 			key = "MAX_DMG";
+			lang = "ÃÖ´ë °ø°Ý·Â";
 			break;
 		case UNIT_STATUS::DEF:
 			key = "DEF";
+			lang = "¹æ¾î·Â";
 			break;
 		case UNIT_STATUS::MAX_HP:
 			key = "MAX_HP";
+			lang = "ÃÖ´ëÃ¼·Â";
 			break;
 		case UNIT_STATUS::HP_REGEN:
 			key = "HP_REGEN";
+			lang = "ÃÊ´çÈ¸º¹";
 			break;
 		case UNIT_STATUS::VAMP:
 			key = "VAMP";
+			lang = "ÈíÇ÷";
 			break;
 		case UNIT_STATUS::COUNTER:
 			key = "COUNTER";
+			lang = "¹Ý°ÝÈ®·ü";
 			break;
 		case UNIT_STATUS::ALL_DMG:
 			key = "ALL_DMG";
+			lang = "ÀüÃ¼ °ø°Ý·Â";
 			break;
 		case UNIT_STATUS::EVASION:
 			key = "EVASION";
+			lang = "È¸ÇÇÀ²";
 			break;
 		case UNIT_STATUS::SKEL_QULITY:
 			key = "SKEL_QULITY";
+			lang = "ÇØ°ñÀÇ Áú";
 			break;
 		case UNIT_STATUS::SKEL_POWER:
 			key = "SKEL_POWER";
+			lang = "ÇØ°ñ ÆÄ¿ö";
 			break;
 		case UNIT_STATUS::MOVE_SPEED:
 			key = "MOVE_SPEED";
+			lang = "ÀÌµ¿¼Óµµ";
 			break;
 		case UNIT_STATUS::ATK_SPEED:
 			key = "ATK_SPEED";
+			lang = "°ø°Ý¼Óµµ";
 			break;
 		}
+		mUnitStatusLang.insert(make_pair((UNIT_STATUS)i, lang));
 		mUnitStatus.insert(make_pair(key, (UNIT_STATUS)i));
 	}
 
@@ -199,35 +231,46 @@ HRESULT GameData::Init()
 		{
 		case EQUIP_PARTS::SWORD:
 			key = "SWORD";
+			lang = "°Ë";
 			break;
 		case EQUIP_PARTS::BOOK:
 			key = "BOOK";
+			lang = "¸¶µµ¼­";
 			break;
 		case EQUIP_PARTS::SHIELD:
 			key = "SHIELD";
+			lang = "¹æÆÐ";
 			break;
 		case EQUIP_PARTS::HELMET:
 			key = "HELMET";
+			lang = "Çï¸Ë";
 			break;
 		case EQUIP_PARTS::ARMOR:
 			key = "ARMOR";
+			lang = "°©¿Ê";
 			break;
 		case EQUIP_PARTS::BELTS:
 			key = "BELTS";
+			lang = "¹ëÆ®";
 			break;
 		case EQUIP_PARTS::GLOVES:
 			key = "GLOVES";
+			lang = "Àå°©";
 			break;
 		case EQUIP_PARTS::BOOTS:
 			key = "BOOTS";
+			lang = "ºÎÃ÷";
 			break;
 		case EQUIP_PARTS::RING:
 			key = "RING";
+			lang = "¹ÝÁö";
 			break;
 		case EQUIP_PARTS::ARMULET:
 			key = "ARMULET";
+			lang = "¸ñ°ÉÀÌ";
 			break;
 		}
+		mEquipPartsLang.insert(make_pair((EQUIP_PARTS)i, lang));
 		mEquipParts.insert(make_pair(key, (EQUIP_PARTS)i));
 	}
 
@@ -282,4 +325,25 @@ Trait* GameData::GetTrait(string traitKey)
 	}
 
 	return it->second;
+}
+
+string GameData::GetLang(UNIT_SLOT slot)
+{
+	if (mUnitSlotLang.find(slot) == mUnitSlotLang.end()) return "";
+
+	return mUnitSlotLang[slot];
+}
+
+string GameData::GetLang(UNIT_STATUS status)
+{
+	if (mUnitStatusLang.find(status) == mUnitStatusLang.end()) return "";
+
+	return mUnitStatusLang[status];
+}
+
+string GameData::GetLang(EQUIP_PARTS parts)
+{
+	if (mEquipPartsLang.find(parts) == mEquipPartsLang.end()) return "";
+
+	return mEquipPartsLang[parts];
 }
