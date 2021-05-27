@@ -17,6 +17,8 @@
 
 HRESULT InGame::Init()
 {
+    GameData::GetSingleton()->SetUnit(Trait::NewUnit("Warrior"));
+
     lpBuffer = ImageManager::GetSingleton()->FindImage("ingame_backbuffer");
     lpBackImage = ImageManager::GetSingleton()->FindImage("InGame_BackGround");
 
@@ -37,43 +39,14 @@ HRESULT InGame::Init()
     lpFieldTiles = GameObject::Create<FieldTileMap>();
     lpFieldTiles->Init();
 
-    lpUnit = Trait::NewUnit("Warrior");
-    lpUnit->SetPos({ WINSIZE_WIDTH / 2.0f, WINSIZE_HEIGHT / 2.0f });
-    //lpEquipItem = EquipItem::CreateEquip(lpUnit->GetTraits());
-
-    GameData::GetSingleton()->SetUnit(lpUnit);
-
     lpEventSystem = new EventSystem();
     lpEventSystem->Init();
     lpEventSystem->SetGameUI(lpCanvus);
     lpEventSystem->SetGameObject(lpFieldTiles);
 
-    lpEnemy = Trait::NewUnit("Slime");
-    lpEnemy->SetPos({ WINSIZE_WIDTH / 2.0f - 100, WINSIZE_HEIGHT / 2.0f });
-
-
     lpBattleWindow = GameUI::CreateUI<UIBattleWindow>(lpCanvus);
     lpBattleWindow->Init(UI_ANCHOR::MIDDLE, { -100, 0.0f }, 301 * 2, 257 * 2);
-
-    lpBattleField = GameObject::Create<BattleField>();
-    lpBattleField->Init();
-    lpBattleField->AddUnit(BATTLE_TEAM::LEFT, lpUnit);
-    lpBattleField->AddUnit(BATTLE_TEAM::RIGHT, lpEnemy);
-    lpBattleField->AddUnit(BATTLE_TEAM::RIGHT, Trait::NewUnit("Slime"));
-    lpBattleField->AddUnit(BATTLE_TEAM::RIGHT, Trait::NewUnit("Slime"));
-    lpBattleField->AddUnit(BATTLE_TEAM::RIGHT, Trait::NewUnit("Slime"));
-    lpBattleField->AddUnit(BATTLE_TEAM::RIGHT, Trait::NewUnit("Slime"));
-    ObserverManager::GetSingleton()->Notify("BattleStart", lpBattleField);
-
-    //UIBattleUnit* lpUIBattleUnit = GameUI::CreateUI<UIBattleUnit>(lpCanvus);
-    //lpUIBattleUnit->Init(UI_ANCHOR::BOTTOM_MIDDLE, { 0.0f, 300.0f }, 80 * 2, 92 * 2);
-    //lpUIBattleUnit->SetUnit(lpUnit);
-    //
-    //lpUIBattleUnit = GameUI::CreateUI<UIBattleUnit>(lpCanvus);
-    //lpUIBattleUnit->Init(UI_ANCHOR::BOTTOM_MIDDLE, { -150.0f, 300.0f }, 80 * 2, 92 * 2);
-    //lpUIBattleUnit->SetUnit(lpEnemy);
-
-
+    lpBattleWindow->SetVisible(false);
 
     SetBkMode(lpBuffer->GetMemDC(), TRANSPARENT);
     return S_OK;
@@ -95,32 +68,11 @@ void InGame::Release()
         lpCanvus = nullptr;
     }
 
-    if (lpUnit)
-    {
-        lpUnit->Release();
-        delete lpUnit;
-        lpUnit = nullptr;
-    }
-
-    if (lpEnemy)
-    {
-        lpEnemy->Release();
-        delete lpEnemy;
-        lpEnemy = nullptr;
-    }
-
     if (lpEventSystem)
     {
         lpEventSystem->Release();
         delete lpEventSystem;
         lpEventSystem = nullptr;
-    }
-
-    if (lpBattleField)
-    {
-        lpBattleField->Release();
-        delete lpBattleField;
-        lpBattleField = nullptr;
     }
 
     ObserverManager::GetSingleton()->Release();
@@ -138,12 +90,9 @@ void InGame::Update(float deltaTime)
     lpEventSystem->Update(deltaTime);
     lpCanvus->Update(deltaTime);
     lpFieldTiles->Update(deltaTime);
+    //GameData::GetSingleton()->GetUnit()->Update(deltaTime);
 
     lpCanvus->LateUpdate(deltaTime);
-
-    lpEnemy->Update(deltaTime);
-    lpUnit->Update(deltaTime);
-    if (lpBattleField) lpBattleField->Update(deltaTime);
 }
 
 void InGame::Render(HDC hdc)
@@ -159,8 +108,6 @@ void InGame::Render(HDC hdc)
 
     // µð¹ö±×
     lpEventSystem->Render(hMemDC);
-    lpUnit->Render(hMemDC);
-    lpEnemy->Render(hMemDC);
 
     lpBuffer->Render(hdc);
 }

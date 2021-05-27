@@ -2,13 +2,15 @@
 #include "EquipItem.h"
 #include "UIHorizontalScroll.h"
 #include "UISprite.h"
+#include "Unit.h"
 #include "Utill.h"
 #include "Image.h"
 
-void UIItemSlot::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height, EQUIP_PARTS parts)
+void UIItemSlot::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height, UNIT_SLOT slot, EQUIP_PARTS parts)
 {
 	GameUI::Init(anchor, pos, width, height);
 
+	this->slot = slot;
 	this->parts = parts;
 	this->lpItem = nullptr;
 	this->lpSprite = nullptr;
@@ -64,9 +66,11 @@ void UIItemSlot::OnDrop(EventData& data)
 		if (lpGameUI->GetGameObject() && typeid(*lpGameUI->GetGameObject()) == typeid(EquipItem))
 		{
 			EquipItem* lpEquipItem = (EquipItem*)lpGameUI->GetGameObject();
-
 			if (lpEquipItem->GetParts() == parts)
 			{
+				// Àåºñ ÀåÂø
+				GameData::GetSingleton()->GetUnit()->UseEquipItem(slot, lpEquipItem);
+
 				lpGameUI->SetAnchor(UI_ANCHOR::MIDDLE);
 
 				lpItem = lpEquipItem;

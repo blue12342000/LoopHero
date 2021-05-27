@@ -22,7 +22,7 @@ public:
 	virtual void Update(float deltaTime) override;
 	virtual void Render(HDC hdc) override;
 
-	void Attack(BattleUnit*& lpAttaker, list<BattleUnit*>& lDefenders);
+	bool Attack(BattleUnit*& lpAttaker, list<BattleUnit*>& lDefenders);
 	void AllAttack(BattleUnit*& lpAttaker, list<BattleUnit*>& lDefenders);
 	void AddUnit(BATTLE_TEAM team, Unit* lpUnit);
 

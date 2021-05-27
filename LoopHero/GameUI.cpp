@@ -69,6 +69,7 @@ void GameUI::Release()
 	}
 	vChildUI.clear();
 
+	lpParent = nullptr;
 	PoolingManager::GetSingleton()->AddClass(this);
 }
 

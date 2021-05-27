@@ -12,7 +12,6 @@ void ObserverManager::ProcessingMessage()
 	{
 		for (const auto& lpObserver : sObservers)
 		{
-			if (lpObserver == lMessages.front().lpCaller) continue;
 			lpObserver->Notify(lMessages.front().message, lMessages.front().lpCaller);
 		}
 		lMessages.pop_front();

@@ -1,22 +1,23 @@
 #pragma once
 #include "GameObject.h"
 
-enum class UNIT_STATE
-{
-	INTRO,
-	IDLE,
-	ATTACK,
-	DEATH,
-	HURT,
-	REVIVE,
-	NONE
-};
-
 enum class IMAGE_ALIGN;
 class Animation;
 class Unit;
 class BattleUnit : public GameObject
 {
+private:
+	enum class UNIT_STATE
+	{
+		INTRO,
+		IDLE,
+		ATTACK,
+		DEATH,
+		HURT,
+		REVIVE,
+		NONE
+	};
+
 private:
 	UNIT_STATE state;
 	Unit* lpUnit;
@@ -35,7 +36,7 @@ public:
 	void Intro();
 	void Idle();
 	void Hit(float dmg);
-	void Attack();
+	float Attack();
 	void Revive();
 	void Death();
 
@@ -49,6 +50,7 @@ public:
 	inline float GetMaxAction() { return maxAction; }
 	inline bool IsReady() { return state != UNIT_STATE::INTRO; }
 	inline bool IsAlive() { return state != UNIT_STATE::DEATH; }
+	inline bool IsDeath() { return state == UNIT_STATE::DEATH; }
 	inline bool IsAtkReady() { return isAtkReady; }
 };
 

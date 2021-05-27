@@ -25,7 +25,15 @@ void Animation::Update(float deltaTime)
 		frame += fps * deltaTime;
 		if (frame >= endFrame)
 		{
-			frame = startFrame;
+			if (type == ANIMATION_TYPE::LOOP)
+			{
+				frame = startFrame;
+			}
+			else
+			{
+				state = ANIMATION_STATE::STOP;
+				frame = endFrame - 1;
+			}
 			if (callBack) callBack();
 		}
 	}

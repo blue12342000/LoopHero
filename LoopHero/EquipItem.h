@@ -36,6 +36,7 @@ public:
 	virtual void Render(HDC hdc);
 
 	inline EQUIP_PARTS GetParts() { return parts; }
+	inline map<UNIT_STATUS, float> GetStatus() { return mStatus; }
 
 	string ToString() override;
 

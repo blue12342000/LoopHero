@@ -28,7 +28,7 @@ void GameObject::RemoveChild(GameObject* lpChild)
 
 	for (int i = 0; i < vChilds.size(); ++i)
 	{
-		if (vChilds[i] == lpChild)
+		if (&(*vChilds[i]) == lpChild)
 		{
 			RemoveChild(i);
 			return;

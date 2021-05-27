@@ -12,6 +12,7 @@ void UIBattleWindow::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int heigh
 	lpBackground = ImageManager::GetSingleton()->FindImage("battle_background");
 	ObserverManager::GetSingleton()->RegisterObserver(this);
 	AddOEventHandler("BattleStart", bind(&UIBattleWindow::BattleStart, this, placeholders::_1));
+	AddOEventHandler("BattleEnd", bind(&UIBattleWindow::BattleEnd, this, placeholders::_1));
 }
 
 void UIBattleWindow::Release()
@@ -34,6 +35,7 @@ void UIBattleWindow::Render(HDC hdc)
 
 void UIBattleWindow::BattleStart(ObserverHandler* lpCaller)
 {
+	isVisible = true;
 	if (typeid(*lpCaller) == typeid(BattleField))
 	{
 		lpBattleField = (BattleField*)lpCaller;
@@ -89,5 +91,10 @@ void UIBattleWindow::BattleStart(ObserverHandler* lpCaller)
 void UIBattleWindow::BattleEnd(ObserverHandler* lpCaller)
 {
 	isVisible = false;
-	GameUI::Release();
+
+	for (int i = 0; i < vChildUI.size(); ++i)
+	{
+		vChildUI[i]->Release();
+	}
+	vChildUI.clear();
 }

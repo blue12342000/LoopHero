@@ -48,6 +48,14 @@ class Animation;
 class Unit : public GameObject
 {
 private:
+	enum class UNIT_STATE
+	{
+		ALIVE,
+		DEATH
+	};
+
+private:
+	UNIT_STATE state;
 	string name;
 	float currHp;
 
@@ -57,8 +65,6 @@ private:
 	map<UNIT_STATUS, float> mStatus;
 	map<UNIT_SLOT, EquipSlot> mEquip;
 
-	vector<EquipItem*> vEquipInven;
-
 public:
 	virtual void Init();
 	virtual void Release();
@@ -66,17 +72,19 @@ public:
 	virtual void Render(HDC hdc);
 
 	void Idle();
-	void Hit(float dmg);
-	void Attack();
+	bool Hit(float dmg);
+	float Attack();
 	void Revive();
 	void Death();
 
 	void SetTrait(Trait& trait);
+	void UseEquipItem(UNIT_SLOT slot, EquipItem* lpEquipItem);
 
 	string ToString() override;
 
 	inline float GetCurrHp() { return currHp; }
 	inline Trait* GetTrait() { return lpTrait; }
 	inline float GetStatus(UNIT_STATUS status) { if (mStatus.find(status) == mStatus.end()) { return 0.0f; } else { return mStatus[status]; } }
+	inline bool IsAlive() { return currHp > 0; }
 };
 

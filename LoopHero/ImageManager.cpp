@@ -198,6 +198,13 @@ HRESULT ImageManager::Init()
     mLpImages.insert(make_pair("campsite_tile_white", new Image()));
     mLpImages["campsite_tile_white"]->Init("Image/Tiles/campsite_tile_white.bmp", 25 * 2, 34 * 2, 1, 1, 1, true, RGB(0, 170, 255));
 
+    mLpImages.insert(make_pair("lantern_tile", new Image()));
+    mLpImages["lantern_tile"]->Init("Image/Tiles/lantern_tile.bmp", 25 * 2 * 2, 34 * 2, 2, 1, 2, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("lantern_tile_select", new Image()));
+    mLpImages["lantern_tile_select"]->Init("Image/Tiles/lantern_tile_select.bmp", 25 * 2 * 2, 34 * 2, 2, 1, 2, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("lantern_tile_white", new Image()));
+    mLpImages["lantern_tile_white"]->Init("Image/Tiles/lantern_tile_white.bmp", 25 * 2 * 2, 34 * 2, 2, 1, 2, true, RGB(0, 170, 255));
+
     mLpImages.insert(make_pair("crystal_tile", new Image()));
     mLpImages["crystal_tile"]->Init("Image/Tiles/crystal_tile.bmp", 25 * 2, 34 * 2, 1, 1, 1, true, RGB(0, 170, 255));
     mLpImages.insert(make_pair("crystal_tile_select", new Image()));
@@ -220,7 +227,7 @@ HRESULT ImageManager::Init()
     mLpImages["empty_tresury_tile_white"]->Init("Image/Tiles/empty_tresury_tile_white.bmp", 25 * 2, 34 * 2, 1, 1, 1, true, RGB(0, 170, 255));
 
     mLpImages.insert(make_pair("tresury_tile", new Image()));
-    mLpImages["tresury_tile"]->Init("Image/Tiles/empty_tresury_tile.bmp", 25 * 2, 34 * 2, 1, 1, 1, true, RGB(0, 170, 255));
+    mLpImages["tresury_tile"]->Init("Image/Tiles/tresury_tile.bmp", 25 * 2, 34 * 2, 1, 1, 1, true, RGB(0, 170, 255));
     mLpImages.insert(make_pair("tresury_tile_select", new Image()));
     mLpImages["tresury_tile_select"]->Init("Image/Tiles/tresury_tile_select.bmp", 25 * 2, 34 * 2, 1, 1, 1, true, RGB(0, 170, 255));
     mLpImages.insert(make_pair("tresury_tile_white", new Image()));

@@ -10,6 +10,7 @@
 #define FIELD_TILE_SIZE 50
 
 class FieldTile;
+class BattleField;
 class FieldTileMap : public GameObject
 {
 private:
@@ -20,6 +21,7 @@ private:
 	Tile* lpSelectedTile;
 	bool isPossibleBuild[FIELD_TILE_Y][FIELD_TILE_X];
 
+	BattleField* lpBattleField;
 
 private:
 	TILE_IMAGE_SEQ CalTileSeq(int buildX, int buildY, Tile* lpTile);
@@ -38,6 +40,8 @@ public:
 	void DeselectCard(ObserverHandler* lpObserver);
 
 	void SetTile(int x, int y, Tile* lpTile);
+
+	void BattleEnd(ObserverHandler* lpCaller);
 
 	virtual void OnClick(EventData& data) override;
 	virtual void OnMouseEnter(EventData& data) override;

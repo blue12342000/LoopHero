@@ -8,29 +8,64 @@ void BattleField::Init()
 
 void BattleField::Release()
 {
+	for (auto& lpBattleUnit : lDeath)
+	{
+		lpBattleUnit->Release();
+	}
+
+	for (auto& lpBattleUnit : lHeroParty)
+	{
+		lpBattleUnit->Release();
+	}
+
+	for (auto& lpBattleUnit : lEnemyParty)
+	{
+		lpBattleUnit->Release();
+	}
+
 	lDeath.clear();
 	lHeroParty.clear();
 	lEnemyParty.clear();
+
+	PoolingManager::GetSingleton()->AddClass(this);
 }
 
 void BattleField::Update(float deltaTime)
 {
-	for (BattleUnit*& lpBattleUnit : lHeroParty)
+	BattleUnit* lpBattleUnit;
+	for (auto it = lDeath.begin(); it != lDeath.end(); ++it)
 	{
+		(*it)->Update(deltaTime);
+	}
+
+	for (auto it = lHeroParty.begin(); it != lHeroParty.end(); ++it)
+	{
+		lpBattleUnit = (*it);
 		lpBattleUnit->Update(deltaTime);
 		if (lpBattleUnit->IsAtkReady())
 		{
-			Attack(lpBattleUnit, lEnemyParty);
+			if (Attack(lpBattleUnit, lEnemyParty))
+			{
+				ObserverManager::GetSingleton()->Notify("DropCard", this);
+				ObserverManager::GetSingleton()->Notify("DropEquip", lHeroParty.front()->GetUnit());
+			}
 		}
 	}
 
-	for (BattleUnit*& lpBattleUnit : lEnemyParty)
+	for (auto it = lEnemyParty.begin(); it != lEnemyParty.end(); ++it)
 	{
+		lpBattleUnit = (*it);
 		lpBattleUnit->Update(deltaTime);
 		if (lpBattleUnit->IsAtkReady())
 		{
 			Attack(lpBattleUnit, lHeroParty);
 		}
+	}
+
+	if (IsFinish())
+	{
+		ObserverManager::GetSingleton()->Notify("BattleEnd", this);
+		return;
 	}
 
 	//GameObject::Update(deltaTime);
@@ -41,18 +76,30 @@ void BattleField::Render(HDC hdc)
 	//GameObject::Render(hdc);
 }
 
-void BattleField::Attack(BattleUnit*& lpAttaker, list<BattleUnit*>& lDefenders)
+bool BattleField::Attack(BattleUnit*& lpAttaker, list<BattleUnit*>& lDefenders)
 {
-	lpAttaker->Attack();
+	if (lDefenders.empty()) return false;
+
+	;
 	int randNum = rand() % lDefenders.size();
 	auto it = lDefenders.begin();
 	advance(it, randNum);
-	(*it)->Hit(0.3f);
-		
+	(*it)->Hit(lpAttaker->Attack());
+	
+	if ((*it)->IsDeath())
+	{
+		lDeath.push_front(*it);
+		lDefenders.erase(it);
+		return true;
+	}
+
+	return false;
 }
 
 void BattleField::AllAttack(BattleUnit*& lpAttaker, list<BattleUnit*>& lDefenders)
 {
+	if (lDefenders.empty()) return;
+
 	lpAttaker->Attack();
 	for (auto& member : lDefenders)
 	{

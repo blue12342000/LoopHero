@@ -4,11 +4,8 @@
 class Image;
 class FieldTileMap;
 class GameUI;
-class EquipItem;
-class Unit;
 class EventSystem;
 class UIBattleWindow;
-class BattleField;
 class InGame : public Scene
 {
 private:
@@ -18,12 +15,6 @@ private:
 	GameUI* lpCanvus;
 
 	FieldTileMap* lpFieldTiles;
-
-	Unit* lpUnit;
-	Unit* lpEnemy;
-	EquipItem* lpEquipItem;
-
-	BattleField* lpBattleField;
 	UIBattleWindow* lpBattleWindow;
 
 	EventSystem* lpEventSystem;

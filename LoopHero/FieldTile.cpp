@@ -45,14 +45,14 @@ void FieldTile::Render(HDC hdc)
 
 void FieldTile::DailySpawnMonster(ObserverHandler* lpCaller)
 {
-	if (lpTile && vChilds.size() < 4)
+	if (lpTile && vChilds.size() < 4 && !lpTile->spawnUnit.empty())
 	{
 		Unit* lpUnit = Trait::NewUnit(lpTile->spawnUnit);
 		AddChild(lpUnit);
 		lpUnit->SetPos({ 25.0f + cos(angle + PI / 2.0f * (vChilds.size() - 1)) * radius, 25.0f + sin(angle + PI / 2.0f * (vChilds.size() - 1)) * radius });
 		if (rand() % 100 < lpTile->spawnPer)
 		{
-
+			// È®·ü
 		}
 	}
 }

@@ -74,4 +74,6 @@ void UIInGameInfo::HideInfo(ObserverHandler* lpTarget)
 {
 	lpTitle->SetText("");
 	lpContent->SetText("");
+
+	ViewInfo(GameData::GetSingleton()->GetUnit());
 }

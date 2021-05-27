@@ -14,13 +14,22 @@ void BattleUnit::Init()
 
 void BattleUnit::Release()
 {
+	if (lpParent)
+	{
+		lpParent->RemoveChild(this);
+		lpParent = nullptr;
+	}
+
 	for (auto pair : mAnimations)
 	{
 		delete pair.second;
 	}
 	mAnimations.clear();
 
+	lpUnit->Release();
 	lpUnit = nullptr;
+
+	PoolingManager::GetSingleton()->AddClass(this);
 }
 
 void BattleUnit::Update(float deltaTime)
@@ -37,6 +46,10 @@ void BattleUnit::Update(float deltaTime)
 
 void BattleUnit::Render(HDC hdc)
 {
+	if (IsDeath())
+	{
+		int a = 0;
+	}
 	mAnimations[state]->Render(hdc, pos.x, pos.y, IMAGE_ALIGN::LEFT_TOP);
 }
 
@@ -56,14 +69,33 @@ void BattleUnit::Idle()
 
 void BattleUnit::Hit(float dmg)
 {
-	mAnimations[state]->Stop();
-	state = UNIT_STATE::HURT;
-	mAnimations[state]->Play();
+	if (!lpUnit->IsAlive()) return;
 
-	if (lpUnit) lpUnit->Hit(dmg);
+	if (lpUnit)
+	{
+		if (lpUnit->Hit(dmg))
+		{
+			// 맞음
+			if (!lpUnit->IsAlive())
+			{
+				// 죽음
+				Death();
+			}
+			else
+			{
+				mAnimations[state]->Stop();
+				state = UNIT_STATE::HURT;
+				mAnimations[state]->Play();
+			}
+		}
+		else
+		{
+			// 회피함
+		}
+	}
 }
 
-void BattleUnit::Attack()
+float BattleUnit::Attack()
 {
 	mAnimations[state]->Stop();
 	state = UNIT_STATE::ATTACK;
@@ -71,6 +103,7 @@ void BattleUnit::Attack()
 
 	action = 0;
 	isAtkReady = false;
+	return lpUnit->Attack();
 }
 
 void BattleUnit::Revive()

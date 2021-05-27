@@ -8,22 +8,40 @@
 void Unit::Init()
 {
 	lpIcon = nullptr;
+	state = UNIT_STATE::ALIVE;
 }
 
 void Unit::Release()
 {
+	if (this == &(*GameData::GetSingleton()->GetUnit())) return;
 	lpTrait = nullptr;
+
+	if (lpParent)
+	{
+		lpParent->RemoveChild(this);
+		lpParent = nullptr;
+	}
 
 	if (lpIcon)
 	{
 		delete lpIcon;
 		lpIcon = nullptr;
 	}
+	PoolingManager::GetSingleton()->AddClass(this);
 }
 
 void Unit::Update(float deltaTime)
 {
 	if (lpIcon) lpIcon->Update(deltaTime);
+
+	if (state == UNIT_STATE::ALIVE)
+	{
+		currHp += GetStatus(UNIT_STATUS::HP_REGEN) * deltaTime;
+		if (currHp > GetStatus(UNIT_STATUS::MAX_HP))
+		{
+			currHp = GetStatus(UNIT_STATUS::MAX_HP);
+		}
+	}
 }
 
 void Unit::Render(HDC hdc)
@@ -35,18 +53,32 @@ void Unit::Idle()
 {
 }
 
-void Unit::Hit(float dmg)
+bool Unit::Hit(float dmg)
 {
+	float evasion = GetStatus(UNIT_STATUS::EVASION);
+	if (rand() % 1000 < (int)(evasion * 10))
+	{
+		// È¸ÇÇ
+		return false;
+	}
+
+	float def = GetStatus(UNIT_STATUS::DEF);
+	dmg -= def;
+	if (dmg < 0) dmg = 0.1f;
+
 	currHp -= dmg;
 	if (currHp <= 0)
 	{
-		currHp = GetStatus(UNIT_STATUS::MAX_HP);
+		state = UNIT_STATE::DEATH;
+		Death();
 	}
+	return true;
 }
 
-void Unit::Attack()
+float Unit::Attack()
 {
-
+	int atk = rand() % (int)((GetStatus(UNIT_STATUS::MAX_DMG) - GetStatus(UNIT_STATUS::MIN_DMG)) * 10 + FLT_EPSILON);
+	return atk / 10.0f + GetStatus(UNIT_STATUS::MIN_DMG);
 }
 
 void Unit::Revive()
@@ -56,7 +88,7 @@ void Unit::Revive()
 
 void Unit::Death()
 {
-
+	
 }
 
 void Unit::SetTrait(Trait& trait)
@@ -74,6 +106,22 @@ void Unit::SetTrait(Trait& trait)
 	lpIcon = new Animation();
 	lpIcon->Init(name + "_icon", ANIMATION_TYPE::LOOP, 5);
 	lpIcon->Play();
+}
+
+void Unit::UseEquipItem(UNIT_SLOT slot, EquipItem* lpEquipItem)
+{
+	if (mEquip[slot].lpEquip)
+	{
+		for (const auto& pair : mEquip[slot].lpEquip->GetStatus())
+		{
+			mStatus[pair.first] -= pair.second;
+		}
+	}
+
+	for (const auto& pair : lpEquipItem->GetStatus())
+	{
+		mStatus[pair.first] += pair.second;
+	}
 }
 
 string Unit::ToString()
