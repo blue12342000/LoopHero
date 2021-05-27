@@ -59,7 +59,7 @@ public:
 		return lpGameUI;
 	}
 
-	void InsertChildId(GameUI* lpChild, int index);
+	void InsertChild(GameUI* lpChild, int index);
 	virtual void AddChildUI(GameUI* lpChild);
 	virtual void RemoveChildUI(int index);
 	virtual void RemoveChildUI(GameUI* lpChild) final;

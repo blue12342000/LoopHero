@@ -88,6 +88,8 @@ public:
 
 	inline HDC GetMemDC() { return (lpImageInfo) ? lpImageInfo->vHMemDC[0] : NULL; }
 	inline int GetTotalFrame() { return (lpImageInfo) ? lpImageInfo->totalFrame : 1; }
+	inline int GetMaxFrameX() { return (lpImageInfo) ? lpImageInfo->maxFrameX : 1; }
+	inline int GetMaxFrameY() { return (lpImageInfo) ? lpImageInfo->maxFrameY : 1; }
 	inline int GetWidth() { return lpImageInfo->width; }
 	inline int GetHeight() { return lpImageInfo->height; }
 };

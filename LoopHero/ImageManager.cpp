@@ -139,7 +139,7 @@ HRESULT ImageManager::Init()
     mLpImages["Warrior_revive"]->Init("Image/Hero/Warrior/hero_revive.bmp", 360 * 2, 39 * 2, 6, 1, 6, true, RGB(0, 170, 255));
 
     mLpImages.insert(make_pair("Slime_icon", new Image()));
-    mLpImages["Slime_icon"]->Init("Image/ObjectIcon/slime_icon.bmp", 28 * 2, 14 * 2, 2, 1, 2, true, RGB(0, 170, 255));
+    mLpImages["Slime_icon"]->Init("Image/ObjectIcon/slime_icon.bmp", (int)(28 * 1.5f), (int)(14 * 1.5f), 2, 1, 2, true, RGB(0, 170, 255));
     mLpImages.insert(make_pair("Slime_idle", new Image()));
     mLpImages["Slime_idle"]->Init("Image/Enemy/Slime/slime_idle.bmp", 60 * 2, 39 * 2, 1, 1, 1, true, RGB(0, 170, 255));
     mLpImages.insert(make_pair("Slime_attack", new Image()));
@@ -297,7 +297,7 @@ HRESULT ImageManager::Init()
     mLpImages["swamp_tile_white"]->Init("Image/Tiles/swamp_tile_white.bmp", 25 * 2, 34 * 2 * 7, 1, 7, 7, true, RGB(0, 170, 255));
 
     mLpImages.insert(make_pair("village_tile", new Image()));
-    mLpImages["village_tile"]->Init("Image/Tiles/swamp_tile.bmp", 25 * 2, 34 * 2 * 7, 1, 7, 7, true, RGB(0, 170, 255));
+    mLpImages["village_tile"]->Init("Image/Tiles/village_tile.bmp", 25 * 2, 34 * 2 * 7, 1, 7, 7, true, RGB(0, 170, 255));
     mLpImages.insert(make_pair("village_tile_select", new Image()));
     mLpImages["village_tile_select"]->Init("Image/Tiles/village_tile_select.bmp", 25 * 2, 34 * 2 * 7, 1, 7, 7, true, RGB(0, 170, 255));
     mLpImages.insert(make_pair("village_tile_white", new Image()));

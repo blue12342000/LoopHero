@@ -18,15 +18,9 @@ void UIBattleUnit::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
 	lpHudBack = ImageManager::GetSingleton()->FindImage("battle_unit_statusbar");
 	lpHpBar = GameUI::CreateUI<UIProgressBar>(this);
 	lpHpBar->Init(UI_ANCHOR::BOTTOM_MIDDLE, { 0.0f, 0.0f }, 50, 4, UI_BAR_TYPE::HORIZON, "", "battle_unit_statusbar_hp");
-	lpHpBar->SetTrackingData(action);
-	lpHpBar->SetTrackingMaxData(maxAction);
-	//lpHpBar->SetTrackingData(bind(&Unit::GetCurrHp, lpUnit));
-	//lpHpBar->SetTrackingMaxData(bind(&Unit::GetStatus, lpUnit, UNIT_STATUS::MAX_HP));
 
 	lpActionBar = GameUI::CreateUI<UIProgressBar>(this);
 	lpActionBar->Init(UI_ANCHOR::BOTTOM_MIDDLE, { 0.0f, 0.0f }, 50, 2, UI_BAR_TYPE::HORIZON, "", "battle_unit_statusbar_action");
-	lpActionBar->SetTrackingData(action);
-	lpActionBar->SetTrackingMaxData(maxAction);
 
 	lpHover = nullptr;
 
@@ -82,6 +76,11 @@ void UIBattleUnit::SetBattleUnit(BattleUnit* lpBattleUnit)
 		{
 			lpHover = ImageManager::GetSingleton()->FindImage("battle_unit_hover_80_58");
 		}
+
+		lpHpBar->SetTrackingData(bind(&Unit::GetCurrHp, lpBattleUnit->GetUnit()));
+		lpHpBar->SetTrackingMaxData(bind(&Unit::GetStatus, lpBattleUnit->GetUnit(), UNIT_STATUS::MAX_HP));
+		lpActionBar->SetTrackingData(bind(&BattleUnit::GetAction, lpBattleUnit));
+		lpActionBar->SetTrackingMaxData(bind(&BattleUnit::GetMaxAction, lpBattleUnit));
 	}
 }
 

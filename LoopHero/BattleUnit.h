@@ -21,6 +21,7 @@ private:
 	UNIT_STATE state;
 	Unit* lpUnit;
 	float action;
+	float maxAction;
 	bool isAtkReady;
 
 	map<UNIT_STATE, Animation*> mAnimations;
@@ -44,6 +45,8 @@ public:
 	void SetUnit(Unit* lpUnit);
 
 	inline Unit* GetUnit() { return lpUnit; }
+	inline float GetAction() { return action; }
+	inline float GetMaxAction() { return maxAction; }
 	inline bool IsReady() { return state != UNIT_STATE::INTRO; }
 	inline bool IsAlive() { return state != UNIT_STATE::DEATH; }
 	inline bool IsAtkReady() { return isAtkReady; }

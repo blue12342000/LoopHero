@@ -28,7 +28,7 @@ void Unit::Update(float deltaTime)
 
 void Unit::Render(HDC hdc)
 {
-	if (lpIcon) lpIcon->Render(hdc, pos.x, pos.y);
+	if (lpIcon) lpIcon->Render(hdc, GetWorldPos().x, GetWorldPos().y, IMAGE_ALIGN::CENTER);
 }
 
 void Unit::Idle()
@@ -37,7 +37,11 @@ void Unit::Idle()
 
 void Unit::Hit(float dmg)
 {
-
+	currHp -= dmg;
+	if (currHp <= 0)
+	{
+		currHp = GetStatus(UNIT_STATUS::MAX_HP);
+	}
 }
 
 void Unit::Attack()
@@ -62,12 +66,14 @@ void Unit::SetTrait(Trait& trait)
 
 	name = lpTrait->GetTraitId();
 	mStatus = lpTrait->GetInitStatus();
+	currHp = GetStatus(UNIT_STATUS::MAX_HP);
 	for (const auto& pair : lpTrait->GetUnitSlot())
 	{
 		mEquip.insert(make_pair(pair.first, EquipSlot{ pair.second, nullptr }));
 	}
 	lpIcon = new Animation();
 	lpIcon->Init(name + "_icon", ANIMATION_TYPE::LOOP, 5);
+	lpIcon->Play();
 }
 
 string Unit::ToString()

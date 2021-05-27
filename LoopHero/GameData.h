@@ -8,6 +8,20 @@
 
 using namespace std;
 
+enum class TILE_IMAGE_SEQ
+{
+	BASIC,
+	HORIZON,
+	VERTICAL,
+	RIGHT_BOTTOM,
+	LEFT_BOTTOM,
+	RIGHT_TOP,
+	LEFT_TOP,
+	HORIZON_2,
+	VERTICAL_2,
+	NONE
+};
+
 enum class UNIT_STATUS;
 struct EquipInfo
 {
@@ -33,6 +47,10 @@ struct Tile
 	vector<string> vEtc;
 	map<TILE_TYPE, Image*> mLpImage;
 
+	string spawnUnit;
+	int spawnPer;
+	int spawnDelay;
+
 	// 설치할수 있는 정보
 	bool checkTiles[3][3];
 	int selfCondition;
@@ -55,6 +73,9 @@ private:
 	map<UNIT_SLOT, string> mUnitSlotLang;
 	map<UNIT_STATUS, string> mUnitStatusLang;
 	map<EQUIP_PARTS, string> mEquipPartsLang;
+
+	// 타일별 데이터셋
+	map<int, TILE_IMAGE_SEQ> mTileSeq;
 
 	// 키값
 	map<string, UNIT_SLOT> mUnitSlot;
@@ -93,6 +114,8 @@ public:
 	string GetLang(UNIT_SLOT slot);
 	string GetLang(UNIT_STATUS status);
 	string GetLang(EQUIP_PARTS parts);
+
+	TILE_IMAGE_SEQ GetTileSeq(int data);
 
 	inline vector<pair<string, Tile*>> GetVMapList() { vector<pair<string, Tile*>> vList(mLpTiles.begin(), mLpTiles.end()); return vList; };
 	inline Tile* GetTile(int index) { return (index < mLpTiles.size()) ? next(mLpTiles.begin(), index)->second : nullptr; }

@@ -334,6 +334,9 @@ void Image::Render(HDC hdc, int destX, int destY, int frame, IMAGE_ALIGN align)
 
 void Image::Render(HDC hdc, int destX, int destY, POINT frame, IMAGE_ALIGN align)
 {
+    frame.x %= lpImageInfo->maxFrameX;
+    frame.y %= lpImageInfo->maxFrameY;
+
     switch (align)
     {
     case IMAGE_ALIGN::CENTER:

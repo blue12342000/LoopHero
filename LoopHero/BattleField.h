@@ -23,6 +23,7 @@ public:
 	virtual void Render(HDC hdc) override;
 
 	void Attack(BattleUnit*& lpAttaker, list<BattleUnit*>& lDefenders);
+	void AllAttack(BattleUnit*& lpAttaker, list<BattleUnit*>& lDefenders);
 	void AddUnit(BATTLE_TEAM team, Unit* lpUnit);
 
 	inline list<BattleUnit*> GetHeroParty() { return lHeroParty; }

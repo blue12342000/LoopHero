@@ -9,30 +9,20 @@
 
 #define FIELD_TILE_SIZE 50
 
-class Tile;
-struct FieldTile
-{
-	int x;
-	int y;
-	RECT rc;
-
-	Tile* lpTile;
-	int frameX;
-	int frameY;
-	int eventCount;
-
-	vector<string> vHistory;
-};
-
+class FieldTile;
 class FieldTileMap : public GameObject
 {
 private:
-	FieldTile tiles[FIELD_TILE_Y][FIELD_TILE_X];
+	FieldTile* tiles[FIELD_TILE_Y][FIELD_TILE_X];
 
 	map<string, vector<FieldTile*>> mBuildTiles;
 
 	Tile* lpSelectedTile;
 	bool isPossibleBuild[FIELD_TILE_Y][FIELD_TILE_X];
+
+
+private:
+	TILE_IMAGE_SEQ CalTileSeq(int buildX, int buildY, Tile* lpTile);
 
 public:
 	virtual ~FieldTileMap() {}

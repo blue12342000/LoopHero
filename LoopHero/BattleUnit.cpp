@@ -9,6 +9,7 @@ void BattleUnit::Init()
 	state = UNIT_STATE::INTRO;
 	lpUnit = nullptr;
 	action = 0;
+	maxAction = 1.0f;
 }
 
 void BattleUnit::Release()
@@ -25,10 +26,10 @@ void BattleUnit::Release()
 void BattleUnit::Update(float deltaTime)
 {
 	action += (1.0f + lpUnit->GetStatus(UNIT_STATUS::ATK_SPEED) * 0.01f) * deltaTime;
-	if (action >= 1)
+	if (action >= maxAction)
 	{
 		isAtkReady = true;
-		action = 1;
+		action = maxAction;
 	}
 
 	mAnimations[state]->Update(deltaTime);
@@ -100,6 +101,8 @@ int BattleUnit::GetHeight()
 
 void BattleUnit::SetUnit(Unit* lpUnit)
 {
+	Init();
+
 	this->lpUnit = lpUnit;
 	this->action = 0;
 

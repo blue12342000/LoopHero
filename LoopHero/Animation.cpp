@@ -22,7 +22,7 @@ void Animation::Update(float deltaTime)
 {
 	if (state == ANIMATION_STATE::PLAY)
 	{
-		frame += this->fps * deltaTime;
+		frame += fps * deltaTime;
 		if (frame >= endFrame)
 		{
 			frame = startFrame;

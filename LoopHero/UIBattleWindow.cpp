@@ -38,20 +38,50 @@ void UIBattleWindow::BattleStart(ObserverHandler* lpCaller)
 	{
 		lpBattleField = (BattleField*)lpCaller;
 
-		int index = 0;
-		for (BattleUnit*& lpBattleUnit : lpBattleField->GetHeroParty())
+		int index = 0, group = 0;
+		if (lpBattleField->GetHeroParty().size() == 1)
 		{
+			// 네크로멘서는 무조건 여길 타선 안된다.
 			UIBattleUnit* lpUIBattleUnit = GameUI::CreateUI<UIBattleUnit>(this);
-			lpUIBattleUnit->Init(UI_ANCHOR::BOTTOM_MIDDLE, { -100.0f, 300.0f }, lpBattleUnit->GetWidth(), lpBattleUnit->GetHeight());
-			lpUIBattleUnit->SetBattleUnit(lpBattleUnit);
+			lpUIBattleUnit->Init(UI_ANCHOR::BOTTOM_MIDDLE, { -135.0f, 150.0f }, lpBattleField->GetHeroParty().back()->GetWidth(), lpBattleField->GetHeroParty().back()->GetHeight());
+			lpUIBattleUnit->SetBattleUnit(lpBattleField->GetHeroParty().back());
+		}
+		else
+		{
+			for (BattleUnit*& lpBattleUnit : lpBattleField->GetHeroParty())
+			{
+				UIBattleUnit* lpUIBattleUnit = GameUI::CreateUI<UIBattleUnit>();
+				if (index % 2 == 0) InsertChild(lpUIBattleUnit, 0);
+				else AddChildUI(lpUIBattleUnit);
+				lpUIBattleUnit->Init(UI_ANCHOR::BOTTOM_MIDDLE, { -65.0f - (group % 2) * 140.0f, 150.0f + 60.0f * (1 + (-2) * (index % 2)) * group }, lpBattleUnit->GetWidth(), lpBattleUnit->GetHeight());
+				lpUIBattleUnit->SetBattleUnit(lpBattleUnit);
+
+				if (index % 2 == 0) ++group;
+				++index;
+			}
 		}
 		
 		index = 0;
-		for (BattleUnit*& lpBattleUnit : lpBattleField->GetEnemyParty())
+		group = 0;
+		if (lpBattleField->GetEnemyParty().size() == 1)
 		{
 			UIBattleUnit* lpUIBattleUnit = GameUI::CreateUI<UIBattleUnit>(this);
-			lpUIBattleUnit->Init(UI_ANCHOR::BOTTOM_MIDDLE, { 100.0f, 300.0f }, lpBattleUnit->GetWidth(), lpBattleUnit->GetHeight());
-			lpUIBattleUnit->SetBattleUnit(lpBattleUnit);
+			lpUIBattleUnit->Init(UI_ANCHOR::BOTTOM_MIDDLE, { 135.0f, 150.0f }, lpBattleField->GetEnemyParty().back()->GetWidth(), lpBattleField->GetEnemyParty().back()->GetHeight());
+			lpUIBattleUnit->SetBattleUnit(lpBattleField->GetEnemyParty().back());
+		}
+		else
+		{
+			for (BattleUnit*& lpBattleUnit : lpBattleField->GetEnemyParty())
+			{
+				UIBattleUnit* lpUIBattleUnit = GameUI::CreateUI<UIBattleUnit>();
+				if (index % 2 == 0) InsertChild(lpUIBattleUnit, 0);
+				else AddChildUI(lpUIBattleUnit);
+				lpUIBattleUnit->Init(UI_ANCHOR::BOTTOM_MIDDLE, { 65.0f + (group % 2) * 140.0f, 150.0f + 60.0f * (1 + (-2) * (index % 2)) * group }, lpBattleUnit->GetWidth(), lpBattleUnit->GetHeight());
+				lpUIBattleUnit->SetBattleUnit(lpBattleUnit);
+
+				if (index % 2 == 0) ++group;
+				++index;
+			}
 		}
 	}
 }

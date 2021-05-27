@@ -3,6 +3,7 @@
 #include "Card.h"
 #include "Unit.h"
 #include "EquipItem.h"
+#include "FieldTile.h"
 #include "Utill.h"
 
 void UIInGameInfo::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
@@ -55,6 +56,10 @@ void UIInGameInfo::ViewInfo(ObserverHandler* lpTarget)
 	else if (typeid(*lpTarget) == typeid(EquipItem))
 	{
 		lpNode = (EquipItem*)lpTarget;
+	}
+	else if (typeid(*lpTarget) == typeid(FieldTile))
+	{
+		lpNode = (FieldTile*)lpTarget;
 	}
 
 	if (lpNode)

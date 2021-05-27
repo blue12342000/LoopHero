@@ -65,7 +65,7 @@ void GameUI::Release()
 	for (int i = 0; i < vChildUI.size(); ++i)
 	{
 		vChildUI[i]->Release();
-		delete vChildUI[i];
+		//delete vChildUI[i];
 	}
 	vChildUI.clear();
 
@@ -106,7 +106,7 @@ void GameUI::Render(HDC hdc)
 	}
 }
 
-void GameUI::InsertChildId(GameUI* lpChild, int index)
+void GameUI::InsertChild(GameUI* lpChild, int index)
 {
 	lpChild->SetPos(lpChild->GetRealationPos(this));
 	lpChild->lpParent = this;

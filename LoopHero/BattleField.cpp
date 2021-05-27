@@ -44,9 +44,19 @@ void BattleField::Render(HDC hdc)
 void BattleField::Attack(BattleUnit*& lpAttaker, list<BattleUnit*>& lDefenders)
 {
 	lpAttaker->Attack();
+	int randNum = rand() % lDefenders.size();
+	auto it = lDefenders.begin();
+	advance(it, randNum);
+	(*it)->Hit(0.3f);
+		
+}
+
+void BattleField::AllAttack(BattleUnit*& lpAttaker, list<BattleUnit*>& lDefenders)
+{
+	lpAttaker->Attack();
 	for (auto& member : lDefenders)
 	{
-		member->Hit(0.0f);
+		member->Hit(0.3f);
 	}
 }
 

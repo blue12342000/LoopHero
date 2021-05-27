@@ -77,6 +77,25 @@ void GameData::LoadTiles()
 		else mLpTiles[group.first]->nearCondition = stod(mDatas[group.first]["near_condition"]);
 		mLpTiles[group.first]->vSelfTiles = StringSplit(mDatas[group.first]["self"], ',');
 		mLpTiles[group.first]->vNearTiles = StringSplit(mDatas[group.first]["near"], ',');
+
+		// 이벤트 정보 로드
+		if (!DataManager::GetSingleton()->GetSingleton()->GetData("tiles", group.first, "event_count").empty())
+		{
+			int count = stoi(mDatas[group.first]["event_count"]);
+			for (int i = 0; i < count; ++i)
+			{
+				if (mDatas[group.first]["event_" + to_string(i)] == string("daily_spawn_monster"))
+				{
+					//mLpTiles[group.first]->spawnUnit = mDatas[group.first]["spawn_" + to_string(i)];
+					mLpTiles[group.first]->spawnUnit = "Slime";
+					mLpTiles[group.first]->spawnPer = stoi(mDatas[group.first]["spawn_per_" + to_string(i)]);
+					if (!DataManager::GetSingleton()->GetSingleton()->GetData("tiles", group.first, "spawn_delay_" + to_string(i)).empty())
+					{
+						mLpTiles[group.first]->spawnDelay = stoi(mDatas[group.first]["spawn_delay_" + to_string(i)]);
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -109,6 +128,32 @@ HRESULT GameData::Init()
 {
     lpDeck = new Deck();
     lpDeck->Init();
+
+	// 일반 (내가 중앙일때)
+	mTileSeq.insert(make_pair(0x10, TILE_IMAGE_SEQ::BASIC));
+	mTileSeq.insert(make_pair(0x38, TILE_IMAGE_SEQ::HORIZON));
+	mTileSeq.insert(make_pair(0x92, TILE_IMAGE_SEQ::VERTICAL));
+	mTileSeq.insert(make_pair(0x1A, TILE_IMAGE_SEQ::RIGHT_BOTTOM));
+	mTileSeq.insert(make_pair(0x32, TILE_IMAGE_SEQ::LEFT_BOTTOM));
+	mTileSeq.insert(make_pair(0x98, TILE_IMAGE_SEQ::RIGHT_TOP));
+	mTileSeq.insert(make_pair(0xB0, TILE_IMAGE_SEQ::LEFT_TOP));
+
+	// 상대위치 (3x3에서 중앙을 기준으로)
+	mTileSeq.insert(make_pair(0xBA, TILE_IMAGE_SEQ::BASIC));
+	mTileSeq.insert(make_pair(0x1C0, TILE_IMAGE_SEQ::HORIZON));
+	mTileSeq.insert(make_pair(0x24, TILE_IMAGE_SEQ::VERTICAL));
+	mTileSeq.insert(make_pair(0x1A0, TILE_IMAGE_SEQ::RIGHT_BOTTOM));
+	mTileSeq.insert(make_pair(0xC8, TILE_IMAGE_SEQ::LEFT_BOTTOM));
+	mTileSeq.insert(make_pair(0x26, TILE_IMAGE_SEQ::RIGHT_TOP));
+	mTileSeq.insert(make_pair(0x0B, TILE_IMAGE_SEQ::LEFT_TOP));
+	mTileSeq.insert(make_pair(0x07, TILE_IMAGE_SEQ::HORIZON_2));
+	mTileSeq.insert(make_pair(0x49, TILE_IMAGE_SEQ::VERTICAL_2));
+
+	// 3개가 아닌 두개씩 될수도 있음
+	mTileSeq.insert(make_pair(0x18, TILE_IMAGE_SEQ::HORIZON));
+	mTileSeq.insert(make_pair(0x30, TILE_IMAGE_SEQ::HORIZON));
+	mTileSeq.insert(make_pair(0x90, TILE_IMAGE_SEQ::VERTICAL));
+	mTileSeq.insert(make_pair(0x12, TILE_IMAGE_SEQ::VERTICAL));
 
 	string key, lang;
 	for (int i = 0; i < (int)UNIT_SLOT::NONE; ++i)
@@ -346,4 +391,10 @@ string GameData::GetLang(EQUIP_PARTS parts)
 	if (mEquipPartsLang.find(parts) == mEquipPartsLang.end()) return "";
 
 	return mEquipPartsLang[parts];
+}
+
+TILE_IMAGE_SEQ GameData::GetTileSeq(int data)
+{
+	if (mTileSeq.find(data) == mTileSeq.end()) return TILE_IMAGE_SEQ::NONE;
+	return mTileSeq[data];
 }

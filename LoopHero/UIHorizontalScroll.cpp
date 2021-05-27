@@ -103,8 +103,8 @@ void UIHorizontalScroll::AddChildUI(GameUI* lpChild)
 		break;
 	}
 
-	if (insert == HS_ARGS_INSERT::AFTER) GameUI::InsertChildId(lpChild, vChildUI.size());
-	else GameUI::InsertChildId(lpChild, 0);
+	if (insert == HS_ARGS_INSERT::AFTER) GameUI::InsertChild(lpChild, vChildUI.size());
+	else GameUI::InsertChild(lpChild, 0);
 
 	SlotResize();
 }

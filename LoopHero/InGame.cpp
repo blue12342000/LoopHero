@@ -59,6 +59,10 @@ HRESULT InGame::Init()
     lpBattleField->Init();
     lpBattleField->AddUnit(BATTLE_TEAM::LEFT, lpUnit);
     lpBattleField->AddUnit(BATTLE_TEAM::RIGHT, lpEnemy);
+    lpBattleField->AddUnit(BATTLE_TEAM::RIGHT, Trait::NewUnit("Slime"));
+    lpBattleField->AddUnit(BATTLE_TEAM::RIGHT, Trait::NewUnit("Slime"));
+    lpBattleField->AddUnit(BATTLE_TEAM::RIGHT, Trait::NewUnit("Slime"));
+    lpBattleField->AddUnit(BATTLE_TEAM::RIGHT, Trait::NewUnit("Slime"));
     ObserverManager::GetSingleton()->Notify("BattleStart", lpBattleField);
 
     //UIBattleUnit* lpUIBattleUnit = GameUI::CreateUI<UIBattleUnit>(lpCanvus);

@@ -4,6 +4,31 @@
 #include "Card.h"
 #include "LoopHero.h"
 #include "Image.h"
+#include "FieldTile.h"
+
+TILE_IMAGE_SEQ FieldTileMap::CalTileSeq(int buildX, int buildY, Tile* lpTile)
+{
+	int data = 0;
+	for (int y = 1, digit = 1; y > -2; --y)
+	{
+		for (int x = 1; x > -2; --x, digit <<= 1)
+		{
+			if (x == 0 && y == 0) data |= digit;
+			if (abs(x + y) != 1) continue;
+
+			if (buildX + x > -1 && buildY + y > -1
+				&& buildX + x < FIELD_TILE_X && buildY + y < FIELD_TILE_Y)
+			{
+				if (tiles[buildY + y][buildX + x]->lpTile && tiles[buildY + y][buildX + x]->lpTile->id == lpTile->id)
+				{
+					data |= digit;
+				}
+			}
+		}
+	}
+
+	return GameData::GetSingleton()->GetTileSeq(data);
+}
 
 void FieldTileMap::Init()
 {
@@ -11,14 +36,17 @@ void FieldTileMap::Init()
 	{
 		for (int x = 0; x < FIELD_TILE_X; ++x)
 		{
-			tiles[y][x].x = x;
-			tiles[y][x].y = y;
-			SetRect(&tiles[y][x].rc, FIELD_START_X + x * FIELD_TILE_SIZE, FIELD_START_Y + y * FIELD_TILE_SIZE, FIELD_START_X + (x + 1) * FIELD_TILE_SIZE, FIELD_START_Y + (y + 1) * FIELD_TILE_SIZE);
+			tiles[y][x] = GameObject::Create<FieldTile>(this);
+			tiles[y][x]->Init();
+			tiles[y][x]->SetPos({ (float)(FIELD_START_X + x * FIELD_TILE_SIZE), (float)(FIELD_START_Y + y * FIELD_TILE_SIZE) });
+			tiles[y][x]->x = x;
+			tiles[y][x]->y = y;
+			SetRect(&tiles[y][x]->rc, FIELD_START_X + x * FIELD_TILE_SIZE, FIELD_START_Y + y * FIELD_TILE_SIZE, FIELD_START_X + (x + 1) * FIELD_TILE_SIZE, FIELD_START_Y + (y + 1) * FIELD_TILE_SIZE);
 
-			tiles[y][x].lpTile = nullptr;
-			tiles[y][x].frameX = 0;
-			tiles[y][x].frameY = 0;
-			tiles[y][x].eventCount = 0;
+			tiles[y][x]->lpTile = nullptr;
+			tiles[y][x]->frameX = 0;
+			tiles[y][x]->frameY = 0;
+			tiles[y][x]->eventCount = 0;
 
 			isPossibleBuild[y][x] = false;
 		}
@@ -27,6 +55,7 @@ void FieldTileMap::Init()
 	SetRect(&rc, FIELD_START_X, FIELD_START_Y, FIELD_START_X + FIELD_TILE_SIZE * FIELD_TILE_X, FIELD_START_Y + FIELD_TILE_SIZE * FIELD_TILE_Y);
 
 	lpSelectedTile = nullptr;
+	isVisible = true;
 
 	ObserverManager::GetSingleton()->RegisterObserver(this);
 	AddOEventHandler("SelectedCard", bind(&FieldTileMap::SelectedCard, this, placeholders::_1));
@@ -51,6 +80,14 @@ void FieldTileMap::Update(float deltaTime)
 			if (lpSelectedTile) SelectedTileValidation();
 		}
 	}
+
+	if (isVisible)
+	{
+		for (int i = 0; i < vChilds.size(); ++i)
+		{
+			vChilds[i]->Update(deltaTime);
+		}
+	}
 }
 
 void FieldTileMap::Render(HDC hdc)
@@ -59,19 +96,20 @@ void FieldTileMap::Render(HDC hdc)
 	{
 		for (int x = 0; x < FIELD_TILE_X; ++x)
 		{
-			//Rectangle(hdc, tiles[y][x].rc.left, tiles[y][x].rc.top, tiles[y][x].rc.right, tiles[y][x].rc.bottom);
-			if (isPossibleBuild[y][x])
+			//Rectangle(hdc, tiles[y][x]->rc.left, tiles[y][x]->rc.top, tiles[y][x]->rc.right, tiles[y][x]->rc.bottom);
+			if (tiles[y][x]->lpTile)
 			{
-				//TextOut(hdc, tiles[y][x].rc.left, tiles[y][x].rc.top + 30, "O", 1);
-				ImageManager::GetSingleton()->FindImage("possible_tile")->Render(hdc, tiles[y][x].rc.left, tiles[y][x].rc.top);
-			}
-			if (tiles[y][x].lpTile)
-			{
-				string str = tiles[y][x].lpTile->name;
-				//TextOut(hdc, tiles[y][x].rc.left, tiles[y][x].rc.top, str.c_str(), str.length());
-				tiles[y][x].lpTile->mLpImage[TILE_TYPE::TILE]->Render(hdc, (tiles[y][x].rc.left + tiles[y][x].rc.right) / 2, tiles[y][x].rc.bottom, POINT{0, 0}, IMAGE_ALIGN::MIDDLE_BOTTOM);
+				string str = tiles[y][x]->lpTile->name;
+				//TextOut(hdc, tiles[y][x]->rc.left, tiles[y][x]->rc.top, str.c_str(), str.length());
+				tiles[y][x]->lpTile->mLpImage[TILE_TYPE::TILE]->Render(hdc, (tiles[y][x]->rc.left + tiles[y][x]->rc.right) / 2, tiles[y][x]->rc.bottom, POINT{ tiles[y][x]->frameX, tiles[y][x]->frameY }, IMAGE_ALIGN::MIDDLE_BOTTOM);
+				tiles[y][x]->Render(hdc);
 			}
 
+			if (isPossibleBuild[y][x])
+			{
+				//TextOut(hdc, tiles[y][x]->rc.left, tiles[y][x]->rc.top + 30, "O", 1);
+				ImageManager::GetSingleton()->FindImage("possible_tile")->Render(hdc, tiles[y][x]->rc.left, tiles[y][x]->rc.top);
+			}
 		}
 	}
 
@@ -80,7 +118,16 @@ void FieldTileMap::Render(HDC hdc)
 	if (lpSelectedTile)
 	{
 		POINT mPos = KeyManager::GetSingleton()->GetMousePoint();
-		lpSelectedTile->mLpImage[TILE_TYPE::SELECT]->Render(hdc, mPos.x, mPos.y, POINT{ 0, 0 }, IMAGE_ALIGN::CENTER);
+		int x = (mPos.x - FIELD_START_X) / FIELD_TILE_SIZE;
+		int y = (mPos.y - FIELD_START_Y) / FIELD_TILE_SIZE;
+		if (isPossibleBuild[y][x])
+		{
+			lpSelectedTile->mLpImage[TILE_TYPE::SELECT]->Render(hdc, (tiles[y][x]->rc.left + tiles[y][x]->rc.right) / 2, tiles[y][x]->rc.bottom, POINT{ tiles[y][x]->frameX, tiles[y][x]->frameY }, IMAGE_ALIGN::MIDDLE_BOTTOM);
+		}
+		else
+		{
+			lpSelectedTile->mLpImage[TILE_TYPE::SELECT]->Render(hdc, mPos.x, mPos.y, POINT{ 0, 0 }, IMAGE_ALIGN::CENTER);
+		}
 		//TextOut(hdc, 200, 10, lpSelectedTile->name.c_str(), lpSelectedTile->name.length());
 	}
 
@@ -93,14 +140,58 @@ bool FieldTileMap::BuildTile(int x, int y, Tile* lpTile)
 	{
 		if (isPossibleBuild[y][x])
 		{
-			tiles[y][x].lpTile = lpTile;
-			tiles[y][x].vHistory.push_back(lpTile->id);
+			if (lpTile->id == "oblivion")
+			{
+				if (!tiles[y][x]->vHistory.empty())
+				{
+					if (tiles[y][x]->vHistory.front() == "road")
+					{
+						tiles[y][x]->lpTile = GameData::GetSingleton()->GetTile("road");
+					}
+					tiles[y][x]->vHistory.erase(tiles[y][x]->vHistory.begin() + 1, tiles[y][x]->vHistory.end());
+				}
+				while (!tiles[y][x]->vChilds.empty())
+				{
+					tiles[y][x]->vChilds.back()->Release();
+					tiles[y][x]->vChilds.pop_back();
+				}
+				DeselectCard(this);
+				return true;
+			}
+
+
+			tiles[y][x]->lpTile = lpTile;
+			if (tiles[y][x]->vHistory.empty())
+			{
+				tiles[y][x]->frameY = (int)CalTileSeq(x, y, lpTile) % lpTile->mLpImage[TILE_TYPE::TILE]->GetMaxFrameY();
+
+				if (lpTile->id == "road")
+				{
+					for (int dy = 1; dy > -2; --dy)
+					{
+						for (int dx = 1; dx > -2; --dx)
+						{
+							if (abs(dx + dy) != 1) continue;
+
+							if (dx + x > -1 && dy + y > -1
+								&& dx + x < FIELD_TILE_X && dy + y < FIELD_TILE_Y)
+							{
+								if (!tiles[dy + y][dx + x]->lpTile) continue;
+								tiles[dy + y][dx + x]->frameY = (int)CalTileSeq(dx + x, dy + y, tiles[dy + y][dx + x]->lpTile) % tiles[dy + y][dx + x]->lpTile->mLpImage[TILE_TYPE::TILE]->GetMaxFrameY();
+							}
+						}
+					}
+				}
+			}
+
+			tiles[y][x]->vHistory.push_back(lpTile->id);
 			auto it = mBuildTiles.find(lpTile->id);
 			if (it == mBuildTiles.end())
 			{
 				mBuildTiles.insert(make_pair(lpTile->id, vector<FieldTile*>()));
 			}
-			mBuildTiles[lpTile->id].push_back(&tiles[y][x]);
+			mBuildTiles[lpTile->id].push_back(tiles[y][x]);
+
 			DeselectCard(this);
 			return true;
 		}
@@ -180,7 +271,7 @@ void FieldTileMap::SelectedTileValidation()
 				{
 					for (int x = 0; x < FIELD_TILE_X; ++x)
 					{
-						isPossibleBuild[y][x] = (tiles[y][x].lpTile == nullptr);
+						isPossibleBuild[y][x] = (tiles[y][x]->lpTile == nullptr);
 					}
 				}
 			}
@@ -202,24 +293,24 @@ void FieldTileMap::SelectedTileValidation()
 					// 상하좌우 확인해서 만약 시작과 끝점이 아닌 같은 타일이 만나면 그건 절때 안됨
 					if (lpFieldTile->y - 2 > -1)
 					{
-						if (tiles[lpFieldTile->y - 2][lpFieldTile->x].lpTile == lpSelectedTile && &tiles[lpFieldTile->y - 2][lpFieldTile->x] != mBuildTiles[lpSelectedTile->vNearTiles[0]].back()
-							&& &tiles[lpFieldTile->y - 2][lpFieldTile->x] != mBuildTiles[lpSelectedTile->vNearTiles[0]].front())
+						if (tiles[lpFieldTile->y - 2][lpFieldTile->x]->lpTile == lpSelectedTile && tiles[lpFieldTile->y - 2][lpFieldTile->x] != mBuildTiles[lpSelectedTile->vNearTiles[0]].back()
+							&& tiles[lpFieldTile->y - 2][lpFieldTile->x] != mBuildTiles[lpSelectedTile->vNearTiles[0]].front())
 						{
 							isPossibleBuild[lpFieldTile->y - 1][lpFieldTile->x] = false;
 						}
 					}
 					if (lpFieldTile->x - 1 > -1)
 					{
-						if (tiles[lpFieldTile->y - 1][lpFieldTile->x - 1].lpTile == lpSelectedTile && &tiles[lpFieldTile->y - 1][lpFieldTile->x - 1] != mBuildTiles[lpSelectedTile->vNearTiles[0]].back()
-							&& &tiles[lpFieldTile->y - 1][lpFieldTile->x - 1] != mBuildTiles[lpSelectedTile->vNearTiles[0]].front())
+						if (tiles[lpFieldTile->y - 1][lpFieldTile->x - 1]->lpTile == lpSelectedTile && tiles[lpFieldTile->y - 1][lpFieldTile->x - 1] != mBuildTiles[lpSelectedTile->vNearTiles[0]].back()
+							&& tiles[lpFieldTile->y - 1][lpFieldTile->x - 1] != mBuildTiles[lpSelectedTile->vNearTiles[0]].front())
 						{
 							isPossibleBuild[lpFieldTile->y - 1][lpFieldTile->x] = false;
 						}
 					}
 					if (lpFieldTile->x + 1 < FIELD_TILE_X)
 					{
-						if (tiles[lpFieldTile->y - 1][lpFieldTile->x + 1].lpTile == lpSelectedTile && &tiles[lpFieldTile->y - 1][lpFieldTile->x + 1] != mBuildTiles[lpSelectedTile->vNearTiles[0]].back()
-							&& &tiles[lpFieldTile->y - 1][lpFieldTile->x + 1] != mBuildTiles[lpSelectedTile->vNearTiles[0]].front())
+						if (tiles[lpFieldTile->y - 1][lpFieldTile->x + 1]->lpTile == lpSelectedTile && tiles[lpFieldTile->y - 1][lpFieldTile->x + 1] != mBuildTiles[lpSelectedTile->vNearTiles[0]].back()
+							&& tiles[lpFieldTile->y - 1][lpFieldTile->x + 1] != mBuildTiles[lpSelectedTile->vNearTiles[0]].front())
 						{
 							isPossibleBuild[lpFieldTile->y - 1][lpFieldTile->x] = false;
 						}
@@ -230,24 +321,24 @@ void FieldTileMap::SelectedTileValidation()
 					isPossibleBuild[lpFieldTile->y][lpFieldTile->x - 1] = true;
 					if (lpFieldTile->y - 1 > -1)
 					{
-						if (tiles[lpFieldTile->y - 1][lpFieldTile->x - 1].lpTile == lpSelectedTile && &tiles[lpFieldTile->y - 1][lpFieldTile->x - 1] != mBuildTiles[lpSelectedTile->vNearTiles[0]].back()
-							&& &tiles[lpFieldTile->y - 1][lpFieldTile->x - 1] != mBuildTiles[lpSelectedTile->vNearTiles[0]].front())
+						if (tiles[lpFieldTile->y - 1][lpFieldTile->x - 1]->lpTile == lpSelectedTile && tiles[lpFieldTile->y - 1][lpFieldTile->x - 1] != mBuildTiles[lpSelectedTile->vNearTiles[0]].back()
+							&& tiles[lpFieldTile->y - 1][lpFieldTile->x - 1] != mBuildTiles[lpSelectedTile->vNearTiles[0]].front())
 						{
 							isPossibleBuild[lpFieldTile->y][lpFieldTile->x - 1] = false;
 						}
 					}
 					if (lpFieldTile->y + 1 < FIELD_TILE_Y)
 					{
-						if (tiles[lpFieldTile->y + 1][lpFieldTile->x - 1].lpTile == lpSelectedTile && &tiles[lpFieldTile->y + 1][lpFieldTile->x - 1] != mBuildTiles[lpSelectedTile->vNearTiles[0]].back()
-							&& &tiles[lpFieldTile->y + 1][lpFieldTile->x - 1] != mBuildTiles[lpSelectedTile->vNearTiles[0]].front())
+						if (tiles[lpFieldTile->y + 1][lpFieldTile->x - 1]->lpTile == lpSelectedTile && tiles[lpFieldTile->y + 1][lpFieldTile->x - 1] != mBuildTiles[lpSelectedTile->vNearTiles[0]].back()
+							&& tiles[lpFieldTile->y + 1][lpFieldTile->x - 1] != mBuildTiles[lpSelectedTile->vNearTiles[0]].front())
 						{
 							isPossibleBuild[lpFieldTile->y][lpFieldTile->x - 1] = false;
 						}
 					}
 					if (lpFieldTile->x - 2 > -1)
 					{
-						if (tiles[lpFieldTile->y][lpFieldTile->x - 2].lpTile == lpSelectedTile && &tiles[lpFieldTile->y][lpFieldTile->x - 2] != mBuildTiles[lpSelectedTile->vNearTiles[0]].back()
-							&& &tiles[lpFieldTile->y][lpFieldTile->x - 2] != mBuildTiles[lpSelectedTile->vNearTiles[0]].front())
+						if (tiles[lpFieldTile->y][lpFieldTile->x - 2]->lpTile == lpSelectedTile && tiles[lpFieldTile->y][lpFieldTile->x - 2] != mBuildTiles[lpSelectedTile->vNearTiles[0]].back()
+							&& tiles[lpFieldTile->y][lpFieldTile->x - 2] != mBuildTiles[lpSelectedTile->vNearTiles[0]].front())
 						{
 							isPossibleBuild[lpFieldTile->y][lpFieldTile->x - 1] = false;
 						}
@@ -258,24 +349,24 @@ void FieldTileMap::SelectedTileValidation()
 					isPossibleBuild[lpFieldTile->y + 1][lpFieldTile->x] = true;
 					if (lpFieldTile->y + 2 < FIELD_START_Y)
 					{
-						if (tiles[lpFieldTile->y + 2][lpFieldTile->x].lpTile == lpSelectedTile && &tiles[lpFieldTile->y + 2][lpFieldTile->x] != mBuildTiles[lpSelectedTile->vNearTiles[0]].back()
-							&& &tiles[lpFieldTile->y + 2][lpFieldTile->x] != mBuildTiles[lpSelectedTile->vNearTiles[0]].front())
+						if (tiles[lpFieldTile->y + 2][lpFieldTile->x]->lpTile == lpSelectedTile && tiles[lpFieldTile->y + 2][lpFieldTile->x] != mBuildTiles[lpSelectedTile->vNearTiles[0]].back()
+							&& tiles[lpFieldTile->y + 2][lpFieldTile->x] != mBuildTiles[lpSelectedTile->vNearTiles[0]].front())
 						{
 							isPossibleBuild[lpFieldTile->y + 1][lpFieldTile->x] = false;
 						}
 					}
 					if (lpFieldTile->x - 1 > -1)
 					{
-						if (tiles[lpFieldTile->y + 1][lpFieldTile->x - 1].lpTile == lpSelectedTile && &tiles[lpFieldTile->y + 1][lpFieldTile->x - 1] != mBuildTiles[lpSelectedTile->vNearTiles[0]].back()
-							&& &tiles[lpFieldTile->y + 1][lpFieldTile->x - 1] != mBuildTiles[lpSelectedTile->vNearTiles[0]].front())
+						if (tiles[lpFieldTile->y + 1][lpFieldTile->x - 1]->lpTile == lpSelectedTile && tiles[lpFieldTile->y + 1][lpFieldTile->x - 1] != mBuildTiles[lpSelectedTile->vNearTiles[0]].back()
+							&& tiles[lpFieldTile->y + 1][lpFieldTile->x - 1] != mBuildTiles[lpSelectedTile->vNearTiles[0]].front())
 						{
 							isPossibleBuild[lpFieldTile->y + 1][lpFieldTile->x] = false;
 						}
 					}
 					if (lpFieldTile->x + 1 < FIELD_TILE_X)
 					{
-						if (tiles[lpFieldTile->y + 1][lpFieldTile->x + 1].lpTile == lpSelectedTile && &tiles[lpFieldTile->y + 1][lpFieldTile->x + 1] != mBuildTiles[lpSelectedTile->vNearTiles[0]].back()
-							&& &tiles[lpFieldTile->y + 1][lpFieldTile->x + 1] != mBuildTiles[lpSelectedTile->vNearTiles[0]].front())
+						if (tiles[lpFieldTile->y + 1][lpFieldTile->x + 1]->lpTile == lpSelectedTile && tiles[lpFieldTile->y + 1][lpFieldTile->x + 1] != mBuildTiles[lpSelectedTile->vNearTiles[0]].back()
+							&& tiles[lpFieldTile->y + 1][lpFieldTile->x + 1] != mBuildTiles[lpSelectedTile->vNearTiles[0]].front())
 						{
 							isPossibleBuild[lpFieldTile->y + 1][lpFieldTile->x] = false;
 						}
@@ -286,24 +377,24 @@ void FieldTileMap::SelectedTileValidation()
 					isPossibleBuild[lpFieldTile->y][lpFieldTile->x + 1] = true;
 					if (lpFieldTile->y - 1 > -1)
 					{
-						if (tiles[lpFieldTile->y - 1][lpFieldTile->x + 1].lpTile == lpSelectedTile && &tiles[lpFieldTile->y - 1][lpFieldTile->x + 1] != mBuildTiles[lpSelectedTile->vNearTiles[0]].back()
-							&& &tiles[lpFieldTile->y - 1][lpFieldTile->x + 1] != mBuildTiles[lpSelectedTile->vNearTiles[0]].front())
+						if (tiles[lpFieldTile->y - 1][lpFieldTile->x + 1]->lpTile == lpSelectedTile && tiles[lpFieldTile->y - 1][lpFieldTile->x + 1] != mBuildTiles[lpSelectedTile->vNearTiles[0]].back()
+							&& tiles[lpFieldTile->y - 1][lpFieldTile->x + 1] != mBuildTiles[lpSelectedTile->vNearTiles[0]].front())
 						{
 							isPossibleBuild[lpFieldTile->y][lpFieldTile->x + 1] = false;
 						}
 					}
 					if (lpFieldTile->y + 1 < FIELD_TILE_Y)
 					{
-						if (tiles[lpFieldTile->y + 1][lpFieldTile->x + 1].lpTile == lpSelectedTile && &tiles[lpFieldTile->y + 1][lpFieldTile->x + 1] != mBuildTiles[lpSelectedTile->vNearTiles[0]].back()
-							&& &tiles[lpFieldTile->y + 1][lpFieldTile->x + 1] != mBuildTiles[lpSelectedTile->vNearTiles[0]].front())
+						if (tiles[lpFieldTile->y + 1][lpFieldTile->x + 1]->lpTile == lpSelectedTile && tiles[lpFieldTile->y + 1][lpFieldTile->x + 1] != mBuildTiles[lpSelectedTile->vNearTiles[0]].back()
+							&& tiles[lpFieldTile->y + 1][lpFieldTile->x + 1] != mBuildTiles[lpSelectedTile->vNearTiles[0]].front())
 						{
 							isPossibleBuild[lpFieldTile->y][lpFieldTile->x + 1] = false;
 						}
 					}
 					if (lpFieldTile->x + 2 < FIELD_TILE_X)
 					{
-						if (tiles[lpFieldTile->y][lpFieldTile->x + 2].lpTile == lpSelectedTile && &tiles[lpFieldTile->y][lpFieldTile->x + 2] != mBuildTiles[lpSelectedTile->vNearTiles[0]].back()
-							&& &tiles[lpFieldTile->y][lpFieldTile->x  + 2] != mBuildTiles[lpSelectedTile->vNearTiles[0]].front())
+						if (tiles[lpFieldTile->y][lpFieldTile->x + 2]->lpTile == lpSelectedTile && tiles[lpFieldTile->y][lpFieldTile->x + 2] != mBuildTiles[lpSelectedTile->vNearTiles[0]].back()
+							&& tiles[lpFieldTile->y][lpFieldTile->x  + 2] != mBuildTiles[lpSelectedTile->vNearTiles[0]].front())
 						{
 							isPossibleBuild[lpFieldTile->y][lpFieldTile->x + 1] = false;
 						}
@@ -332,37 +423,37 @@ void FieldTileMap::SelectedTileValidation()
 					//상하좌우
 					if (lpSelectedTile->checkTiles[2][1] && lpFieldTile->y - 1 > -1)
 					{
-						auto it = mCheckMap.find(&tiles[lpFieldTile->y - 1][lpFieldTile->x]);
-						if (!tiles[lpFieldTile->y - 1][lpFieldTile->x].lpTile)
+						auto it = mCheckMap.find(tiles[lpFieldTile->y - 1][lpFieldTile->x]);
+						if (!tiles[lpFieldTile->y - 1][lpFieldTile->x]->lpTile)
 						{
-							if (it == mCheckMap.end()) mCheckMap.insert(make_pair(&tiles[lpFieldTile->y - 1][lpFieldTile->x], 1));
+							if (it == mCheckMap.end()) mCheckMap.insert(make_pair(tiles[lpFieldTile->y - 1][lpFieldTile->x], 1));
 							else ++(it->second);
 						}
 					}
 					if (lpSelectedTile->checkTiles[1][2] && lpFieldTile->x - 1 > -1)
 					{
-						auto it = mCheckMap.find(&tiles[lpFieldTile->y][lpFieldTile->x - 1]);
-						if (!tiles[lpFieldTile->y][lpFieldTile->x - 1].lpTile)
+						auto it = mCheckMap.find(tiles[lpFieldTile->y][lpFieldTile->x - 1]);
+						if (!tiles[lpFieldTile->y][lpFieldTile->x - 1]->lpTile)
 						{
-							if (it == mCheckMap.end()) mCheckMap.insert(make_pair(&tiles[lpFieldTile->y][lpFieldTile->x - 1], 1));
+							if (it == mCheckMap.end()) mCheckMap.insert(make_pair(tiles[lpFieldTile->y][lpFieldTile->x - 1], 1));
 							else ++(it->second);
 						}
 					}
 					if (lpSelectedTile->checkTiles[0][1] && lpFieldTile->y + 1 < FIELD_TILE_Y)
 					{
-						auto it = mCheckMap.find(&tiles[lpFieldTile->y + 1][lpFieldTile->x]);
-						if (!tiles[lpFieldTile->y + 1][lpFieldTile->x].lpTile)
+						auto it = mCheckMap.find(tiles[lpFieldTile->y + 1][lpFieldTile->x]);
+						if (!tiles[lpFieldTile->y + 1][lpFieldTile->x]->lpTile)
 						{
-							if (it == mCheckMap.end()) mCheckMap.insert(make_pair(&tiles[lpFieldTile->y + 1][lpFieldTile->x], 1));
+							if (it == mCheckMap.end()) mCheckMap.insert(make_pair(tiles[lpFieldTile->y + 1][lpFieldTile->x], 1));
 							else ++(it->second);
 						}
 					}
 					if (lpSelectedTile->checkTiles[1][0] && lpFieldTile->x + 1 < FIELD_TILE_X)
 					{
-						auto it = mCheckMap.find(&tiles[lpFieldTile->y][lpFieldTile->x + 1]);
-						if (!tiles[lpFieldTile->y][lpFieldTile->x + 1].lpTile)
+						auto it = mCheckMap.find(tiles[lpFieldTile->y][lpFieldTile->x + 1]);
+						if (!tiles[lpFieldTile->y][lpFieldTile->x + 1]->lpTile)
 						{
-							if (it == mCheckMap.end()) mCheckMap.insert(make_pair(&tiles[lpFieldTile->y][lpFieldTile->x + 1], 1));
+							if (it == mCheckMap.end()) mCheckMap.insert(make_pair(tiles[lpFieldTile->y][lpFieldTile->x + 1], 1));
 							else ++(it->second);
 						}
 					}
@@ -370,37 +461,37 @@ void FieldTileMap::SelectedTileValidation()
 					//대각선
 					if (lpSelectedTile->checkTiles[0][0] && lpFieldTile->y - 1 > -1 && lpFieldTile->x - 1 > -1)
 					{
-						auto it = mCheckMap.find(&tiles[lpFieldTile->y - 1][lpFieldTile->x - 1]);
-						if (!tiles[lpFieldTile->y - 1][lpFieldTile->x - 1].lpTile)
+						auto it = mCheckMap.find(tiles[lpFieldTile->y - 1][lpFieldTile->x - 1]);
+						if (!tiles[lpFieldTile->y - 1][lpFieldTile->x - 1]->lpTile)
 						{
-							if (it == mCheckMap.end()) mCheckMap.insert(make_pair(&tiles[lpFieldTile->y - 1][lpFieldTile->x - 1], 1));
+							if (it == mCheckMap.end()) mCheckMap.insert(make_pair(tiles[lpFieldTile->y - 1][lpFieldTile->x - 1], 1));
 							else ++(it->second);
 						}
 					}
 					if (lpSelectedTile->checkTiles[2][2] && lpFieldTile->y + 1 < FIELD_TILE_Y && lpFieldTile->x + 1 < FIELD_TILE_X)
 					{
-						auto it = mCheckMap.find(&tiles[lpFieldTile->y + 1][lpFieldTile->x + 1]);
-						if (!tiles[lpFieldTile->y + 1][lpFieldTile->x + 1].lpTile)
+						auto it = mCheckMap.find(tiles[lpFieldTile->y + 1][lpFieldTile->x + 1]);
+						if (!tiles[lpFieldTile->y + 1][lpFieldTile->x + 1]->lpTile)
 						{
-							if (it == mCheckMap.end()) mCheckMap.insert(make_pair(&tiles[lpFieldTile->y + 1][lpFieldTile->x + 1], 1));
+							if (it == mCheckMap.end()) mCheckMap.insert(make_pair(tiles[lpFieldTile->y + 1][lpFieldTile->x + 1], 1));
 							else ++(it->second);
 						}
 					}
 					if (lpSelectedTile->checkTiles[0][2] && lpFieldTile->y - 1 > -1 && lpFieldTile->x + 1 < FIELD_TILE_X)
 					{
-						auto it = mCheckMap.find(&tiles[lpFieldTile->y - 1][lpFieldTile->x + 1]);
-						if (!tiles[lpFieldTile->y - 1][lpFieldTile->x + 1].lpTile)
+						auto it = mCheckMap.find(tiles[lpFieldTile->y - 1][lpFieldTile->x + 1]);
+						if (!tiles[lpFieldTile->y - 1][lpFieldTile->x + 1]->lpTile)
 						{
-							if (it == mCheckMap.end()) mCheckMap.insert(make_pair(&tiles[lpFieldTile->y - 1][lpFieldTile->x + 1], 1));
+							if (it == mCheckMap.end()) mCheckMap.insert(make_pair(tiles[lpFieldTile->y - 1][lpFieldTile->x + 1], 1));
 							else ++(it->second);
 						}
 					}
 					if (lpSelectedTile->checkTiles[2][0] && lpFieldTile->y + 1 < FIELD_TILE_Y && lpFieldTile->x - 1 > -1)
 					{
-						auto it = mCheckMap.find(&tiles[lpFieldTile->y + 1][lpFieldTile->x - 1]);
-						if (!tiles[lpFieldTile->y + 1][lpFieldTile->x - 1].lpTile)
+						auto it = mCheckMap.find(tiles[lpFieldTile->y + 1][lpFieldTile->x - 1]);
+						if (!tiles[lpFieldTile->y + 1][lpFieldTile->x - 1]->lpTile)
 						{
-							if (it == mCheckMap.end()) mCheckMap.insert(make_pair(&tiles[lpFieldTile->y + 1][lpFieldTile->x - 1], 1));
+							if (it == mCheckMap.end()) mCheckMap.insert(make_pair(tiles[lpFieldTile->y + 1][lpFieldTile->x - 1], 1));
 							else ++(it->second);
 						}
 					}
@@ -472,10 +563,10 @@ void FieldTileMap::SelectedTileValidation()
 					switch (lpSelectedTile->selfCondition)
 					{
 					case 0:
-						isPossibleBuild[y][x] = (tiles[y][x].lpTile == nullptr);
+						isPossibleBuild[y][x] = (tiles[y][x]->lpTile == nullptr);
 						break;
 					case 1:
-						if (!tiles[y][x].lpTile)
+						if (!tiles[y][x]->lpTile)
 						{
 							isPossibleBuild[y][x] = false;
 						}
@@ -484,7 +575,7 @@ void FieldTileMap::SelectedTileValidation()
 							isPossibleBuild[y][x] = false;
 							for (string tileKey : lpSelectedTile->vSelfTiles)
 							{
-								if (tiles[y][x].lpTile->id == tileKey)
+								if (tiles[y][x]->lpTile->id == tileKey)
 								{
 									isPossibleBuild[y][x] = true;
 									break;
@@ -493,7 +584,7 @@ void FieldTileMap::SelectedTileValidation()
 						}
 						break;
 					case 2:
-						if (!tiles[y][x].lpTile || lpSelectedTile->vSelfTiles.size() > 1)
+						if (!tiles[y][x]->lpTile || lpSelectedTile->vSelfTiles.size() > 1)
 						{
 							isPossibleBuild[y][x] = false;
 						}
@@ -502,7 +593,7 @@ void FieldTileMap::SelectedTileValidation()
 							isPossibleBuild[y][x] = false;
 							for (string tileKey : lpSelectedTile->vSelfTiles)
 							{
-								if (tiles[y][x].lpTile->id == tileKey)
+								if (tiles[y][x]->lpTile->id == tileKey)
 								{
 									isPossibleBuild[y][x] = true;
 								}
@@ -540,7 +631,7 @@ void FieldTileMap::DeselectCard(ObserverHandler* lpObserver)
 
 void FieldTileMap::SetTile(int x, int y, Tile* lpTile)
 {
-	tiles[y][x].lpTile = lpTile;
+	tiles[y][x]->lpTile = lpTile;
 }
 
 void FieldTileMap::OnClick(EventData& data)
