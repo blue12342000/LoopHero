@@ -19,17 +19,17 @@ public:
 	template<typename U>
 	U* GetClass()
 	{
-		string name = typeid(U*).name();
+		string name = typeid(U).name();
 		auto it = mlLpClass.find(name);
 		if (it == mlLpClass.end())
 		{
 			return nullptr;
 		}
-		else
+		else if (!it->second.empty())
 		{
 			U* lpClass = (U*)it->second.front();
 			it->second.pop_front();
-			return lpClass;
+			return nullptr;
 		}
 	}
 

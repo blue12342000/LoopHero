@@ -4,6 +4,7 @@
 #include "Unit.h"
 #include "EquipItem.h"
 #include "Trait.h"
+#include "Hero.h"
 #include "Utill.h"
 
 void GameData::LoadTraits()
@@ -397,4 +398,11 @@ TILE_IMAGE_SEQ GameData::GetTileSeq(int data)
 {
 	if (mTileSeq.find(data) == mTileSeq.end()) return TILE_IMAGE_SEQ::NONE;
 	return mTileSeq[data];
+}
+
+Unit* GameData::GetUnit()
+{
+	if (lpHero) return lpHero->GetUnit();
+
+	return nullptr;
 }

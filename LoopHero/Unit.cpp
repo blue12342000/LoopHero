@@ -11,23 +11,31 @@ void Unit::Init()
 	state = UNIT_STATE::ALIVE;
 }
 
+/*
+부모가 존재할경우
+본인이 제거를 해선 안됨
+부모한테 삭제를 요청해야한다.
+*/
+
 void Unit::Release()
 {
 	if (this == &(*GameData::GetSingleton()->GetUnit())) return;
-	lpTrait = nullptr;
 
 	if (lpParent)
 	{
 		lpParent->RemoveChild(this);
-		lpParent = nullptr;
+		return;
 	}
-
-	if (lpIcon)
+	else
 	{
-		delete lpIcon;
-		lpIcon = nullptr;
+		if (lpIcon)
+		{
+			delete lpIcon;
+			lpIcon = nullptr;
+		}
+		lpTrait = nullptr;
+		PoolingManager::GetSingleton()->AddClass(this);
 	}
-	PoolingManager::GetSingleton()->AddClass(this);
 }
 
 void Unit::Update(float deltaTime)
@@ -93,7 +101,7 @@ void Unit::Death()
 
 void Unit::SetTrait(Trait& trait)
 {
-	Release();
+	if (this->lpTrait) Release();
 	this->lpTrait = &trait;
 
 	name = lpTrait->GetTraitId();

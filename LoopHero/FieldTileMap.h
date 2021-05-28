@@ -11,6 +11,8 @@
 
 class FieldTile;
 class BattleField;
+class Hero;
+class Unit;
 class FieldTileMap : public GameObject
 {
 private:
@@ -22,6 +24,7 @@ private:
 	bool isPossibleBuild[FIELD_TILE_Y][FIELD_TILE_X];
 
 	BattleField* lpBattleField;
+	Hero* lpHero;
 
 private:
 	TILE_IMAGE_SEQ CalTileSeq(int buildX, int buildY, Tile* lpTile);
@@ -41,7 +44,10 @@ public:
 
 	void SetTile(int x, int y, Tile* lpTile);
 
+	void BattleStart(ObserverHandler* lpCaller);
 	void BattleEnd(ObserverHandler* lpCaller);
+
+	void SetHero(Hero* lpHero);
 
 	virtual void OnClick(EventData& data) override;
 	virtual void OnMouseEnter(EventData& data) override;

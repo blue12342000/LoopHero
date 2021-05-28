@@ -65,6 +65,7 @@ class EquipItem;
 class Card;
 class Deck;
 class Unit;
+class Hero;
 class Trait;
 class GameData : public Singleton<GameData>
 {
@@ -93,6 +94,7 @@ private:
 
 	int loopLevel;
 	Unit* lpUnit;
+	Hero* lpHero;
 
 private:
 	void LoadTraits();
@@ -117,12 +119,15 @@ public:
 
 	TILE_IMAGE_SEQ GetTileSeq(int data);
 
+	Unit* GetUnit();
+
 	inline vector<pair<string, Tile*>> GetVMapList() { vector<pair<string, Tile*>> vList(mLpTiles.begin(), mLpTiles.end()); return vList; };
 	inline Tile* GetTile(int index) { return (index < mLpTiles.size()) ? next(mLpTiles.begin(), index)->second : nullptr; }
 	inline Tile* GetTile(string key) { return (mLpTiles.find(key) != mLpTiles.end()) ? mLpTiles[key] : nullptr; }
 
 	inline int GetLoopLevel() { return loopLevel; }
-	inline void SetUnit(Unit* lpUnit) { this->lpUnit = lpUnit; }
-	inline Unit* GetUnit() { return lpUnit; }
+
+	inline void SetHero(Hero* lpHero) { this->lpHero = lpHero; }
+	inline Hero* GetHero() { return lpHero; }
 };
 

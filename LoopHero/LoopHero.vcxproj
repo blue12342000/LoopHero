@@ -157,6 +157,7 @@
     <ClCompile Include="GameData.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameUI.cpp" />
+    <ClCompile Include="Hero.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ObserverHandler.cpp" />
     <ClCompile Include="ObserverManager.cpp" />
@@ -201,6 +202,7 @@
     <ClInclude Include="GameData.h" />
     <ClInclude Include="GameNode.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Hero.h" />
     <ClInclude Include="PoolingManager.h" />
     <ClInclude Include="GameUI.h" />
     <ClInclude Include="IClickHandler.h" />

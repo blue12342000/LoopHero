@@ -32,10 +32,9 @@ public:
 
 	string ToString() override;
 
-	inline void SetXY(int x, int y) { this->x = x; this->y = y; }
-	inline void SetTile(Tile* lpTile) { this->lpTile = lpTile; }
-	inline void SetFrame(int x, int y) { frameX = x; frameY = y; }
-
+	inline POINT GetTilePos() { return POINT{x, y}; }
+	inline int GetTilePosX() { return x; }
+	inline int GetTilePosY() { return y; }
 	inline Tile* GetTile() { return lpTile; }
 	inline void AddHistory(string tileKey) { vHistory.push_back(tileKey); }
 

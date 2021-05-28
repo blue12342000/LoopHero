@@ -2,6 +2,7 @@
 #include "Utill.h"
 #include "Unit.h"
 #include "Trait.h"
+#include "FieldTileMap.h"
 
 void FieldTile::Init()
 {
@@ -24,7 +25,7 @@ void FieldTile::Update(float deltaTime)
 	angle += PI / 2.0f * deltaTime;
 	if (angle > PI * 2) angle -= PI * 2;
 
-	SetRect(&rc, pos.x, pos.y, pos.x + 50, pos.y + 50);
+	SetRect(&rc, pos.x - FIELD_TILE_SIZE / 2, pos.y - FIELD_TILE_SIZE / 2, pos.x + FIELD_TILE_SIZE / 2, pos.y + FIELD_TILE_SIZE / 2);
 
 	for (int i = 0; i < vChilds.size(); ++i)
 	{

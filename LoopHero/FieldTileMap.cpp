@@ -8,6 +8,7 @@
 #include "BattleField.h"
 #include "Unit.h"
 #include "Trait.h"
+#include "Hero.h"
 
 TILE_IMAGE_SEQ FieldTileMap::CalTileSeq(int buildX, int buildY, Tile* lpTile)
 {
@@ -51,7 +52,7 @@ void FieldTileMap::Init()
 		{
 			tiles[y][x] = GameObject::Create<FieldTile>(this);
 			tiles[y][x]->Init();
-			tiles[y][x]->SetPos({ (float)(FIELD_START_X + x * FIELD_TILE_SIZE), (float)(FIELD_START_Y + y * FIELD_TILE_SIZE) });
+			tiles[y][x]->SetPos({ (float)(FIELD_START_X + FIELD_TILE_SIZE * 0.5f + x * FIELD_TILE_SIZE), (float)(FIELD_START_Y + FIELD_TILE_SIZE * 0.5f + y * FIELD_TILE_SIZE) });
 			tiles[y][x]->x = x;
 			tiles[y][x]->y = y;
 			SetRect(&tiles[y][x]->rc, FIELD_START_X + x * FIELD_TILE_SIZE, FIELD_START_Y + y * FIELD_TILE_SIZE, FIELD_START_X + (x + 1) * FIELD_TILE_SIZE, FIELD_START_Y + (y + 1) * FIELD_TILE_SIZE);
@@ -73,6 +74,7 @@ void FieldTileMap::Init()
 	ObserverManager::GetSingleton()->RegisterObserver(this);
 	AddOEventHandler("SelectedCard", bind(&FieldTileMap::SelectedCard, this, placeholders::_1));
 	AddOEventHandler("DeselectCard", bind(&FieldTileMap::DeselectCard, this, placeholders::_1));
+	AddOEventHandler("BattleStart", bind(&FieldTileMap::BattleStart, this, placeholders::_1));
 	AddOEventHandler("BattleEnd", bind(&FieldTileMap::BattleEnd, this, placeholders::_1));
 }
 
@@ -99,12 +101,12 @@ void FieldTileMap::Update(float deltaTime)
 	{
 		// 플레이어 이동 테스트
 		// 디버그 테스트
-		if (mBuildTiles.find("campsite") != mBuildTiles.end())
+		if (mBuildTiles.find("road") != mBuildTiles.end())
 		{
-			FieldTile* lpFieldTile = mBuildTiles["campsite"].back();
-			RemoveChild(GameData::GetSingleton()->GetUnit());
-			AddChild(GameData::GetSingleton()->GetUnit());
-			GameData::GetSingleton()->GetUnit()->SetPos({ FIELD_TILE_SIZE * 0.5f + lpFieldTile->x * FIELD_TILE_SIZE, FIELD_TILE_SIZE * 0.5f + lpFieldTile->y * FIELD_TILE_SIZE });
+			if (lpHero)
+			{
+				lpHero->Loop(mBuildTiles["road"]);
+			}
 		}
 	}
 
@@ -158,7 +160,7 @@ void FieldTileMap::Render(HDC hdc)
 		//TextOut(hdc, 200, 10, lpSelectedTile->name.c_str(), lpSelectedTile->name.length());
 	}
 
-	GameData::GetSingleton()->GetUnit()->Render(hdc);
+	if (lpHero) lpHero->Render(hdc);
 
 	//RenderRectangle(hdc, rc, RGB(255, 0, 255));
 }
@@ -176,6 +178,10 @@ bool FieldTileMap::BuildTile(int x, int y, Tile* lpTile)
 					if (tiles[y][x]->vHistory.front() == "road")
 					{
 						tiles[y][x]->lpTile = GameData::GetSingleton()->GetTile("road");
+					}
+					else
+					{
+						tiles[y][x]->lpTile = nullptr;
 					}
 					tiles[y][x]->vHistory.erase(tiles[y][x]->vHistory.begin() + 1, tiles[y][x]->vHistory.end());
 				}
@@ -713,11 +719,34 @@ void FieldTileMap::SetTile(int x, int y, Tile* lpTile)
 	tiles[y][x]->lpTile = lpTile;
 }
 
+void FieldTileMap::BattleStart(ObserverHandler* lpCaller)
+{
+	if (typeid(*lpCaller) == typeid(BattleField))
+	{
+		lpBattleField = (BattleField*)lpCaller;
+		AddChild(lpBattleField);
+	}
+}
+
 void FieldTileMap::BattleEnd(ObserverHandler* lpCaller)
 {
-	RemoveChild(lpBattleField);
-	lpBattleField->Release();
-	lpBattleField = nullptr;
+	if (lpBattleField)
+	{
+		RemoveChild(&(*lpBattleField));
+		lpBattleField->Release();
+		lpBattleField = nullptr;
+	}
+}
+
+void FieldTileMap::SetHero(Hero* lpHero)
+{
+	this->lpHero = lpHero;
+	AddChild(lpHero);
+
+	if (mBuildTiles.find("campsite") != mBuildTiles.end())
+	{
+		lpHero->SetPos({ FIELD_TILE_SIZE * 0.5f + mBuildTiles["campsite"].back()->GetTilePosX() * FIELD_TILE_SIZE, FIELD_TILE_SIZE * 0.5f + mBuildTiles["campsite"].back()->GetTilePosY() * FIELD_TILE_SIZE });
+	}
 }
 
 void FieldTileMap::OnClick(EventData& data)

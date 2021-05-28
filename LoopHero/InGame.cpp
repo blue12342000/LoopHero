@@ -11,13 +11,18 @@
 #include "Card.h"
 #include "Unit.h"
 #include "Trait.h"
+#include "Hero.h"
 #include "EventSystem.h"
 #include "BattleField.h"
 #include "UIBattleUnit.h"
 
 HRESULT InGame::Init()
 {
-    GameData::GetSingleton()->SetUnit(Trait::NewUnit("Warrior"));
+    Hero* lpHero = GameObject::Create<Hero>();
+    lpHero->Init();
+    lpHero->NewHero("Warrior");
+
+    GameData::GetSingleton()->SetHero(lpHero);
 
     lpBuffer = ImageManager::GetSingleton()->FindImage("ingame_backbuffer");
     lpBackImage = ImageManager::GetSingleton()->FindImage("InGame_BackGround");
@@ -38,6 +43,7 @@ HRESULT InGame::Init()
 
     lpFieldTiles = GameObject::Create<FieldTileMap>();
     lpFieldTiles->Init();
+    lpFieldTiles->SetHero(GameData::GetSingleton()->GetHero());
 
     lpEventSystem = new EventSystem();
     lpEventSystem->Init();

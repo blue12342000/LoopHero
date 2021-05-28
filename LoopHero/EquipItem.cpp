@@ -15,8 +15,13 @@ void EquipItem::SetItemStatus(UNIT_STATUS status, int itemPower)
 		mStatus.insert(make_pair(UNIT_STATUS::MIN_DMG, itemPower * 0.1f - 0.5f * level));
 		mStatus.insert(make_pair(UNIT_STATUS::MAX_DMG, itemPower * 0.1f + 0.5f * level));
 		break;
-	case UNIT_STATUS::DEF:
 	case UNIT_STATUS::MAX_HP:
+		mStatus.insert(make_pair(status, itemPower * 2.0f));
+		break;
+	case UNIT_STATUS::ATK_SPEED:
+		mStatus.insert(make_pair(status, itemPower * 0.5f));
+		break;
+	case UNIT_STATUS::DEF:
 	case UNIT_STATUS::HP_REGEN:
 	case UNIT_STATUS::VAMP:
 	case UNIT_STATUS::COUNTER:
@@ -25,7 +30,6 @@ void EquipItem::SetItemStatus(UNIT_STATUS status, int itemPower)
 	case UNIT_STATUS::SKEL_QULITY:
 	case UNIT_STATUS::SKEL_POWER:
 	case UNIT_STATUS::MOVE_SPEED:
-	case UNIT_STATUS::ATK_SPEED:
 		mStatus.insert(make_pair(status, itemPower * 0.1f));
 		break;
 	}

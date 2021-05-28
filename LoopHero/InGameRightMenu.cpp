@@ -30,7 +30,7 @@ void InGameRightMenu::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int heig
 		UIItemSlot* lpItemSlot1 = GameUI::CreateUI<UIItemSlot>();
 		lpItemSlot1->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ 0, 0 }, 25 * 2, 25 * 2, UNIT_SLOT::RIGHT_HAND, mSlotEquip[UNIT_SLOT::RIGHT_HAND]);
 		lpHeroEquip->SetItemObject(0, 0, lpItemSlot1);
-	}
+	} 
 
 	if (mSlotEquip.find(UNIT_SLOT::HELMET) != mSlotEquip.end())
 	{

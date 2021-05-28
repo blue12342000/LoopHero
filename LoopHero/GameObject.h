@@ -43,6 +43,7 @@ public:
 	virtual POINTFLOAT GetWorldPos() final;
 	virtual POINTFLOAT GetRealationPos(GameObject* lpOther) final;
 	virtual void SetParent(GameObject* lpParent) final;
+	virtual inline GameObject* GetParent() final { return lpParent; }
 
 	virtual inline void SetPos(POINTFLOAT pos) final { this->pos = pos; }
 	virtual inline void SetVisible(bool isVisible) final { this->isVisible = isVisible; }

@@ -28,18 +28,6 @@
     <Filter Include="소스 파일\LoopHero\UI">
       <UniqueIdentifier>{3fff3f4f-4c83-467c-9f15-db1e74c62d44}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\LoopHero\Unit">
-      <UniqueIdentifier>{7f6e746b-dc2e-41f6-aaab-175913dbacad}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\LoopHero\Item">
-      <UniqueIdentifier>{9f85c001-8af9-45ae-bdcf-9c8257f7a5ed}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\LoopHero\Card">
-      <UniqueIdentifier>{10df509a-21b6-4ca1-b5d1-fef1b8f3d37e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\LoopHero\Tile">
-      <UniqueIdentifier>{6de12e75-7658-4b42-8ee7-4853899a02fd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\LoopHero\UI\InGame">
       <UniqueIdentifier>{d4fb85fe-1021-4348-8eb6-e9cb6663f6c7}</UniqueIdentifier>
     </Filter>
@@ -48,9 +36,6 @@
     </Filter>
     <Filter Include="소스 파일\LoopHero\UI\Base">
       <UniqueIdentifier>{2b7f02f5-eba8-45ed-a66e-af89ac5d2dec}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\LoopHero\Unit\Traits">
-      <UniqueIdentifier>{619876bc-0c67-4457-a879-00a5881d71e2}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Engine\Event">
       <UniqueIdentifier>{6629fdd2-6d16-4140-b9b6-37f6e22eab9d}</UniqueIdentifier>
@@ -64,10 +49,34 @@
     <Filter Include="소스 파일\LoopHero\GameData">
       <UniqueIdentifier>{00566c59-d141-420c-a397-4d14000faa0c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\LoopHero\Battle">
+    <Filter Include="소스 파일\LoopHero\Object">
+      <UniqueIdentifier>{95bd2c91-429c-488f-a8de-70a42856a6c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\LoopHero\Object\Super">
+      <UniqueIdentifier>{7e8e9685-6f56-456c-b7ce-7c0d87b93c13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\LoopHero\Object\Tile">
+      <UniqueIdentifier>{6de12e75-7658-4b42-8ee7-4853899a02fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\LoopHero\Object\Unit">
+      <UniqueIdentifier>{7f6e746b-dc2e-41f6-aaab-175913dbacad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\LoopHero\Object\Unit\Traits">
+      <UniqueIdentifier>{619876bc-0c67-4457-a879-00a5881d71e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\LoopHero\Object\Item">
+      <UniqueIdentifier>{9f85c001-8af9-45ae-bdcf-9c8257f7a5ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\LoopHero\Object\Hero">
+      <UniqueIdentifier>{787ed9aa-f100-48b6-96ff-ebefe5a46309}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\LoopHero\Object\Card">
+      <UniqueIdentifier>{10df509a-21b6-4ca1-b5d1-fef1b8f3d37e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\LoopHero\Object\Battle">
       <UniqueIdentifier>{f3e92928-d8c3-40d5-a721-4a0576e284c8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\LoopHero\Battle\Character">
+    <Filter Include="소스 파일\LoopHero\Object\Battle\Character">
       <UniqueIdentifier>{f489a64b-67fe-4ef9-802b-677ce28a3313}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -97,10 +106,10 @@
       <Filter>소스 파일\LoopHero\Scene</Filter>
     </ClCompile>
     <ClCompile Include="FieldTileMap.cpp">
-      <Filter>소스 파일\LoopHero\Tile</Filter>
+      <Filter>소스 파일\LoopHero\Object\Tile</Filter>
     </ClCompile>
     <ClCompile Include="Deck.cpp">
-      <Filter>소스 파일\LoopHero\Card</Filter>
+      <Filter>소스 파일\LoopHero\Object\Card</Filter>
     </ClCompile>
     <ClCompile Include="DataManager.cpp">
       <Filter>소스 파일\Engine\Manager</Filter>
@@ -109,7 +118,7 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Card.cpp">
-      <Filter>소스 파일\LoopHero\Card</Filter>
+      <Filter>소스 파일\LoopHero\Object\Card</Filter>
     </ClCompile>
     <ClCompile Include="InGameRightMenu.cpp">
       <Filter>소스 파일\LoopHero\UI\InGame</Filter>
@@ -136,13 +145,13 @@
       <Filter>소스 파일\LoopHero\UI\InGame</Filter>
     </ClCompile>
     <ClCompile Include="Item.cpp">
-      <Filter>소스 파일\LoopHero\Item</Filter>
+      <Filter>소스 파일\LoopHero\Object\Item</Filter>
     </ClCompile>
     <ClCompile Include="Unit.cpp">
-      <Filter>소스 파일\LoopHero\Unit</Filter>
+      <Filter>소스 파일\LoopHero\Object\Unit</Filter>
     </ClCompile>
     <ClCompile Include="EquipItem.cpp">
-      <Filter>소스 파일\LoopHero\Item</Filter>
+      <Filter>소스 파일\LoopHero\Object\Item</Filter>
     </ClCompile>
     <ClCompile Include="EventTrigger.cpp">
       <Filter>소스 파일\Engine\Event</Filter>
@@ -158,9 +167,6 @@
     </ClCompile>
     <ClCompile Include="ObserverHandler.cpp">
       <Filter>소스 파일\Engine\Observer</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>소스 파일\LoopHero</Filter>
     </ClCompile>
     <ClCompile Include="UIButton.cpp">
       <Filter>소스 파일\LoopHero\UI\Base</Filter>
@@ -178,16 +184,16 @@
       <Filter>소스 파일\LoopHero\GameData</Filter>
     </ClCompile>
     <ClCompile Include="Trait.cpp">
-      <Filter>소스 파일\LoopHero\Unit\Traits</Filter>
+      <Filter>소스 파일\LoopHero\Object\Unit\Traits</Filter>
     </ClCompile>
     <ClCompile Include="FieldTile.cpp">
-      <Filter>소스 파일\LoopHero\Tile</Filter>
+      <Filter>소스 파일\LoopHero\Object\Tile</Filter>
     </ClCompile>
     <ClCompile Include="UIBattleWindow.cpp">
       <Filter>소스 파일\LoopHero\UI\InGame</Filter>
     </ClCompile>
     <ClCompile Include="BattleField.cpp">
-      <Filter>소스 파일\LoopHero\Battle</Filter>
+      <Filter>소스 파일\LoopHero\Object\Battle</Filter>
     </ClCompile>
     <ClCompile Include="UIBattleUnit.cpp">
       <Filter>소스 파일\LoopHero\UI\InGame</Filter>
@@ -196,7 +202,13 @@
       <Filter>소스 파일\LoopHero\UI\InGame</Filter>
     </ClCompile>
     <ClCompile Include="BattleUnit.cpp">
-      <Filter>소스 파일\LoopHero\Battle\Character</Filter>
+      <Filter>소스 파일\LoopHero\Object\Battle\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Hero.cpp">
+      <Filter>소스 파일\LoopHero\Object\Hero</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>소스 파일\LoopHero\Object\Super</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -228,10 +240,10 @@
       <Filter>소스 파일\Engine</Filter>
     </ClInclude>
     <ClInclude Include="FieldTileMap.h">
-      <Filter>소스 파일\LoopHero\Tile</Filter>
+      <Filter>소스 파일\LoopHero\Object\Tile</Filter>
     </ClInclude>
     <ClInclude Include="Deck.h">
-      <Filter>소스 파일\LoopHero\Card</Filter>
+      <Filter>소스 파일\LoopHero\Object\Card</Filter>
     </ClInclude>
     <ClInclude Include="DataManager.h">
       <Filter>소스 파일\Engine\Manager</Filter>
@@ -240,7 +252,7 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Card.h">
-      <Filter>소스 파일\LoopHero\Card</Filter>
+      <Filter>소스 파일\LoopHero\Object\Card</Filter>
     </ClInclude>
     <ClInclude Include="InGameRightMenu.h">
       <Filter>소스 파일\LoopHero\UI\InGame</Filter>
@@ -250,9 +262,6 @@
     </ClInclude>
     <ClInclude Include="GameUI.h">
       <Filter>소스 파일\LoopHero\UI\Super</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>소스 파일\LoopHero</Filter>
     </ClInclude>
     <ClInclude Include="InGameHandCard.h">
       <Filter>소스 파일\LoopHero\UI\InGame</Filter>
@@ -273,13 +282,13 @@
       <Filter>소스 파일\LoopHero\UI\InGame</Filter>
     </ClInclude>
     <ClInclude Include="Item.h">
-      <Filter>소스 파일\LoopHero\Item</Filter>
+      <Filter>소스 파일\LoopHero\Object\Item</Filter>
     </ClInclude>
     <ClInclude Include="Unit.h">
-      <Filter>소스 파일\LoopHero\Unit</Filter>
+      <Filter>소스 파일\LoopHero\Object\Unit</Filter>
     </ClInclude>
     <ClInclude Include="EquipItem.h">
-      <Filter>소스 파일\LoopHero\Item</Filter>
+      <Filter>소스 파일\LoopHero\Object\Item</Filter>
     </ClInclude>
     <ClInclude Include="EventTrigger.h">
       <Filter>소스 파일\Engine\Event</Filter>
@@ -327,16 +336,16 @@
       <Filter>소스 파일\LoopHero\GameData</Filter>
     </ClInclude>
     <ClInclude Include="Trait.h">
-      <Filter>소스 파일\LoopHero\Unit\Traits</Filter>
+      <Filter>소스 파일\LoopHero\Object\Unit\Traits</Filter>
     </ClInclude>
     <ClInclude Include="FieldTile.h">
-      <Filter>소스 파일\LoopHero\Tile</Filter>
+      <Filter>소스 파일\LoopHero\Object\Tile</Filter>
     </ClInclude>
     <ClInclude Include="UIBattleWindow.h">
       <Filter>소스 파일\LoopHero\UI\InGame</Filter>
     </ClInclude>
     <ClInclude Include="BattleField.h">
-      <Filter>소스 파일\LoopHero\Battle</Filter>
+      <Filter>소스 파일\LoopHero\Object\Battle</Filter>
     </ClInclude>
     <ClInclude Include="UIBattleUnit.h">
       <Filter>소스 파일\LoopHero\UI\InGame</Filter>
@@ -345,7 +354,13 @@
       <Filter>소스 파일\LoopHero\UI\InGame</Filter>
     </ClInclude>
     <ClInclude Include="BattleUnit.h">
-      <Filter>소스 파일\LoopHero\Battle\Character</Filter>
+      <Filter>소스 파일\LoopHero\Object\Battle\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Hero.h">
+      <Filter>소스 파일\LoopHero\Object\Hero</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>소스 파일\LoopHero\Object\Super</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
