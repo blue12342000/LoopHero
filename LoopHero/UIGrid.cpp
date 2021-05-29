@@ -62,49 +62,6 @@ void UIGrid::Resize(int rows, int cols)
 		{
 			vCells[y][x].pos.x = (cWidth + spacing.x) * x;
 			vCells[y][x].pos.y = (cHeight + spacing.y) * y;
-//			巨目客绰 公包窍促
-//			switch (anchor)
-//			{
-//			case UI_ANCHOR::RIGHT_TOP:
-//				vCells[y][x].pos.x = (width - cWidth) - (cWidth + spacing.x) * x;
-//				vCells[y][x].pos.y = (cHeight + spacing.y) * y;
-//				//vCells[y][x].pos.x = (cWidth + spacing.x) * x;
-//				//vCells[y][x].pos.y = (cHeight + spacing.y) * y;
-//				break;
-//			case UI_ANCHOR::LEFT_BOTTOM:
-//				vCells[y][x].pos.x = (cWidth + spacing.x) * x;
-//				vCells[y][x].pos.y = (height - cHeight) - (cHeight + spacing.y) * y;
-//				break;
-//			case UI_ANCHOR::RIGHT_BOTTOM:
-//				vCells[y][x].pos.x = (width - cWidth) - (cWidth + spacing.x) * x;
-//				vCells[y][x].pos.y = (height - cHeight) - (cHeight + spacing.y) * y;
-//				break;
-//			case UI_ANCHOR::LEFT_MIDDLE:
-//				vCells[y][x].pos.x = (cWidth + spacing.x) * x;
-//				vCells[y][x].pos.y = (cHeight + spacing.y) * y - height / 2;
-//				break;
-//			case UI_ANCHOR::RIGHT_MIDDLE:
-//				vCells[y][x].pos.x = (width - cWidth) - (cWidth + spacing.x) * x;
-//				vCells[y][x].pos.y = (cHeight + spacing.y) * y - height / 2;
-//				break;
-//			case UI_ANCHOR::TOP_MIDDLE:
-//				vCells[y][x].pos.x = (cWidth + spacing.x) * x - width / 2;
-//				vCells[y][x].pos.y = (cHeight + spacing.y) * y;
-//				break;
-//			case UI_ANCHOR::BOTTOM_MIDDLE:
-//				vCells[y][x].pos.x = (cWidth + spacing.x) * x - width / 2;
-//				vCells[y][x].pos.y = (height - cHeight) - (cHeight + spacing.y) * y;
-//				break;
-//			case UI_ANCHOR::MIDDLE:
-//				vCells[y][x].pos.x = (cWidth + spacing.x) * x - width / 2;
-//				vCells[y][x].pos.y = (cHeight + spacing.y) * y - height / 2;
-//				break;
-//			case UI_ANCHOR::LEFT_TOP:
-//			default:
-//				vCells[y][x].pos.x = (cWidth + spacing.x) * x;
-//				vCells[y][x].pos.y = (cHeight + spacing.y) * y;
-//				break;
-//			}
 		}
 	}
 }
@@ -114,11 +71,10 @@ void UIGrid::SetItemObject(int row, int col, GameUI* lpGameUI)
 	if (row < 0 || col < 0 || row >= rows || col >= cols) return;
 	vCells[row][col].lpGameUI = lpGameUI;
 	lpGameUI->SetAnchor(UI_ANCHOR::LEFT_TOP);
-	lpGameUI->SetPos(lpGameUI->GetRealationPos(this));
-	GameUI::AddChildUI(lpGameUI);
+	GameUI::AddChild(lpGameUI);
 }
 
-void UIGrid::AddChildUI(GameUI* lpChild)
+void UIGrid::AddChild(GameUI* lpChild)
 {
 	if (!lpChild) return;
 
@@ -139,14 +95,12 @@ void UIGrid::AddChildUI(GameUI* lpChild)
 		}
 	}
 	lpChild->SetAnchor(UI_ANCHOR::LEFT_TOP);
-	lpChild->SetPos(lpChild->GetRealationPos(this));
-
-	GameUI::AddChildUI(lpChild);
+	GameUI::AddChild(lpChild);
 }
 
-void UIGrid::RemoveChildUI(int index)
+void UIGrid::RemoveChild(int index)
 {
-	GameUI* lpItem = *(vChildUI.begin() + index);
+	GameUI* lpItem = *(vChilds.begin() + index);
 
 	for (int y = rows - 1; y > -1; --y)
 	{
@@ -155,7 +109,7 @@ void UIGrid::RemoveChildUI(int index)
 			if (vCells[y][x].lpGameUI == lpItem)
 			{
 				vCells[y][x].lpGameUI = nullptr;
-				GameUI::RemoveChildUI(index);
+				GameUI::RemoveChild(index);
 				return;
 			}
 		}

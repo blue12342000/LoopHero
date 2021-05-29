@@ -46,6 +46,7 @@ void EquipItem::Init()
 
 void EquipItem::Release()
 {
+	GameObject::Release();
 }
 
 void EquipItem::Update(float deltaTime)

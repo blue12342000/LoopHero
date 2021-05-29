@@ -34,7 +34,7 @@ public:
 	virtual ~UIProgressBar() {}
 
 	virtual void Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height, UI_BAR_TYPE type, string back, string bar);
-
+	virtual void Release() override;
 	virtual void Update(float deltaTime) override;
 	virtual void Render(HDC hdc) override;
 

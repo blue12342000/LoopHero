@@ -31,10 +31,10 @@ protected:
 	RECT rc;
 
 	GameUI* lpParent;
-	vector<GameUI*> vChildUI;
+	vector<GameUI*> vChilds;
 
-protected:
-	GameUI() {}
+private:
+	void VaildChilds();
 
 protected:
 	void Refresh();
@@ -49,22 +49,25 @@ public:
 	virtual void Render(HDC hdc);
 
 	template<typename T>
-	static T* CreateUI(GameUI* lpParent = nullptr)
+	static T* Create(GameUI* lpParent = nullptr)
 	{
 		T* lpGameUI = PoolingManager::GetSingleton()->GetClass<T>();
-		if (!lpGameUI) lpGameUI = new T;
 
+		lpGameUI->isVisible = true;
 		lpGameUI->lpParent = lpParent;
-		if (lpParent) lpParent->vChildUI.push_back(lpGameUI);
+		if (lpParent) lpParent->vChilds.push_back(lpGameUI);
+
+		ObserverManager::GetSingleton()->RegisterObserver(lpGameUI);
 		return lpGameUI;
 	}
 
 	void InsertChild(GameUI* lpChild, int index);
-	virtual void AddChildUI(GameUI* lpChild);
-	virtual void RemoveChildUI(int index);
-	virtual void RemoveChildUI(GameUI* lpChild) final;
+	virtual void AddChild(GameUI* lpChild);
+	virtual void RemoveChild(int index);
+	virtual void RemoveChild(GameUI* lpChild) final;
 
 	virtual void SetWorldPos(POINT pos) final;
+	virtual void SetWorldPos(POINTFLOAT pos) final;
 	virtual POINTFLOAT GetWorldPos() final;
 	virtual POINTFLOAT GetRealationPos(GameUI* lpOtherUI) final;
 	virtual void SetAnchor(UI_ANCHOR anchor) final;
@@ -76,9 +79,9 @@ public:
 	virtual inline RECT GetRect() final { return rc; }
 	virtual inline int GetWidth() final { return width; }
 	virtual inline int GetHeight() final { return height; }
-	virtual inline int GetChildCount() final { return vChildUI.size(); }
+	virtual inline int GetChildCount() final { return vChilds.size(); }
 	virtual inline int GetDepth() final { return depth; }
-	virtual inline vector<GameUI*> GetChilds() final { return vChildUI; }
+	virtual inline vector<GameUI*> GetChilds() final { return vChilds; }
 	virtual inline bool IsVisible() final { return isVisible; }
 	virtual inline GameUI* GetParent() { return lpParent; }
 	virtual inline POINT GetCenter() final { return { (rc.left + rc.right) / 2, (rc.top + rc.bottom) / 2 }; }

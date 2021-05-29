@@ -9,22 +9,13 @@
 void Hero::Init()
 {
 	state == HERO_STATE::IDLE;
-	ObserverManager::GetSingleton()->RegisterObserver(this);
-	AddOEventHandler("BattleEnd", bind(&Hero::BattleEnd, this, placeholders::_1));
-
 	SetEventCatch(EVENT_CATCH::PASS);
+	AddEventHandler("Resume Loop", bind(&Hero::Move, this, placeholders::_1));
 }
 
 void Hero::Release()
 {
-	if (lpUnit)
-	{
-		lpUnit->Release();
-		lpUnit = nullptr;
-	}
-	ObserverManager::GetSingleton()->RemoveObserver(this);
-	RemoveOEventHandler("BattleEnd");
-	PoolingManager::GetSingleton()->AddClass(this);
+	GameObject::Release();
 }
 
 void Hero::Update(float deltaTime)
@@ -42,14 +33,14 @@ void Hero::Update(float deltaTime)
 		SetRect(&rc, pos.x, pos.y, pos.x, pos.y);
 
 		float diff = pow(pos.x - target.x, 2) + (pos.y - target.y, 2);
-		if (diff < 10)
+		if (diff < 5)
 		{
 			if (lpFieldTile->GetChildCount() > 0)
 			{
 				state = HERO_STATE::BATTLE;
 				BattleField* lpBattleField = GameObject::Create<BattleField>();
-				lpBattleField->Init();
 				lpBattleField->AddUnit(BATTLE_TEAM::LEFT, lpUnit);
+				lpBattleField->SetFieldTile(lpFieldTile);
 				for (auto& lpEnemy : lpFieldTile->GetChilds())
 				{
 					lpBattleField->AddUnit(BATTLE_TEAM::RIGHT, (Unit*)lpEnemy);
@@ -74,7 +65,7 @@ void Hero::Render(HDC hdc)
 	Ellipse(hdc, pos.x - 5, pos.y - 5, pos.x + 5, pos.y + 5);
 }
 
-void Hero::BattleEnd(ObserverHandler* lpCaller)
+void Hero::Move(ObserverHandler* lpCaller)
 {
 	if (state == HERO_STATE::BATTLE)
 	{

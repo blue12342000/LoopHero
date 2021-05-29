@@ -1,5 +1,10 @@
 #pragma once
-#include "GameObject.h"
+#include "GameNode.h"
+#include <Windows.h>
+#include <string>
+#include <functional>
+
+using namespace std;
 
 enum class ANIMATION_STATE
 {
@@ -15,7 +20,7 @@ enum class ANIMATION_TYPE
 
 enum class IMAGE_ALIGN;
 class Image;
-class Animation
+class Animation : public GameNode
 {
 private:
 	ANIMATION_STATE state;
@@ -33,6 +38,7 @@ public:
 	void Init(Image* lpImage, ANIMATION_TYPE type, float fps);
 	void Init(string imageKey, ANIMATION_TYPE type, float fps);
 
+	void Release();
 	void Update(float deltaTime);
 	void Render(HDC hdc, int x, int y, IMAGE_ALIGN align = (IMAGE_ALIGN)0);
 

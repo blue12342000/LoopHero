@@ -10,26 +10,18 @@ void BattleUnit::Init()
 	lpUnit = nullptr;
 	action = 0;
 	maxAction = 1.0f;
+	isAtkReady = false;
 }
 
 void BattleUnit::Release()
 {
-	if (lpParent)
+	lpUnit = nullptr;
+	for (const auto& pair : mAnimations)
 	{
-		lpParent->RemoveChild(this);
-		lpParent = nullptr;
-	}
-
-	for (auto pair : mAnimations)
-	{
-		delete pair.second;
+		pair.second->Release();
 	}
 	mAnimations.clear();
-
-	lpUnit->Release();
-	lpUnit = nullptr;
-
-	PoolingManager::GetSingleton()->AddClass(this);
+	GameObject::Release();
 }
 
 void BattleUnit::Update(float deltaTime)
@@ -46,10 +38,7 @@ void BattleUnit::Update(float deltaTime)
 
 void BattleUnit::Render(HDC hdc)
 {
-	if (IsDeath())
-	{
-		int a = 0;
-	}
+	// pos 가 local pos가 아닌 world Pos로 되어있다
 	mAnimations[state]->Render(hdc, pos.x, pos.y, IMAGE_ALIGN::LEFT_TOP);
 }
 
@@ -134,32 +123,30 @@ int BattleUnit::GetHeight()
 
 void BattleUnit::SetUnit(Unit* lpUnit)
 {
-	Init();
-
 	this->lpUnit = lpUnit;
 	this->action = 0;
 
 	string id = lpUnit->GetTrait()->GetTraitId();
-	mAnimations.insert(make_pair(UNIT_STATE::INTRO, new Animation()));
+	mAnimations.insert(make_pair(UNIT_STATE::INTRO, PoolingManager::GetSingleton()->GetClass<Animation>()));
 	mAnimations[UNIT_STATE::INTRO]->Init(ImageManager::GetSingleton()->FindImage(id + "_intro"), ANIMATION_TYPE::LOOP, 10);
 	mAnimations[UNIT_STATE::INTRO]->SetCallBack(bind(&BattleUnit::Idle, this));
 
-	mAnimations.insert(make_pair(UNIT_STATE::IDLE, new Animation()));
+	mAnimations.insert(make_pair(UNIT_STATE::IDLE, PoolingManager::GetSingleton()->GetClass<Animation>()));
 	mAnimations[UNIT_STATE::IDLE]->Init(ImageManager::GetSingleton()->FindImage(id + "_idle"), ANIMATION_TYPE::LOOP, 10);
 
-	mAnimations.insert(make_pair(UNIT_STATE::ATTACK, new Animation()));
+	mAnimations.insert(make_pair(UNIT_STATE::ATTACK, PoolingManager::GetSingleton()->GetClass<Animation>()));
 	mAnimations[UNIT_STATE::ATTACK]->Init(ImageManager::GetSingleton()->FindImage(id + "_attack"), ANIMATION_TYPE::ONCE, 10);
 	mAnimations[UNIT_STATE::ATTACK]->SetCallBack(bind(&BattleUnit::Idle, this));
 
-	mAnimations.insert(make_pair(UNIT_STATE::DEATH, new Animation()));
+	mAnimations.insert(make_pair(UNIT_STATE::DEATH, PoolingManager::GetSingleton()->GetClass<Animation>()));
 	mAnimations[UNIT_STATE::DEATH]->Init(ImageManager::GetSingleton()->FindImage(id + "_death"), ANIMATION_TYPE::ONCE, 10);
 	//mAnimations[UNIT_STATE::DEATH]->SetCallBack(bind(&Character::Death, this));
 
-	mAnimations.insert(make_pair(UNIT_STATE::HURT, new Animation()));
+	mAnimations.insert(make_pair(UNIT_STATE::HURT, PoolingManager::GetSingleton()->GetClass<Animation>()));
 	mAnimations[UNIT_STATE::HURT]->Init(ImageManager::GetSingleton()->FindImage(id + "_hurt"), ANIMATION_TYPE::ONCE, 10);
 	mAnimations[UNIT_STATE::HURT]->SetCallBack(bind(&BattleUnit::Idle, this));
 
-	mAnimations.insert(make_pair(UNIT_STATE::REVIVE, new Animation()));
+	mAnimations.insert(make_pair(UNIT_STATE::REVIVE, PoolingManager::GetSingleton()->GetClass<Animation>()));
 	mAnimations[UNIT_STATE::REVIVE]->Init(ImageManager::GetSingleton()->FindImage(id + "_revive"), ANIMATION_TYPE::ONCE, 10);
 	mAnimations[UNIT_STATE::REVIVE]->SetCallBack(bind(&BattleUnit::Idle, this));
 }

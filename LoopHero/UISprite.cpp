@@ -12,6 +12,16 @@ void UISprite::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
 	lpImage->Fill();
 }
 
+void UISprite::Release()
+{
+	if (lpObject)
+	{
+		lpObject->Release();
+		lpObject = nullptr;
+	}
+	GameUI::Release();
+}
+
 void UISprite::Render(HDC hdc)
 {
 	if (lpObject)

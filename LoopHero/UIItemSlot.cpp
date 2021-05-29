@@ -46,16 +46,16 @@ void UIItemSlot::Render(HDC hdc)
 	}
 }
 
-void UIItemSlot::AddChildUI(GameUI* lpChild)
+void UIItemSlot::AddChild(GameUI* lpChild)
 {
-	if (vChildUI.size() > 0) RemoveChildUI();
+	if (vChilds.size() > 0) RemoveChild();
 
-	GameUI::AddChildUI(lpChild);
+	GameUI::AddChild(lpChild);
 }
 
-void UIItemSlot::RemoveChildUI(int index)
+void UIItemSlot::RemoveChild(int index)
 {
-	GameUI::RemoveChildUI(index);
+	GameUI::RemoveChild(index);
 }
 
 void UIItemSlot::OnDrop(EventData& data)
@@ -75,7 +75,7 @@ void UIItemSlot::OnDrop(EventData& data)
 
 				lpItem = lpEquipItem;
 				lpSprite = lpGameUI;
-				AddChildUI(lpGameUI);
+				AddChild(lpGameUI);
 			}
 		}
 	}

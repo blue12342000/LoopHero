@@ -1,9 +1,71 @@
 #include "GameObject.h"
 
+void GameObject::VaildChilds()
+{
+	auto it = vChilds.cbegin();
+	while (it != vChilds.cend())
+	{
+		if ((*it)->lpParent != this)
+		{
+			it = vChilds.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
+}
+
+void GameObject::Init()
+{
+}
+
+void GameObject::Release()
+{
+	if (lpParent)
+	{
+		lpParent->RemoveChild(this);
+		return;
+	}
+	else
+	{
+		while (!vChilds.empty())
+		{
+			vChilds.back()->lpParent = nullptr;
+			vChilds.back()->Release();
+			vChilds.pop_back();
+		}
+	}
+	ClearEventHandler();
+	ObserverManager::GetSingleton()->RemoveObserver(this);
+	PoolingManager::GetSingleton()->AddClass(this);
+}
+
+void GameObject::Update(float deltaTime)
+{
+	if (isVisible)
+	{
+		for (const auto& lpChild : vChilds)
+		{
+			if (lpChild->isVisible) lpChild->Update(deltaTime);
+		}
+	}
+}
+
+void GameObject::Render(HDC hdc)
+{
+	if (isVisible)
+	{
+		for (const auto& lpChild : vChilds)
+		{
+			if (lpChild->isVisible) lpChild->Render(hdc);
+		}
+	}
+}
+
 void GameObject::InsertChild(GameObject* lpChild, int index)
 {
-	lpChild->SetPos(lpChild->GetRealationPos(this));
-	lpChild->lpParent = this;
+	lpChild->SetParent(this);
 	vChilds.insert(vChilds.begin() + index, lpChild);
 }
 
@@ -17,8 +79,10 @@ void GameObject::RemoveChild(int index)
 {
 	if (index > -1 && index < vChilds.size())
 	{
-		GameObject* lpGame = (*vChilds.begin());
-		vChilds.erase(vChilds.begin() + index);
+		auto it = (vChilds.begin() + index);
+		(*it)->lpParent = nullptr;
+		(*it)->Release();
+		vChilds.erase(it);
 	}
 }
 
@@ -26,23 +90,15 @@ void GameObject::RemoveChild(GameObject* lpChild)
 {
 	if (!lpChild) return;
 
-	for (int i = 0; i < vChilds.size(); ++i)
-	{
-		if (&(*vChilds[i]) == lpChild)
-		{
-			RemoveChild(i);
-			return;
-		}
-	}
+	RemoveChild(find(vChilds.begin(), vChilds.end(), lpChild) - vChilds.begin());
 }
 
 void GameObject::SetWorldPos(POINTFLOAT pos)
 {
 	if (lpParent)
 	{
-		RECT parentRc = lpParent->GetRect();
-		pos.x -= parentRc.left;
-		pos.y -= parentRc.top;
+		pos.x -= lpParent->GetWorldPos().x;
+		pos.y -= lpParent->GetWorldPos().y;
 	}
 
 	this->pos.x = pos.x;
@@ -54,9 +110,8 @@ POINTFLOAT GameObject::GetWorldPos()
 	POINTFLOAT worldPos = pos;
 	if (lpParent)
 	{
-		RECT parentRc = lpParent->GetRect();
-		worldPos.x += parentRc.left;
-		worldPos.y += parentRc.top;
+		worldPos.x += lpParent->GetWorldPos().x;
+		worldPos.y += lpParent->GetWorldPos().y;
 	}
 
 	return worldPos;
@@ -67,9 +122,8 @@ POINTFLOAT GameObject::GetRealationPos(GameObject* lpOther)
 	POINTFLOAT localPos = GetWorldPos();
 	if (lpParent)
 	{
-		RECT otherRc = lpOther->GetRect();
-		localPos.x -= otherRc.left;
-		localPos.y -= otherRc.top;
+		localPos.x -= lpOther->pos.x;
+		localPos.y -= lpOther->pos.x;
 	}
 
 	return localPos;
@@ -78,10 +132,11 @@ POINTFLOAT GameObject::GetRealationPos(GameObject* lpOther)
 void GameObject::SetParent(GameObject* lpParent)
 {
 	POINTFLOAT worldPos = GetWorldPos();
-	if (this->lpParent)
-	{
-		this->lpParent->RemoveChild(this);
-	}
+	GameObject* lpPreParent = this->lpParent;
 	this->lpParent = lpParent;
+	if (lpPreParent)
+	{
+		lpPreParent->VaildChilds();
+	}
 	SetWorldPos(worldPos);
 }

@@ -28,7 +28,7 @@ public:
 
 	void SetItemObject(int row, int col, GameUI* lpGameUI);
 
-	virtual void AddChildUI(GameUI* lpChild) final;
-	virtual void RemoveChildUI(int index = 0) final;
+	virtual void AddChild(GameUI* lpChild) final;
+	virtual void RemoveChild(int index = 0) final;
 };
 

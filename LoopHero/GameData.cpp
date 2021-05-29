@@ -1,4 +1,5 @@
 #include "GameData.h"
+#include "PoolingManager.h"
 #include "Deck.h"
 #include "Card.h"
 #include "Unit.h"
@@ -127,7 +128,7 @@ void GameData::LoadEquipInfo()
 
 HRESULT GameData::Init()
 {
-    lpDeck = new Deck();
+    lpDeck = PoolingManager::GetSingleton()->GetClass<Deck>();
     lpDeck->Init();
 
 	// 일반 (내가 중앙일때)
@@ -332,7 +333,6 @@ void GameData::Release()
     if (lpDeck)
     {
         lpDeck->Release();
-        delete lpDeck;
         lpDeck = nullptr;
     }
 

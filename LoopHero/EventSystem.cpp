@@ -234,6 +234,8 @@ HRESULT EventSystem::Init()
 
 void EventSystem::Release()
 {
+	eventData = {};
+	PoolingManager::GetSingleton()->AddClass(this);
 }
 
 void EventSystem::Update(float deltaTime)

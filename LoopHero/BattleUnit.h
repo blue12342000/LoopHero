@@ -28,6 +28,8 @@ private:
 	map<UNIT_STATE, Animation*> mAnimations;
 
 public:
+	virtual ~BattleUnit() {}
+
 	void Init();
 	void Release();
 	void Update(float deltaTime);

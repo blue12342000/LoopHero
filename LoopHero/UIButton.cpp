@@ -11,8 +11,7 @@ void UIButton::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height, UI_
 
 	lpButtonImage = nullptr;
 
-	ObserverManager::GetSingleton()->RegisterObserver(this);
-	AddOEventHandler("__OnClick_" + to_string((__int64)(this)), bind(&UIButton::CallBack, this, placeholders::_1));
+	AddEventHandler("__OnClick_" + to_string((__int64)(this)), bind(&UIButton::CallBack, this, placeholders::_1));
 }
 
 void UIButton::Render(HDC hdc)

@@ -13,12 +13,12 @@ void Card::Init()
 
 	SetRect(&rc, pos.x, pos.y, pos.x + width, pos.y + height);
 
-	hFont = CreateFont(13, 5, 0, 0, FW_BOLD, 0, 0, 0, HANGEUL_CHARSET, OUT_TT_ONLY_PRECIS, 0, DEFAULT_QUALITY, VARIABLE_PITCH | FF_ROMAN, TEXT("µ¸¿ò"));
+	hFont = FontManager::GetSingleton()->GetFont("Uµ¸¿ò", 8);
 }
 
 void Card::Release()
 {
-	DeleteObject(hFont);
+	GameObject::Release();
 }
 
 void Card::Update(float deltaTime)

@@ -1,24 +1,26 @@
 #include "BattleField.h"
 #include "BattleUnit.h"
 #include "Unit.h"
+#include "FieldTile.h"
 
 void BattleField::Init()
 {
+	state = BATTLE_FIELD_STATE::NONE;
 }
 
 void BattleField::Release()
 {
-	for (auto& lpBattleUnit : lDeath)
+	for (const auto& lpBattleUnit : lDeath)
 	{
 		lpBattleUnit->Release();
 	}
 
-	for (auto& lpBattleUnit : lHeroParty)
+	for (const auto& lpBattleUnit : lHeroParty)
 	{
 		lpBattleUnit->Release();
 	}
 
-	for (auto& lpBattleUnit : lEnemyParty)
+	for (const auto& lpBattleUnit : lEnemyParty)
 	{
 		lpBattleUnit->Release();
 	}
@@ -26,12 +28,16 @@ void BattleField::Release()
 	lDeath.clear();
 	lHeroParty.clear();
 	lEnemyParty.clear();
+	lpFieldTile->ClearMonster();
+	lpFieldTile = nullptr;
 
-	PoolingManager::GetSingleton()->AddClass(this);
+	GameObject::Release();
 }
 
 void BattleField::Update(float deltaTime)
 {
+	if (state == BATTLE_FIELD_STATE::NONE) return;
+
 	BattleUnit* lpBattleUnit;
 	for (auto it = lDeath.begin(); it != lDeath.end(); ++it)
 	{
@@ -65,22 +71,22 @@ void BattleField::Update(float deltaTime)
 	if (IsFinish())
 	{
 		ObserverManager::GetSingleton()->Notify("BattleEnd", this);
+		state == BATTLE_FIELD_STATE::NONE;
 		return;
 	}
 
-	//GameObject::Update(deltaTime);
+	GameObject::Update(deltaTime);
 }
 
 void BattleField::Render(HDC hdc)
 {
-	//GameObject::Render(hdc);
+	GameObject::Render(hdc);
 }
 
 bool BattleField::Attack(BattleUnit*& lpAttaker, list<BattleUnit*>& lDefenders)
 {
 	if (lDefenders.empty()) return false;
 
-	;
 	int randNum = rand() % lDefenders.size();
 	auto it = lDefenders.begin();
 	advance(it, randNum);
@@ -124,4 +130,15 @@ void BattleField::AddUnit(BATTLE_TEAM team, Unit* lpUnit)
 		}
 		lpBattleUnit->Intro();
 	}
+}
+
+void BattleField::SetFieldTile(FieldTile* lpFieldTile)
+{
+	if (state == BATTLE_FIELD_STATE::BATTLE)
+	{
+		int a = 0;
+	}
+
+	this->lpFieldTile = lpFieldTile;
+	state = BATTLE_FIELD_STATE::BATTLE;
 }

@@ -12,14 +12,13 @@ void InGameHandCard::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int heigh
 	moveSpeed = 200;
 	initPos = pos;
 
-	lpHScrollView = GameUI::CreateUI<UIHorizontalScroll>(this);
+	lpHScrollView = GameUI::Create<UIHorizontalScroll>(this);
 	lpHScrollView->Init(UI_ANCHOR::LEFT_BOTTOM, { 0.0f, 0.0f }, WINSIZE_WIDTH - 296, 58 * 2, HSCROLL_ALIGN::LEFT, HS_ARGS_INSERT::AFTER, 18);
 	lpHScrollView->SetHScrollControl(HSCROLL_ITEM_CONTROL::DRAG);
 	lpHScrollView->SetHScrollEscape(HSCROLL_ITEM_ESCAPE::HIDE);
 
-	ObserverManager::GetSingleton()->RegisterObserver(this);
-	AddOEventHandler("DropCard", bind(&InGameHandCard::UICardLoot, this, placeholders::_1));
-	AddOEventHandler("UseCard", bind(&InGameHandCard::UseCard, this, placeholders::_1));
+	AddEventHandler("DropCard", bind(&InGameHandCard::UICardLoot, this, placeholders::_1));
+	AddEventHandler("UseCard", bind(&InGameHandCard::UseCard, this, placeholders::_1));
 }
 
 void InGameHandCard::Release()
@@ -33,17 +32,17 @@ void InGameHandCard::Update(float deltaTime)
 	{
 		for (int i = 0; i < 20; ++i)
 		{
-			UISprite* lpSprite = GameUI::CreateUI<UISprite>();
+			UISprite* lpSprite = GameUI::Create<UISprite>();
 			lpSprite->Init(UI_ANCHOR::LEFT_TOP, { 0.0f, 0.0f }, 41 * 2, 58 * 2);
 			lpSprite->SetGameObject(GameData::GetSingleton()->PickCard());
 			lpSprite->SetEventCatch(EVENT_CATCH::BLOCK_PASS);
-			lpHScrollView->AddChildUI(lpSprite);
+			lpHScrollView->AddChild(lpSprite);
 		}
 	}
 
 	if (KeyManager::GetSingleton()->IsKeyOnceDown('O'))
 	{
-		((UIHorizontalScroll*)lpHScrollView)->RemoveChildUI(rand() % 10);
+		((UIHorizontalScroll*)lpHScrollView)->RemoveChild(rand() % 10);
 	}
 
 	if (PtInRect(&rc, KeyManager::GetSingleton()->GetMousePoint()))
@@ -71,19 +70,19 @@ void InGameHandCard::Render(HDC hdc)
 
 void InGameHandCard::UICardLoot(ObserverHandler* observer)
 {
-	UISprite* lpSprite = GameUI::CreateUI<UISprite>();
+	UISprite* lpSprite = GameUI::Create<UISprite>();
 	lpSprite->Init(UI_ANCHOR::LEFT_TOP, { 0.0f, 0.0f }, 41 * 2, 58 * 2);
 	lpSprite->SetGameObject(GameData::GetSingleton()->PickCard());
 	lpSprite->SetEventCatch(EVENT_CATCH::BLOCK_PASS);
-	lpHScrollView->AddChildUI(lpSprite);
+	lpHScrollView->AddChild(lpSprite);
 }
 
 void InGameHandCard::UseCard(ObserverHandler* observer)
 {
-	GameUI* lpGameUI = dynamic_cast<GameUI*>(observer);
-	if (lpGameUI)
+	if (typeid(*observer) == typeid(UISprite))
 	{
-		((GameUI*)lpHScrollView)->RemoveChildUI(lpGameUI);
+		GameUI* lpGameUI = (GameUI*)(observer);
+		((GameUI*)lpHScrollView)->RemoveChild(lpGameUI);
 	}
 }
 

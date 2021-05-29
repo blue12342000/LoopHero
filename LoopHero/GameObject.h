@@ -14,23 +14,28 @@ protected:
 	GameObject* lpParent;
 	vector<GameObject*> vChilds;
 
+private:
+	void VaildChilds();
+
 public:
 	virtual ~GameObject() {}
 
-	virtual void Init() = 0;
-	virtual void Release() = 0;
-	virtual void Update(float deltaTime) = 0;
+	virtual void Init();
+	virtual void Release();
+	virtual void Update(float deltaTime);
 	virtual void LateUpdate(float deltaTime) {}
-	virtual void Render(HDC hdc) = 0;
+	virtual void Render(HDC hdc);
 
 	template<typename T>
 	static T* Create(GameObject* lpParent = nullptr)
 	{
 		T* lpGameObject = PoolingManager::GetSingleton()->GetClass<T>();
-		if (!lpGameObject) lpGameObject = new T;
-
+		lpGameObject->Init();
+		lpGameObject->isVisible = true;
 		lpGameObject->lpParent = lpParent;
 		if (lpParent) lpParent->vChilds.push_back(lpGameObject);
+
+		ObserverManager::GetSingleton()->RegisterObserver(lpGameObject);
 		return lpGameObject;
 	}
 

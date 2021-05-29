@@ -19,7 +19,6 @@
 HRESULT InGame::Init()
 {
     Hero* lpHero = GameObject::Create<Hero>();
-    lpHero->Init();
     lpHero->NewHero("Warrior");
 
     GameData::GetSingleton()->SetHero(lpHero);
@@ -27,30 +26,29 @@ HRESULT InGame::Init()
     lpBuffer = ImageManager::GetSingleton()->FindImage("ingame_backbuffer");
     lpBackImage = ImageManager::GetSingleton()->FindImage("InGame_BackGround");
 
-    lpCanvus = GameUI::CreateUI<GameUI>();
+    lpCanvus = GameUI::Create<GameUI>();
     lpCanvus->Init(UI_ANCHOR::LEFT_TOP, { 0.0f, 0.0f }, WINSIZE_WIDTH, WINSIZE_HEIGHT);
     lpCanvus->SetEventCatch(EVENT_CATCH::PASS);
 
-    InGameRightMenu* lpRightMenu = GameUI::CreateUI<InGameRightMenu>(lpCanvus);
+    InGameRightMenu* lpRightMenu = GameUI::Create<InGameRightMenu>(lpCanvus);
     lpRightMenu->Init(UI_ANCHOR::RIGHT_TOP, { 0.0f, 0.0f }, 296, WINSIZE_HEIGHT);
     lpRightMenu->SetEventCatch(EVENT_CATCH::BLOCK_PASS);
 
-    InGameHandCard* lpHandCards = GameUI::CreateUI<InGameHandCard>(lpCanvus);
+    InGameHandCard* lpHandCards = GameUI::Create<InGameHandCard>(lpCanvus);
     lpHandCards->Init(UI_ANCHOR::LEFT_BOTTOM, { 0.0f, -48.0f }, WINSIZE_WIDTH - 300, 58 * 2);
 
-    InGameEventTimer* lpEvent = GameUI::CreateUI<InGameEventTimer>(lpCanvus);
+    InGameEventTimer* lpEvent = GameUI::Create<InGameEventTimer>(lpCanvus);
     lpEvent->Init(UI_ANCHOR::LEFT_TOP, POINTFLOAT{ 0.0f, 0.0f }, 121 * 2, 27 * 2);
 
     lpFieldTiles = GameObject::Create<FieldTileMap>();
-    lpFieldTiles->Init();
     lpFieldTiles->SetHero(GameData::GetSingleton()->GetHero());
 
-    lpEventSystem = new EventSystem();
+    lpEventSystem = PoolingManager::GetSingleton()->GetClass<EventSystem>();
     lpEventSystem->Init();
     lpEventSystem->SetGameUI(lpCanvus);
     lpEventSystem->SetGameObject(lpFieldTiles);
 
-    lpBattleWindow = GameUI::CreateUI<UIBattleWindow>(lpCanvus);
+    lpBattleWindow = GameUI::Create<UIBattleWindow>(lpCanvus);
     lpBattleWindow->Init(UI_ANCHOR::MIDDLE, { -100, 0.0f }, 301 * 2, 257 * 2);
     lpBattleWindow->SetVisible(false);
 
@@ -63,21 +61,18 @@ void InGame::Release()
     if (lpFieldTiles)
     {
         lpFieldTiles->Release();
-        delete lpFieldTiles;
         lpFieldTiles = nullptr;
     }
 
     if (lpCanvus)
     {
         lpCanvus->Release();
-        delete lpCanvus;
         lpCanvus = nullptr;
     }
 
     if (lpEventSystem)
     {
         lpEventSystem->Release();
-        delete lpEventSystem;
         lpEventSystem = nullptr;
     }
 

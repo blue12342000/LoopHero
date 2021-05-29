@@ -11,9 +11,6 @@ private:
 	map<CARD_TYPE, vector<Card*>> mCardListByType;
 	map<CARD_RARE, vector<Card*>> mCardListByRare;
 
-	vector<Card*> vActiveCards;
-	vector<Card*> vDeactiveCards;
-
 public:
 	virtual void Init() override;
 	virtual void Release() override;

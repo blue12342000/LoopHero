@@ -1,5 +1,20 @@
 #include "GameUI.h"
-#include <functional>
+
+void GameUI::VaildChilds()
+{
+	auto it = vChilds.cbegin();
+	while (it != vChilds.cend())
+	{
+		if ((*it)->lpParent != this)
+		{
+			it = vChilds.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
+}
 
 void GameUI::Refresh()
 {
@@ -62,14 +77,22 @@ void GameUI::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
 
 void GameUI::Release()
 {
-	for (int i = 0; i < vChildUI.size(); ++i)
+	if (lpParent)
 	{
-		vChildUI[i]->Release();
-		//delete vChildUI[i];
+		lpParent->RemoveChild(this);
+		return;
 	}
-	vChildUI.clear();
-
-	lpParent = nullptr;
+	else
+	{
+		while (!vChilds.empty())
+		{
+			vChilds.back()->lpParent = nullptr;
+			vChilds.back()->Release();
+			vChilds.pop_back();
+		}
+	}
+	ClearEventHandler();
+	ObserverManager::GetSingleton()->RemoveObserver(this);
 	PoolingManager::GetSingleton()->AddClass(this);
 }
 
@@ -77,9 +100,9 @@ void GameUI::Update(float deltaTime)
 {
 	if (isVisible)
 	{
-		for (int i = 0; i < vChildUI.size(); ++i)
+		for (int i = 0; i < vChilds.size(); ++i)
 		{
-			vChildUI[i]->Update(deltaTime);
+			vChilds[i]->Update(deltaTime);
 		}
 	}
 }
@@ -89,9 +112,9 @@ void GameUI::LateUpdate(float deltaTime)
 	if (isVisible)
 	{
 		Refresh();
-		for (int i = 0; i < vChildUI.size(); ++i)
+		for (int i = 0; i < vChilds.size(); ++i)
 		{
-			vChildUI[i]->LateUpdate(deltaTime);
+			vChilds[i]->LateUpdate(deltaTime);
 		}
 	}
 }
@@ -100,50 +123,49 @@ void GameUI::Render(HDC hdc)
 {
 	if (isVisible)
 	{
-		for (int i = 0; i < vChildUI.size(); ++i)
+		for (int i = 0; i < vChilds.size(); ++i)
 		{
-			if (vChildUI[i]->isVisible) vChildUI[i]->Render(hdc);
+			if (vChilds[i]->isVisible) vChilds[i]->Render(hdc);
 		}
 	}
 }
 
 void GameUI::InsertChild(GameUI* lpChild, int index)
 {
-	lpChild->SetPos(lpChild->GetRealationPos(this));
-	lpChild->lpParent = this;
-	vChildUI.insert(vChildUI.begin() + index, lpChild);
+	lpChild->SetParernt(this);
+	vChilds.insert(vChilds.begin() + index, lpChild);
 }
 
-void GameUI::AddChildUI(GameUI* lpChild)
+void GameUI::AddChild(GameUI* lpChild)
 {
 	lpChild->SetParernt(this);
-	vChildUI.push_back(lpChild);
+	vChilds.push_back(lpChild);
 }
 
-void GameUI::RemoveChildUI(int index)
+void GameUI::RemoveChild(int index)
 {
-	if (index > -1 && index < vChildUI.size())
+	if (index > -1 && index < vChilds.size())
 	{
-		GameUI* lpGame = (*vChildUI.begin());
-		//lpGame->Release();
-		vChildUI.erase(vChildUI.begin() + index);
-		//delete lpGame;
+		auto it = (vChilds.begin() + index);
+		(*it)->lpParent = nullptr;
+		(*it)->Release();
+		vChilds.erase(it);
 	}
 }
 
-void GameUI::RemoveChildUI(GameUI* lpChild)
+void GameUI::RemoveChild(GameUI* lpChild)
 {
-	for (int i = 0; i < vChildUI.size(); ++i)
-	{
-		if (vChildUI[i] == lpChild)
-		{
-			RemoveChildUI(i);
-			break;
-		}
-	}
+	if (!lpChild) return;
+
+	RemoveChild(find(vChilds.begin(), vChilds.end(), lpChild) - vChilds.begin());
 }
 
 void GameUI::SetWorldPos(POINT pos)
+{
+	SetWorldPos(POINTFLOAT{ (float)pos.x, (float)pos.y });
+}
+
+void GameUI::SetWorldPos(POINTFLOAT pos)
 {
 	POINTFLOAT thisPos = origin;
 
@@ -258,19 +280,12 @@ void GameUI::SetAnchor(UI_ANCHOR anchor)
 
 void GameUI::SetParernt(GameUI* lpParent)
 {
-	if (this->lpParent)
-	{
-		auto it = find(this->lpParent->vChildUI.begin(), this->lpParent->vChildUI.end(), this);
-		this->lpParent->RemoveChildUI(it - this->lpParent->vChildUI.begin());
-	}
+	POINTFLOAT worldPos = GetWorldPos();
+	GameUI* lpPreParent = this->lpParent;
 	this->lpParent = lpParent;
-	if (lpParent)
+	if (lpPreParent)
 	{
-		this->depth = lpParent->depth + 1;
+		lpPreParent->VaildChilds();
 	}
-	else
-	{
-		this->depth = 0;
-	}
-	SetPos(GetRealationPos(lpParent));
+	SetWorldPos(worldPos);
 }

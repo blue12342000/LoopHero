@@ -154,6 +154,7 @@
     <ClCompile Include="EventTrigger.cpp" />
     <ClCompile Include="FieldTile.cpp" />
     <ClCompile Include="FieldTileMap.cpp" />
+    <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GameData.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameUI.cpp" />
@@ -161,7 +162,11 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ObserverHandler.cpp" />
     <ClCompile Include="ObserverManager.cpp" />
+    <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="ParticleManager.cpp" />
+    <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="PoolingManager.cpp" />
+    <ClCompile Include="Text.cpp" />
     <ClCompile Include="Trait.cpp" />
     <ClCompile Include="UIBattleUnit.cpp" />
     <ClCompile Include="UIBattleWindow.cpp" />
@@ -199,10 +204,14 @@
     <ClInclude Include="EventTrigger.h" />
     <ClInclude Include="FieldTile.h" />
     <ClInclude Include="FieldTileMap.h" />
+    <ClInclude Include="FontManager.h" />
     <ClInclude Include="GameData.h" />
     <ClInclude Include="GameNode.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Hero.h" />
+    <ClInclude Include="Particle.h" />
+    <ClInclude Include="ParticleManager.h" />
+    <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="PoolingManager.h" />
     <ClInclude Include="GameUI.h" />
     <ClInclude Include="IClickHandler.h" />
@@ -212,6 +221,7 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="ObserverHandler.h" />
     <ClInclude Include="ObserverManager.h" />
+    <ClInclude Include="Text.h" />
     <ClInclude Include="Trait.h" />
     <ClInclude Include="UIBattleUnit.h" />
     <ClInclude Include="UIBattleWindow.h" />

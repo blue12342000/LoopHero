@@ -30,3 +30,9 @@ extern bool isDebugMode;
 #include "GameData.h"
 #include "ObserverManager.h"
 #include "PoolingManager.h"
+#include "FontManager.h"
+#include "ParticleManager.h"
+
+#ifdef _DEBUG
+#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
+#endif

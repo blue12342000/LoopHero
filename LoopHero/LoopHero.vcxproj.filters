@@ -79,6 +79,9 @@
     <Filter Include="소스 파일\LoopHero\Object\Battle\Character">
       <UniqueIdentifier>{f489a64b-67fe-4ef9-802b-677ce28a3313}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Engine\Particle">
+      <UniqueIdentifier>{ecfc2cbd-d03e-464c-8254-a5ea32dc6608}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -209,6 +212,21 @@
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>소스 파일\LoopHero\Object\Super</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleManager.cpp">
+      <Filter>소스 파일\Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>소스 파일\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="FontManager.cpp">
+      <Filter>소스 파일\Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>소스 파일\Engine\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>소스 파일\Engine\Particle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -361,6 +379,21 @@
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>소스 파일\LoopHero\Object\Super</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleManager.h">
+      <Filter>소스 파일\Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.h">
+      <Filter>소스 파일\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="FontManager.h">
+      <Filter>소스 파일\Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>소스 파일\Engine\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSystem.h">
+      <Filter>소스 파일\Engine\Particle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

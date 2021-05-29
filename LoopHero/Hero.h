@@ -46,7 +46,7 @@ public:
 	virtual void Update(float deltaTime) override;
 	virtual void Render(HDC hdc) override;
 
-	void BattleEnd(ObserverHandler* lpCaller);
+	void Move(ObserverHandler* lpCaller);
 
 	void Loop(vector<FieldTile*>& vMovePath);
 	void NewHero(string id);

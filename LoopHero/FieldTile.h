@@ -1,11 +1,14 @@
 #pragma once
 #include "GameObject.h"
 
+enum class TILE_TYPE;
 class Tile;
 class FieldTileMap;
 class FieldTile : public GameObject
 {
 private:
+	TILE_TYPE type;
+
 	int x;
 	int y;
 
@@ -26,6 +29,7 @@ public:
 	virtual void Render(HDC hdc) override;
 
 	void DailySpawnMonster(ObserverHandler* lpCaller);
+	void ClearMonster();
 
 	void OnMouseOver(EventData& data) override;
 	void OnMouseOut(EventData& data) override;

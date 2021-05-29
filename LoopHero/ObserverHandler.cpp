@@ -1,19 +1,19 @@
 #include "ObserverHandler.h"
 
-void ObserverHandler::AddOEventHandler(string message, function<void(ObserverHandler*)> func)
+void ObserverHandler::AddEventHandler(string message, function<void(ObserverHandler*)> func)
 {
-	mOEvents.insert(make_pair(message, func));
+	mEvents.insert(make_pair(message, func));
 }
 
-void ObserverHandler::RemoveOEventHandler(string message)
+void ObserverHandler::RemoveEventHandler(string message)
 {
-	mOEvents.erase(message);
+	mEvents.erase(message);
 }
 
 void ObserverHandler::Notify(string message, ObserverHandler* lpCaller)
 {
-	if (mOEvents.find(message) != mOEvents.end())
+	if (mEvents.find(message) != mEvents.end())
 	{
-		mOEvents[message](lpCaller);
+		mEvents[message](lpCaller);
 	}
 }

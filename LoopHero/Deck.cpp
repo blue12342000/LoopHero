@@ -17,16 +17,12 @@ void Deck::Release()
 	for (int i = 0; i < vCardList.size(); ++i)
 	{
 		vCardList[i]->Release();
-		delete vCardList[i];
 	}
 	vCardList.clear();
 
-	for (int i = 0; i < vActiveCards.size(); ++i)
-	{
-		vActiveCards[i]->Release();
-		delete vActiveCards[i];
-	}
-	vActiveCards.clear();
+	mCardListByType.clear();
+	mCardListByRare.clear();
+	PoolingManager::GetSingleton()->AddClass(this);
 }
 
 void Deck::Update(float deltaTime)
@@ -70,23 +66,8 @@ Card* Deck::GetRandomCard()
 	if (!vCards.empty())
 	{
 		Card* randCard = vCards[rand() % vCards.size()];
-		Card* lpCard = nullptr;
-		if (vDeactiveCards.empty())
-		{
-			lpCard = new Card(*randCard);
-			lpCard->hFont = CreateFont(13, 5, 0, 0, FW_BOLD, 0, 0, 0, HANGEUL_CHARSET, OUT_TT_ONLY_PRECIS, 0, DEFAULT_QUALITY, VARIABLE_PITCH | FF_ROMAN, TEXT("µ¸¿ò"));
-		}
-		else
-		{
-			lpCard = vDeactiveCards.back();
-			vDeactiveCards.pop_back();
-
-			HFONT hFont = lpCard->hFont;
-			*lpCard = *randCard;
-			lpCard->hFont = hFont;
-		}
-
-		vActiveCards.push_back(lpCard);
+		Card* lpCard = CreateCard(randCard->GetId());
+		*lpCard = *randCard;
 		return lpCard;
 	}
 	return nullptr;
@@ -95,7 +76,6 @@ Card* Deck::GetRandomCard()
 Card* Deck::CreateCard(string cardId)
 {
 	Card* lpCard = GameObject::Create<Card>();
-	lpCard->Init();
 	lpCard->id = cardId;
 	lpCard->lpIconImg = ImageManager::GetSingleton()->FindImage(cardId + "_icon");
 	lpCard->lpCardImg = ImageManager::GetSingleton()->FindImage(cardId + "_card");

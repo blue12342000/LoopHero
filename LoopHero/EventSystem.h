@@ -1,5 +1,6 @@
 #pragma once
 #include "Singleton.h"
+#include "GameNode.h"
 #include <Windows.h>
 #include <vector>
 #include <queue>
@@ -47,7 +48,7 @@ struct EventData
 
 class GameUI;
 class GameObject;
-class EventSystem
+class EventSystem : public GameNode
 {
 private:
 	EventData eventData;

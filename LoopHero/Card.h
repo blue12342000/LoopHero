@@ -47,6 +47,7 @@ public:
 	virtual void Update(float deltaTime) override;
 	virtual void Render(HDC hdc) override;
 
+	inline string GetId() { return id; }
 	inline Image* GetIconImg() { return lpIconImg; }
 	inline Image* GetCardImg() { return lpCardImg; }
 	inline string GetTileKey() { return tileKey; }

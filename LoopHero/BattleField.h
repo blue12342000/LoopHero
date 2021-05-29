@@ -1,6 +1,12 @@
 #pragma once
 #include "GameObject.h"
 
+enum class BATTLE_FIELD_STATE
+{
+	BATTLE,
+	NONE
+};
+
 enum class BATTLE_TEAM
 {
 	LEFT,
@@ -9,9 +15,12 @@ enum class BATTLE_TEAM
 
 class Unit;
 class BattleUnit;
+class FieldTile;
 class BattleField : public GameObject
 {
 private:
+	BATTLE_FIELD_STATE state;
+	FieldTile* lpFieldTile;
 	list<BattleUnit*> lDeath;
 	list<BattleUnit*> lHeroParty;
 	list<BattleUnit*> lEnemyParty;
@@ -25,6 +34,8 @@ public:
 	bool Attack(BattleUnit*& lpAttaker, list<BattleUnit*>& lDefenders);
 	void AllAttack(BattleUnit*& lpAttaker, list<BattleUnit*>& lDefenders);
 	void AddUnit(BATTLE_TEAM team, Unit* lpUnit);
+
+	void SetFieldTile(FieldTile* lpFieldTile);
 
 	inline list<BattleUnit*> GetHeroParty() { return lHeroParty; }
 	inline list<BattleUnit*> GetEnemyParty() { return lEnemyParty; }

@@ -32,26 +32,28 @@ void UIHorizontalScroll::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int h
 void UIHorizontalScroll::Update(float deltaTime)
 {
 	POINTFLOAT currPos, newPos;
-	for (int i = 0, idx = 0; i < vChildUI.size(); ++i, ++idx)
+	for (int i = 0, idx = 0; i < vChilds.size(); ++i, ++idx)
 	{
+		idx %= vChilds.size();
+		if (lpSelected == vChilds[idx])
+		{
+			++idx;
+			idx %= vChilds.size();
+		}
 		if (i == dragNextIndex)
 		{
 			--idx;
 			continue;
 		}
-		if (lpSelected == vChildUI[idx])
-		{
-			++idx;
-		}
 
-		currPos = vChildUI[idx]->GetPos();
+		currPos = vChilds[idx]->GetPos();
 		newPos = currPos;
 		newPos.x += (vItemSlots[i].pos.x - currPos.x) * 10 * deltaTime;
 		if (abs(newPos.x - vItemSlots[i].pos.x) < 0.01f) newPos.x = vItemSlots[i].pos.x;
 		newPos.y += (vItemSlots[i].pos.y - currPos.y) * 10 * deltaTime;
 		if (abs(newPos.y - vItemSlots[i].pos.y) < 0.01f) newPos.y = vItemSlots[i].pos.y;
 
-		vChildUI[idx]->SetPos(newPos);
+		vChilds[idx]->SetPos(newPos);
 	}
 	if (lpSelected && escape == HSCROLL_ITEM_ESCAPE::HIDE)
 	{
@@ -63,33 +65,22 @@ void UIHorizontalScroll::Update(float deltaTime)
 
 void UIHorizontalScroll::Render(HDC hdc)
 {
-	if (isVisible)
-	{
-		for (int i = 0; i < vChildUI.size(); ++i)
-		{
-			if (vChildUI[i]->IsVisible())
-			{
-				
-				vChildUI[i]->Render(hdc);
-			}
-		}
-	}
+	GameUI::Render(hdc);
 }
 
-void UIHorizontalScroll::AddChildUI(GameUI* lpChild)
+void UIHorizontalScroll::AddChild(GameUI* lpChild)
 {
+	// lpSelected가 존재할때 AddChild시에 Index번호가 바뀌게 되는데 그것의 처리가 없음
 	if (!lpChild) return;
-	if (maxItems > 0 && vChildUI.size() >= maxItems)
+	if (maxItems > 0 && vChilds.size() >= maxItems)
 	{
-		int diff = vChildUI.size() - maxItems;
+		int diff = vChilds.size() - maxItems;
 		for (int i = 0; i <= diff; ++i)
 		{
-			if (insert == HS_ARGS_INSERT::AFTER) RemoveChildUI(0);
-			else RemoveChildUI(vChildUI.size() - 1);
+			if (insert == HS_ARGS_INSERT::AFTER) RemoveChild(0);
+			else RemoveChild(vChilds.size() - 1);
 		}
 	}
-	sHeightSort.insert(lpChild);
-	sWidthSort.insert(lpChild);
 
 	switch (align)
 	{
@@ -103,15 +94,15 @@ void UIHorizontalScroll::AddChildUI(GameUI* lpChild)
 		break;
 	}
 
-	if (insert == HS_ARGS_INSERT::AFTER) GameUI::InsertChild(lpChild, vChildUI.size());
+	if (insert == HS_ARGS_INSERT::AFTER) GameUI::InsertChild(lpChild, vChilds.size());
 	else GameUI::InsertChild(lpChild, 0);
 
 	SlotResize();
 }
 
-void UIHorizontalScroll::RemoveChildUI(int index)
+void UIHorizontalScroll::RemoveChild(int index)
 {
-	if (index > -1 && index < vChildUI.size())
+	if (index > -1 && index < vChilds.size())
 	{
 		if (index == selectedIndex)
 		{
@@ -127,10 +118,8 @@ void UIHorizontalScroll::RemoveChildUI(int index)
 			if (selectedIndex < 0) lpSelected = nullptr;
 		}
 
-		GameUI* item = *(vChildUI.begin() + index);
-		vChildUI.erase(vChildUI.begin() + index);
-		sHeightSort.erase(item);
-		sWidthSort.erase(item);
+		GameUI* item = *(vChilds.begin() + index);
+		GameUI::RemoveChild(index);
 
 		SlotResize();
 	}
@@ -142,7 +131,6 @@ void UIHorizontalScroll::SetMultiLineType(HSCROLL_MULTILINE multiLineType, int c
 	this->cols = cols;
 }
 
-
 void UIHorizontalScroll::OnClick(EventData& data)
 {
 	if (control == HSCROLL_ITEM_CONTROL::FIXED)
@@ -153,12 +141,12 @@ void UIHorizontalScroll::OnClick(EventData& data)
 
 	lpSelected = nullptr;
 	RECT childRc;
-	for (int i = vChildUI.size() - 1; i >= 0; --i)
+	for (int i = vChilds.size() - 1; i >= 0; --i)
 	{
-		childRc = vChildUI[i]->GetRect();
+		childRc = vChilds[i]->GetRect();
 		if (PtInRect(&childRc, data.point))
 		{
-			lpSelected = vChildUI[i];
+			lpSelected = vChilds[i];
 			lpSelected->SetAnchor(UI_ANCHOR::MIDDLE);
 			lpSelected->SetPos(lpSelected->GetRealationPos(this));
 			selectedIndex = i;
@@ -226,43 +214,50 @@ void UIHorizontalScroll::OnEndDrag(EventData& data)
 		if (dragNextIndex < selectedIndex)
 		{
 			// 앞으로
-			vChildUI.erase(vChildUI.begin() + selectedIndex);
-			vChildUI.insert(vChildUI.begin() + dragNextIndex, lpSelected);
+			vChilds.erase(vChilds.begin() + selectedIndex);
+			vChilds.insert(vChilds.begin() + dragNextIndex, lpSelected);
 		}
 		else if (dragNextIndex > selectedIndex)
 		{
 			// 뒤로
-			vChildUI.insert(vChildUI.begin() + (dragNextIndex + 1), lpSelected);
-			vChildUI.erase(vChildUI.begin() + selectedIndex);
+			vChilds.insert(vChilds.begin() + (dragNextIndex + 1), lpSelected);
+			vChilds.erase(vChilds.begin() + selectedIndex);
 		}
 		data.lpDragTarget = lpSelected;
 		lpSelected->SetVisible(true);
 		lpSelected = nullptr;
 		selectedIndex = -1;
 		dragNextIndex = -1;
+
+		SlotResize();
 	}
 }
 
 void UIHorizontalScroll::SlotResize()
 {
-	if (vChildUI.empty()) return;
+	sWidthSort.clear();
+	sHeightSort.clear();
+	if (vChilds.empty()) return;
+
+	sWidthSort.insert(vChilds.begin(), vChilds.end());
+	sHeightSort.insert(vChilds.begin(), vChilds.end());
 
 	int slotWidth = (*sWidthSort.begin())->GetWidth();
 	int slotHeight = (*sHeightSort.begin())->GetHeight();
 
-	if (cols > 0) { totalItemWidth = min(vChildUI.size(), cols - 1) * (*sWidthSort.begin())->GetWidth(); }
-	else { totalItemWidth = (vChildUI.size()) * (*sWidthSort.begin())->GetWidth(); }
+	if (cols > 0) { totalItemWidth = min(vChilds.size(), cols - 1) * (*sWidthSort.begin())->GetWidth(); }
+	else { totalItemWidth = (vChilds.size()) * (*sWidthSort.begin())->GetWidth(); }
 
-	if (vChildUI.size() > 1)
+	if (vChilds.size() > 1)
 	{
-		margin = (width - totalItemWidth) / min(vChildUI.size() - 1, cols - 1);
+		margin = (width - totalItemWidth) / min(vChilds.size() - 1, cols - 1);
 		if (margin > maxMargin) margin = maxMargin;
 	}
 
 	ItemSlot slot;
 	POINTFLOAT slotPos = { 0.0f, 0.0f };
-	vItemSlots.resize(vChildUI.size());
-	for (int i = 0; i < vChildUI.size(); ++i)
+	vItemSlots.resize(vChilds.size());
+	for (int i = 0; i < vChilds.size(); ++i)
 	{
 		vItemSlots[i].pos = slotPos;
 		switch (align)

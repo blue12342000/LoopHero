@@ -18,6 +18,14 @@ void Animation::Init(string imageKey, ANIMATION_TYPE type, float fps)
 	Init(ImageManager::GetSingleton()->FindImage(imageKey), type, fps);
 }
 
+void Animation::Release()
+{
+	lpImage = nullptr;
+	callBack = nullptr;
+	state = ANIMATION_STATE::STOP;
+	PoolingManager::GetSingleton()->AddClass(this);
+}
+
 void Animation::Update(float deltaTime)
 {
 	if (state == ANIMATION_STATE::PLAY)

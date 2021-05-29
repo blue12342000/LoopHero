@@ -11,31 +11,14 @@ void Unit::Init()
 	state = UNIT_STATE::ALIVE;
 }
 
-/*
-부모가 존재할경우
-본인이 제거를 해선 안됨
-부모한테 삭제를 요청해야한다.
-*/
-
 void Unit::Release()
 {
-	if (this == &(*GameData::GetSingleton()->GetUnit())) return;
-
-	if (lpParent)
+	if (lpIcon)
 	{
-		lpParent->RemoveChild(this);
-		return;
+		lpIcon->Release();
+		lpIcon = nullptr;
 	}
-	else
-	{
-		if (lpIcon)
-		{
-			delete lpIcon;
-			lpIcon = nullptr;
-		}
-		lpTrait = nullptr;
-		PoolingManager::GetSingleton()->AddClass(this);
-	}
+	GameObject::Release();
 }
 
 void Unit::Update(float deltaTime)
@@ -101,7 +84,6 @@ void Unit::Death()
 
 void Unit::SetTrait(Trait& trait)
 {
-	if (this->lpTrait) Release();
 	this->lpTrait = &trait;
 
 	name = lpTrait->GetTraitId();
@@ -111,7 +93,7 @@ void Unit::SetTrait(Trait& trait)
 	{
 		mEquip.insert(make_pair(pair.first, EquipSlot{ pair.second, nullptr }));
 	}
-	lpIcon = new Animation();
+	lpIcon = PoolingManager::GetSingleton()->GetClass<Animation>();
 	lpIcon->Init(name + "_icon", ANIMATION_TYPE::LOOP, 5);
 	lpIcon->Play();
 }

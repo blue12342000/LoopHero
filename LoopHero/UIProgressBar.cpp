@@ -16,6 +16,13 @@ void UIProgressBar::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height
 	lpBar = ImageManager::GetSingleton()->FindImage(bar);
 }
 
+void UIProgressBar::Release()
+{
+	lpTargetFunc = nullptr;
+	lpMaxFunc = nullptr;
+	GameUI::Release();
+}
+
 void UIProgressBar::Update(float deltaTime)
 {
 	GameUI::Update(deltaTime);
@@ -41,23 +48,25 @@ void UIProgressBar::Render(HDC hdc)
 		float targetVar, maxVar;
 		switch (target)
 		{
-		case UI_BAR_TARGET::VARIABLE:
-			if (lpTargetVar) targetVar = *lpTargetVar;
-			else targetVar = 1;
-			break;
 		case UI_BAR_TARGET::FUNC:
 			if (lpTargetFunc) targetVar = lpTargetFunc();
+			else targetVar = 1;
+			break;
+		case UI_BAR_TARGET::VARIABLE:
+		default:
+			if (lpTargetVar) targetVar = *lpTargetVar;
 			else targetVar = 1;
 			break;
 		}
 		switch (maxTarget)
 		{
-		case UI_BAR_TARGET::VARIABLE:
-			if (lpMaxVar) maxVar = *lpMaxVar;
-			else maxVar = 1;
-			break;
 		case UI_BAR_TARGET::FUNC:
 			if (lpMaxFunc) maxVar = lpMaxFunc();
+			else maxVar = 1;
+			break;
+		case UI_BAR_TARGET::VARIABLE:
+		default:
+			if (lpMaxVar) maxVar = *lpMaxVar;
 			else maxVar = 1;
 			break;
 		}

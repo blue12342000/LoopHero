@@ -74,10 +74,9 @@ public:
 	virtual void Update(float deltaTime) override;
 	virtual void Render(HDC hdc) override;
 
-	virtual void AddChildUI(GameUI* lpChild) final;
-	virtual void RemoveChildUI(int index = 0) final;
+	virtual void AddChild(GameUI* lpChild) final;
+	virtual void RemoveChild(int index = 0) final;
 	
-	bool ChildUIMaxHeight(GameUI* a, GameUI* b) {}
 	void SetMultiLineType(HSCROLL_MULTILINE multiLineType, int cols);
 
 	virtual void OnClick(EventData& data) override;

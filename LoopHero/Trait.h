@@ -1,4 +1,5 @@
 #pragma once
+#include "GameNode.h"
 #include <map>
 #include <string>
 #include <vector>
@@ -10,7 +11,7 @@ enum class EQUIP_PARTS;
 enum class UNIT_SLOT;
 class Unit;
 class EquipItem;
-class Trait
+class Trait : public GameNode
 {
 private:
 	string traitId;
@@ -24,6 +25,8 @@ private:
 	Trait(const Trait& other) = delete;
 
 public:
+	void Release();
+
 	static Unit* NewUnit(string trait);
 	
 	EquipItem* CreateEquip();

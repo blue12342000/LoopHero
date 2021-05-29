@@ -12,7 +12,8 @@ protected:
 public:
 	virtual ~UISprite() {}
 
-	virtual void Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height);
+	virtual void Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height) override;
+	virtual void Release() override;
 	virtual void Render(HDC hdc) override;
 
 	inline void SetGameObject(GameObject* lpObject) { this->lpObject = lpObject; }

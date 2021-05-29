@@ -11,15 +11,15 @@ void UIBattleUnit::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
 {
 	GameUI::Init(anchor, pos, width, height);
 
-	lpSprite = GameUI::CreateUI<UISprite>(this);
+	lpSprite = GameUI::Create<UISprite>(this);
 	lpSprite->Init(UI_ANCHOR::BOTTOM_MIDDLE, {0.0f, 0.0f}, width, height);
 	lpSprite->SetEventCatch(EVENT_CATCH::PASS);
 
 	lpHudBack = ImageManager::GetSingleton()->FindImage("battle_unit_statusbar");
-	lpHpBar = GameUI::CreateUI<UIProgressBar>(this);
+	lpHpBar = GameUI::Create<UIProgressBar>(this);
 	lpHpBar->Init(UI_ANCHOR::BOTTOM_MIDDLE, { 0.0f, 0.0f }, 50, 4, UI_BAR_TYPE::HORIZON, "", "battle_unit_statusbar_hp");
 
-	lpActionBar = GameUI::CreateUI<UIProgressBar>(this);
+	lpActionBar = GameUI::Create<UIProgressBar>(this);
 	lpActionBar->Init(UI_ANCHOR::BOTTOM_MIDDLE, { 0.0f, 0.0f }, 50, 2, UI_BAR_TYPE::HORIZON, "", "battle_unit_statusbar_action");
 
 	lpHover = nullptr;
@@ -30,6 +30,8 @@ void UIBattleUnit::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
 
 void UIBattleUnit::Release()
 {
+	lpBattleUnit = nullptr;
+	lpSprite->SetGameObject(nullptr);
 	GameUI::Release();
 }
 

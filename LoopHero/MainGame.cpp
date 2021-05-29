@@ -8,6 +8,7 @@ HRESULT MainGame::Init()
 	
 	hFont = CreateFont(12, 0, 0, 0, FW_LIGHT, 0, 0, 0, HANGEUL_CHARSET, OUT_DEVICE_PRECIS, 0, DEFAULT_QUALITY, VARIABLE_PITCH | FF_ROMAN, TEXT("±Ã¼­"));
 
+	FontManager::GetSingleton()->Init();
 	KeyManager::GetSingleton()->Init();
 	ImageManager::GetSingleton()->Init();
 	SceneManager::GetSingleton()->Init();
@@ -27,6 +28,12 @@ void MainGame::Release()
 {
 	delete timer;
 	timer = nullptr;
+
+	FontManager::GetSingleton()->Release();
+	FontManager::GetSingleton()->ReleaseSingleton();
+
+	PoolingManager::GetSingleton()->Release();
+	PoolingManager::GetSingleton()->ReleaseSingleton();
 
 	KeyManager::GetSingleton()->ReleaseSingleton();
 

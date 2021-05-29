@@ -22,8 +22,8 @@ public:
 	virtual void Update(float deltaTime) override;
 	virtual void Render(HDC hdc) override;
 
-	virtual void AddChildUI(GameUI* lpChild) final;
-	virtual void RemoveChildUI(int index = 0) final;
+	virtual void AddChild(GameUI* lpChild) final;
+	virtual void RemoveChild(int index = 0) final;
 
 	virtual void OnDrop(EventData& data) override;
 	virtual void OnMouseEnter(EventData& data) override;

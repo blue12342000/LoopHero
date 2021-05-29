@@ -3,6 +3,7 @@
 #include "Unit.h"
 #include "Trait.h"
 #include "FieldTileMap.h"
+#include "Image.h"
 
 void FieldTile::Init()
 {
@@ -12,24 +13,23 @@ void FieldTile::Init()
 	angle = 0.0f;
 	radius = 15;
 
-	ObserverManager::GetSingleton()->RegisterObserver(this);
-	AddOEventHandler("daily_spawn_monster", bind(&FieldTile::DailySpawnMonster, this, placeholders::_1));
+	AddEventHandler("daily_spawn_monster", bind(&FieldTile::DailySpawnMonster, this, placeholders::_1));
 }
 
 void FieldTile::Release()
 {
+	GameObject::Release();
 }
 
 void FieldTile::Update(float deltaTime)
 {
+	// 해당 타일애서 생성된 몹들 회전
 	angle += PI / 2.0f * deltaTime;
 	if (angle > PI * 2) angle -= PI * 2;
 
-	SetRect(&rc, pos.x - FIELD_TILE_SIZE / 2, pos.y - FIELD_TILE_SIZE / 2, pos.x + FIELD_TILE_SIZE / 2, pos.y + FIELD_TILE_SIZE / 2);
-
 	for (int i = 0; i < vChilds.size(); ++i)
 	{
-		vChilds[i]->SetPos({ 25.0f + cos(angle + PI / 2.0f * i) * radius, 25.0f + sin(angle + PI / 2.0f * i) * radius });
+		vChilds[i]->SetPos({ cos(angle + PI / 2.0f * i) * radius, sin(angle + PI / 2.0f * i) * radius });
 		vChilds[i]->Update(deltaTime);
 	}
 }
@@ -37,11 +37,12 @@ void FieldTile::Update(float deltaTime)
 void FieldTile::Render(HDC hdc)
 {
 	//RenderRectangle(hdc, rc);
-
-	for (int i = 0; i < vChilds.size(); ++i)
+	if (lpTile)
 	{
-		vChilds[i]->Render(hdc);
+		lpTile->mLpImage[type]->Render(hdc, GetWorldPos().x, rc.bottom, POINT{ frameX, frameY }, IMAGE_ALIGN::MIDDLE_BOTTOM);
 	}
+
+	GameObject::Render(hdc);
 }
 
 void FieldTile::DailySpawnMonster(ObserverHandler* lpCaller)
@@ -55,6 +56,14 @@ void FieldTile::DailySpawnMonster(ObserverHandler* lpCaller)
 		{
 			// 확률
 		}
+	}
+}
+
+void FieldTile::ClearMonster()
+{
+	while (!vChilds.empty())
+	{
+		RemoveChild(0);
 	}
 }
 

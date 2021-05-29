@@ -15,14 +15,6 @@ enum class UI_TEXT_VALIGN
 	BOTTOM
 };
 
-enum class UI_TEXT_STYLE
-{
-	NORMAL,
-	BOLD,
-	ITALIC,
-	BOLD_ITALIC
-};
-
 enum class UI_TEXT_LINE
 {
 	SINGLE,
@@ -34,7 +26,6 @@ class UITextField : public GameUI
 private:
 	UI_TEXT_HALIGN hAlign;
 	UI_TEXT_VALIGN vAlign;
-	UI_TEXT_STYLE style;
 	UI_TEXT_LINE line;
 
 	int fontSize;
@@ -53,7 +44,7 @@ public:
 	virtual void Release() override;
 	virtual void Render(HDC hdc) override;
 
-	void SetFont(UI_TEXT_HALIGN hAlign, UI_TEXT_VALIGN vAlign, UI_TEXT_STYLE style, UI_TEXT_LINE line, int fontSize, COLORREF color, string fontName);
+	void SetFont(UI_TEXT_HALIGN hAlign, UI_TEXT_VALIGN vAlign, UI_TEXT_LINE line, int fontSize, COLORREF color, string fontName);
 
 	inline void SetText(string text) { this->text = text; }
 };

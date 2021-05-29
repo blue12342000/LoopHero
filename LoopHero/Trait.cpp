@@ -4,11 +4,14 @@
 #include "GameData.h"
 #include "Utill.h"
 
+void Trait::Release()
+{
+}
+
 Unit* Trait::NewUnit(string trait)
 {
     Unit* lpUnit = GameObject::Create<Unit>();
     Trait* lpTrait = GameData::GetSingleton()->GetTrait(trait);
-    lpUnit->Init();
     if (lpTrait) lpUnit->SetTrait(*lpTrait);
     return lpUnit;
 }
@@ -16,7 +19,6 @@ Unit* Trait::NewUnit(string trait)
 EquipItem* Trait::CreateEquip()
 {
 	EquipItem* lpEquip = GameObject::Create<EquipItem>();
-	lpEquip->Init();
 
 	lpEquip->parts = vParts[rand() % vParts.size()];
 	lpEquip->level += rand() % 4 - 1;
@@ -32,7 +34,6 @@ EquipItem* Trait::CreateEquip()
 	if (statusIndex < 0)
 	{
 		lpEquip->Release();
-		delete lpEquip;
 		return nullptr;
 	}
 
