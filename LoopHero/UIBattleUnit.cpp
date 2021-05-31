@@ -24,7 +24,7 @@ void UIBattleUnit::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
 
 	lpHover = nullptr;
 
-	action = 3;
+	action = 0;
 	maxAction = 5;
 }
 

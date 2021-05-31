@@ -113,8 +113,14 @@ void FieldTileMap::Init()
 
 void FieldTileMap::Release()
 {
+	mBuildTiles.clear();
+	lpSelectedTile = nullptr;
+	lpHero->SetParent(nullptr);
+
+	lpParticleSystem->Release();
 	ParticleManager::GetSingleton()->RemoveParticleSystem("Tile_ParticleSystem");
 	GameObject::Release();
+	GameData::GetSingleton()->ClearEventHandler();
 }
 
 void FieldTileMap::Update(float deltaTime)

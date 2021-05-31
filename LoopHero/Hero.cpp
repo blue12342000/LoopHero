@@ -8,13 +8,18 @@
 
 void Hero::Init()
 {
-	state == HERO_STATE::IDLE;
+	state = HERO_STATE::IDLE;
 	SetEventCatch(EVENT_CATCH::PASS);
 	AddEventHandler("Resume_Loop", bind(&Hero::Move, this, placeholders::_1));
 }
 
 void Hero::Release()
 {
+	if (lpUnit)
+	{
+		lpUnit->Release();
+		lpUnit = nullptr;
+	}
 	GameObject::Release();
 }
 
@@ -24,8 +29,6 @@ void Hero::Update(float deltaTime)
 	{
 		FieldTile* lpFieldTile = *tileIter.iter;
 		POINTFLOAT target = lpFieldTile->GetPos();
-		//target.x += FIELD_TILE_SIZE + 0.5f;
-		//target.y += FIELD_TILE_SIZE + 0.5f;
 		float angle = atan2(target.y - pos.y, target.x - pos.x);
 		pos.x += cosf(angle) * FIELD_TILE_SIZE * deltaTime;
 		pos.y += sinf(angle) * FIELD_TILE_SIZE * deltaTime;

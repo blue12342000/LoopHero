@@ -8,6 +8,9 @@ void InGameEventTimer::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int hei
 
 	lpBackground = ImageManager::GetSingleton()->FindImage("ingame_bosstimer_background");
 
+	dailyTimer = 0.0f;
+	bossTimer = 0.0f;
+
 	maxDailyTimer = 3;
 	maxBossTimer = 10;
 

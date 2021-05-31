@@ -18,6 +18,11 @@ void UIProgressBar::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height
 
 void UIProgressBar::Release()
 {
+	lpBackground = nullptr;
+	lpBar = nullptr;
+
+	lpTargetVar = nullptr;
+	lpMaxVar = nullptr;
 	lpTargetFunc = nullptr;
 	lpMaxFunc = nullptr;
 	GameUI::Release();

@@ -1,13 +1,12 @@
 #include "MainGame.h"
 #include "InGame.h"
+#include "Title.h"
 #include "Timer.h"
 
 HRESULT MainGame::Init()
 {
 	hdc = GetDC(g_hWnd);
 	
-	hFont = CreateFont(12, 0, 0, 0, FW_LIGHT, 0, 0, 0, HANGEUL_CHARSET, OUT_DEVICE_PRECIS, 0, DEFAULT_QUALITY, VARIABLE_PITCH | FF_ROMAN, TEXT("±Ã¼­"));
-
 	FontManager::GetSingleton()->Init();
 	KeyManager::GetSingleton()->Init();
 	ImageManager::GetSingleton()->Init();
@@ -18,9 +17,10 @@ HRESULT MainGame::Init()
 	timer->Init();
 
     // ¾À¸Þ´ÏÀú µî·Ï
+	SceneManager::GetSingleton()->AddScene(SCENE_KIND::TITLE, new Title());
 	SceneManager::GetSingleton()->AddScene(SCENE_KIND::INGAME , new InGame());
 
-	SceneManager::GetSingleton()->ChangeScene(SCENE_KIND::INGAME);
+	SceneManager::GetSingleton()->ChangeScene(SCENE_KIND::TITLE);
     return S_OK;
 }
 

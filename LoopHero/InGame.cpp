@@ -75,12 +75,26 @@ void InGame::Release()
         lpEventSystem = nullptr;
     }
 
+    GameData::GetSingleton()->GetHero()->Release();
+    GameData::GetSingleton()->SetHero(nullptr);
     ObserverManager::GetSingleton()->Release();
 }
 
 void InGame::Update(float deltaTime)
 {
     ObserverManager::GetSingleton()->ProcessingMessage();
+
+    if (KeyManager::GetSingleton()->IsKeyOnceDown('1'))
+    {
+        SceneManager::GetSingleton()->ChangeScene(SCENE_KIND::TITLE);
+        return;
+    }
+
+    if (KeyManager::GetSingleton()->IsKeyOnceDown('2'))
+    {
+        SceneManager::GetSingleton()->ChangeScene(SCENE_KIND::INGAME);
+        return;
+    }
 
     if (KeyManager::GetSingleton()->IsKeyOnceDown('B'))
     {
