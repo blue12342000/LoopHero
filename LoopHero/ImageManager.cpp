@@ -124,6 +124,45 @@ HRESULT ImageManager::Init()
     mLpImages.insert(make_pair("button_exit", new Image()));
     mLpImages["button_exit"]->Init("Image/UI/InGame/Button/button_exit.bmp", 35 * 2, 87 * 2, 1, 3, 3, true, RGB(0, 170, 255));
 
+    mLpImages.insert(make_pair("tile_appear", new Image()));
+    mLpImages["tile_appear"]->Init("Image/Effect/tile_appear.bmp", POINT{ 216 * 2, 104 * 2 }, POINT{ 8, 1 }, POINTFLOAT{ 0.3f, 0.0f }, POINTFLOAT{ 0.7f, 0.5f }, true, RGB(0, 170, 255));
+
+    mLpImages.insert(make_pair("layer_background", new Image()));
+    mLpImages["layer_background"]->Init("Image/UI/InGame/layer_background.bmp", POINT{ 69 * 2, 51 * 2 }, POINT{ 1, 1 }, POINTFLOAT{ 0.3f, 0.3f }, POINTFLOAT{ 0.7f, 0.7f }, true, RGB(0, 170, 255));
+
+    mLpImages.insert(make_pair("layer_background_top", new Image()));
+    mLpImages["layer_background_top"]->Init("Image/UI/InGame/layer_background_top.bmp", 41 * 2, 14 * 2, 1, 1, 1, true, RGB(0, 170, 255));
+
+    mLpImages.insert(make_pair("layer_background_bottom", new Image()));
+    mLpImages["layer_background_bottom"]->Init("Image/UI/InGame/layer_background_bottom.bmp", 41 * 2, 14 * 2, 1, 1, 1, true, RGB(0, 170, 255));
+
+    // ΩΩ∑‘ æ∆¿Ãƒ‹ ===============================================================
+    mLpImages.insert(make_pair("ingame_item_slot_background", new Image()));
+    mLpImages["ingame_item_slot_background"]->Init("Image/UI/InGame/ingame_item_slot_background.bmp", 25 * 2, 25 * 2, 1, 1, 1, true, RGB(0, 170, 255));
+
+    mLpImages.insert(make_pair("item_slot_0_2", new Image()));
+    mLpImages["item_slot_0_2"]->Init("Image/UI/InGame/ItemSlot/item_slot_0_2.bmp", 25 * 2, 25 * 2, 1, 1, 1, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("item_slot_1_0", new Image()));
+    mLpImages["item_slot_1_0"]->Init("Image/UI/InGame/ItemSlot/item_slot_1_0.bmp", 25 * 2, 25 * 2, 1, 1, 1, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("item_slot_1_1", new Image()));
+    mLpImages["item_slot_1_1"]->Init("Image/UI/InGame/ItemSlot/item_slot_1_1.bmp", 25 * 2, 25 * 2, 1, 1, 1, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("item_slot_2_3", new Image()));
+    mLpImages["item_slot_2_3"]->Init("Image/UI/InGame/ItemSlot/item_slot_2_3.bmp", 25 * 2, 25 * 2, 1, 1, 1, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("item_slot_3_4", new Image()));
+    mLpImages["item_slot_3_4"]->Init("Image/UI/InGame/ItemSlot/item_slot_3_4.bmp", 25 * 2, 25 * 2, 1, 1, 1, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("item_slot_4_6", new Image()));
+    mLpImages["item_slot_4_6"]->Init("Image/UI/InGame/ItemSlot/item_slot_4_6.bmp", 25 * 2, 25 * 2, 1, 1, 1, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("item_slot_5_5", new Image()));
+    mLpImages["item_slot_5_5"]->Init("Image/UI/InGame/ItemSlot/item_slot_5_5.bmp", 25 * 2, 25 * 2, 1, 1, 1, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("item_slot_6_7", new Image()));
+    mLpImages["item_slot_6_7"]->Init("Image/UI/InGame/ItemSlot/item_slot_6_7.bmp", 25 * 2, 25 * 2, 1, 1, 1, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("item_slot_7_8", new Image()));
+    mLpImages["item_slot_7_8"]->Init("Image/UI/InGame/ItemSlot/item_slot_7_8.bmp", 25 * 2, 25 * 2, 1, 1, 1, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("item_slot_8_8", new Image()));
+    mLpImages["item_slot_8_8"]->Init("Image/UI/InGame/ItemSlot/item_slot_8_8.bmp", 25 * 2, 25 * 2, 1, 1, 1, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("item_slot_9_9", new Image()));
+    mLpImages["item_slot_9_9"]->Init("Image/UI/InGame/ItemSlot/item_slot_9_9.bmp", 25 * 2, 25 * 2, 1, 1, 1, true, RGB(0, 170, 255));
+
     // ¿Ø¥÷ ======================================================================
     mLpImages.insert(make_pair("Warrior_icon", new Image()));
     mLpImages["Warrior_icon"]->Init("Image/ObjectIcon/hero_icon.bmp", 56 * 2, 14 * 2, 4, 1, 4, true, RGB(0, 170, 255));
@@ -149,7 +188,59 @@ HRESULT ImageManager::Init()
     mLpImages.insert(make_pair("Slime_death", new Image()));
     mLpImages["Slime_death"]->Init("Image/Enemy/Slime/slime_death.bmp", 300 * 2, 39 * 2, 5, 1, 5, true, RGB(0, 170, 255));
     mLpImages.insert(make_pair("Slime_revive", new Image()));
-    mLpImages["Slime_revive"]->Init("Image/Enemy/Slime/Slime_idle.bmp", 60 * 2, 39 * 2, 1, 1, 1, true, RGB(0, 170, 255));
+    mLpImages["Slime_revive"]->Init("Image/Enemy/Slime/slime_idle.bmp", 60 * 2, 39 * 2, 1, 1, 1, true, RGB(0, 170, 255));
+
+    mLpImages.insert(make_pair("Skeleton_icon", new Image()));
+    mLpImages["Skeleton_icon"]->Init("Image/ObjectIcon/skeleton_icon.bmp", (int)(28 * 1.5f), (int)(14 * 1.5f), 2, 1, 2, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("Skeleton_idle", new Image()));
+    mLpImages["Skeleton_idle"]->Init("Image/Enemy/Skeleton/skeleton_idle.bmp", 60 * 2, 39 * 2, 1, 1, 1, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("Skeleton_attack", new Image()));
+    mLpImages["Skeleton_attack"]->Init("Image/Enemy/Skeleton/skeleton_attack.bmp", 300 * 2, 39 * 2, 5, 1, 5, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("Skeleton_hurt", new Image()));
+    mLpImages["Skeleton_hurt"]->Init("Image/Enemy/Skeleton/skeleton_hurt.bmp", 240 * 2, 39 * 2, 4, 1, 4, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("Skeleton_death", new Image()));
+    mLpImages["Skeleton_death"]->Init("Image/Enemy/Skeleton/skeleton_death.bmp", 300 * 2, 39 * 2, 5, 1, 5, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("Skeleton_revive", new Image()));
+    mLpImages["Skeleton_revive"]->Init("Image/Enemy/Skeleton/skeleton_idle.bmp", 60 * 2, 39 * 2, 1, 1, 1, true, RGB(0, 170, 255));
+
+    mLpImages.insert(make_pair("Spider_icon", new Image()));
+    mLpImages["Spider_icon"]->Init("Image/ObjectIcon/spider_icon.bmp", (int)(28 * 1.5f), (int)(14 * 1.5f), 2, 1, 2, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("Spider_idle", new Image()));
+    mLpImages["Spider_idle"]->Init("Image/Enemy/Spider/spider_idle.bmp", 60 * 2, 39 * 2, 1, 1, 1, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("Spider_attack", new Image()));
+    mLpImages["Spider_attack"]->Init("Image/Enemy/Spider/spider_attack.bmp", 300 * 2, 39 * 2, 5, 1, 5, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("Spider_hurt", new Image()));
+    mLpImages["Spider_hurt"]->Init("Image/Enemy/Spider/spider_hurt.bmp", 240 * 2, 39 * 2, 4, 1, 4, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("Spider_death", new Image()));
+    mLpImages["Spider_death"]->Init("Image/Enemy/Spider/spider_death.bmp", 300 * 2, 39 * 2, 5, 1, 5, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("Spider_revive", new Image()));
+    mLpImages["Spider_revive"]->Init("Image/Enemy/Spider/spider_idle.bmp", 60 * 2, 39 * 2, 1, 1, 1, true, RGB(0, 170, 255));
+
+    mLpImages.insert(make_pair("Ratwolf_icon", new Image()));
+    mLpImages["Ratwolf_icon"]->Init("Image/ObjectIcon/ratwolf_icon.bmp", (int)(28 * 1.5f), (int)(14 * 1.5f), 2, 1, 2, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("Ratwolf_idle", new Image()));
+    mLpImages["Ratwolf_idle"]->Init("Image/Enemy/Ratwolf/ratwolf_idle.bmp", 60 * 2, 39 * 2, 1, 1, 1, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("Ratwolf_attack", new Image()));
+    mLpImages["Ratwolf_attack"]->Init("Image/Enemy/Ratwolf/ratwolf_attack.bmp", 300 * 2, 39 * 2, 5, 1, 5, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("Ratwolf_hurt", new Image()));
+    mLpImages["Ratwolf_hurt"]->Init("Image/Enemy/Ratwolf/ratwolf_hurt.bmp", 240 * 2, 39 * 2, 4, 1, 4, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("Ratwolf_death", new Image()));
+    mLpImages["Ratwolf_death"]->Init("Image/Enemy/Ratwolf/ratwolf_death.bmp", 300 * 2, 39 * 2, 5, 1, 5, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("Ratwolf_revive", new Image()));
+    mLpImages["Ratwolf_revive"]->Init("Image/Enemy/Ratwolf/ratwolf_idle.bmp", 60 * 2, 39 * 2, 1, 1, 1, true, RGB(0, 170, 255));
+
+    mLpImages.insert(make_pair("Lich_intro", new Image()));
+    mLpImages["Lich_intro"]->Init("Image/Enemy/Lich/lich_intro.bmp", 640 * 2, 174 * 2, 8, 3, 24, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("Lich_idle", new Image()));
+    mLpImages["Lich_idle"]->Init("Image/Enemy/Lich/lich_idle.bmp", 80 * 2, 58 * 2, 1, 1, 1, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("Lich_attack", new Image()));
+    mLpImages["Lich_attack"]->Init("Image/Enemy/Lich/lich_attack.bmp", 400 * 2, 58 * 2, 5, 1, 5, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("Lich_hurt", new Image()));
+    mLpImages["Lich_hurt"]->Init("Image/Enemy/Lich/lich_hurt.bmp", 320 * 2, 58 * 2, 4, 1, 4, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("Lich_death", new Image()));
+    mLpImages["Lich_death"]->Init("Image/Enemy/Lich/lich_death.bmp", 160 * 2, 58 * 2, 2, 1, 2, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("Lich_revive", new Image()));
+    mLpImages["Lich_revive"]->Init("Image/Enemy/Lich/lich_idle.bmp", 80 * 2, 58 * 2, 1, 1, 1, true, RGB(0, 170, 255));
     // ¿Ø¥÷ ======================================================================
 
     // ≈∏¿œ ======================================================================

@@ -14,6 +14,7 @@ void Text::Init(string fontName, int fontSize, COLORREF color)
 void Text::Release()
 {
 	hFont = NULL;
+	text = "";
 	PoolingManager::GetSingleton()->AddClass(this);
 }
 
@@ -23,8 +24,8 @@ void Text::Render(HDC hdc, int x, int y, UINT textAlign)
 	COLORREF oldColor = SetTextColor(hdc, color);
 	UINT oldTextAlign = SetTextAlign(hdc, textAlign);
 	ExtTextOut(hdc, x, y, 0, nullptr, text.c_str(), text.length(), nullptr);
-	SetTextColor(hdc, oldTextAlign);
-	SetTextAlign(hdc, textAlign);
+	SetTextAlign(hdc, oldTextAlign);
+	SetTextColor(hdc, oldColor);
 	SetBkMode(hdc, OPAQUE);
 }
 

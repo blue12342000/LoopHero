@@ -9,6 +9,12 @@ enum class IMAGE_ALIGN
 	MIDDLE_BOTTOM
 };
 
+enum class IMAGE_FRAME_TYPE
+{
+	NORMAL,
+	LOOP
+};
+
 class Image
 {
 public:
@@ -23,9 +29,10 @@ public:
 	struct ImageInfo
 	{
 		DWORD resID;
+		HDC hMemDC;
+		HBITMAP hBitmap;
 
-		vector<HDC> vHMemDC;
-		vector<HBITMAP> vHBitmap;
+		IMAGE_FRAME_TYPE frameType;
 
 		int width;
 		int height;
@@ -38,40 +45,23 @@ public:
 		bool isTransparent;
 		COLORREF transColor;
 		HBRUSH hBrush;
-
-		ImageInfo()
-		{
-			resID = 0;
-			width = 0;
-			height = 0;
-			loadType = IMAGE_LOAD_TYPE::EMPTY;
-
-			maxFrameX = 0;
-			maxFrameY = 0;
-			totalFrame = 0;
-
-			isTransparent = false;
-			transColor = 0;
-		};
 	};
 
-	struct BlendInfo
+	struct ImageFrame
 	{
-		HDC hBlendDC;
-		HBITMAP hBlendBit;
-		BLENDFUNCTION blendFunc;
+		float axisX[4];
+		float axisY[4];
 	};
 
 private:
-	int splitAngle;
 	ImageInfo* lpImageInfo;
-	BlendInfo* lpBlendInfo;
+	ImageFrame* lpImageFrame;
 
 public:
 	HRESULT Init(int width, int height, bool isTransparent = false, COLORREF transColor = RGB(255, 0, 255));
 	HRESULT Init(string fileName, int width, int height, bool isTransparent = false, COLORREF transColor = RGB(255, 0, 255));
 	HRESULT Init(string fileName, int width, int height, int maxFrameX, int maxFrameY, int totalFrame, bool isTransparent = false, COLORREF transColor = RGB(255, 0, 255));
-	HRESULT RotateInit(string fileName, int width, int height, int maxFrameX, int maxFrameY, int totalFrame, int splitAngle);
+	HRESULT Init(string fileName, POINT size, POINT frame, POINTFLOAT ltFrame, POINTFLOAT rbFrame, bool isTransparent = false, COLORREF transColor = RGB(255, 0, 255));
 
 	HRESULT Reverse(const Image& target);
 
@@ -79,17 +69,17 @@ public:
 
 	void Render(HDC hdc, int destX = 0, int destY = 0, int frame = 0, IMAGE_ALIGN align = IMAGE_ALIGN::LEFT_TOP);
 	void Render(HDC hdc, int destX, int destY, POINT frame, IMAGE_ALIGN align = IMAGE_ALIGN::LEFT_TOP);
-	void AlphaRender(HDC hdc, int destX, int destY);
-	void RotateRender(HDC hdc, int destX, int destY, float angle, int frame);
-	void SplitRender(HDC hdc, POINT dest, int splitX, int splitY, int splitIndex, int frame = 0, UINT uFlag = 0);
+	void LoopRender(HDC hdc, POINT pos, int width, int height, int frame, IMAGE_ALIGN align = IMAGE_ALIGN::LEFT_TOP);
 	void PatternRender(HDC hdc, int destX, int destY, int width, int height, int frame = 0);
 	
 	void Release();
 
-	inline HDC GetMemDC() { return (lpImageInfo) ? lpImageInfo->vHMemDC[0] : NULL; }
+	inline HDC GetMemDC() { return (lpImageInfo) ? lpImageInfo->hMemDC : NULL; }
 	inline int GetTotalFrame() { return (lpImageInfo) ? lpImageInfo->totalFrame : 1; }
 	inline int GetMaxFrameX() { return (lpImageInfo) ? lpImageInfo->maxFrameX : 1; }
 	inline int GetMaxFrameY() { return (lpImageInfo) ? lpImageInfo->maxFrameY : 1; }
 	inline int GetWidth() { return lpImageInfo->width; }
 	inline int GetHeight() { return lpImageInfo->height; }
+	inline IMAGE_FRAME_TYPE GetImageFrameType() { return (lpImageInfo) ? lpImageInfo->frameType : IMAGE_FRAME_TYPE::NORMAL; }
+	inline bool IsFrameLoop() { return lpImageInfo->frameType == IMAGE_FRAME_TYPE::LOOP; }
 };

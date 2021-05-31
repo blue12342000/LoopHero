@@ -5,6 +5,7 @@
 #include "UIProgressBar.h"
 #include "UISprite.h"
 #include "ObserverHandler.h"
+#include "BattleUnit.h"
 
 void InGameHandCard::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
 {
@@ -36,6 +37,8 @@ void InGameHandCard::Update(float deltaTime)
 			lpSprite->Init(UI_ANCHOR::LEFT_TOP, { 0.0f, 0.0f }, 41 * 2, 58 * 2);
 			lpSprite->SetGameObject(GameData::GetSingleton()->PickCard());
 			lpSprite->SetEventCatch(EVENT_CATCH::BLOCK_PASS);
+			lpSprite->SetWorldPos(POINT{ WINSIZE_WIDTH / 2, WINSIZE_HEIGHT / 2 });
+			lpSprite->Refresh();
 			lpHScrollView->AddChild(lpSprite);
 		}
 	}
@@ -68,12 +71,20 @@ void InGameHandCard::Render(HDC hdc)
 	GameUI::Render(hdc);
 }
 
-void InGameHandCard::UICardLoot(ObserverHandler* observer)
+void InGameHandCard::UICardLoot(ObserverHandler* lpObserver)
 {
 	UISprite* lpSprite = GameUI::Create<UISprite>();
 	lpSprite->Init(UI_ANCHOR::LEFT_TOP, { 0.0f, 0.0f }, 41 * 2, 58 * 2);
 	lpSprite->SetGameObject(GameData::GetSingleton()->PickCard());
 	lpSprite->SetEventCatch(EVENT_CATCH::BLOCK_PASS);
+
+	if (typeid(*lpObserver) == typeid(BattleUnit))
+	{
+		BattleUnit* lpBattleUnit = (BattleUnit*)lpObserver;
+		lpSprite->SetWorldPos(lpBattleUnit->GetWorldPos());
+		lpSprite->Refresh();
+	}
+
 	lpHScrollView->AddChild(lpSprite);
 }
 

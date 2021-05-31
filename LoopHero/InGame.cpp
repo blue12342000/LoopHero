@@ -30,6 +30,10 @@ HRESULT InGame::Init()
     lpCanvus->Init(UI_ANCHOR::LEFT_TOP, { 0.0f, 0.0f }, WINSIZE_WIDTH, WINSIZE_HEIGHT);
     lpCanvus->SetEventCatch(EVENT_CATCH::PASS);
 
+    lpBattleWindow = GameUI::Create<UIBattleWindow>(lpCanvus);
+    lpBattleWindow->Init(UI_ANCHOR::MIDDLE, { -100, 0.0f }, 301 * 2, 257 * 2);
+    lpBattleWindow->SetVisible(false);
+
     InGameRightMenu* lpRightMenu = GameUI::Create<InGameRightMenu>(lpCanvus);
     lpRightMenu->Init(UI_ANCHOR::RIGHT_TOP, { 0.0f, 0.0f }, 296, WINSIZE_HEIGHT);
     lpRightMenu->SetEventCatch(EVENT_CATCH::BLOCK_PASS);
@@ -47,11 +51,6 @@ HRESULT InGame::Init()
     lpEventSystem->Init();
     lpEventSystem->SetGameUI(lpCanvus);
     lpEventSystem->SetGameObject(lpFieldTiles);
-
-    lpBattleWindow = GameUI::Create<UIBattleWindow>(lpCanvus);
-    lpBattleWindow->Init(UI_ANCHOR::MIDDLE, { -100, 0.0f }, 301 * 2, 257 * 2);
-    lpBattleWindow->SetVisible(false);
-
     SetBkMode(lpBuffer->GetMemDC(), TRANSPARENT);
     return S_OK;
 }
@@ -109,6 +108,8 @@ void InGame::Render(HDC hdc)
 
     // µð¹ö±×
     lpEventSystem->Render(hMemDC);
+
+    //ImageManager::GetSingleton()->FindImage("layer_background")->LoopRender(hMemDC, POINT{ WINSIZE_WIDTH / 2, WINSIZE_HEIGHT / 2 }, 300, 400, 0, IMAGE_ALIGN::CENTER);
 
     lpBuffer->Render(hdc);
 }

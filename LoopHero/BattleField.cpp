@@ -52,7 +52,7 @@ void BattleField::Update(float deltaTime)
 		{
 			if (Attack(lpBattleUnit, lEnemyParty))
 			{
-				ObserverManager::GetSingleton()->Notify("DropCard", this);
+				ObserverManager::GetSingleton()->Notify("DropCard", lpBattleUnit);
 				ObserverManager::GetSingleton()->Notify("DropEquip", lHeroParty.front()->GetUnit());
 			}
 		}

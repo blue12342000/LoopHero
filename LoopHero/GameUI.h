@@ -36,10 +36,9 @@ protected:
 private:
 	void VaildChilds();
 
-protected:
+public:
 	void Refresh();
 
-public:
 	virtual ~GameUI() {}
 
 	virtual void Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height);

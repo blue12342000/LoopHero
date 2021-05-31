@@ -9,20 +9,21 @@ void UITextField::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
 
 void UITextField::Release()
 {
-	if (hFont != NULL)
-	{
-		DeleteObject(hFont);
-		hFont = NULL;
-	}
+	text = "";
+	GameUI::Release();
 }
 
 void UITextField::Render(HDC hdc)
 {
+	SetBkMode(hdc, TRANSPARENT);
 	COLORREF oldColor = SetTextColor(hdc, color);
 	if (hFont != NULL) hOldFont = (HFONT)SelectObject(hdc, hFont);
 	DrawText(hdc, text.c_str(), text.length(), &rc, fontFormat);
 	if (hFont != NULL) SelectObject(hdc, hOldFont);
 	SetTextColor(hdc, oldColor);
+	SetBkMode(hdc, OPAQUE);
+
+	GameUI::Render(hdc);
 }
 
 void UITextField::SetFont(UI_TEXT_HALIGN hAlign, UI_TEXT_VALIGN vAlign, UI_TEXT_LINE line, int fontSize, COLORREF color, string fontName)
@@ -33,10 +34,6 @@ void UITextField::SetFont(UI_TEXT_HALIGN hAlign, UI_TEXT_VALIGN vAlign, UI_TEXT_
 	this->fontSize = fontSize;
 	this->color = color;
 	this->fontName = fontName;
-
-	float size = 0.3527f * 5;
-	fontSize = (int)(size * fontSize);
-	if (fontSize < 8) fontSize = 8;
 
 	if (this->line == UI_TEXT_LINE::MULTI) this->fontFormat = DT_WORDBREAK;
 	else this->fontFormat = DT_SINGLELINE;
@@ -69,10 +66,4 @@ void UITextField::SetFont(UI_TEXT_HALIGN hAlign, UI_TEXT_VALIGN vAlign, UI_TEXT_
 	}
 
 	hFont = FontManager::GetSingleton()->GetFont(fontName, fontSize);
-
-	/*
-	In_ int cHeight, _In_ int cWidth, _In_ int cEscapement, _In_ int cOrientation, _In_ int cWeight, _In_ DWORD bItalic,
-    _In_ DWORD bUnderline, _In_ DWORD bStrikeOut, _In_ DWORD iCharSet, _In_ DWORD iOutPrecision, _In_ DWORD iClipPrecision,
-    _In_ DWORD iQuality, _In_ DWORD iPitchAndFamily, _In_opt_ LPCSTR pszFaceName
-	*/
 }

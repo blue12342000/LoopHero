@@ -88,8 +88,19 @@ void GameData::LoadTiles()
 			{
 				if (mDatas[group.first]["event_" + to_string(i)] == string("daily_spawn_monster"))
 				{
-					//mLpTiles[group.first]->spawnUnit = mDatas[group.first]["spawn_" + to_string(i)];
-					mLpTiles[group.first]->spawnUnit = "Slime";
+					mLpTiles[group.first]->vEventKey.push_back(mDatas[group.first]["event_" + to_string(i)]);
+					mLpTiles[group.first]->spawnUnit = mDatas[group.first]["spawn_" + to_string(i)];
+					//mLpTiles[group.first]->spawnUnit = "Slime";
+					mLpTiles[group.first]->spawnPer = stoi(mDatas[group.first]["spawn_per_" + to_string(i)]);
+					if (!DataManager::GetSingleton()->GetSingleton()->GetData("tiles", group.first, "spawn_delay_" + to_string(i)).empty())
+					{
+						mLpTiles[group.first]->spawnDelay = stoi(mDatas[group.first]["spawn_delay_" + to_string(i)]);
+					}
+				}
+				else if (mDatas[group.first]["event_" + to_string(i)] == string("daily_near_spawn_monster"))
+				{
+					mLpTiles[group.first]->vEventKey.push_back(mDatas[group.first]["event_" + to_string(i)]);
+					mLpTiles[group.first]->spawnUnit = mDatas[group.first]["spawn_" + to_string(i)];
 					mLpTiles[group.first]->spawnPer = stoi(mDatas[group.first]["spawn_per_" + to_string(i)]);
 					if (!DataManager::GetSingleton()->GetSingleton()->GetData("tiles", group.first, "spawn_delay_" + to_string(i)).empty())
 					{
@@ -347,6 +358,8 @@ void GameData::Release()
 		delete pair.second;
 	}
 	mLpTiles.clear();
+
+	ClearEventHandler();
 }
 
 Card* GameData::PickCard()

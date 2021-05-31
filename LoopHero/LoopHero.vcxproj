@@ -182,6 +182,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="UIInGameInfo.cpp" />
+    <ClCompile Include="UIItemInfo.cpp" />
     <ClCompile Include="UIItemSlot.cpp" />
     <ClCompile Include="UIProgressBar.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -237,6 +238,7 @@
     <ClInclude Include="LoopHero.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="UIInGameInfo.h" />
+    <ClInclude Include="UIItemInfo.h" />
     <ClInclude Include="UIItemSlot.h" />
     <ClInclude Include="UIProgressBar.h" />
     <ClInclude Include="Scene.h" />

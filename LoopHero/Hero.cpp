@@ -10,7 +10,7 @@ void Hero::Init()
 {
 	state == HERO_STATE::IDLE;
 	SetEventCatch(EVENT_CATCH::PASS);
-	AddEventHandler("Resume Loop", bind(&Hero::Move, this, placeholders::_1));
+	AddEventHandler("Resume_Loop", bind(&Hero::Move, this, placeholders::_1));
 }
 
 void Hero::Release()
@@ -32,7 +32,7 @@ void Hero::Update(float deltaTime)
 
 		SetRect(&rc, pos.x, pos.y, pos.x, pos.y);
 
-		float diff = pow(pos.x - target.x, 2) + (pos.y - target.y, 2);
+		float diff = pow(pos.x - target.x, 2) + pow(pos.y - target.y, 2);
 		if (diff < 5)
 		{
 			if (lpFieldTile->GetChildCount() > 0)
@@ -62,7 +62,7 @@ void Hero::Update(float deltaTime)
 void Hero::Render(HDC hdc)
 {
 	if (lpUnit) lpUnit->Render(hdc);
-	Ellipse(hdc, pos.x - 5, pos.y - 5, pos.x + 5, pos.y + 5);
+	Ellipse(hdc, GetWorldPos().x - 5, GetWorldPos().y - 5, GetWorldPos().x + 5, GetWorldPos().y + 5);
 }
 
 void Hero::Move(ObserverHandler* lpCaller)

@@ -12,12 +12,12 @@ void UIInGameInfo::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
 
 	lpTitle = GameUI::Create<UITextField>(this);
 	lpTitle->Init(UI_ANCHOR::TOP_MIDDLE, { 0.0f, 5.0f }, width, 30);
-	lpTitle->SetFont(UI_TEXT_HALIGN::CENTER, UI_TEXT_VALIGN::MIDDLE, UI_TEXT_LINE::SINGLE, 15, RGB(255, 255, 255), "Bµ¸¿ò");
+	lpTitle->SetFont(UI_TEXT_HALIGN::CENTER, UI_TEXT_VALIGN::MIDDLE, UI_TEXT_LINE::SINGLE, 20, RGB(255, 255, 255), "Bµ¸¿ò");
 	//lpTitle->SetEventCatch(EVENT_CATCH::BLOCK_PASS);
 
 	lpContent = GameUI::Create<UITextField>(this);
 	lpContent->Init(UI_ANCHOR::TOP_MIDDLE, { 0.0f, 50.0f }, width, height - 50);
-	lpContent->SetFont(UI_TEXT_HALIGN::LEFT, UI_TEXT_VALIGN::TOP, UI_TEXT_LINE::MULTI, 11, RGB(255, 255, 255), "Lµ¸¿ò");
+	lpContent->SetFont(UI_TEXT_HALIGN::LEFT, UI_TEXT_VALIGN::TOP, UI_TEXT_LINE::MULTI, 17, RGB(255, 255, 255), "Lµ¸¿ò");
 	//lpContent->SetEventCatch(EVENT_CATCH::BLOCK_PASS);
 
 	AddEventHandler("ViewInfo", bind(&UIInGameInfo::ViewInfo, this, placeholders::_1));
@@ -54,7 +54,7 @@ void UIInGameInfo::ViewInfo(ObserverHandler* lpTarget)
 	}
 	else if (typeid(*lpTarget) == typeid(EquipItem))
 	{
-		lpNode = (EquipItem*)lpTarget;
+		lpNode = GameData::GetSingleton()->GetUnit();
 	}
 	else if (typeid(*lpTarget) == typeid(FieldTile))
 	{

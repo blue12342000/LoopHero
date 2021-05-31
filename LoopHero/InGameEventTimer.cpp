@@ -28,6 +28,7 @@ void InGameEventTimer::Update(float deltaTime)
 	if (dailyTimer > maxDailyTimer)
 	{
 		ObserverManager::GetSingleton()->Notify("daily_spawn_monster", this);
+		ObserverManager::GetSingleton()->Notify("daily_near_spawn_monster", this);
 		dailyTimer = 0;
 	}
 

@@ -45,14 +45,14 @@ void UIHorizontalScroll::Update(float deltaTime)
 			--idx;
 			continue;
 		}
-
+		
 		currPos = vChilds[idx]->GetPos();
 		newPos = currPos;
-		newPos.x += (vItemSlots[i].pos.x - currPos.x) * 10 * deltaTime;
+		newPos.x += (vItemSlots[i].pos.x - currPos.x) * 5.0f * deltaTime;
 		if (abs(newPos.x - vItemSlots[i].pos.x) < 0.01f) newPos.x = vItemSlots[i].pos.x;
-		newPos.y += (vItemSlots[i].pos.y - currPos.y) * 10 * deltaTime;
+		newPos.y += (vItemSlots[i].pos.y - currPos.y) * 5.0f * deltaTime;
 		if (abs(newPos.y - vItemSlots[i].pos.y) < 0.01f) newPos.y = vItemSlots[i].pos.y;
-
+		
 		vChilds[idx]->SetPos(newPos);
 	}
 	if (lpSelected && escape == HSCROLL_ITEM_ESCAPE::HIDE)
@@ -70,7 +70,6 @@ void UIHorizontalScroll::Render(HDC hdc)
 
 void UIHorizontalScroll::AddChild(GameUI* lpChild)
 {
-	// lpSelected가 존재할때 AddChild시에 Index번호가 바뀌게 되는데 그것의 처리가 없음
 	if (!lpChild) return;
 	if (maxItems > 0 && vChilds.size() >= maxItems)
 	{
@@ -82,6 +81,13 @@ void UIHorizontalScroll::AddChild(GameUI* lpChild)
 		}
 	}
 
+	if (lpSelected)
+	{
+		if (selectedIndex == dragNextIndex) ++dragNextIndex;
+		++selectedIndex;
+	}
+
+	POINTFLOAT childWorldPos = lpChild->GetWorldPos();
 	switch (align)
 	{
 	case HSCROLL_ALIGN::LEFT:
@@ -93,7 +99,8 @@ void UIHorizontalScroll::AddChild(GameUI* lpChild)
 		else lpChild->SetAnchor(UI_ANCHOR::RIGHT_MIDDLE);
 		break;
 	}
-
+	lpChild->SetWorldPos(childWorldPos);
+	lpChild->Refresh();
 	if (insert == HS_ARGS_INSERT::AFTER) GameUI::InsertChild(lpChild, vChilds.size());
 	else GameUI::InsertChild(lpChild, 0);
 

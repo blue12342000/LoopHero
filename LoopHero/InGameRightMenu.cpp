@@ -8,6 +8,7 @@
 #include "UISprite.h"
 #include "UIInGameInfo.h"
 #include "UIProgressBar.h"
+#include "UIItemInfo.h"
 #include "EquipItem.h"
 #include "Unit.h"
 #include "Trait.h"
@@ -77,7 +78,12 @@ void InGameRightMenu::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int heig
 	lpGameInfo = GameUI::Create<UIInGameInfo>(this);
 	lpGameInfo->Init(UI_ANCHOR::RIGHT_BOTTOM, { 15.0f, 10.0f }, 195, 285);
 
+	lpItemInfo = nullptr;
+	vCompareItems.clear();
+
 	AddEventHandler("DropEquip", bind(&InGameRightMenu::DropEquip, this, placeholders::_1));
+	AddEventHandler("ViewInfo", bind(&InGameRightMenu::OpenEquipLayer, this, placeholders::_1));
+	AddEventHandler("HideInfo", bind(&InGameRightMenu::CloseEquipLayer, this, placeholders::_1));
 }
 
 void InGameRightMenu::Update(float deltaTime)
@@ -108,7 +114,62 @@ void InGameRightMenu::DropEquip(ObserverHandler* lpCaller)
 			lpSprite->Init(UI_ANCHOR::LEFT_TOP, { 0.0f, 0.0f }, 23 * 2, 23 * 2);
 			lpSprite->SetGameObject(lpEquipItem);
 			lpSprite->SetEventCatch(EVENT_CATCH::BLOCK_PASS);
+			lpSprite->SetWorldPos(POINT{ WINSIZE_WIDTH / 2, WINSIZE_HEIGHT / 2 });
+			lpSprite->Refresh();
 			lpHScroll->AddChild(lpSprite);
 		}
+	}
+}
+
+void InGameRightMenu::OpenEquipLayer(ObserverHandler* lpCaller)
+{
+	if (typeid(*lpCaller) == typeid(EquipItem))
+	{
+		EquipItem* lpEquipItem = (EquipItem*)lpCaller;
+		RECT invenRc = move(lpHScroll->GetRect());
+		if (PtInRect(&invenRc, KeyManager::GetSingleton()->GetMousePoint()))
+		{
+			if (!lpItemInfo)
+			{
+				lpItemInfo = GameUI::Create<UIItemInfo>(this);
+				lpItemInfo->Init(UI_ANCHOR::RIGHT_TOP, { 115.0f * 2, 110 * 2.0f }, 110 * 2, 80 * 2);
+			}
+			lpItemInfo->SetVisible(true);
+			lpItemInfo->SetEquipItem(lpEquipItem);
+		}
+
+		Unit* lpUnit = GameData::GetSingleton()->GetUnit();
+		auto mEquips = lpUnit->GetEquips();
+		int count = -1;
+		for (const auto& pair : mEquips)
+		{
+			if (pair.second.parts == lpEquipItem->GetParts() && pair.second.lpEquip)
+			{
+				++count;
+				if (vCompareItems.size() <= count)
+				{
+					vCompareItems.push_back(nullptr);
+					vCompareItems[count] = GameUI::Create<UIItemInfo>(this);
+					vCompareItems[count]->Init(UI_ANCHOR::RIGHT_TOP, { 115.0f * 2 + 230.0f * count, 0.0f }, 110 * 2, 80 * 2);
+				}
+
+				vCompareItems[count]->SetVisible(true);
+				vCompareItems[count]->SetEquipItem(pair.second.lpEquip);
+				vCompareItems[count]->SetTag("ÀåºñÁß");
+			}
+		}
+	}
+	else
+	{
+		CloseEquipLayer(this);
+	}
+}
+
+void InGameRightMenu::CloseEquipLayer(ObserverHandler* lpCaller)
+{
+	if(lpItemInfo) lpItemInfo->SetVisible(false);
+	for (const auto& lpItemUI : vCompareItems)
+	{
+		lpItemUI->SetVisible(false);
 	}
 }

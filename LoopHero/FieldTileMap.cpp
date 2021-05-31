@@ -9,6 +9,7 @@
 #include "Unit.h"
 #include "Trait.h"
 #include "Hero.h"
+#include "ParticleSystem.h"
 
 TILE_IMAGE_SEQ FieldTileMap::CalTileSeq(int buildX, int buildY, Tile* lpTile)
 {
@@ -62,16 +63,47 @@ void FieldTileMap::Init()
 			tiles[y][x]->lpTile = nullptr;
 			tiles[y][x]->frameX = 0;
 			tiles[y][x]->frameY = 0;
-			tiles[y][x]->eventCount = 0;
+			tiles[y][x]->spawnDelay = 0;
+
+			if (x - 1 > -1)
+			{
+				tiles[y][x]->lpNearTiles[(int)TILE_DIRECTION::LEFT] = tiles[y][x - 1];
+				tiles[y][x - 1]->lpNearTiles[(int)TILE_DIRECTION::RIGHT] = tiles[y][x];
+			}
+			if (y - 1 > -1)
+			{
+				tiles[y][x]->lpNearTiles[(int)TILE_DIRECTION::UP] = tiles[y - 1][x];
+				tiles[y - 1][x]->lpNearTiles[(int)TILE_DIRECTION::DOWN] = tiles[y][x];
+			}
 
 			isPossibleBuild[y][x] = false;
 			worldPos = tiles[y][x]->GetWorldPos();
 			SetRect(&tiles[y][x]->rc, worldPos.x - FIELD_TILE_SIZE  / 2, worldPos.y - FIELD_TILE_SIZE / 2, worldPos.x + FIELD_TILE_SIZE / 2, worldPos.y + FIELD_TILE_SIZE / 2);
+
+			// 타일이 사용할수 있는 모든 이벤트들을 미리 등록시켜야한다.
+			GameData::GetSingleton()->AddEventHandler("daily_spawn_monster_" + to_string(x) + "_" + to_string(y), bind(&FieldTile::DailySpawnMonster, tiles[y][x], placeholders::_1));
+			GameData::GetSingleton()->AddEventHandler("daily_near_spawn_monster_" + to_string(x) + "_" + to_string(y), bind(&FieldTile::DailyNearSpawnMonster, tiles[y][x], placeholders::_1));
 		}
 	}
 
 	lpSelectedTile = nullptr;
 	isVisible = true;
+
+	lpParticleSystem = PoolingManager::GetSingleton()->GetClass<ParticleSystem>();
+
+	ParticleInfo info;
+	info.angle = 0.0f;
+	info.deltaAngle = 0.0f;
+	info.force = 0.0f;
+	info.deltaForce = 0.0f;
+	info.spread = PARTICLE_SPREAD::LINE;
+	info.movement = PARTICLE_MOVEMENT::STRAIGHT;
+	info.type = PATTICLE_TYPE::IMAGE;
+	info.align = PARTICLE_ALIGN::MIDDLE_BOTTOM;
+	info.lifeCycle = 0.5f;
+	lpParticleSystem->Init(info, "tile_appear");
+
+	ParticleManager::GetSingleton()->AddParticleSystem("Tile_ParticleSystem", lpParticleSystem);
 
 	AddEventHandler("SelectedCard", bind(&FieldTileMap::SelectedCard, this, placeholders::_1));
 	AddEventHandler("DeselectCard", bind(&FieldTileMap::DeselectCard, this, placeholders::_1));
@@ -81,11 +113,14 @@ void FieldTileMap::Init()
 
 void FieldTileMap::Release()
 {
+	ParticleManager::GetSingleton()->RemoveParticleSystem("Tile_ParticleSystem");
 	GameObject::Release();
 }
 
 void FieldTileMap::Update(float deltaTime)
 {
+	lpParticleSystem->Update(deltaTime);
+
 	if (KeyManager::GetSingleton()->IsKeyOnceDown('T'))
 	{
 		if (lpSelectedTile)
@@ -158,6 +193,8 @@ void FieldTileMap::Render(HDC hdc)
 	if (lpHero) lpHero->Render(hdc);
 
 	//RenderRectangle(hdc, rc, RGB(255, 0, 255));
+
+	lpParticleSystem->Render(hdc);
 }
 
 bool FieldTileMap::BuildTile(int x, int y, Tile* lpTile)
@@ -167,6 +204,13 @@ bool FieldTileMap::BuildTile(int x, int y, Tile* lpTile)
 		if (isPossibleBuild[y][x])
 		{
 			tiles[y][x]->type = TILE_TYPE::WHITE;
+			tiles[y][x]->spawnDelay = lpTile->spawnDelay;
+
+			tiles[y][x]->ClearEventHandler();
+			for (const string& eventKey : lpTile->vEventKey)
+			{
+				tiles[y][x]->AddEventHandler(eventKey, GameData::GetSingleton()->GetEventHandler(eventKey + "_" + to_string(x) + "_" + to_string(y)));
+			}
 
 			if (lpTile->id == "oblivion")
 			{
@@ -187,6 +231,7 @@ bool FieldTileMap::BuildTile(int x, int y, Tile* lpTile)
 					tiles[y][x]->vChilds.back()->Release();
 					tiles[y][x]->vChilds.pop_back();
 				}
+				ParticleManager::GetSingleton()->SpreadParticle("Tile_ParticleSystem", POINTFLOAT{ tiles[y][x]->GetWorldPos().x, tiles[y][x]->GetWorldPos().y + FIELD_TILE_SIZE / 2 }, POINT{ FIELD_TILE_SIZE, WINSIZE_HEIGHT }, bind(&FieldTileMap::BuildTileFinish, this, x, y));
 				DeselectCard(this);
 				return true;
 			}
@@ -232,13 +277,18 @@ bool FieldTileMap::BuildTile(int x, int y, Tile* lpTile)
 					tiles[y][x]->vHistory.push_back("campsite");
 				}
 			}
-
+			ParticleManager::GetSingleton()->SpreadParticle("Tile_ParticleSystem", POINTFLOAT{ tiles[y][x]->GetWorldPos().x, tiles[y][x]->GetWorldPos().y + FIELD_TILE_SIZE / 2 }, POINT{ FIELD_TILE_SIZE, WINSIZE_HEIGHT }, bind(&FieldTileMap::BuildTileFinish, this, x, y));
 			DeselectCard(this);
 			return true;
 		}
 	}
 	DeselectCard(this);
 	return false;
+}
+
+void FieldTileMap::BuildTileFinish(int x, int y)
+{
+	tiles[y][x]->type = TILE_TYPE::TILE;
 }
 
 void FieldTileMap::SelectedTileValidation()
@@ -277,7 +327,7 @@ void FieldTileMap::SelectedTileValidation()
 		{
 			for (const auto& tile : pair.second)
 			{
-				if (tiles[tile->y][tile->x]->lpTile->id == "campsite") continue;
+				if (!tiles[tile->y][tile->x]->lpTile || tiles[tile->y][tile->x]->lpTile->id == "campsite") continue;
 				isPossibleBuild[tile->y][tile->x] = true;
 			}
 		}
@@ -752,19 +802,6 @@ void FieldTileMap::OnClick(EventData& data)
 	if (lpSelectedTile)
 	{
 		BuildTile(x, y, lpSelectedTile);
-	}
-	else
-	{
-		if (tiles[y][x]->lpTile && tiles[y][x]->vHistory.front() == "road")
-		{
-			lpBattleField = GameObject::Create<BattleField>(this);
-			lpBattleField->AddUnit(BATTLE_TEAM::LEFT, GameData::GetSingleton()->GetUnit());
-			for (auto& lpUnit : tiles[y][x]->vChilds)
-			{
-				lpBattleField->AddUnit(BATTLE_TEAM::RIGHT, (Unit*)lpUnit);
-			}
-			ObserverManager::GetSingleton()->Notify("BattleStart", lpBattleField);
-		}
 	}
 }
 

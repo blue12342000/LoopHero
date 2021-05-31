@@ -12,8 +12,6 @@ void FieldTile::Init()
 
 	angle = 0.0f;
 	radius = 15;
-
-	AddEventHandler("daily_spawn_monster", bind(&FieldTile::DailySpawnMonster, this, placeholders::_1));
 }
 
 void FieldTile::Release()
@@ -49,12 +47,51 @@ void FieldTile::DailySpawnMonster(ObserverHandler* lpCaller)
 {
 	if (lpTile && vChilds.size() < 4 && !lpTile->spawnUnit.empty())
 	{
-		Unit* lpUnit = Trait::NewUnit(lpTile->spawnUnit);
-		AddChild(lpUnit);
-		lpUnit->SetPos({ 25.0f + cos(angle + PI / 2.0f * (vChilds.size() - 1)) * radius, 25.0f + sin(angle + PI / 2.0f * (vChilds.size() - 1)) * radius });
+		--spawnDelay;
+		if (spawnDelay <= 0)
+		{
+			if (rand() % 100 < lpTile->spawnPer)
+			{
+				// È®·ü
+				Unit* lpUnit = Trait::NewUnit(lpTile->spawnUnit);
+				AddChild(lpUnit);
+				lpUnit->SetPos({ 25.0f + cos(angle + PI / 2.0f * (vChilds.size() - 1)) * radius, 25.0f + sin(angle + PI / 2.0f * (vChilds.size() - 1)) * radius });
+			}
+
+			spawnDelay = lpTile->spawnDelay;
+		}
+	}
+}
+
+void FieldTile::DailyNearSpawnMonster(ObserverHandler* lpCaller)
+{
+	if (!lpTile) return;
+
+	--spawnDelay;
+	if (spawnDelay <= 0)
+	{
 		if (rand() % 100 < lpTile->spawnPer)
 		{
-			// È®·ü
+			vector<FieldTile*> vFieldTiles;
+			vFieldTiles.insert(vFieldTiles.end(), begin(lpNearTiles), end(lpNearTiles));
+			random_device rd;
+			mt19937 g(rd());
+			shuffle(vFieldTiles.begin(), vFieldTiles.end(), g);
+				
+			for (const auto& lpFieldTile : vFieldTiles)
+			{
+				if (!lpFieldTile->vHistory.empty()
+					&& lpFieldTile->vHistory.front() == "road"
+					&& lpFieldTile->vChilds.size() < 4)
+				{
+					// È®·ü
+					Unit* lpUnit = Trait::NewUnit(lpTile->spawnUnit);
+					lpFieldTile->AddChild(lpUnit);
+					lpUnit->SetPos({ 25.0f + cos(angle + PI / 2.0f * (lpFieldTile->vChilds.size() - 1)) * radius, 25.0f + sin(angle + PI / 2.0f * (lpFieldTile->vChilds.size() - 1)) * radius });
+					break;
+				}
+			}
+			spawnDelay = lpTile->spawnDelay;
 		}
 	}
 }

@@ -7,6 +7,7 @@ class UIHorizontalScroll;
 class UIButton;
 class UIInGameInfo;
 class UIProgressBar;
+class UIItemInfo;
 class InGameRightMenu : public GameUI
 {
 private:
@@ -18,11 +19,16 @@ private:
 	UIInGameInfo* lpGameInfo;
 	UIProgressBar* lpHeroHpBar;
 
+	UIItemInfo* lpItemInfo;
+	vector<UIItemInfo*> vCompareItems;
+
 public:
 	virtual void Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height) override;
 	virtual void Update(float deltaTime) override;
 	virtual void Render(HDC hdc) override;
 
 	void DropEquip(ObserverHandler* lpCaller);
+	void OpenEquipLayer(ObserverHandler* lpCaller);
+	void CloseEquipLayer(ObserverHandler* lpCaller);
 };
 

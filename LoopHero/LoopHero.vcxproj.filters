@@ -228,6 +228,9 @@
     <ClCompile Include="Particle.cpp">
       <Filter>소스 파일\Engine\Particle</Filter>
     </ClCompile>
+    <ClCompile Include="UIItemInfo.cpp">
+      <Filter>소스 파일\LoopHero\UI\InGame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Image.h">
@@ -394,6 +397,9 @@
     </ClInclude>
     <ClInclude Include="ParticleSystem.h">
       <Filter>소스 파일\Engine\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="UIItemInfo.h">
+      <Filter>소스 파일\LoopHero\UI\InGame</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

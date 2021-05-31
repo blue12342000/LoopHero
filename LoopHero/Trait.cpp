@@ -56,8 +56,7 @@ EquipItem* Trait::CreateEquip()
 		vIndex = GetRandomArgs(vTraits, lpEquipInfo->sBonusStatus, 3);
 	}
 
-	lpEquip->rank = (ITEM_RANK)vIndex.size();
-
+	lpEquip->rank = ITEM_RANK::NORMAL;
 	if (vIndex.empty()) { lpEquip->SetItemStatus(vTraits[statusIndex], itemPower); }
 	else
 	{
@@ -65,6 +64,7 @@ EquipItem* Trait::CreateEquip()
 		for (int i = 0; i < vIndex.size(); ++i)
 		{
 			lpEquip->SetItemStatus(vTraits[vIndex[i]], itemPower * 0.6f);
+			lpEquip->rank = (ITEM_RANK)((int)lpEquip->rank + 1);
 		}
 	}
 	lpEquip->lpRankImage = ImageManager::GetSingleton()->FindImage("item_rank");

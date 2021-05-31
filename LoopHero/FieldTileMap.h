@@ -13,6 +13,7 @@ class FieldTile;
 class BattleField;
 class Hero;
 class Unit;
+class ParticleSystem;
 class FieldTileMap : public GameObject
 {
 private:
@@ -26,6 +27,8 @@ private:
 	BattleField* lpBattleField;
 	Hero* lpHero;
 
+	ParticleSystem* lpParticleSystem;
+
 private:
 	TILE_IMAGE_SEQ CalTileSeq(int buildX, int buildY, Tile* lpTile);
 
@@ -38,6 +41,7 @@ public:
 	virtual void Render(HDC hdc) override;
 
 	bool BuildTile(int x, int y, Tile* lpTile);
+	void BuildTileFinish(int x, int y);
 	void SelectedTileValidation();
 	void SelectedCard(ObserverHandler* lpObserver);
 	void DeselectCard(ObserverHandler* lpObserver);

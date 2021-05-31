@@ -40,10 +40,6 @@ void Unit::Render(HDC hdc)
 	if (lpIcon) lpIcon->Render(hdc, GetWorldPos().x, GetWorldPos().y, IMAGE_ALIGN::CENTER);
 }
 
-void Unit::Idle()
-{
-}
-
 bool Unit::Hit(float dmg)
 {
 	float evasion = GetStatus(UNIT_STATUS::EVASION);
@@ -53,15 +49,10 @@ bool Unit::Hit(float dmg)
 		return false;
 	}
 
-	float def = GetStatus(UNIT_STATUS::DEF);
-	dmg -= def;
-	if (dmg < 0) dmg = 0.1f;
-
 	currHp -= dmg;
 	if (currHp <= 0)
 	{
 		state = UNIT_STATE::DEATH;
-		Death();
 	}
 	return true;
 }
@@ -70,16 +61,6 @@ float Unit::Attack()
 {
 	int atk = rand() % (int)((GetStatus(UNIT_STATUS::MAX_DMG) - GetStatus(UNIT_STATUS::MIN_DMG)) * 10 + FLT_EPSILON);
 	return atk / 10.0f + GetStatus(UNIT_STATUS::MIN_DMG);
-}
-
-void Unit::Revive()
-{
-
-}
-
-void Unit::Death()
-{
-	
 }
 
 void Unit::SetTrait(Trait& trait)
@@ -112,6 +93,8 @@ void Unit::UseEquipItem(UNIT_SLOT slot, EquipItem* lpEquipItem)
 	{
 		mStatus[pair.first] += pair.second;
 	}
+
+	mEquip[slot].lpEquip = lpEquipItem;
 }
 
 string Unit::ToString()
@@ -126,6 +109,8 @@ string Unit::ToString()
 		status = (UNIT_STATUS)i;
 		if (mStatus.find(status) != mStatus.end())
 		{
+			if (abs(mStatus[status]) < FLT_EPSILON) continue;
+
 			if (content.size() > 0) content += "\n";
 			var = to_string(mStatus[status]);
 			content += GameData::GetSingleton()->GetLang(status) + ": " + var.substr(0, var.find_first_of('.') + 2);

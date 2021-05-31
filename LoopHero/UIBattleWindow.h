@@ -5,6 +5,7 @@ class Image;
 class Animation;
 class BattleField;
 class UIBattleUnit;
+class ParticleSystem;
 class UIBattleWindow : public GameUI
 {
 private:
@@ -13,6 +14,7 @@ private:
 	Animation* lpHourglass;
 
 	BattleField* lpBattleField;
+	ParticleSystem* lpParticleSystem;
 
 public:
 	virtual void Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height) override;
@@ -22,5 +24,7 @@ public:
 
 	void BattleStart(ObserverHandler* lpCaller);
 	void BattleEnd(ObserverHandler* lpCaller);
+
+	void OnClick(EventData& data) override;
 };
 

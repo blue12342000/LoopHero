@@ -84,6 +84,13 @@ void GameUI::Release()
 	}
 	else
 	{
+		rc = { 0, 0, 0, 0 };
+		origin = { 0.0f, 0.0f };
+		pos = { 0.0f, 0.0f };
+		anchor = UI_ANCHOR::LEFT_TOP;
+		width = 0;
+		height = 0;
+
 		while (!vChilds.empty())
 		{
 			vChilds.back()->lpParent = nullptr;
@@ -246,11 +253,14 @@ POINTFLOAT GameUI::GetRealationPos(GameUI* lpOtherUI)
 	switch (anchor)
 	{
 	case UI_ANCHOR::TOP_MIDDLE:
-	case UI_ANCHOR::LEFT_MIDDLE:
 	case UI_ANCHOR::LEFT_TOP:
 	case UI_ANCHOR::MIDDLE:
 		thisPos.x = thisPos.x - inRect.left;
 		thisPos.y = thisPos.y - inRect.top;
+		break;
+	case UI_ANCHOR::LEFT_MIDDLE:
+		thisPos.x = thisPos.x - inRect.left;
+		thisPos.y = thisPos.y - (inRect.top + inRect.bottom) / 2;
 		break;
 	case UI_ANCHOR::RIGHT_MIDDLE:
 	case UI_ANCHOR::RIGHT_TOP:
@@ -276,6 +286,7 @@ void GameUI::SetAnchor(UI_ANCHOR anchor)
 	if (this->anchor == anchor) return;
 
 	this->anchor = anchor;
+	Refresh();
 }
 
 void GameUI::SetParernt(GameUI* lpParent)
@@ -287,5 +298,6 @@ void GameUI::SetParernt(GameUI* lpParent)
 	{
 		lpPreParent->VaildChilds();
 	}
+	Refresh();
 	SetWorldPos(worldPos);
 }

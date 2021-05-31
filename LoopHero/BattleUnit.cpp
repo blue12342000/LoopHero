@@ -3,6 +3,7 @@
 #include "Image.h"
 #include "Unit.h"
 #include "Trait.h"
+#include "ParticleManager.h"
 
 void BattleUnit::Init()
 {
@@ -38,8 +39,8 @@ void BattleUnit::Update(float deltaTime)
 
 void BattleUnit::Render(HDC hdc)
 {
-	// pos 가 local pos가 아닌 world Pos로 되어있다
-	mAnimations[state]->Render(hdc, pos.x, pos.y, IMAGE_ALIGN::LEFT_TOP);
+	// 해당 오르젝트는 UI에서 그려질것이라 예외적으로 항상 0.0f에서 그려지도록 한다.
+	mAnimations[state]->Render(hdc, 0.0f, 0.0f, IMAGE_ALIGN::LEFT_TOP);
 }
 
 void BattleUnit::Intro()
@@ -62,8 +63,15 @@ void BattleUnit::Hit(float dmg)
 
 	if (lpUnit)
 	{
+		float def = lpUnit->GetStatus(UNIT_STATUS::DEF);
+		dmg -= def;
+		if (dmg < 0) dmg = 0.1f;
+
 		if (lpUnit->Hit(dmg))
 		{
+			string dmgStr = to_string(dmg);
+			dmgStr = "#0000AA|" + dmgStr.substr(0, dmgStr.find('.') + 2);
+			ParticleManager::GetSingleton()->SpreadParticle("Battle_ParticleSystem", POINTFLOAT{pos.x, pos.y - mAnimations[state]->GetHeight() / 2 }, dmgStr);
 			// 맞음
 			if (!lpUnit->IsAlive())
 			{
@@ -80,6 +88,7 @@ void BattleUnit::Hit(float dmg)
 		else
 		{
 			// 회피함
+			ParticleManager::GetSingleton()->SpreadParticle("Battle_ParticleSystem", GetWorldPos(), "회피");
 		}
 	}
 }

@@ -8,6 +8,7 @@ class Image;
 class UIItemSlot : public GameUI
 {
 private:
+	Image* lpBackground;
 	UNIT_SLOT slot;
 	EQUIP_PARTS parts;
 	EquipItem* lpItem;

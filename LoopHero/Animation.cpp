@@ -7,6 +7,17 @@ void Animation::Init(Image* lpImage, ANIMATION_TYPE type, float fps)
 	this->type = type;
 	this->fps = fps;
 
+	if (lpImage)
+	{
+		this->width = lpImage->GetWidth();
+		this->height = lpImage->GetHeight();
+	}
+	else
+	{
+		this->width = -1;
+		this->height = -1;
+	}
+
 	startFrame = 0;
 	endFrame = 0;
 
@@ -16,6 +27,20 @@ void Animation::Init(Image* lpImage, ANIMATION_TYPE type, float fps)
 void Animation::Init(string imageKey, ANIMATION_TYPE type, float fps)
 {
 	Init(ImageManager::GetSingleton()->FindImage(imageKey), type, fps);
+}
+
+void Animation::Init(Image* lpImage, ANIMATION_TYPE type, int width, int height, float fps)
+{
+	this->lpImage = lpImage;
+	this->type = type;
+	this->fps = fps;
+	this->width = width;
+	this->height = height;
+
+	startFrame = 0;
+	endFrame = 0;
+
+	state = ANIMATION_STATE::STOP;
 }
 
 void Animation::Release()
@@ -49,7 +74,34 @@ void Animation::Update(float deltaTime)
 
 void Animation::Render(HDC hdc, int x, int y, IMAGE_ALIGN align)
 {
-	if (lpImage) lpImage->Render(hdc, x, y, (int)frame, align);
+	if (lpImage)
+	{
+		if (lpImage->IsFrameLoop())
+		{
+			lpImage->LoopRender(hdc, POINT{ x, y }, width, height, (int)frame, align);
+		}
+		else
+		{
+			lpImage->Render(hdc, x, y, (int)frame, align);
+		}
+	}
+}
+
+void Animation::Render(HDC hdc, int x, int y, int width, int height, IMAGE_ALIGN align)
+{
+	if (lpImage)
+	{
+		Ellipse(hdc, x - 5, y - 5, x + 5, y + 5);
+
+		if (lpImage->IsFrameLoop())
+		{
+			lpImage->LoopRender(hdc, POINT{ x, y }, width, height, (int)frame, align);
+		}
+		else
+		{
+			lpImage->Render(hdc, x, y, (int)frame, align);
+		}
+	}
 }
 
 void Animation::Play(int startFrame, int endFrame)

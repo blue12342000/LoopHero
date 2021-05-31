@@ -1,20 +1,23 @@
 #pragma once
 #include "Singleton.h"
 #include <Windows.h>
-#include <list>
+#include <string>
+#include <map>
+#include <functional>
 
 using namespace std;
 
-class Particle;
+class ParticleSystem;
 class ParticleManager : public Singleton<ParticleManager>
 {
 private:
-	list<Particle*> lParticles;
+	map<string, ParticleSystem*> mParticleSystem;
 
 public:
-	void Update(float deltaTime);
-	void Render(HDC hdc);
+	void AddParticleSystem(string key, ParticleSystem* lpParticleSystem);
+	void RemoveParticleSystem(string key);
 
-	void AddParticle(Particle* lpParticle);
+	void SpreadParticle(string system, POINTFLOAT pos, POINT size = {-1, -1}, function<void()> callBack = nullptr);
+	void SpreadParticle(string system, POINTFLOAT pos, string data, POINT size = {-1, -1}, function<void()> callBack = nullptr);
 };
 

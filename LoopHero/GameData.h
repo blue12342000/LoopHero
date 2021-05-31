@@ -5,6 +5,7 @@
 #include <string>
 #include <set>
 #include <map>
+#include <functional>
 
 using namespace std;
 
@@ -57,6 +58,8 @@ struct Tile
 	int nearCondition;
 	vector<string> vSelfTiles;
 	vector<string> vNearTiles;
+
+	vector<string> vEventKey;
 };
 
 enum class UNIT_SLOT;
@@ -67,6 +70,8 @@ class Deck;
 class Unit;
 class Hero;
 class Trait;
+class ObserverHandler;
+class FieldTile;
 class GameData : public Singleton<GameData>
 {
 private:
@@ -91,6 +96,8 @@ private:
 	map<string, Tile*> mLpTiles;
 	// µ¦
 	Deck* lpDeck;
+
+	map<string, function<void(ObserverHandler*)>> mEventMap;
 
 	int loopLevel;
 	Unit* lpUnit;
@@ -121,6 +128,9 @@ public:
 
 	Unit* GetUnit();
 
+	inline void AddEventHandler(string eventKey, function<void(ObserverHandler*)> eventFunc) { mEventMap.insert(make_pair(eventKey, move(eventFunc))); }
+	inline function<void(ObserverHandler*)> GetEventHandler(string eventKey) { return mEventMap[eventKey]; }
+	inline void ClearEventHandler() { mEventMap.clear(); }
 	inline vector<pair<string, Tile*>> GetVMapList() { vector<pair<string, Tile*>> vList(mLpTiles.begin(), mLpTiles.end()); return vList; };
 	inline Tile* GetTile(int index) { return (index < mLpTiles.size()) ? next(mLpTiles.begin(), index)->second : nullptr; }
 	inline Tile* GetTile(string key) { return (mLpTiles.find(key) != mLpTiles.end()) ? mLpTiles[key] : nullptr; }

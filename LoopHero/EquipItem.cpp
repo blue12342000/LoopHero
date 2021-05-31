@@ -46,6 +46,7 @@ void EquipItem::Init()
 
 void EquipItem::Release()
 {
+	mStatus.clear();
 	GameObject::Release();
 }
 

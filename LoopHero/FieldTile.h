@@ -1,6 +1,15 @@
 #pragma once
 #include "GameObject.h"
 
+enum class TILE_DIRECTION
+{
+	LEFT,
+	UP,
+	RIGHT,
+	DOWN,
+	NONE
+};
+
 enum class TILE_TYPE;
 class Tile;
 class FieldTileMap;
@@ -8,6 +17,7 @@ class FieldTile : public GameObject
 {
 private:
 	TILE_TYPE type;
+	TILE_DIRECTION direction;
 
 	int x;
 	int y;
@@ -15,12 +25,14 @@ private:
 	Tile* lpTile;
 	int frameX;
 	int frameY;
-	int eventCount;
 
 	float angle;
 	float radius;
 
 	vector<string> vHistory;
+	FieldTile* lpNearTiles[(int)TILE_DIRECTION::NONE];
+
+	int spawnDelay;
 
 public:
 	virtual void Init() override;
@@ -29,6 +41,7 @@ public:
 	virtual void Render(HDC hdc) override;
 
 	void DailySpawnMonster(ObserverHandler* lpCaller);
+	void DailyNearSpawnMonster(ObserverHandler* lpCaller);
 	void ClearMonster();
 
 	void OnMouseOver(EventData& data) override;

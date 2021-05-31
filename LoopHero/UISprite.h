@@ -8,6 +8,7 @@ class UISprite : public GameUI
 protected:
 	Image* lpImage;
 	GameObject* lpObject;
+	Image* lpTexture;
 
 public:
 	virtual ~UISprite() {}
@@ -18,6 +19,7 @@ public:
 
 	inline void SetGameObject(GameObject* lpObject) { this->lpObject = lpObject; }
 	inline GameObject* GetGameObject() { return lpObject; }
+	inline void SetTexture(Image* lpTexture) { this->lpTexture = lpTexture; }
 
 	void OnMouseOver(EventData& data);
 	void OnMouseOut(EventData& data);

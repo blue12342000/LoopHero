@@ -71,11 +71,8 @@ public:
 	virtual void Update(float deltaTime);
 	virtual void Render(HDC hdc);
 
-	void Idle();
 	bool Hit(float dmg);
 	float Attack();
-	void Revive();
-	void Death();
 
 	void SetTrait(Trait& trait);
 	void UseEquipItem(UNIT_SLOT slot, EquipItem* lpEquipItem);
@@ -86,5 +83,6 @@ public:
 	inline Trait* GetTrait() { return lpTrait; }
 	inline float GetStatus(UNIT_STATUS status) { if (mStatus.find(status) == mStatus.end()) { return 0.0f; } else { return mStatus[status]; } }
 	inline bool IsAlive() { return currHp > 0; }
+	inline map<UNIT_SLOT, EquipSlot> GetEquips() { return mEquip; }
 };
 

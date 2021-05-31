@@ -10,6 +10,8 @@ void UIItemSlot::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height, U
 {
 	GameUI::Init(anchor, pos, width, height);
 
+	lpBackground = ImageManager::GetSingleton()->FindImage("item_slot_" + to_string((int)slot) + "_" + to_string((int)parts));
+
 	this->slot = slot;
 	this->parts = parts;
 	this->lpItem = nullptr;
@@ -37,6 +39,8 @@ void UIItemSlot::Update(float deltaTime)
 
 void UIItemSlot::Render(HDC hdc)
 {
+	if (lpBackground) lpBackground->Render(hdc, rc.left, rc.top);
+
 	//RenderRectangle(hdc, rc);
 	GameUI::Render(hdc);
 
@@ -70,7 +74,6 @@ void UIItemSlot::OnDrop(EventData& data)
 			{
 				// Àåºñ ÀåÂø
 				GameData::GetSingleton()->GetUnit()->UseEquipItem(slot, lpEquipItem);
-
 				lpGameUI->SetAnchor(UI_ANCHOR::MIDDLE);
 
 				lpItem = lpEquipItem;
