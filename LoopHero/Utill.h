@@ -3,6 +3,7 @@
 #include <vector>
 #include <set>
 #include <Windows.h>
+#include <algorithm>
 
 using namespace std;
 
@@ -41,4 +42,75 @@ inline vector<int> GetRandomArgs(const vector<T>& args, const set<T>& in, int co
 	}
 
 	return vIndex;
+}
+
+template<typename T>
+inline T LerpAxis(T from, T to, float ratio)
+{
+	if (ratio < 1)
+	{
+		return from + (T)((to - from) * ratio);
+	}
+	else
+	{
+		return to;
+	}
+}
+
+template<>
+inline POINT LerpAxis(POINT from, POINT to, float ratio)
+{
+	if (ratio < 1)
+	{
+		return POINT{ LerpAxis(from.x, to.x, ratio), LerpAxis(from.y, to.y, ratio) };
+	}
+	else
+	{
+		return to;
+	}
+}
+
+template<>
+inline POINTFLOAT LerpAxis(POINTFLOAT from, POINTFLOAT to, float ratio)
+{
+	if (ratio < 1)
+	{
+		return POINTFLOAT{ LerpAxis(from.x, to.x, ratio), LerpAxis(from.y, to.y, ratio) };
+	}
+	else
+	{
+		return to;
+	}
+}
+
+template<typename T>
+inline T LerpAxis(vector<T>& vAxis, float ratio)
+{
+	if (vAxis.empty()) return T();
+
+	if (ratio < 1)
+	{
+		vector<T> vLerpAxis;
+		vLerpAxis.reserve(vAxis.size());
+		for (int i = 0, n = vAxis.size() - 1; i < n; ++i)
+		{
+			vLerpAxis.push_back(LerpAxis(vAxis[i], vAxis[i + 1], ratio));
+		}
+		if (vLerpAxis.size() == 1) return vLerpAxis.back();
+		else return LerpAxis(vLerpAxis, ratio);
+	}
+	else
+	{
+		return vAxis.back();
+	}
+}
+
+inline POINTFLOAT operator+(POINTFLOAT& a, POINTFLOAT& b)
+{
+	return POINTFLOAT{ a.x + b.x, a.y + b.y };
+}
+
+inline POINTFLOAT operator+(POINTFLOAT a, POINTFLOAT b)
+{
+	return POINTFLOAT{ a.x + b.x, a.y + b.y };
 }

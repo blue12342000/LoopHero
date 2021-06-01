@@ -144,6 +144,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="AnimationHandler.cpp" />
+    <ClCompile Include="AnimationMove.cpp" />
     <ClCompile Include="BattleField.cpp" />
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="BattleUnit.cpp" />
@@ -170,6 +172,7 @@
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="Trait.cpp" />
+    <ClCompile Include="AnimationUIController.cpp" />
     <ClCompile Include="UIBattleUnit.cpp" />
     <ClCompile Include="UIBattleWindow.cpp" />
     <ClCompile Include="UIButton.cpp" />
@@ -186,6 +189,7 @@
     <ClCompile Include="UIInGameInfo.cpp" />
     <ClCompile Include="UIItemInfo.cpp" />
     <ClCompile Include="UIItemSlot.cpp" />
+    <ClCompile Include="UILogo.cpp" />
     <ClCompile Include="UIProgressBar.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -197,6 +201,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="AnimationHandler.h" />
+    <ClInclude Include="AnimationMove.h" />
     <ClInclude Include="BattleField.h" />
     <ClInclude Include="Card.h" />
     <ClInclude Include="BattleUnit.h" />
@@ -228,6 +234,7 @@
     <ClInclude Include="Text.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="Trait.h" />
+    <ClInclude Include="AnimationUIController.h" />
     <ClInclude Include="UIBattleUnit.h" />
     <ClInclude Include="UIBattleWindow.h" />
     <ClInclude Include="UIButton.h" />
@@ -244,6 +251,7 @@
     <ClInclude Include="UIInGameInfo.h" />
     <ClInclude Include="UIItemInfo.h" />
     <ClInclude Include="UIItemSlot.h" />
+    <ClInclude Include="UILogo.h" />
     <ClInclude Include="UIProgressBar.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />

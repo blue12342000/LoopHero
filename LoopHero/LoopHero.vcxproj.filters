@@ -82,6 +82,18 @@
     <Filter Include="소스 파일\Engine\Particle">
       <UniqueIdentifier>{ecfc2cbd-d03e-464c-8254-a5ea32dc6608}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\LoopHero\UI\Title">
+      <UniqueIdentifier>{e24922f1-73e5-475d-9981-d02a05404f27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\LoopHero\Animator">
+      <UniqueIdentifier>{06a38257-60dd-4893-8c95-e382b4032e78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\LoopHero\Animator\Base">
+      <UniqueIdentifier>{dd4d29d4-0a75-489f-a69a-f30304a05695}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\LoopHero\Animator\Controller">
+      <UniqueIdentifier>{1d882807-04cc-481a-9ce0-40bb79f5137a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -236,6 +248,18 @@
     </ClCompile>
     <ClCompile Include="Title.cpp">
       <Filter>소스 파일\LoopHero\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="UILogo.cpp">
+      <Filter>소스 파일\LoopHero\UI\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationMove.cpp">
+      <Filter>소스 파일\LoopHero\Animator</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationHandler.cpp">
+      <Filter>소스 파일\LoopHero\Animator\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationUIController.cpp">
+      <Filter>소스 파일\LoopHero\Animator\Controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -412,6 +436,18 @@
     </ClInclude>
     <ClInclude Include="Title.h">
       <Filter>소스 파일\LoopHero\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="UILogo.h">
+      <Filter>소스 파일\LoopHero\UI\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationMove.h">
+      <Filter>소스 파일\LoopHero\Animator</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationHandler.h">
+      <Filter>소스 파일\LoopHero\Animator\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationUIController.h">
+      <Filter>소스 파일\LoopHero\Animator\Controller</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

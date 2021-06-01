@@ -234,7 +234,21 @@ HRESULT EventSystem::Init()
 
 void EventSystem::Release()
 {
-	eventData = {};
+	eventData.message.reset();
+	eventData.lpLastTarget = nullptr;
+	eventData.lpDragTarget = nullptr;
+	eventData.isDragging = false;
+	eventData.vlpTargets.clear();
+	eventData.slpLastTargets.clear();
+
+	lpGameUI = nullptr;
+	vGameObjects.clear();
+	lpGameObject = nullptr;
+
+	vFindUIs.clear();
+	vFindObjects.clear();
+	lpObjectFindTop = nullptr;
+
 	PoolingManager::GetSingleton()->AddClass(this);
 }
 
@@ -246,12 +260,18 @@ void EventSystem::Update(float deltaTime)
 	eventData.point = KeyManager::GetSingleton()->GetMousePoint();
 
 	// 내 마우스 위치에서 최상위에 있는 UI를 Get
-	FindDispatcherUI(vFindUIs, lpGameUI, eventData.point);
-	eventData.vlpTargets.insert(eventData.vlpTargets.end(), vFindUIs.crbegin(), vFindUIs.crend());
+	if (lpGameUI)
+	{
+		FindDispatcherUI(vFindUIs, lpGameUI, eventData.point);
+		eventData.vlpTargets.insert(eventData.vlpTargets.end(), vFindUIs.crbegin(), vFindUIs.crend());
+	}
 
 	// 내 마우스 위치에서 최상위에 있는 Object를 Get
-	FindDispatcherObject(vFindObjects, lpGameObject, eventData.point);
-	eventData.vlpTargets.insert(eventData.vlpTargets.end(), vFindObjects.crbegin(), vFindObjects.crend());
+	if (lpGameObject)
+	{
+		FindDispatcherObject(vFindObjects, lpGameObject, eventData.point);
+		eventData.vlpTargets.insert(eventData.vlpTargets.end(), vFindObjects.crbegin(), vFindObjects.crend());
+	}
 
 	// 이벤트 처리
 	EventProcess();
@@ -271,8 +291,6 @@ void EventSystem::Render(HDC hdc)
 			text = string(typeid(*(eventData.vlpTargets[i])).name()) + ", " + to_string(eventData.vlpTargets[i]->IsCanPassEvent());
 			TextOut(hdc, 300, lineHeight, text.c_str(), text.length());
 		}
-		text = eventData.message.to_string();
-		TextOut(hdc, 300, lineHeight, text.c_str(), text.length());
 	}
 	SetBkMode(hdc, TRANSPARENT);
 }

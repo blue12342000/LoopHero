@@ -2,11 +2,19 @@
 #include "Scene.h"
 
 class Image;
+class GameUI;
+class EventSystem;
+class AnimationUIController;
 class Title : public Scene
 {
 private:
 	Image* lpBuffer;
 	Image* lpBackImage;
+
+	GameUI* lpCanvus;
+	EventSystem* lpEventSystem;
+
+	AnimationUIController* lpAnimController;
 
 public:
 	virtual HRESULT Init() override;

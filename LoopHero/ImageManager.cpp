@@ -9,6 +9,9 @@ HRESULT ImageManager::Init()
     mLpImages.insert(make_pair("title_background", new Image()));
     mLpImages["title_background"]->Init("Image/UI/Title/title_background.bmp", 644 * 2, 364 * 2);
 
+    mLpImages.insert(make_pair("title_logo", new Image()));
+    mLpImages["title_logo"]->Init("Image/UI/Title/title_logo.bmp", 195 * 2, 195 * 2, true, RGB(0, 170, 55));
+
     mLpImages.insert(make_pair("InGame_BackGround", new Image()));
     mLpImages["InGame_BackGround"]->Init("Image/UI/InGame/InGame_BackGround.bmp", 644 * 2, 364 * 2);
 

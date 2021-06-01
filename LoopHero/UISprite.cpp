@@ -19,6 +19,10 @@ void UISprite::Release()
 		lpObject->Release();
 		lpObject = nullptr;
 	}
+	if (lpTexture)
+	{
+		lpTexture = nullptr;
+	}
 	GameUI::Release();
 }
 
@@ -29,6 +33,12 @@ void UISprite::Render(HDC hdc)
 		lpImage->Fill();
 		lpObject->Render(lpImage->GetMemDC());
 	}
+	else if (lpTexture)
+	{
+		RECT inRect = { 0, 0, width, height };
+		lpTexture->ResizeRender(lpImage->GetMemDC(), inRect, 0);
+	}
+
 	lpImage->Render(hdc, rc.left, rc.top);
 	//unsigned int rgb = ((unsigned int)this) * 10;
 	//RenderRectangle(hdc, rc, RGB((rgb % 150), (rgb % 150), (rgb % 150)));

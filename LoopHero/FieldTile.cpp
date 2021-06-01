@@ -16,6 +16,14 @@ void FieldTile::Init()
 
 void FieldTile::Release()
 {
+	type = TILE_TYPE::WHITE;
+	direction = TILE_DIRECTION::NONE;
+	x = -1;
+	y = -1;
+	lpTile = nullptr;
+	ZeroMemory(lpNearTiles, sizeof(FieldTile*) * (int)TILE_DIRECTION::NONE);
+	vHistory.clear();
+
 	GameObject::Release();
 }
 

@@ -69,6 +69,7 @@ public:
 
 	void Render(HDC hdc, int destX = 0, int destY = 0, int frame = 0, IMAGE_ALIGN align = IMAGE_ALIGN::LEFT_TOP);
 	void Render(HDC hdc, int destX, int destY, POINT frame, IMAGE_ALIGN align = IMAGE_ALIGN::LEFT_TOP);
+	void ResizeRender(HDC hdc, RECT inRect, int frame = 0);
 	void LoopRender(HDC hdc, POINT pos, int width, int height, int frame, IMAGE_ALIGN align = IMAGE_ALIGN::LEFT_TOP);
 	void PatternRender(HDC hdc, int destX, int destY, int width, int height, int frame = 0);
 	

@@ -121,6 +121,9 @@ void FieldTileMap::Release()
 	ParticleManager::GetSingleton()->RemoveParticleSystem("Tile_ParticleSystem");
 	GameObject::Release();
 	GameData::GetSingleton()->ClearEventHandler();
+
+	ZeroMemory(tiles, sizeof(FieldTile*) * FIELD_TILE_X * FIELD_TILE_Y);
+	ZeroMemory(isPossibleBuild, sizeof(bool) * FIELD_TILE_X * FIELD_TILE_Y);
 }
 
 void FieldTileMap::Update(float deltaTime)
@@ -235,7 +238,6 @@ bool FieldTileMap::BuildTile(int x, int y, Tile* lpTile)
 				while (!tiles[y][x]->vChilds.empty())
 				{
 					tiles[y][x]->vChilds.back()->Release();
-					tiles[y][x]->vChilds.pop_back();
 				}
 				ParticleManager::GetSingleton()->SpreadParticle("Tile_ParticleSystem", POINTFLOAT{ tiles[y][x]->GetWorldPos().x, tiles[y][x]->GetWorldPos().y + FIELD_TILE_SIZE / 2 }, POINT{ FIELD_TILE_SIZE, WINSIZE_HEIGHT }, bind(&FieldTileMap::BuildTileFinish, this, x, y));
 				DeselectCard(this);

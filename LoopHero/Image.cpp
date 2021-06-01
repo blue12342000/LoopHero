@@ -256,6 +256,24 @@ void Image::Render(HDC hdc, int destX, int destY, POINT frame, IMAGE_ALIGN align
     }
 }
 
+void Image::ResizeRender(HDC hdc, RECT inRect, int frame)
+{
+    frame %= lpImageInfo->totalFrame;
+    int frameX = frame % lpImageInfo->maxFrameX;
+    int frameY = frame / lpImageInfo->maxFrameX;
+
+    if (lpImageInfo->isTransparent)
+    {
+        GdiTransparentBlt(hdc, inRect.left, inRect.top, inRect.right - inRect.left, inRect.bottom - inRect.top,
+            lpImageInfo->hMemDC, lpImageInfo->width * frameX, lpImageInfo->height * frameY, lpImageInfo->width, lpImageInfo->height, lpImageInfo->transColor);
+    }
+    else
+    {
+        StretchBlt(hdc, inRect.left, inRect.top, inRect.right - inRect.left, inRect.bottom - inRect.top,
+            lpImageInfo->hMemDC, lpImageInfo->width * frameX, lpImageInfo->height * frameY, lpImageInfo->width, lpImageInfo->height, SRCCOPY);
+    }
+}
+
 void Image::LoopRender(HDC hdc, POINT pos, int width, int height, int frame, IMAGE_ALIGN align)
 {
     int frameX = frame % lpImageInfo->maxFrameX;

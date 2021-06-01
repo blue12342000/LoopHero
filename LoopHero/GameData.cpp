@@ -349,6 +349,7 @@ void GameData::Release()
 
 	for (auto& pair : mLpTraits)
 	{
+		pair.second->Release();
 		delete pair.second;
 	}
 	mLpTraits.clear();
@@ -358,6 +359,20 @@ void GameData::Release()
 		delete pair.second;
 	}
 	mLpTiles.clear();
+
+	mEquipInfo.clear();
+
+	mUnitSlotLang.clear();
+	mUnitStatusLang.clear();
+	mEquipPartsLang.clear();
+
+	// 타일별 데이터셋
+	mTileSeq.clear();
+
+	// 키값
+	mUnitSlot.clear();
+	mUnitStatus.clear();
+	mEquipParts.clear();
 
 	ClearEventHandler();
 }
