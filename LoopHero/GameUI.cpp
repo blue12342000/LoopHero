@@ -1,4 +1,5 @@
 #include "GameUI.h"
+#include "AnimationUIController.h"
 
 void GameUI::VaildChilds()
 {
@@ -98,6 +99,13 @@ void GameUI::Release()
 			vChilds.pop_back();
 		}
 	}
+
+	if (lpAnimController)
+	{
+		lpAnimController->Release();
+		lpAnimController = nullptr;
+	}
+
 	ClearEventHandler();
 	ObserverManager::GetSingleton()->RemoveObserver(this);
 	PoolingManager::GetSingleton()->AddClass(this);
@@ -299,5 +307,19 @@ void GameUI::SetParernt(GameUI* lpParent)
 		lpPreParent->VaildChilds();
 	}
 	Refresh();
+	SetWorldPos(worldPos);
+}
+
+void GameUI::SetWorldPosX(float x)
+{
+	POINTFLOAT worldPos = GetWorldPos();
+	worldPos.x = x;
+	SetWorldPos(worldPos);
+}
+
+void GameUI::SetWorldPosY(float y)
+{
+	POINTFLOAT worldPos = GetWorldPos();
+	worldPos.y = y;
 	SetWorldPos(worldPos);
 }

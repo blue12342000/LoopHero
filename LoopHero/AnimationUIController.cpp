@@ -1,5 +1,6 @@
 #include "AnimationUIController.h"
 #include "AnimationHandler.h"
+#include "AnimationMove.h"
 #include "PoolingManager.h"
 #include "GameUI.h"
 
@@ -7,6 +8,10 @@ void AnimationUIController::Init(GameUI* lpTarget)
 {
 	this->lpTarget = lpTarget;
 	this->isPlay = false;
+
+	vAnimTick.push_back(AnimTick{0, vector<string>()});
+
+	AddAnimationHandler<AnimationMove>();
 }
 
 void AnimationUIController::Release()
@@ -19,6 +24,7 @@ void AnimationUIController::Release()
 		PoolingManager::GetSingleton()->AddClass(pair.second);
 	}
 	mAnimHandler.clear();
+	vAnimTick.clear();
 	PoolingManager::GetSingleton()->AddClass(this);
 }
 
@@ -36,11 +42,6 @@ void AnimationUIController::Update(float deltaTime)
 void AnimationUIController::Render(HDC hdc)
 {
 
-}
-
-void AnimationUIController::AddAnimHandler(AnimationHandler* lpAnimHandler)
-{
-	vLpAnimHandler.push_back(lpAnimHandler);
 }
 
 void AnimationUIController::Play()
@@ -64,4 +65,9 @@ void AnimationUIController::Resume()
 void AnimationUIController::Stop()
 {
 	isPlay = false;
+}
+
+void AnimationUIController::AddEvent(float time)
+{
+
 }

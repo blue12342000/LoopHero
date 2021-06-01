@@ -8,11 +8,11 @@ using namespace std;
 class AnimationMove : public AnimationHandler
 {
 private:
-	vector<float> vMoveTime;
+	vector<int> vMoveTime;
 	vector<POINTFLOAT> vMovePoint;
 
 public:
 	virtual void Exec(AnimVariable& animVar) final;
-	virtual void AddEvent(float time, AnimVariable& animVar) final;
+	virtual void AddEvent(int time, AnimVariable& animVar) final;
 };
 

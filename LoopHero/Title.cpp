@@ -4,9 +4,9 @@
 #include "PoolingManager.h"
 #include "EventSystem.h"
 #include "Image.h"
-#include "AnimationUIController.h"
-#include "AnimationMove.h"
 #include "UILogo.h"
+#include "UIEditBox.h"
+#include "UIAnimInspector.h"
 
 HRESULT Title::Init()
 {
@@ -19,12 +19,16 @@ HRESULT Title::Init()
     UILogo* lpLogo = GameUI::Create<UILogo>(lpCanvus);
     lpLogo->Init(UI_ANCHOR::TOP_MIDDLE, { 0.0f, 0.0f }, 195 * 2, 195 * 2);
 
+    UIAnimInspector* lpUIAnimInspector = GameUI::Create<UIAnimInspector>(lpCanvus);
+    lpUIAnimInspector->Init(UI_ANCHOR::RIGHT_BOTTOM, { 0.0f, 0.0f }, 600, 300);
+    lpUIAnimInspector->SetVisible(false);
+
+    //UIEditBox* lpEditBox = GameUI::Create<UIEditBox>(lpCanvus);
+    //lpEditBox->Init(UI_ANCHOR::MIDDLE, { 0.0f, 0.0f }, 400, 25, INPUT_TYPE::TEXT);
+
     lpEventSystem = PoolingManager::GetSingleton()->GetClass<EventSystem>();
     lpEventSystem->Init();
     lpEventSystem->SetGameUI(lpCanvus);
-
-    lpAnimController = PoolingManager::GetSingleton()->GetClass<AnimationUIController>();
-    AnimationMove* lpAnimMove = lpAnimController->AddAnimationHandler<AnimationMove>();
 
 	return E_NOTIMPL;
 }
@@ -33,7 +37,7 @@ void Title::Release()
 {
     lpCanvus->Release();
     lpEventSystem->Release();
-    lpAnimController->Release();
+    //ObserverManager::GetSingleton()->Release();
 }
 
 void Title::Update(float deltaTime)
@@ -50,8 +54,11 @@ void Title::Update(float deltaTime)
         return;
     }
 
+    ObserverManager::GetSingleton()->ProcessingMessage();
     lpEventSystem->Update(deltaTime);
     lpCanvus->Update(deltaTime);
+
+    lpCanvus->LateUpdate(deltaTime);
 }
 
 void Title::Render(HDC hdc)

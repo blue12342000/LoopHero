@@ -67,7 +67,7 @@ void InGameRightMenu::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int heig
 	lpHScroll->SetHScrollControl(HSCROLL_ITEM_CONTROL::DRAG_SWAP);
 
 	lpHeroHpBar = GameUI::Create<UIProgressBar>(this);
-	lpHeroHpBar->Init(UI_ANCHOR::RIGHT_TOP, { 20.0f * 2, 123.0f * 2 }, 75 * 2, 7 * 2, UI_BAR_TYPE::HORIZON, "", "battle_unit_statusbar_hp");
+	lpHeroHpBar->Init(UI_ANCHOR::RIGHT_TOP, { 20.0f * 2, 241.0f }, 75 * 2, 6 * 2, UI_BAR_TYPE::HORIZON, "", "battle_unit_statusbar_hp");
 	lpHeroHpBar->SetTrackingData(bind(&Unit::GetCurrHp, GameData::GetSingleton()->GetUnit()));
 	lpHeroHpBar->SetTrackingMaxData(bind(&Unit::GetStatus, GameData::GetSingleton()->GetUnit(), UNIT_STATUS::MAX_HP));
 

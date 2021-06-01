@@ -173,9 +173,12 @@
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="Trait.cpp" />
     <ClCompile Include="AnimationUIController.cpp" />
+    <ClCompile Include="UIAnimInspector.cpp" />
     <ClCompile Include="UIBattleUnit.cpp" />
     <ClCompile Include="UIBattleWindow.cpp" />
     <ClCompile Include="UIButton.cpp" />
+    <ClCompile Include="UIEditBox.cpp" />
+    <ClCompile Include="UIGameUIInfo.cpp" />
     <ClCompile Include="UIHorizontalScroll.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageManager.cpp" />
@@ -235,9 +238,12 @@
     <ClInclude Include="Title.h" />
     <ClInclude Include="Trait.h" />
     <ClInclude Include="AnimationUIController.h" />
+    <ClInclude Include="UIAnimInspector.h" />
     <ClInclude Include="UIBattleUnit.h" />
     <ClInclude Include="UIBattleWindow.h" />
     <ClInclude Include="UIButton.h" />
+    <ClInclude Include="UIEditBox.h" />
+    <ClInclude Include="UIGameUIInfo.h" />
     <ClInclude Include="UIHorizontalScroll.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageManager.h" />

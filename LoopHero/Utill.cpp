@@ -1,5 +1,6 @@
 #include "Utill.h"
 
+
 double StackCalculate(string text)
 {
 	bool isNextNum = true;

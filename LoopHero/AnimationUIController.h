@@ -15,6 +15,12 @@ struct AnimVariable
 	float elapsedTime;
 };
 
+struct AnimTick
+{
+	int time;
+	vector<string> vAnimHandle;
+};
+
 class GameUI;
 class AnimationHandler;
 class AnimationUIController : public GameNode
@@ -26,6 +32,8 @@ private:
 	GameUI* lpTarget;
 	map<string, AnimationHandler*> mAnimHandler;
 	AnimVariable animVar;
+
+	vector<AnimTick> vAnimTick;
 
 public:
 	void Init(GameUI* lpTarget);
@@ -41,12 +49,13 @@ public:
 		auto it = mAnimHandler.find(name);
 		if (it == mAnimHandler.end())
 		{
-			mAnimHandler.insert(make_pair(typeid(T).name(), lpAnimHandler));
+			mAnimHandler.insert(make_pair(name, lpAnimHandler));
+			vAnimTick.front().vAnimHandle.push_back(name);
 		}
 		else
 		{
 			PoolingManager::GetSingleton()->AddClass(lpAnimHandler);
-			lpAnimHandler = it->second;
+			lpAnimHandler = (T*)mAnimHandler[name];
 		}
 		return lpAnimHandler;
 	}
@@ -54,5 +63,7 @@ public:
 	void Play();
 	void Resume();
 	void Stop();
+
+	void AddEvent(float time);
 };
 

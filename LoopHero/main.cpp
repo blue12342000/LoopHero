@@ -1,5 +1,6 @@
 #include "LoopHero.h"
 #include "MainGame.h"
+#include "Utill.h"
 
 HINSTANCE g_hInstance;
 HWND g_hWnd;
@@ -27,7 +28,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPreInstance, LPSTR lpCmdLin
 
 	RegisterClass(&wndClass);
 
-	g_hWnd = CreateWindow(g_lpszClass, g_lpszClass, WS_OVERLAPPEDWINDOW, WINPOS_STARTX, WINPOS_STARTY, WINSIZE_WIDTH, WINSIZE_HEIGHT, NULL, NULL, g_hInstance, NULL);
+	g_hWnd = CreateWindow(g_lpszClass, g_lpszClass, WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN, WINPOS_STARTX, WINPOS_STARTY, WINSIZE_WIDTH, WINSIZE_HEIGHT, NULL, NULL, g_hInstance, NULL);
 	SetWindowSize(g_hWnd, WINSIZE_WIDTH, WINSIZE_HEIGHT);
 
 	ShowWindow(g_hWnd, nShowCmd);
@@ -60,18 +61,4 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPreInstance, LPSTR lpCmdLin
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 	return g_mainGame.WndProc(hWnd, iMessage, wParam, lParam);
-}
-
-void SetWindowSize(HWND hWnd, int width, int height)
-{
-	RECT wndRect;
-	DWORD wndStyle = GetWindowLong(hWnd, GWL_STYLE);
-
-	SetRect(&wndRect, 0, 0, width, height);
-	AdjustWindowRect(&wndRect, wndStyle, GetMenu(hWnd) != NULL);
-
-	if (wndStyle & WS_VSCROLL) wndRect.right += GetSystemMetrics(SM_CYVSCROLL);
-	if (wndStyle & WS_HSCROLL) wndRect.bottom += GetSystemMetrics(SM_CXVSCROLL);
-
-	SetWindowPos(hWnd, NULL, 0, 0, wndRect.right - wndRect.left, wndRect.bottom - wndRect.top, SWP_NOMOVE | SWP_NOZORDER);
 }

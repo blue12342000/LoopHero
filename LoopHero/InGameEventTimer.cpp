@@ -15,12 +15,12 @@ void InGameEventTimer::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int hei
 	maxBossTimer = 10;
 
 	lpDailyTimer = GameUI::Create<UIProgressBar>(this);
-	lpDailyTimer->Init(UI_ANCHOR::LEFT_TOP, { 17.0f * 2, 7.0f * 2 }, 200, 4, UI_BAR_TYPE::HORIZON, "", "battle_unit_statusbar_hp");
+	lpDailyTimer->Init(UI_ANCHOR::LEFT_TOP, { 17.0f * 2, 11.0f }, 200, 4, UI_BAR_TYPE::HORIZON, "", "battle_unit_statusbar_hp");
 	lpDailyTimer->SetTrackingData(dailyTimer);
 	lpDailyTimer->SetTrackingMaxData(maxDailyTimer);
 
 	lpBossTimer = GameUI::Create<UIProgressBar>(this);
-	lpBossTimer->Init(UI_ANCHOR::LEFT_TOP, { 17.0f * 2, 22.0f * 2 }, 200, 4, UI_BAR_TYPE::HORIZON, "", "battle_unit_statusbar_hp");
+	lpBossTimer->Init(UI_ANCHOR::LEFT_TOP, { 17.0f * 2, 41.0f }, 200, 4, UI_BAR_TYPE::HORIZON, "", "battle_unit_statusbar_hp");
 	lpBossTimer->SetTrackingData(bind(&InGameEventTimer::GetBossTimer, this));
 	lpBossTimer->SetTrackingMaxData(maxBossTimer);
 }

@@ -124,6 +124,15 @@ HRESULT ImageManager::Init()
     mLpImages.insert(make_pair("battle_unit_hover_80_92", new Image()));
     mLpImages["battle_unit_hover_80_92"]->Init("Image/UI/InGame/battle_unit_hover_80_92.bmp", 80 * 2, 92 * 2, 1, 1, 1, true, RGB(0, 170, 255));
 
+    mLpImages.insert(make_pair("axis_bar", new Image()));
+    mLpImages["axis_bar"]->Init("Image/UI/Title/axis_bar.bmp", 250, 15, 1, 1, 1, true, RGB(0, 170, 255));
+
+    mLpImages.insert(make_pair("axis_bar_button", new Image()));
+    mLpImages["axis_bar_button"]->Init("Image/UI/Title/axis_bar_button.bmp", 5, 15, 1, 1, 1, true, RGB(0, 170, 255));
+
+    mLpImages.insert(make_pair("button_27_17", new Image()));
+    mLpImages["button_27_17"]->Init("Image/UI/Common/button_27_17.bmp", 27 * 3, 51 * 3, 1, 3, 3, true, RGB(0, 170, 255));
+
     mLpImages.insert(make_pair("button_exit", new Image()));
     mLpImages["button_exit"]->Init("Image/UI/InGame/Button/button_exit.bmp", 35 * 2, 87 * 2, 1, 3, 3, true, RGB(0, 170, 255));
 

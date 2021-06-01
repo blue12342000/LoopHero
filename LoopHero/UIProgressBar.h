@@ -4,7 +4,8 @@
 enum class UI_BAR_TYPE
 {
 	HORIZON,
-	VERTICAL
+	VERTICAL,
+	RANGE
 };
 
 enum class UI_BAR_TARGET
@@ -30,6 +31,14 @@ private:
 	function<float()> lpMaxFunc;
 	float* lpMaxVar;
 
+	// Range 전용 변수
+	float var;
+	float minVar;
+	float maxVar;
+	bool isDrag;
+
+	vector<function<void(float)>> vChangedFuncs;
+
 public:
 	virtual ~UIProgressBar() {}
 
@@ -42,5 +51,15 @@ public:
 	void SetTrackingData(function<float()> lpTargetFunc);
 	void SetTrackingMaxData(float& lpTargetVar);
 	void SetTrackingMaxData(function<float()> lpTargetFunc);
+
+	void SetVar(float var);
+	void SetRange(float min, float max);
+	void ClearFunc();
+	void PushBackFunc(function<void(float)> func);
+	void PopFunc();
+
+	void OnBeginDrag(EventData& data) override;
+	void OnDrag(EventData& data) override;
+	void OnEndDrag(EventData& data) override;
 };
 

@@ -261,6 +261,15 @@
     <ClCompile Include="AnimationUIController.cpp">
       <Filter>소스 파일\LoopHero\Animator\Controller</Filter>
     </ClCompile>
+    <ClCompile Include="UIEditBox.cpp">
+      <Filter>소스 파일\LoopHero\UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="UIAnimInspector.cpp">
+      <Filter>소스 파일\LoopHero\UI\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="UIGameUIInfo.cpp">
+      <Filter>소스 파일\LoopHero\UI\Title</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Image.h">
@@ -448,6 +457,15 @@
     </ClInclude>
     <ClInclude Include="AnimationUIController.h">
       <Filter>소스 파일\LoopHero\Animator\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="UIEditBox.h">
+      <Filter>소스 파일\LoopHero\UI\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="UIAnimInspector.h">
+      <Filter>소스 파일\LoopHero\UI\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="UIGameUIInfo.h">
+      <Filter>소스 파일\LoopHero\UI\Title</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

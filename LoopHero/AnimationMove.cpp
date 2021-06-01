@@ -10,6 +10,6 @@ void AnimationMove::Exec(AnimVariable& animVar)
 	}
 }
 
-void AnimationMove::AddEvent(float time, AnimVariable& animVar)
+void AnimationMove::AddEvent(int time, AnimVariable& animVar)
 {
 }

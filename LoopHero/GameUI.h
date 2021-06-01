@@ -7,17 +7,18 @@
 enum class UI_ANCHOR
 {
 	LEFT_TOP,
-	RIGHT_TOP,
-	LEFT_BOTTOM,
-	RIGHT_BOTTOM,
-	LEFT_MIDDLE,
-	RIGHT_MIDDLE,
 	TOP_MIDDLE,
-	BOTTOM_MIDDLE,
+	RIGHT_TOP,
+	LEFT_MIDDLE,
 	MIDDLE,
+	RIGHT_MIDDLE,
+	LEFT_BOTTOM,
+	BOTTOM_MIDDLE,
+	RIGHT_BOTTOM,
 	NONE
 };
 
+class AnimationUIController;
 class GameUI : public GameNode, public EventTrigger, public ObserverHandler
 {
 protected:
@@ -32,6 +33,9 @@ protected:
 
 	GameUI* lpParent;
 	vector<GameUI*> vChilds;
+
+	// 에니메이션 컨트롤러 사용시에만 값이 존재한다.
+	AnimationUIController* lpAnimController;
 
 private:
 	void VaildChilds();
@@ -71,6 +75,10 @@ public:
 	virtual POINTFLOAT GetRealationPos(GameUI* lpOtherUI) final;
 	virtual void SetAnchor(UI_ANCHOR anchor) final;
 	virtual void SetParernt(GameUI* lpParent) final;
+	virtual void SetWorldPosX(float x) final;
+	virtual void SetWorldPosY(float y) final;
+
+	virtual AnimationUIController* GetAnimController() { return lpAnimController; }
 
 	virtual inline void SetPos(POINTFLOAT pos) final { this->pos = pos; }
 	virtual inline void SetVisible(bool isVisible) final { this->isVisible = isVisible; }
@@ -84,4 +92,5 @@ public:
 	virtual inline bool IsVisible() final { return isVisible; }
 	virtual inline GameUI* GetParent() { return lpParent; }
 	virtual inline POINT GetCenter() final { return { (rc.left + rc.right) / 2, (rc.top + rc.bottom) / 2 }; }
+	virtual inline UI_ANCHOR GetAnchor() final { return anchor; }
 };

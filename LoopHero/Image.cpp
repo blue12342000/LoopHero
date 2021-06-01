@@ -350,7 +350,7 @@ void Image::PatternRender(HDC hdc, int destX, int destY, int width, int height, 
                 if (y - lpImageInfo->height >= limitY) { drawY = lpImageInfo->height; }
                 else { drawY = height % lpImageInfo->height; }
 
-                GdiTransparentBlt(hdc, x, y, drawX, -drawY,
+                GdiTransparentBlt(hdc, x, y, drawX, drawY,
                     lpImageInfo->hMemDC, lpImageInfo->width * (frame % lpImageInfo->maxFrameX), lpImageInfo->height * (frame / lpImageInfo->maxFrameX), drawX, drawY, lpImageInfo->transColor);
             }
         }
@@ -366,7 +366,7 @@ void Image::PatternRender(HDC hdc, int destX, int destY, int width, int height, 
                 if (y - lpImageInfo->height >= limitY) { drawY = lpImageInfo->height; }
                 else { drawY = height % lpImageInfo->height; }
 
-                StretchBlt(hdc, x, y, drawX, -drawY,
+                StretchBlt(hdc, x, y, drawX, drawY,
                     lpImageInfo->hMemDC, lpImageInfo->width * (frame % lpImageInfo->maxFrameX), lpImageInfo->height * (frame / lpImageInfo->maxFrameX), drawX, drawY, SRCCOPY);
             }
         }

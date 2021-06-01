@@ -7,6 +7,20 @@
 
 using namespace std;
 
+inline void SetWindowSize(HWND hWnd, int width, int height)
+{
+	RECT wndRect;
+	DWORD wndStyle = GetWindowLong(hWnd, GWL_STYLE);
+
+	SetRect(&wndRect, 0, 0, width, height);
+	AdjustWindowRect(&wndRect, wndStyle, GetMenu(hWnd) != NULL);
+
+	if (wndStyle & WS_VSCROLL) wndRect.right += GetSystemMetrics(SM_CYVSCROLL);
+	if (wndStyle & WS_HSCROLL) wndRect.bottom += GetSystemMetrics(SM_CXVSCROLL);
+
+	SetWindowPos(hWnd, NULL, 0, 0, wndRect.right - wndRect.left, wndRect.bottom - wndRect.top, SWP_NOMOVE | SWP_NOZORDER);
+}
+
 double StackCalculate(string text);
 vector<string> StringSplit(string str, char token);
 RECT MakeRect(POINTFLOAT pos, int width, int height);

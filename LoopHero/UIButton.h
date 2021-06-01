@@ -12,7 +12,7 @@ enum class UI_BUTTON_STATE
 enum class UI_BUTTON_TYPE
 {
 	BUTTON,
-	TOGGLE
+	RADIO
 };
 
 class Image;
@@ -25,8 +25,11 @@ private:
 	Image* lpButtonImage;
 	vector<function<void()>> vClickFuncs;
 
+	string groupId;
+
 public:
 	virtual void Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height, UI_BUTTON_TYPE type);
+	virtual void Release();
 	virtual void Render(HDC hdc);
 
 	void SetButtonImage(string imageKey);
@@ -34,12 +37,18 @@ public:
 
 	void OnClick();
 	void CallBack(ObserverHandler* lpCaller);
+	void RadioCallBack(ObserverHandler* lpCaller);
 
+	void ClearFunc();
 	void PushBackFunc(function<void()> func);
 	void PopFunc();
+
+	void SetRadioGroup(string groupId);
 
 	virtual void OnClick(EventData& data) final;
 	virtual void OnMouseOver(EventData& data) final;
 	virtual void OnMouseOut(EventData& data) final;
+
+	inline void SetState(UI_BUTTON_STATE state) { this->state = state; }
 };
 
