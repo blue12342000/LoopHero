@@ -25,7 +25,7 @@ void UITimeTick::Render(HDC hdc)
 	GameUI::Render(hdc);
 }
 
-void UITimeTick::OnClick(EventData& data)
-{
-	isUseTick = !isUseTick;
-}
+//void UITimeTick::OnClick(EventData& data)
+//{
+//	isUseTick = !isUseTick;
+//}

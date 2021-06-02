@@ -1,13 +1,20 @@
 #include "AnimationMove.h"
 #include "AnimationUIController.h"
+#include "PoolingManager.h"
 #include "Utill.h"
+
+void AnimationMove::Release()
+{
+	vMoveTime.clear();
+	vMovePoint.clear();
+	PoolingManager::GetSingleton()->AddClass(this);
+}
 
 void AnimationMove::Exec(AnimVariable& animVar)
 {
 	if (!vMoveTime.empty())
 	{
-		isLinear = false;
-		if (isLinear)
+		if (animVar.isLinear)
 		{
 			animVar.position = animVar.origin + LerpAxis(vMovePoint, (float)animVar.tick / vMoveTime.back());
 		}
@@ -46,5 +53,14 @@ void AnimationMove::RemoveEvent(int index)
 	{
 		vMoveTime.erase(vMoveTime.begin() + index);
 		vMovePoint.erase(vMovePoint.begin() + index);
+	}
+}
+
+void AnimationMove::ResetEvent()
+{
+	if (vMoveTime.size() > 1)
+	{
+		vMoveTime.erase(vMoveTime.begin() + 1, vMoveTime.end());
+		vMovePoint.erase(vMovePoint.begin() + 1, vMovePoint.end());
 	}
 }

@@ -23,8 +23,6 @@ void UIGameUIInfo::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
 	lpAxisYBar = GameUI::Create<UIProgressBar>(this);
 	lpAxisYBar->Init(UI_ANCHOR::BOTTOM_MIDDLE, { 0.0f, 30 }, 250, 15, UI_BAR_TYPE::RANGE, "axis_bar", "axis_bar_button");
 	lpAxisYBar->SetRange(-300, WINSIZE_HEIGHT + 300);
-
-	AddEventHandler("OpenAnimController", bind(&UIGameUIInfo::OpenAnimController, this, placeholders::_1));
 }
 
 void UIGameUIInfo::Render(HDC hdc)
@@ -33,9 +31,18 @@ void UIGameUIInfo::Render(HDC hdc)
 	GameUI::Render(hdc);
 }
 
-void UIGameUIInfo::OpenAnimController(ObserverHandler* lpCaller)
+void UIGameUIInfo::RefreshBar()
 {
-	GameUI* lpGameUI = dynamic_cast<GameUI*>(lpCaller);
+	if (lpTarget)
+	{
+		POINTFLOAT worldPos = lpTarget->GetWorldPos();
+		lpAxisXBar->SetVar(worldPos.x);
+		lpAxisYBar->SetVar(worldPos.y);
+	}
+}
+
+void UIGameUIInfo::OpenAnimController(GameUI* lpGameUI)
+{
 	if (lpGameUI)
 	{
 		lpTarget = lpGameUI;

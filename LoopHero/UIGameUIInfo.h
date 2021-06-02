@@ -17,6 +17,8 @@ public:
 	virtual void Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height) override;
 	virtual void Render(HDC hdc) override;
 
-	void OpenAnimController(ObserverHandler* lpCaller);
+	void RefreshBar();
+
+	void OpenAnimController(GameUI* lpTarget);
 };
 

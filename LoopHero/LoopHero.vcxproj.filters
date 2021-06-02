@@ -88,11 +88,11 @@
     <Filter Include="소스 파일\LoopHero\Animator">
       <UniqueIdentifier>{06a38257-60dd-4893-8c95-e382b4032e78}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\LoopHero\Animator\Base">
-      <UniqueIdentifier>{dd4d29d4-0a75-489f-a69a-f30304a05695}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\LoopHero\Animator\Controller">
       <UniqueIdentifier>{1d882807-04cc-481a-9ce0-40bb79f5137a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\LoopHero\Animator\Super">
+      <UniqueIdentifier>{dd4d29d4-0a75-489f-a69a-f30304a05695}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -254,9 +254,6 @@
     </ClCompile>
     <ClCompile Include="AnimationMove.cpp">
       <Filter>소스 파일\LoopHero\Animator</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimationHandler.cpp">
-      <Filter>소스 파일\LoopHero\Animator\Base</Filter>
     </ClCompile>
     <ClCompile Include="AnimationUIController.cpp">
       <Filter>소스 파일\LoopHero\Animator\Controller</Filter>
@@ -459,7 +456,7 @@
       <Filter>소스 파일\LoopHero\Animator</Filter>
     </ClInclude>
     <ClInclude Include="AnimationHandler.h">
-      <Filter>소스 파일\LoopHero\Animator\Base</Filter>
+      <Filter>소스 파일\LoopHero\Animator\Super</Filter>
     </ClInclude>
     <ClInclude Include="AnimationUIController.h">
       <Filter>소스 파일\LoopHero\Animator\Controller</Filter>

@@ -225,7 +225,7 @@ void UIProgressBar::OnBeginDrag(EventData& data)
 	float ratio = (var - minVar) / (maxVar - minVar);
 	if (ratio > 1) ratio = 1;
 
-	RECT inRect = { rc.left + (int)(width * ratio) - 5, rc.top - 2, rc.left + (int)(width * ratio) + lpBar->GetWidth() + 2, rc.top + lpBar->GetHeight() + 2 };
+	RECT inRect = { rc.left + (int)(width * ratio) - 5, rc.top - 2, rc.left + (int)(width * ratio) + lpBar->GetWidth() + 5, rc.bottom + 2 };
 	if (PtInRect(&inRect, data.point))
 	{
 		isDrag = true;

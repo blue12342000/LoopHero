@@ -15,8 +15,6 @@ void UILogo::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
 
     lpAnimController = PoolingManager::GetSingleton()->GetClass<AnimationUIController>();
     lpAnimController->Init(this);
-    lpAnimController->AddEventTime(5.5f);
-    //AnimationMove* lpAnimMove = lpAnimController->AddAnimationHandler<AnimationMove>();
 }
 
 void UILogo::Release()

@@ -18,6 +18,7 @@ struct AnimVariable
 	float elapsedTime;
 
 	int sequence;
+	bool isLinear;
 };
 
 struct AnimTick
@@ -39,9 +40,9 @@ private:
 	map<string, AnimationHandler*> mAnimHandler;
 	AnimVariable animVar;
 
-	//set<AnimTick, function<bool(AnimTick,AnimTick)>> sAnimTick;
 	set<int> sAnimTick;
 	set<int>::iterator tickIter;
+	vector<AnimVariable> vAnimVars;
 
 public:
 	void Init(GameUI* lpTarget);
@@ -58,7 +59,6 @@ public:
 		if (it == mAnimHandler.end())
 		{
 			mAnimHandler.insert(make_pair(name, lpAnimHandler));
-			//sAnimTick.begin()->vAnimHandle.push_back(name);
 		}
 		else
 		{
@@ -72,12 +72,18 @@ public:
 	void Resume();
 	void Stop();
 
+	void ResetEvent();
 	void AddEventTime(float time);
 	void AddEventTick(int timeTick);
 
+	vector<AnimVariable> GetAnimVariables();
+
 	inline vector<int> GetEventTicks() { return vector<int>(sAnimTick.begin(), sAnimTick.end()); }
+	inline bool IsEventExist(float time) { return sAnimTick.find((int)(time / tickScale + FLT_EPSILON)) != sAnimTick.end(); }
 	inline bool IsEventExist(int tick) { return sAnimTick.find(tick) != sAnimTick.end(); }
 	inline float GetElapsedTime() { return animVar.elapsedTime; }
 	inline bool IsPlay() { return isPlay; }
+	inline bool IsLinear() { return animVar.isLinear; }
+	inline void ToggleLinear() { animVar.isLinear = !animVar.isLinear; }
 };
 

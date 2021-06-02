@@ -6,9 +6,12 @@ class AnimationHandler : public GameNode
 {
 public:
 	virtual ~AnimationHandler() {}
+
+	virtual void Release() = 0;
 	virtual void Exec(AnimVariable& animVar) = 0;
 	virtual void AddEvent(int index, AnimVariable& animVar) = 0;
 	virtual void ReplaceEvent(int index, AnimVariable& animVar) = 0;
 	virtual void RemoveEvent(int index) = 0;
+	virtual void ResetEvent() = 0;
 };
 

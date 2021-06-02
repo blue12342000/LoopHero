@@ -32,6 +32,12 @@ HRESULT FontManager::Init()
 	logFont.lfWeight = FW_BOLD;
 	mLogFonts.insert(make_pair("B°íµñ", logFont));
 
+	strcpy_s(logFont.lfFaceName, "³ª´®¹Ù¸¥°íµñ");
+	mLogFonts.insert(make_pair("B³ª´®¹Ù¸¥°íµñ", logFont));
+
+	logFont.lfWeight = FW_LIGHT;
+	mLogFonts.insert(make_pair("L³ª´®¹Ù¸¥°íµñ", logFont));
+
 	return S_OK;
 }
 

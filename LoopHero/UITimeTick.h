@@ -14,7 +14,7 @@ public:
 	virtual void Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height) override;
 	virtual void Render(HDC hdc) override;
 
-	void OnClick(EventData& data) override;
+	//void OnClick(EventData& data) override;
 
 	inline void SetUseTick(bool isUseTick) { this->isUseTick = isUseTick; }
 	inline void SetTick(int tick) { this->timeTick = tick; }

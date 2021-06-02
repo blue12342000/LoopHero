@@ -11,6 +11,7 @@ void UIButton::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height, UI_
 
 	lpButtonImage = nullptr;
 	groupId = to_string((__int64)(this));
+	isOn = false;
 
 	AddEventHandler("__OnClick_" + to_string((__int64)(this)), bind(&UIButton::CallBack, this, placeholders::_1));
 	if (type == UI_BUTTON_TYPE::RADIO) AddEventHandler("__OnClick_button_" + groupId, bind(&UIButton::RadioCallBack, this, placeholders::_1));
@@ -18,13 +19,17 @@ void UIButton::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height, UI_
 
 void UIButton::Release()
 {
+	isOn = false;
 	vClickFuncs.clear();
 	GameUI::Release();
 }
 
 void UIButton::Render(HDC hdc)
 {
-	if (lpButtonImage) lpButtonImage->Render(hdc, rc.left, rc.top, { 0, (int)state });
+	if (lpButtonImage)
+	{
+		lpButtonImage->Render(hdc, rc.left, rc.top, { isOn, (int)state });
+	}
 	GameUI::Render(hdc);
 }
 
@@ -100,6 +105,10 @@ void UIButton::OnClick(EventData& data)
 	if (type == UI_BUTTON_TYPE::RADIO)
 	{
 		ObserverManager::GetSingleton()->Notify("__OnClick_button_" + groupId, this);
+	}
+	else if (type == UI_BUTTON_TYPE::TOGGLE)
+	{
+		isOn = !isOn;
 	}
 }
 

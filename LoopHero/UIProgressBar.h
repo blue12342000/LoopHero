@@ -67,6 +67,7 @@ public:
 	void OnEndDrag(EventData& data) override;
 
 	inline void SetTick(float tick) { this->tick = tick; }
+	inline float GetTick() { return this->tick; }
 	inline int GetVarTick() { return (int)(var / tick + FLT_EPSILON); }
 	inline int GetTotalTick() { return (int)((maxVar - minVar) / tick + FLT_EPSILON); }
 };

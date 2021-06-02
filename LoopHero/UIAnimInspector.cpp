@@ -26,15 +26,18 @@ void UIAnimInspector::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int heig
 	lpTimeBar = GameUI::Create<UIProgressBar>(this);
 	lpTimeBar->Init(UI_ANCHOR::LEFT_TOP, { 30.0f, 30.0f }, width - 160, 30, UI_BAR_TYPE::RANGE, "time_axis_bar", "axis_bar_button");
 	lpTimeBar->SetRange(0.0f, 10.0f);
-	lpTimeBar->SetTick(0.01f);
+	lpTimeBar->SetTick(0.1f);
 	lpTimeBar->PushBackFunc(bind([](UITextField* lpTimeLabel, float var) { lpTimeLabel->SetText(to_string(var).substr(0, to_string(var).find('.') + 3) + "s"); }, lpTimeLabel, placeholders::_1));
+	lpTimeBar->PushBackFunc(bind(&UIAnimTickInfo::ViewAnimVariable, lpAnimTickInfo, placeholders::_1));
+	lpTimeBar->PushBackFunc(bind(&UIAnimInspector::MoveTarget, this, placeholders::_1));
+
 	lpTimeLabel->SetText(to_string(lpTimeBar->GetVar()).substr(0, to_string(lpTimeBar->GetVar()).find('.') + 3) + "s");
 
 	lpAnimTimeScroll = GameUI::Create<UIHorizontalScroll>(this);
 	lpAnimTimeScroll->Init(UI_ANCHOR::LEFT_TOP, { 30.0f, 70.0f }, width - 160, 50, HSCROLL_ALIGN::LEFT, HS_ARGS_INSERT::BEFORE, 0, 0);
 	lpAnimTimeScroll->SetHScrollControl(HSCROLL_ITEM_CONTROL::FIXED);
 	lpAnimTimeScroll->SetHScrollEscape(HSCROLL_ITEM_ESCAPE::DRAW);
-	for (int i = 0; i < lpTimeBar->GetTotalTick(); ++i)
+	for (int i = 0, n = lpTimeBar->GetTotalTick() + 1; i < n; ++i)
 	{
 		UITimeTick* lpTimeTick = GameUI::Create<UITimeTick>();
 		lpTimeTick->Init(UI_ANCHOR::MIDDLE, { 0.0f, 0.0f }, 30, 50);
@@ -57,6 +60,14 @@ void UIAnimInspector::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int heig
 	lpPauseBtn = GameUI::Create<UIButton>(this);
 	lpPauseBtn->Init(UI_ANCHOR::RIGHT_TOP, { 45.0f, 140.0f }, 54, 34, UI_BUTTON_TYPE::BUTTON);
 	lpPauseBtn->SetButtonImage("pause_button_27_17");
+
+	lpResetBtn = GameUI::Create<UIButton>(this);
+	lpResetBtn->Init(UI_ANCHOR::RIGHT_TOP, { 45.0f, 180.0f }, 54, 34, UI_BUTTON_TYPE::BUTTON);
+	lpResetBtn->SetButtonImage("reset_button_27_17");
+
+	lpLinearBtn = GameUI::Create<UIButton>(this);
+	lpLinearBtn->Init(UI_ANCHOR::RIGHT_TOP, { 45.0f, 220.0f }, 54, 34, UI_BUTTON_TYPE::TOGGLE);
+	lpLinearBtn->SetButtonImage("linear_button_27_17");
 
 	AddEventHandler("OpenAnimController", bind(&UIAnimInspector::OpenAnimController, this, placeholders::_1));
 }
@@ -81,6 +92,50 @@ void UIAnimInspector::Render(HDC hdc)
 	if (lpBackground) lpBackground->LoopRender(hdc, POINT{ rc.left, rc.top }, width, height, 0);
 
 	GameUI::Render(hdc);
+
+	if (vAnimVariables.size() > 1)
+	{
+		HPEN hPen, hOldPen;
+		hPen = CreatePen(PS_SOLID, 3, RGB(255, 170, 0));
+		hOldPen = (HPEN)SelectObject(hdc, hPen);
+		MoveToEx(hdc, vAnimVariables.front().position.x, vAnimVariables.front().position.y, nullptr);
+		for (const auto& animVar : vAnimVariables)
+		{
+			LineTo(hdc, animVar.position.x, animVar.position.y);
+		}
+		DeleteObject(SelectObject(hdc, hOldPen));
+	}
+}
+
+void UIAnimInspector::MoveTarget(float time)
+{
+	if (lpTarget)
+	{
+		if (lpTargetAnim->IsPlay()) return;
+
+		int index = (int)(time / 0.01f + FLT_EPSILON);
+		if (index < vAnimVariables.size())
+		{
+			lpTarget->SetWorldPos(vAnimVariables[index].position);
+			lpUIInfo->RefreshBar();
+		}
+	}
+}
+
+void UIAnimInspector::AnimTimeTickRefreash()
+{
+	if (lpTarget)
+	{
+		// 이벤트 적용된 틱 가져와서 기본값 넣어주기
+		for (int i = 0, n = lpTimeBar->GetTotalTick(); i < n; ++i)
+		{
+			((UITimeTick*)lpAnimTimeScroll->GetChild(i))->SetUseTick(lpTargetAnim->IsEventExist(i * lpTimeBar->GetTick()));
+		}
+
+		vAnimVariables = lpTargetAnim->GetAnimVariables();
+		lpAnimTickInfo->SetAnimVariables(vAnimVariables);
+		lpAnimTickInfo->ViewAnimVariable(lpTimeBar->GetVar());
+	}
 }
 
 void UIAnimInspector::OpenAnimController(ObserverHandler* lpCaller)
@@ -92,12 +147,14 @@ void UIAnimInspector::OpenAnimController(ObserverHandler* lpCaller)
 		if (isVisible = (lpTarget != nullptr))
 		{
 			state = ANIM_INSPECTOR_STATE::STOP;
+			lpUIInfo->OpenAnimController(lpTarget);
 			lpTargetAnim = lpTarget->GetAnimController();
 			if (lpTargetAnim)
 			{
 				lpSaveBtn->ClearFunc();
-				lpSaveBtn->PushBackFunc(bind([](AnimationUIController* lpTargetAnim, UIProgressBar* lpTimeBar) {lpTargetAnim->AddEventTick(lpTimeBar->GetVarTick()); }, lpTargetAnim, lpTimeBar));
+				lpSaveBtn->PushBackFunc(bind([](AnimationUIController* lpTargetAnim, UIProgressBar* lpTimeBar) {lpTargetAnim->AddEventTime(lpTimeBar->GetVar()); }, lpTargetAnim, lpTimeBar));
 				lpSaveBtn->PushBackFunc(bind([](UIHorizontalScroll* lpAnimTimeScroll, UIProgressBar* lpTimeBar) {((UITimeTick*)lpAnimTimeScroll->GetChild(lpTimeBar->GetVarTick()))->SetUseTick(true); }, lpAnimTimeScroll, lpTimeBar));
+				lpSaveBtn->PushBackFunc(bind(&UIAnimInspector::AnimTimeTickRefreash, this));
 
 				lpPlayBtn->ClearFunc();
 				lpPlayBtn->PushBackFunc(bind(&AnimationUIController::Play, lpTargetAnim));
@@ -107,11 +164,16 @@ void UIAnimInspector::OpenAnimController(ObserverHandler* lpCaller)
 				lpPauseBtn->PushBackFunc(bind(&AnimationUIController::Stop, lpTargetAnim));
 				lpPauseBtn->PushBackFunc(bind(&UIAnimInspector::SetState, this, ANIM_INSPECTOR_STATE::STOP));
 
-				// 이벤트 적용된 틱 가져와서 기본값 넣어주기
-				for (int i = 0, n = lpTimeBar->GetTotalTick(); i < n; ++i)
-				{
-					((UITimeTick*)lpAnimTimeScroll->GetChild(i))->SetUseTick(lpTargetAnim->IsEventExist(i));
-				}
+				lpResetBtn->ClearFunc();
+				lpResetBtn->PushBackFunc(bind(&AnimationUIController::ResetEvent, lpTargetAnim));
+				lpResetBtn->PushBackFunc(bind(&UIAnimInspector::AnimTimeTickRefreash, this));
+
+				lpLinearBtn->ClearFunc();
+				lpLinearBtn->PushBackFunc(bind(&AnimationUIController::ToggleLinear, lpTargetAnim));
+				lpLinearBtn->PushBackFunc(bind(&UIAnimInspector::AnimTimeTickRefreash, this));
+				lpLinearBtn->SetOn(lpTargetAnim->IsLinear());
+
+				AnimTimeTickRefreash();
 			}
 		}
 	}

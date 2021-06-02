@@ -12,7 +12,8 @@ enum class UI_BUTTON_STATE
 enum class UI_BUTTON_TYPE
 {
 	BUTTON,
-	RADIO
+	RADIO,
+	TOGGLE
 };
 
 class Image;
@@ -26,6 +27,7 @@ private:
 	vector<function<void()>> vClickFuncs;
 
 	string groupId;
+	bool isOn;
 
 public:
 	virtual void Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height, UI_BUTTON_TYPE type);
@@ -50,5 +52,7 @@ public:
 	virtual void OnMouseOut(EventData& data) final;
 
 	inline void SetState(UI_BUTTON_STATE state) { this->state = state; }
+	inline void SetOn(bool isOn) { this->isOn = (isOn && type == UI_BUTTON_TYPE::TOGGLE); }
+	inline bool IsOn() { return isOn; }
 };
 

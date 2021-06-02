@@ -142,6 +142,10 @@ HRESULT ImageManager::Init()
     mLpImages["pause_button_27_17"]->Init("Image/UI/Title/pause_button_27_17.bmp", 27 * 2, 51 * 2, 1, 3, 3, true, RGB(0, 170, 255));
     mLpImages.insert(make_pair("save_button_27_17", new Image()));
     mLpImages["save_button_27_17"]->Init("Image/UI/Title/save_button_27_17.bmp", 27 * 2, 51 * 2, 1, 3, 3, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("reset_button_27_17", new Image()));
+    mLpImages["reset_button_27_17"]->Init("Image/UI/Title/reset_button_27_17.bmp", 27 * 2, 51 * 2, 1, 3, 3, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("linear_button_27_17", new Image()));
+    mLpImages["linear_button_27_17"]->Init("Image/UI/Title/linear_button_27_17.bmp", 27 * 4, 51 * 2, 2, 3, 6, true, RGB(0, 170, 255));
 
     mLpImages.insert(make_pair("button_27_17", new Image()));
     mLpImages["button_27_17"]->Init("Image/UI/Common/button_27_17.bmp", 27 * 3, 51 * 3, 1, 3, 3, true, RGB(0, 170, 255));

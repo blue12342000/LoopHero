@@ -6,13 +6,13 @@
 
 void AnimationUIController::Init(GameUI* lpTarget)
 {
+	vAnimVars.reserve(1000);
 	this->lpTarget = lpTarget;
 	this->isPlay = false;
-
 	this->tickScale = 0.01f;
 
-	//auto compare = [](AnimTick a, AnimTick b) { return a.tick < b.tick; };
-	//sAnimTick = decltype(sAnimTick)(compare);
+	animVar.isLinear = false;
+	animVar.sequence = 0;
 	AddAnimationHandler<AnimationMove>();
 	AddEventTick(0);
 }
@@ -21,10 +21,11 @@ void AnimationUIController::Release()
 {
 	lpTarget = nullptr;
 	isPlay = false;
-
+	animVar.isLinear = false;
+	animVar.sequence = 0;
 	for (const auto& pair : mAnimHandler)
 	{
-		PoolingManager::GetSingleton()->AddClass(pair.second);
+		pair.second->Release();
 	}
 	mAnimHandler.clear();
 	sAnimTick.clear();
@@ -51,7 +52,6 @@ void AnimationUIController::Update(float deltaTime)
 		if (animVar.tick > *sAnimTick.crbegin())
 		{
 			isPlay = false;
-			//animVar.elapsedTime = 0.0f;
 		}
 	}
 }
@@ -87,6 +87,20 @@ void AnimationUIController::Stop()
 	isPlay = false;
 }
 
+void AnimationUIController::ResetEvent()
+{
+	if (sAnimTick.size() > 1)
+	{
+		for (const auto& pair : mAnimHandler)
+		{
+			pair.second->ResetEvent();
+		}
+		sAnimTick.clear();
+		sAnimTick.insert(0);
+		tickIter = sAnimTick.begin();
+	}
+}
+
 void AnimationUIController::AddEventTime(float time)
 {
 	int tick = (int)(time / tickScale + FLT_EPSILON);
@@ -95,7 +109,7 @@ void AnimationUIController::AddEventTime(float time)
 
 void AnimationUIController::AddEventTick(int timeTick)
 {
-	if (-1 < timeTick && timeTick < 10 / tickScale )
+	if (-1 < timeTick && timeTick <= 10 / tickScale )
 	{
 		animVar.position = lpTarget->GetWorldPos();
 		animVar.tick = timeTick;
@@ -119,5 +133,41 @@ void AnimationUIController::AddEventTick(int timeTick)
 				pair.second->ReplaceEvent(index, animVar);
 			}
 		}
+		tickIter = sAnimTick.begin();
 	}
+}
+
+vector<AnimVariable> AnimationUIController::GetAnimVariables()
+{
+	vAnimVars.clear();
+	AnimVariable animVariable;
+	animVariable.isLinear = animVar.isLinear;
+	animVariable.origin = animVar.origin;
+	animVariable.position = animVar.origin;
+	animVariable.elapsedTime = 0.0f;
+	animVariable.tick = 0;
+	animVariable.sequence = 0;
+	if (!sAnimTick.empty())
+	{
+		set<int>::iterator sit = sAnimTick.begin();
+		while (animVariable.tick <= *sAnimTick.crbegin())
+		{
+			if (*sit < animVariable.tick)
+			{
+				++sit;
+				++animVariable.sequence;
+			}
+
+			for (const auto& pair : mAnimHandler)
+			{
+				pair.second->Exec(animVariable);
+			}
+			vAnimVars.push_back(animVariable);
+
+			animVariable.elapsedTime += tickScale;
+			animVariable.tick = (int)(animVariable.elapsedTime / tickScale + FLT_EPSILON);
+		}
+	}
+
+	return vAnimVars;
 }
