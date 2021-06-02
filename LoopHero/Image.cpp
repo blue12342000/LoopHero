@@ -210,6 +210,9 @@ void Image::Render(HDC hdc, int destX, int destY, int frame, IMAGE_ALIGN align)
     case IMAGE_ALIGN::MIDDLE_TOP:
         destX -= lpImageInfo->width / 2;
         break;
+    case IMAGE_ALIGN::LEFT_MIDDLE:
+        destY -= lpImageInfo->height / 2;
+        break;
     }
 
     if (lpImageInfo->isTransparent)
@@ -241,6 +244,9 @@ void Image::Render(HDC hdc, int destX, int destY, POINT frame, IMAGE_ALIGN align
         break;
     case IMAGE_ALIGN::MIDDLE_TOP:
         destX -= lpImageInfo->width / 2;
+        break;
+    case IMAGE_ALIGN::LEFT_MIDDLE:
+        destY -= lpImageInfo->height / 2;
         break;
     }
 

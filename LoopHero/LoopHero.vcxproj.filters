@@ -270,6 +270,12 @@
     <ClCompile Include="UIGameUIInfo.cpp">
       <Filter>소스 파일\LoopHero\UI\Title</Filter>
     </ClCompile>
+    <ClCompile Include="UITimeTick.cpp">
+      <Filter>소스 파일\LoopHero\UI\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="UIAnimTickInfo.cpp">
+      <Filter>소스 파일\LoopHero\UI\Title</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Image.h">
@@ -465,6 +471,12 @@
       <Filter>소스 파일\LoopHero\UI\Title</Filter>
     </ClInclude>
     <ClInclude Include="UIGameUIInfo.h">
+      <Filter>소스 파일\LoopHero\UI\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="UITimeTick.h">
+      <Filter>소스 파일\LoopHero\UI\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="UIAnimTickInfo.h">
       <Filter>소스 파일\LoopHero\UI\Title</Filter>
     </ClInclude>
   </ItemGroup>

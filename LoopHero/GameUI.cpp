@@ -126,6 +126,7 @@ void GameUI::LateUpdate(float deltaTime)
 {
 	if (isVisible)
 	{
+		if (lpAnimController) lpAnimController->Update(deltaTime);
 		Refresh();
 		for (int i = 0; i < vChilds.size(); ++i)
 		{

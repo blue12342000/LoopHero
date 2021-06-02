@@ -25,6 +25,9 @@ private:
 	Image* lpBackground;
 	Image* lpBar;
 
+	float tick;
+	float lastVar;
+
 	function<float()> lpTargetFunc;
 	float* lpTargetVar;
 	
@@ -52,6 +55,7 @@ public:
 	void SetTrackingMaxData(float& lpTargetVar);
 	void SetTrackingMaxData(function<float()> lpTargetFunc);
 
+	float GetVar();
 	void SetVar(float var);
 	void SetRange(float min, float max);
 	void ClearFunc();
@@ -61,5 +65,9 @@ public:
 	void OnBeginDrag(EventData& data) override;
 	void OnDrag(EventData& data) override;
 	void OnEndDrag(EventData& data) override;
+
+	inline void SetTick(float tick) { this->tick = tick; }
+	inline int GetVarTick() { return (int)(var / tick + FLT_EPSILON); }
+	inline int GetTotalTick() { return (int)((maxVar - minVar) / tick + FLT_EPSILON); }
 };
 

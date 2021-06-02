@@ -1,4 +1,5 @@
 #include "UIHorizontalScroll.h"
+#include "UIProgressBar.h"
 #include "Utill.h"
 
 void UIHorizontalScroll::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height, HSCROLL_ALIGN align, HS_ARGS_INSERT insert, int maxItems, int margin)
@@ -29,35 +30,71 @@ void UIHorizontalScroll::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int h
 	dragNextIndex = -1;
 }
 
+void UIHorizontalScroll::Release()
+{
+	lpScroll = nullptr;
+	sHeightSort.clear();
+	sWidthSort.clear();
+	vItemSlots.clear();
+	totalItemWidth = 0.0f;
+	lpSelected = nullptr;
+	GameUI::Release();
+}
+
 void UIHorizontalScroll::Update(float deltaTime)
 {
 	POINTFLOAT currPos, newPos;
-	for (int i = 0, idx = 0; i < vChilds.size(); ++i, ++idx)
+	if (lpScroll == nullptr)
 	{
-		idx %= vChilds.size();
-		if (lpSelected == vChilds[idx])
+		for (int i = 0, idx = 0; i < vChilds.size(); ++i, ++idx)
 		{
-			++idx;
 			idx %= vChilds.size();
+			if (lpSelected == vChilds[idx])
+			{
+				++idx;
+				idx %= vChilds.size();
+			}
+			if (i == dragNextIndex)
+			{
+				--idx;
+				continue;
+			}
+		
+			currPos = vChilds[idx]->GetPos();
+			newPos = currPos;
+			newPos.x += (vItemSlots[i].pos.x - currPos.x) * 5.0f * deltaTime;
+			if (abs(newPos.x - vItemSlots[i].pos.x) < 0.01f) newPos.x = vItemSlots[i].pos.x;
+			newPos.y += (vItemSlots[i].pos.y - currPos.y) * 5.0f * deltaTime;
+			if (abs(newPos.y - vItemSlots[i].pos.y) < 0.01f) newPos.y = vItemSlots[i].pos.y;
+		
+			vChilds[idx]->SetPos(newPos);
 		}
-		if (i == dragNextIndex)
+		if (lpSelected && escape == HSCROLL_ITEM_ESCAPE::HIDE)
 		{
-			--idx;
-			continue;
+			lpSelected->SetVisible(PtInRect(&rc, KeyManager::GetSingleton()->GetMousePoint()));
 		}
-		
-		currPos = vChilds[idx]->GetPos();
-		newPos = currPos;
-		newPos.x += (vItemSlots[i].pos.x - currPos.x) * 5.0f * deltaTime;
-		if (abs(newPos.x - vItemSlots[i].pos.x) < 0.01f) newPos.x = vItemSlots[i].pos.x;
-		newPos.y += (vItemSlots[i].pos.y - currPos.y) * 5.0f * deltaTime;
-		if (abs(newPos.y - vItemSlots[i].pos.y) < 0.01f) newPos.y = vItemSlots[i].pos.y;
-		
-		vChilds[idx]->SetPos(newPos);
 	}
-	if (lpSelected && escape == HSCROLL_ITEM_ESCAPE::HIDE)
+	else
 	{
-		lpSelected->SetVisible(PtInRect(&rc, KeyManager::GetSingleton()->GetMousePoint()));
+		for (const auto& lpGameUI : vChilds)
+		{
+			lpGameUI->SetVisible(false);
+		}
+
+		for (int i = lpScroll->GetVarTick() - viewItemCount / 2, n = lpScroll->GetVarTick() + viewItemCount / 2, idx = 0; i < n; ++i, ++idx)
+		{
+			if (i < 0 || i >= vChilds.size()) continue;
+
+			//currPos = vChilds[i]->GetPos();
+			//newPos = currPos;
+			//newPos.x += (vItemSlots[idx].pos.x - currPos.x) * 5.0f * deltaTime;
+			//if (abs(newPos.x - vItemSlots[idx].pos.x) < 0.01f) newPos.x = vItemSlots[idx].pos.x;
+			//newPos.y += (vItemSlots[idx].pos.y - currPos.y) * 5.0f * deltaTime;
+			//if (abs(newPos.y - vItemSlots[idx].pos.y) < 0.01f) newPos.y = vItemSlots[idx].pos.y;
+
+			vChilds[i]->SetPos(vItemSlots[idx].pos);
+			vChilds[i]->SetVisible(true);
+		}
 	}
 
 	GameUI::Update(deltaTime);
@@ -65,6 +102,8 @@ void UIHorizontalScroll::Update(float deltaTime)
 
 void UIHorizontalScroll::Render(HDC hdc)
 {
+	RenderRectangle(hdc, rc, RGB(200, 200, 200));
+
 	GameUI::Render(hdc);
 }
 
@@ -136,6 +175,13 @@ void UIHorizontalScroll::SetMultiLineType(HSCROLL_MULTILINE multiLineType, int c
 {
 	this->multiLineType = multiLineType;
 	this->cols = cols;
+}
+
+void UIHorizontalScroll::SetScroll(UIProgressBar* lpScroll)
+{
+	this->lpScroll = lpScroll;
+	
+	SlotResize();
 }
 
 void UIHorizontalScroll::OnClick(EventData& data)
@@ -255,48 +301,84 @@ void UIHorizontalScroll::SlotResize()
 	if (cols > 0) { totalItemWidth = min(vChilds.size(), cols - 1) * (*sWidthSort.begin())->GetWidth(); }
 	else { totalItemWidth = (vChilds.size()) * (*sWidthSort.begin())->GetWidth(); }
 
-	if (vChilds.size() > 1)
+	if (lpScroll == nullptr)
 	{
-		margin = (width - totalItemWidth) / min(vChilds.size() - 1, cols - 1);
-		if (margin > maxMargin) margin = maxMargin;
+		// 사이 거리값은 스크롤이 없을때만 연산해준다
+		if (vChilds.size() > 1)
+		{
+			margin = (width - totalItemWidth) / min(vChilds.size() - 1, cols - 1);
+			if (margin > maxMargin) margin = maxMargin;
+		}
+	}
+	else
+	{
+		viewItemCount = width / slotWidth;
+		margin = maxMargin;
 	}
 
 	ItemSlot slot;
 	POINTFLOAT slotPos = { 0.0f, 0.0f };
-	vItemSlots.resize(vChilds.size());
-	for (int i = 0; i < vChilds.size(); ++i)
+	if (lpScroll == nullptr)
 	{
-		vItemSlots[i].pos = slotPos;
-		switch (align)
+		// 스크롤 없을때
+		vItemSlots.resize(vChilds.size());
+		for (int i = 0; i < vChilds.size(); ++i)
 		{
-		case HSCROLL_ALIGN::LEFT:
-			if (cols > 0) vItemSlots[i].worldPos = { rc.left + slotPos.x, rc.top + slotPos.y };
-			else vItemSlots[i].worldPos = { rc.left + slotPos.x, (rc.top + rc.bottom) * 0.5f + slotPos.y };
-			SetRect(&vItemSlots[i].rc, vItemSlots[i].worldPos.x, vItemSlots[i].worldPos.y, vItemSlots[i].worldPos.x + slotWidth, vItemSlots[i].worldPos.y + slotHeight);
-			break;
-		case HSCROLL_ALIGN::RIGHT:
-			if (cols > 0) vItemSlots[i].worldPos = { rc.right - slotPos.x, rc.top + slotPos.y };
-			else vItemSlots[i].worldPos = { rc.right - slotPos.x, (rc.top + rc.bottom) * 0.5f + slotPos.y };
-			SetRect(&vItemSlots[i].rc, vItemSlots[i].worldPos.x - slotWidth, vItemSlots[i].worldPos.y, vItemSlots[i].worldPos.x, vItemSlots[i].worldPos.y + slotHeight);
-			break;
-		}
+			vItemSlots[i].pos = slotPos;
+			switch (align)
+			{
+			case HSCROLL_ALIGN::LEFT:
+				if (cols > 0) vItemSlots[i].worldPos = { rc.left + slotPos.x, rc.top + slotPos.y };
+				else vItemSlots[i].worldPos = { rc.left + slotPos.x, (rc.top + rc.bottom) * 0.5f + slotPos.y };
+				SetRect(&vItemSlots[i].rc, vItemSlots[i].worldPos.x, vItemSlots[i].worldPos.y, vItemSlots[i].worldPos.x + slotWidth, vItemSlots[i].worldPos.y + slotHeight);
+				break;
+			case HSCROLL_ALIGN::RIGHT:
+				if (cols > 0) vItemSlots[i].worldPos = { rc.right - slotPos.x, rc.top + slotPos.y };
+				else vItemSlots[i].worldPos = { rc.right - slotPos.x, (rc.top + rc.bottom) * 0.5f + slotPos.y };
+				SetRect(&vItemSlots[i].rc, vItemSlots[i].worldPos.x - slotWidth, vItemSlots[i].worldPos.y, vItemSlots[i].worldPos.x, vItemSlots[i].worldPos.y + slotHeight);
+				break;
+			}
 
-		if (multiLineType != HSCROLL_MULTILINE::ZIGZAG) slotPos.x += slotWidth + margin;
-		else
-		{
-			if (((i / cols) % 2) == 0) slotPos.x += slotWidth + margin;
-			else slotPos.x -= (slotWidth + margin);
-		}
-
-		if (cols > 0 && ((i + 1) % cols) == 0)
-		{
-			if (multiLineType != HSCROLL_MULTILINE::ZIGZAG) slotPos.x = 0;
+			if (multiLineType != HSCROLL_MULTILINE::ZIGZAG) slotPos.x += slotWidth + margin;
 			else
 			{
-				if ((((i + 1) / cols) % 2) == 0) slotPos.x = 0;
-				else slotPos.x = width - slotWidth;
+				if (((i / cols) % 2) == 0) slotPos.x += slotWidth + margin;
+				else slotPos.x -= (slotWidth + margin);
 			}
-			slotPos.y += slotHeight + maxMargin;
+
+			if (cols > 0 && ((i + 1) % cols) == 0)
+			{
+				if (multiLineType != HSCROLL_MULTILINE::ZIGZAG) slotPos.x = 0;
+				else
+				{
+					if ((((i + 1) / cols) % 2) == 0) slotPos.x = 0;
+					else slotPos.x = width - slotWidth;
+				}
+				slotPos.y += slotHeight + maxMargin;
+			}
+		}
+	}
+	else
+	{
+		// 스크롤 있을때
+		int padding = (width - viewItemCount * (*sWidthSort.begin())->GetWidth()) / 2;
+		slotPos.x = padding;
+		vItemSlots.resize(viewItemCount);
+		for (int i = 0; i < viewItemCount; ++i)
+		{
+			vItemSlots[i].pos = slotPos;
+			switch (align)
+			{
+			case HSCROLL_ALIGN::LEFT:
+				vItemSlots[i].worldPos = { rc.left + slotPos.x, (rc.top + rc.bottom) * 0.5f + slotPos.y };
+				SetRect(&vItemSlots[i].rc, vItemSlots[i].worldPos.x, vItemSlots[i].worldPos.y, vItemSlots[i].worldPos.x + slotWidth, vItemSlots[i].worldPos.y + slotHeight);
+				break;
+			case HSCROLL_ALIGN::RIGHT:
+				vItemSlots[i].worldPos = { rc.right - slotPos.x, (rc.top + rc.bottom) * 0.5f + slotPos.y };
+				SetRect(&vItemSlots[i].rc, vItemSlots[i].worldPos.x - slotWidth, vItemSlots[i].worldPos.y, vItemSlots[i].worldPos.x, vItemSlots[i].worldPos.y + slotHeight);
+				break;
+			}
+			slotPos.x += slotWidth + margin;
 		}
 	}
 }

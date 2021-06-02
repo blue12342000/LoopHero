@@ -119,11 +119,6 @@ inline T LerpAxis(vector<T>& vAxis, float ratio)
 	}
 }
 
-inline POINTFLOAT operator+(POINTFLOAT& a, POINTFLOAT& b)
-{
-	return POINTFLOAT{ a.x + b.x, a.y + b.y };
-}
-
 inline POINTFLOAT operator+(POINTFLOAT a, POINTFLOAT b)
 {
 	return POINTFLOAT{ a.x + b.x, a.y + b.y };

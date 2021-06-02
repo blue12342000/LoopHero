@@ -12,9 +12,13 @@ void UIProgressBar::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height
 	this->maxTarget = UI_BAR_TARGET::VARIABLE;
 	this->lpTargetVar = nullptr;
 	this->lpMaxVar = nullptr;
+	this->tick = -1;
 
 	lpBackground = ImageManager::GetSingleton()->FindImage(back);
 	lpBar = ImageManager::GetSingleton()->FindImage(bar);
+
+	this->var = 0.0f;
+	lastVar = var;
 }
 
 void UIProgressBar::Release()
@@ -33,6 +37,15 @@ void UIProgressBar::Release()
 
 void UIProgressBar::Update(float deltaTime)
 {
+	if (lastVar < var - FLT_EPSILON || lastVar > var + FLT_EPSILON)
+	{
+		lastVar = var;
+		for (const auto& onChangeFunc : vChangedFuncs)
+		{
+			onChangeFunc(var);
+		}
+	}
+
 	GameUI::Update(deltaTime);
 }
 
@@ -49,6 +62,9 @@ void UIProgressBar::Render(HDC hdc)
 			break;
 		case UI_BAR_TYPE::VERTICAL:
 			lpBackground->PatternRender(hdc, rc.left, rc.bottom, width, height);
+			break;
+		case UI_BAR_TYPE::RANGE:
+			lpBackground->PatternRender(hdc, rc.left, rc.top, width, height);
 			break;
 		}
 	}
@@ -140,11 +156,43 @@ void UIProgressBar::SetTrackingMaxData(function<float()> lpTargetFunc)
 	}
 }
 
+float UIProgressBar::GetVar()
+{
+	if (type == UI_BAR_TYPE::RANGE)
+	{
+		return var;
+	}
+	else
+	{
+		float targetVar;
+		switch (target)
+		{
+		case UI_BAR_TARGET::FUNC:
+			if (lpTargetFunc) targetVar = lpTargetFunc();
+			else targetVar = 1;
+			break;
+		case UI_BAR_TARGET::VARIABLE:
+		default:
+			if (lpTargetVar) targetVar = *lpTargetVar;
+			else targetVar = 1;
+			break;
+		}
+		return targetVar;
+	}
+}
+
 void UIProgressBar::SetVar(float var)
 {
-	if (var < minVar) var = minVar;
-	else if (var > maxVar) var = maxVar;
+	if (var < minVar) { var = minVar; }
+	else if (var > maxVar) { var = maxVar; }
+	else if (tick > 0)
+	{
+		float ratio = (var - minVar) / (maxVar - minVar);
+		var = ((int)((((maxVar - minVar) / tick)) * ratio)) * tick + minVar;
+	}
+
 	this->var = var;
+	lastVar = var;
 }
 
 void UIProgressBar::SetRange(float min, float max)
@@ -154,6 +202,7 @@ void UIProgressBar::SetRange(float min, float max)
 
 	if (var < minVar) var = minVar;
 	else if (var > maxVar) var = maxVar;
+	lastVar = var;
 }
 
 void UIProgressBar::ClearFunc()
@@ -189,16 +238,19 @@ void UIProgressBar::OnDrag(EventData& data)
 	{
 		var = (float)(data.point.x - rc.left);
 		if (var < 0) { var = minVar; }
-		else if (var > (maxVar - minVar)) { var = maxVar; }
+		else if (var > width) { var = maxVar; }
 		else
 		{
-			float ratio = var / width;
-			var = (maxVar - minVar) * ratio + minVar;
-		}
-
-		for (const auto& onChangeFunc : vChangedFuncs)
-		{
-			onChangeFunc(var);
+			if (tick < 0)
+			{
+				float ratio = var / width;
+				var = (maxVar - minVar) * ratio + minVar;
+			}
+			else
+			{
+				float ratio = var / width;
+				var = ((int)((((maxVar - minVar) / tick)) * ratio)) * tick + minVar;
+			}
 		}
 	}
 }

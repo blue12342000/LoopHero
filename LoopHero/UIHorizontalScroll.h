@@ -34,6 +34,7 @@ enum class HSCROLL_ITEM_ESCAPE
 };
 
 class GameUI;
+class UIProgressBar;
 class UIHorizontalScroll : public GameUI
 {
 protected:
@@ -67,10 +68,15 @@ protected:
 	int selectedIndex;
 	int dragNextIndex;
 
+	// ScrollUI 해당 스크롤이 없다면 스크롤기능은 제공하지 않는다.
+	UIProgressBar* lpScroll;
+	int viewItemCount;
+
 public:
 	virtual ~UIHorizontalScroll() {}
 
 	virtual void Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height, HSCROLL_ALIGN align = HSCROLL_ALIGN::LEFT, HS_ARGS_INSERT insert = HS_ARGS_INSERT::BEFORE, int maxItems = 0, int margin = 4);
+	virtual void Release() override;
 	virtual void Update(float deltaTime) override;
 	virtual void Render(HDC hdc) override;
 
@@ -78,6 +84,8 @@ public:
 	virtual void RemoveChild(int index = 0) final;
 	
 	void SetMultiLineType(HSCROLL_MULTILINE multiLineType, int cols);
+
+	void SetScroll(UIProgressBar* lpScroll);
 
 	virtual void OnClick(EventData& data) override;
 	virtual void OnDrag(EventData& data) override;

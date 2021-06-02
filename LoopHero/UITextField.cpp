@@ -15,6 +15,8 @@ void UITextField::Release()
 
 void UITextField::Render(HDC hdc)
 {
+	//RenderRectangle(hdc, rc);
+
 	SetBkMode(hdc, TRANSPARENT);
 	COLORREF oldColor = SetTextColor(hdc, color);
 	if (hFont != NULL) hOldFont = (HFONT)SelectObject(hdc, hFont);

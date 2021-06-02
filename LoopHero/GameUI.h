@@ -89,6 +89,7 @@ public:
 	virtual inline int GetChildCount() final { return vChilds.size(); }
 	virtual inline int GetDepth() final { return depth; }
 	virtual inline vector<GameUI*> GetChilds() final { return vChilds; }
+	virtual inline GameUI* GetChild(int index) { return vChilds[index]; }
 	virtual inline bool IsVisible() final { return isVisible; }
 	virtual inline GameUI* GetParent() { return lpParent; }
 	virtual inline POINT GetCenter() final { return { (rc.left + rc.right) / 2, (rc.top + rc.bottom) / 2 }; }

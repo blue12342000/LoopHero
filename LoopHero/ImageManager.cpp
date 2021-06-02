@@ -127,8 +127,21 @@ HRESULT ImageManager::Init()
     mLpImages.insert(make_pair("axis_bar", new Image()));
     mLpImages["axis_bar"]->Init("Image/UI/Title/axis_bar.bmp", 250, 15, 1, 1, 1, true, RGB(0, 170, 255));
 
+    mLpImages.insert(make_pair("time_tick_arrow", new Image()));
+    mLpImages["time_tick_arrow"]->Init("Image/UI/Title/time_tick_arrow.bmp", 15, 15, 1, 1, 1, true, RGB(0, 170, 255));
+
+    mLpImages.insert(make_pair("time_axis_bar", new Image()));
+    mLpImages["time_axis_bar"]->Init("Image/UI/Title/time_axis_bar.bmp", 250, 30, 1, 1, 1, true, RGB(0, 170, 255));
+
     mLpImages.insert(make_pair("axis_bar_button", new Image()));
-    mLpImages["axis_bar_button"]->Init("Image/UI/Title/axis_bar_button.bmp", 5, 15, 1, 1, 1, true, RGB(0, 170, 255));
+    mLpImages["axis_bar_button"]->Init("Image/UI/Title/axis_bar_button.bmp", 15, 15, 1, 1, 1, true, RGB(0, 170, 255));
+
+    mLpImages.insert(make_pair("play_button_27_17", new Image()));
+    mLpImages["play_button_27_17"]->Init("Image/UI/Title/play_button_27_17.bmp", 27 * 2, 51 * 2, 1, 3, 3, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("pause_button_27_17", new Image()));
+    mLpImages["pause_button_27_17"]->Init("Image/UI/Title/pause_button_27_17.bmp", 27 * 2, 51 * 2, 1, 3, 3, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("save_button_27_17", new Image()));
+    mLpImages["save_button_27_17"]->Init("Image/UI/Title/save_button_27_17.bmp", 27 * 2, 51 * 2, 1, 3, 3, true, RGB(0, 170, 255));
 
     mLpImages.insert(make_pair("button_27_17", new Image()));
     mLpImages["button_27_17"]->Init("Image/UI/Common/button_27_17.bmp", 27 * 3, 51 * 3, 1, 3, 3, true, RGB(0, 170, 255));
