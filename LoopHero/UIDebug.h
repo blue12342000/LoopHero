@@ -10,6 +10,7 @@ private:
 	UITextField* lpLogText;
 
 	GameNode* lpDebugNode;
+	HDC hDrawDC;
 
 public:
 	virtual void Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height) override;
