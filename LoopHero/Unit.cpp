@@ -9,6 +9,8 @@ void Unit::Init()
 {
 	lpIcon = nullptr;
 	state = UNIT_STATE::ALIVE;
+	isPossibleLevelUp = true;
+	AddEventHandler("LevelUp", bind(&Unit::LevelUp, this, placeholders::_1));
 }
 
 void Unit::Release()
@@ -69,6 +71,11 @@ void Unit::SetTrait(Trait& trait)
 
 	name = lpTrait->GetTraitId();
 	mStatus = lpTrait->GetInitStatus();
+	for (int i = 1; i < GameData::GetSingleton()->GetLoopLevel(); ++i)
+	{
+		LevelUp(this);
+	}
+
 	currHp = GetStatus(UNIT_STATUS::MAX_HP);
 	for (const auto& pair : lpTrait->GetUnitSlot())
 	{
@@ -81,6 +88,7 @@ void Unit::SetTrait(Trait& trait)
 
 void Unit::UseEquipItem(UNIT_SLOT slot, EquipItem* lpEquipItem)
 {
+	float hpRatio = currHp / GetStatus(UNIT_STATUS::MAX_HP);
 	if (mEquip[slot].lpEquip)
 	{
 		for (const auto& pair : mEquip[slot].lpEquip->GetStatus())
@@ -94,6 +102,7 @@ void Unit::UseEquipItem(UNIT_SLOT slot, EquipItem* lpEquipItem)
 		mStatus[pair.first] += pair.second;
 	}
 
+	currHp = GetStatus(UNIT_STATUS::MAX_HP) * hpRatio;
 	mEquip[slot].lpEquip = lpEquipItem;
 }
 
@@ -118,4 +127,41 @@ string Unit::ToString()
 	}
 
 	return name + "|" + content;
+}
+
+void Unit::LevelUp(ObserverHandler* lpCaller)
+{
+	if (isPossibleLevelUp)
+	{
+		for (auto& pair : mStatus)
+		{
+			switch (pair.first)
+			{
+			case UNIT_STATUS::VAMP:
+			case UNIT_STATUS::COUNTER:
+			case UNIT_STATUS::EVASION:
+			case UNIT_STATUS::MOVE_SPEED:
+				pair.second *= 1.10f;
+				if (pair.second > 50)
+				{
+					pair.second = 50;
+				}
+				break;
+			case UNIT_STATUS::ATK_SPEED:
+				if (pair.second > 0)
+				{
+					pair.second *= 1.10f;
+					if (pair.second > 80)
+					{
+						pair.second = 80;
+					}
+				}
+				break;
+			default:
+				pair.second *= 1.25f;
+				break;
+			}
+		}
+		currHp = GetStatus(UNIT_STATUS::MAX_HP);
+	}
 }

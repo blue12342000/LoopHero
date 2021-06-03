@@ -1,10 +1,9 @@
 #pragma once
 #include "LoopHero.h"
 #include "EventTrigger.h"
-#include "ObserverHandler.h"
 #include "GameNode.h"
 
-class GameObject : public GameNode, public EventTrigger, public ObserverHandler
+class GameObject : public GameNode, public EventTrigger
 {
 protected:
 	bool isVisible;

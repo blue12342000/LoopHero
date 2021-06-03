@@ -15,6 +15,7 @@ enum class UI_BAR_TARGET
 };
 
 class Image;
+class UITextField;
 class UIProgressBar : public GameUI
 {
 private:
@@ -42,6 +43,9 @@ private:
 
 	vector<function<void(float)>> vChangedFuncs;
 
+	// 라벨출력이 필요하다면 외부에서 연결시켜준다면 해당 라벨에 데이터를 넣어준다.
+	UITextField* lpLabel;
+
 public:
 	virtual ~UIProgressBar() {}
 
@@ -56,6 +60,8 @@ public:
 	void SetTrackingMaxData(function<float()> lpTargetFunc);
 
 	float GetVar();
+	float GetMaxVar();
+
 	void SetVar(float var);
 	void SetRange(float min, float max);
 	void ClearFunc();
@@ -70,5 +76,6 @@ public:
 	inline float GetTick() { return this->tick; }
 	inline int GetVarTick() { return (int)(var / tick + FLT_EPSILON); }
 	inline int GetTotalTick() { return (int)((maxVar - minVar) / tick + FLT_EPSILON); }
+	inline void SetLabel(UITextField* lpLabel) { this->lpLabel = lpLabel; }
 };
 

@@ -15,7 +15,7 @@ void UIItemInfo::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
 
 	lpTag = GameUI::Create<UITextField>(this);
 	lpTag->Init(UI_ANCHOR::LEFT_TOP, { 25.0f, 20.0f }, 80, 25);
-	lpTag->SetFont(UI_TEXT_HALIGN::LEFT, UI_TEXT_VALIGN::MIDDLE, UI_TEXT_LINE::SINGLE, 17, RGB(255, 170, 255), "Lµ¸¿ò");
+	lpTag->SetFont(UI_TEXT_HALIGN::LEFT, UI_TEXT_VALIGN::MIDDLE, UI_TEXT_LINE::SINGLE, 13, RGB(255, 170, 255), "Lµ¸¿ò");
 
 	lpName = GameUI::Create<UITextField>(this);
 	lpName->Init(UI_ANCHOR::TOP_MIDDLE, { 0.0f, 20.0f }, width - 20, 25);

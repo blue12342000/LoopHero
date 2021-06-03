@@ -7,6 +7,7 @@
 #include "UILogo.h"
 #include "UIEditBox.h"
 #include "UIAnimInspector.h"
+#include "UIDebug.h"
 
 HRESULT Title::Init()
 {
@@ -23,8 +24,9 @@ HRESULT Title::Init()
     lpUIAnimInspector->Init(UI_ANCHOR::RIGHT_BOTTOM, { 0.0f, 0.0f }, 600, 300);
     lpUIAnimInspector->SetVisible(false);
 
-    //UIEditBox* lpEditBox = GameUI::Create<UIEditBox>(lpCanvus);
-    //lpEditBox->Init(UI_ANCHOR::MIDDLE, { 0.0f, 0.0f }, 400, 25, INPUT_TYPE::TEXT);
+    UIDebug* lpUIDebug = GameUI::Create<UIDebug>(lpCanvus);
+    lpUIDebug->Init(UI_ANCHOR::LEFT_TOP, { 0.0f, 0.0f }, 250, 50);
+    lpUIDebug->SetVisible(false);
 
     lpEventSystem = PoolingManager::GetSingleton()->GetClass<EventSystem>();
     lpEventSystem->Init();
@@ -37,7 +39,6 @@ void Title::Release()
 {
     lpCanvus->Release();
     lpEventSystem->Release();
-    //ObserverManager::GetSingleton()->Release();
 }
 
 void Title::Update(float deltaTime)
@@ -54,6 +55,11 @@ void Title::Update(float deltaTime)
         return;
     }
 
+    if (KeyManager::GetSingleton()->IsKeyOnceDown('Q'))
+    {
+        ObserverManager::GetSingleton()->Notify("OpenDebugInfo", lpEventSystem);
+    }
+
     ObserverManager::GetSingleton()->ProcessingMessage();
     lpEventSystem->Update(deltaTime);
     lpCanvus->Update(deltaTime);
@@ -67,7 +73,7 @@ void Title::Render(HDC hdc)
 	lpBackImage->Render(hMemDC);
 
     lpCanvus->Render(hMemDC);
-    lpEventSystem->Render(hMemDC);
+    //lpEventSystem->Render(hMemDC);
 
 	lpBuffer->Render(hdc);
 }

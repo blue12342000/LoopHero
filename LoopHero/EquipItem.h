@@ -18,6 +18,7 @@ enum class EQUIP_PARTS
 
 enum class UNIT_STATUS;
 class Trait;
+class Text;
 class EquipItem : public Item
 {
 private:
@@ -25,6 +26,7 @@ private:
 	int level;
 	EQUIP_PARTS parts;
 	map<UNIT_STATUS, float> mStatus;
+	Text* lpText;
 
 private:
 	void SetItemStatus(UNIT_STATUS status, int itemPower);

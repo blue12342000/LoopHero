@@ -53,7 +53,7 @@ void UIBattleWindow::Update(float deltaTime)
 
 void UIBattleWindow::Render(HDC hdc)
 {
-	RenderRectangle(hdc, rc, RGB(200, 200, 200));
+	//RenderRectangle(hdc, rc, RGB(200, 200, 200));
 	lpBackground->Render(hdc, rc.left, rc.top);
 
 	GameUI::Render(hdc);

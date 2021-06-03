@@ -39,8 +39,8 @@ void UIBattleUnit::Update(float deltaTime)
 {
 	if (lpBattleUnit)
 	{
-		lpHpBar->SetPos({ 0.0f, (float)lpBattleUnit->GetHeight() + 3.0f });
-		lpActionBar->SetPos({ 0.0f, (float)lpBattleUnit->GetHeight() + 3.0f });
+		lpHpBar->SetPos({ 0.0f, (float)lpBattleUnit->GetHeight() + 6.0f });
+		lpActionBar->SetPos({ 0.0f, (float)lpBattleUnit->GetHeight() + 4.0f });
 	}
 
 	GameUI::Update(deltaTime);
@@ -48,8 +48,6 @@ void UIBattleUnit::Update(float deltaTime)
 
 void UIBattleUnit::Render(HDC hdc)
 {
-	//RenderRectangle(hdc, rc, RGB(0, 200, 200));
-
 	if (lpBattleUnit)
 	{
 		lpHudBack->Render(hdc, origin.x + pos.x, rc.bottom - lpBattleUnit->GetHeight(), 0, IMAGE_ALIGN::MIDDLE_BOTTOM);

@@ -291,7 +291,7 @@ HRESULT ImageManager::Init()
     mLpImages["bandit_tile_white"]->Init("Image/Tiles/bandit_tile_white.bmp", 25 * 2, 34 * 2, 1, 1, 1, true, RGB(0, 170, 255));
 
     mLpImages.insert(make_pair("battlefield_tile", new Image()));
-    mLpImages["battlefield_tile"]->Init("Image/Tiles/bandit_tile.bmp", 25 * 2, 34 * 2, 1, 1, 1, true, RGB(0, 170, 255));
+    mLpImages["battlefield_tile"]->Init("Image/Tiles/battlefield_tile.bmp", 25 * 2, 34 * 2, 1, 1, 1, true, RGB(0, 170, 255));
     mLpImages.insert(make_pair("battlefield_tile_select", new Image()));
     mLpImages["battlefield_tile_select"]->Init("Image/Tiles/battlefield_tile_select.bmp", 25 * 2, 34 * 2, 1, 1, 1, true, RGB(0, 170, 255));
     mLpImages.insert(make_pair("battlefield_tile_white", new Image()));
@@ -305,7 +305,7 @@ HRESULT ImageManager::Init()
     mLpImages["meadom_tile_white"]->Init("Image/Tiles/meadom_tile_white.bmp", 25 * 2, 34 * 2, 1, 1, 1, true, RGB(0, 170, 255));
 
     mLpImages.insert(make_pair("bloommeadom_tile", new Image()));
-    mLpImages["bloommeadom_tile"]->Init("Image/Tiles/bandit_tile.bmp", 25 * 2, 34 * 2, 1, 1, 1, true, RGB(0, 170, 255));
+    mLpImages["bloommeadom_tile"]->Init("Image/Tiles/bloommeadom_tile.bmp", 25 * 2, 34 * 2, 1, 1, 1, true, RGB(0, 170, 255));
     mLpImages.insert(make_pair("bloommeadom_tile_select", new Image()));
     mLpImages["bloommeadom_tile_select"]->Init("Image/Tiles/bloommeadom_tile_select.bmp", 25 * 2, 34 * 2, 1, 1, 1, true, RGB(0, 170, 255));
     mLpImages.insert(make_pair("bloommeadom_tile_white", new Image()));

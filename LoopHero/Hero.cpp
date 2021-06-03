@@ -38,6 +38,11 @@ void Hero::Update(float deltaTime)
 		float diff = pow(pos.x - target.x, 2) + pow(pos.y - target.y, 2);
 		if (diff < 5)
 		{
+			if (tileIter.iter == tileIter.beginIter)
+			{
+				GameData::GetSingleton()->LevelUp();
+				ObserverManager::GetSingleton()->Notify("LevelUp", this);
+			}
 			if (lpFieldTile->GetChildCount() > 0)
 			{
 				state = HERO_STATE::BATTLE;
@@ -65,7 +70,6 @@ void Hero::Update(float deltaTime)
 void Hero::Render(HDC hdc)
 {
 	if (lpUnit) lpUnit->Render(hdc);
-	Ellipse(hdc, GetWorldPos().x - 5, GetWorldPos().y - 5, GetWorldPos().x + 5, GetWorldPos().y + 5);
 }
 
 void Hero::Move(ObserverHandler* lpCaller)
@@ -78,16 +82,27 @@ void Hero::Move(ObserverHandler* lpCaller)
 
 void Hero::Loop(vector<FieldTile*>& vMovePath)
 {
-	state = HERO_STATE::MOVE;
-	tileIter = CycleIterator(vMovePath);
-	SetPos((*tileIter.iter)->GetPos());
+	if (state == HERO_STATE::IDLE)
+	{
+		state = HERO_STATE::MOVE;
+		tileIter = LoopIterator(vMovePath);
+		SetPos((*tileIter.iter)->GetPos());
 
-	SetRect(&rc, pos.x, pos.y, pos.x, pos.y);
-	lpUnit->SetPos({ 0.0f, 0.0f });
+		SetRect(&rc, pos.x, pos.y, pos.x, pos.y);
+		lpUnit->SetPos({ 0.0f, 0.0f });
+		++tileIter;
+	}
+	else
+	{
+		int distance = tileIter.iter - tileIter.beginIter;
+		tileIter = LoopIterator(vMovePath);
+		advance(tileIter.iter, distance);
+	}
 }
 
 void Hero::NewHero(string id)
 {
 	lpUnit = Trait::NewUnit(id);
+	lpUnit->SetIsPossibleLevelUp(false);
 	AddChild(lpUnit);
 }

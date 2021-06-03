@@ -79,6 +79,8 @@ void UIItemSlot::OnDrop(EventData& data)
 				lpItem = lpEquipItem;
 				lpSprite = lpGameUI;
 				AddChild(lpGameUI);
+
+				lpGameUI->SetWorldPos(POINTFLOAT{ (rc.left + rc.right) / 2.0f, (rc.top + rc.bottom) / 2.0f });
 			}
 		}
 	}

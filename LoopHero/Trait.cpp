@@ -2,6 +2,7 @@
 #include "Unit.h"
 #include "EquipItem.h"
 #include "GameData.h"
+#include "Text.h"
 #include "Utill.h"
 
 void Trait::Release()
@@ -23,6 +24,8 @@ EquipItem* Trait::CreateEquip()
 	lpEquip->parts = vParts[rand() % vParts.size()];
 	lpEquip->level += rand() % 4 - 1;
 	if (lpEquip->level < 1) lpEquip->level = 1;
+
+	lpEquip->lpText->SetText(to_string(lpEquip->level));
 
 	const EquipInfo* lpEquipInfo = GameData::GetSingleton()->GetEquipInfo(lpEquip->parts);
 	lpEquip->no = rand() % lpEquipInfo->count;

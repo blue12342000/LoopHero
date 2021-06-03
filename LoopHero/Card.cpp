@@ -13,7 +13,7 @@ void Card::Init()
 
 	SetRect(&rc, pos.x, pos.y, pos.x + width, pos.y + height);
 
-	hFont = FontManager::GetSingleton()->GetFont("Uµ¸¿ò", 8);
+	hFont = FontManager::GetSingleton()->GetFont("Uµ¸¿ò", 16);
 }
 
 void Card::Release()

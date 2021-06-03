@@ -15,12 +15,14 @@
 #include "EventSystem.h"
 #include "BattleField.h"
 #include "UIBattleUnit.h"
+#include "UIDebug.h"
 
 HRESULT InGame::Init()
 {
     Hero* lpHero = GameObject::Create<Hero>();
     lpHero->NewHero("Warrior");
 
+    GameData::GetSingleton()->SetLoopLevel(1);
     GameData::GetSingleton()->SetHero(lpHero);
 
     lpBuffer = ImageManager::GetSingleton()->FindImage("ingame_backbuffer");
@@ -51,7 +53,11 @@ HRESULT InGame::Init()
     lpEventSystem->Init();
     lpEventSystem->SetGameUI(lpCanvus);
     lpEventSystem->SetGameObject(lpFieldTiles);
-    SetBkMode(lpBuffer->GetMemDC(), TRANSPARENT);
+    
+    UIDebug* lpUIDebug = GameUI::Create<UIDebug>(lpCanvus);
+    lpUIDebug->Init(UI_ANCHOR::LEFT_TOP, { 0.0f, 0.0f }, 250, 50);
+    lpUIDebug->SetVisible(false);
+
     return S_OK;
 }
 
@@ -77,7 +83,6 @@ void InGame::Release()
 
     GameData::GetSingleton()->GetHero()->Release();
     GameData::GetSingleton()->SetHero(nullptr);
-    ObserverManager::GetSingleton()->Release();
 }
 
 void InGame::Update(float deltaTime)
@@ -101,10 +106,14 @@ void InGame::Update(float deltaTime)
         lpBattleWindow->SetVisible(!lpBattleWindow->IsVisible());
     }
 
+    if (KeyManager::GetSingleton()->IsKeyOnceDown('Q'))
+    {
+        ObserverManager::GetSingleton()->Notify("OpenDebugInfo", lpEventSystem);
+    }
+
     lpEventSystem->Update(deltaTime);
     lpCanvus->Update(deltaTime);
     lpFieldTiles->Update(deltaTime);
-    //GameData::GetSingleton()->GetUnit()->Update(deltaTime);
 
     lpCanvus->LateUpdate(deltaTime);
 }
@@ -115,14 +124,14 @@ void InGame::Render(HDC hdc)
 
     lpBackImage->Render(hMemDC);
 
-    //UI
+    // Object
     lpFieldTiles->Render(hMemDC);
 
+    // UI
     lpCanvus->Render(hMemDC);
 
     // µð¹ö±×
-    lpEventSystem->Render(hMemDC);
-
+    //lpEventSystem->Render(hMemDC);
     //ImageManager::GetSingleton()->FindImage("layer_background")->LoopRender(hMemDC, POINT{ WINSIZE_WIDTH / 2, WINSIZE_HEIGHT / 2 }, 300, 400, 0, IMAGE_ALIGN::CENTER);
 
     lpBuffer->Render(hdc);

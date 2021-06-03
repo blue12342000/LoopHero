@@ -23,6 +23,8 @@ void InGameEventTimer::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int hei
 	lpBossTimer->Init(UI_ANCHOR::LEFT_TOP, { 17.0f * 2, 41.0f }, 200, 4, UI_BAR_TYPE::HORIZON, "", "battle_unit_statusbar_hp");
 	lpBossTimer->SetTrackingData(bind(&InGameEventTimer::GetBossTimer, this));
 	lpBossTimer->SetTrackingMaxData(maxBossTimer);
+
+	AddEventHandler("IncreaseBossTimer", bind(&InGameEventTimer::IncreaseBossTimer, this, placeholders::_1));
 }
 
 void InGameEventTimer::Update(float deltaTime)
@@ -35,9 +37,6 @@ void InGameEventTimer::Update(float deltaTime)
 		dailyTimer = 0;
 	}
 
-	bossTimer += deltaTime;
-	if (bossTimer > maxBossTimer) bossTimer = 0;
-
 	GameUI::Update(deltaTime);
 }
 
@@ -46,4 +45,10 @@ void InGameEventTimer::Render(HDC hdc)
 	lpBackground->Render(hdc, rc.left, rc.top);
 
 	GameUI::Render(hdc);
+}
+
+void InGameEventTimer::IncreaseBossTimer(ObserverHandler* lpCaller)
+{
+	bossTimer += 0.1f;
+	if (bossTimer > maxBossTimer) bossTimer = maxBossTimer;
 }

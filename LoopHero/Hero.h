@@ -13,21 +13,21 @@ class FieldTile;
 class Hero : public GameObject
 {
 private:
-	struct CycleIterator
+	struct LoopIterator
 	{
 		vector<FieldTile*>::iterator iter;
 		vector<FieldTile*>::iterator beginIter;
 		vector<FieldTile*>::iterator endIter;
 
-		CycleIterator() {}
-		CycleIterator(vector<FieldTile*>& vFieldTile)
+		LoopIterator() {}
+		LoopIterator(vector<FieldTile*>& vFieldTile)
 		{
 			this->iter = vFieldTile.begin();
 			this->beginIter = vFieldTile.begin();
 			this->endIter = vFieldTile.end();
 		}
 
-		CycleIterator& operator++()
+		LoopIterator& operator++()
 		{
 			++iter;
 			if (iter == endIter) iter = beginIter;
@@ -38,7 +38,7 @@ private:
 private:
 	HERO_STATE state;
 	Unit* lpUnit;
-	CycleIterator tileIter;
+	LoopIterator tileIter;
 
 public:
 	virtual void Init() override;
@@ -52,5 +52,6 @@ public:
 	void NewHero(string id);
 
 	inline Unit* GetUnit() { return lpUnit; }
+	inline bool IsLoop() { return state != HERO_STATE::IDLE; }
 };
 

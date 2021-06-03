@@ -136,8 +136,10 @@ public:
 	inline Tile* GetTile(string key) { return (mLpTiles.find(key) != mLpTiles.end()) ? mLpTiles[key] : nullptr; }
 
 	inline int GetLoopLevel() { return loopLevel; }
+	inline void SetLoopLevel(int loopLevel) { this->loopLevel = loopLevel; }
 
 	inline void SetHero(Hero* lpHero) { this->lpHero = lpHero; }
 	inline Hero* GetHero() { return lpHero; }
+	inline void LevelUp() { ++loopLevel; }
 };
 

@@ -9,6 +9,7 @@
 #include "UIInGameInfo.h"
 #include "UIProgressBar.h"
 #include "UIItemInfo.h"
+#include "UITextField.h"
 #include "EquipItem.h"
 #include "Unit.h"
 #include "Trait.h"
@@ -20,12 +21,28 @@ void InGameRightMenu::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int heig
 
 	lpBackground = ImageManager::GetSingleton()->FindImage("ingame_info_background");
 
+	lpLoopLevelLabel = GameUI::Create<UITextField>(this);
+	lpLoopLevelLabel->Init(UI_ANCHOR::TOP_MIDDLE, { 32.0f, 20.0f }, 50, 25);
+	lpLoopLevelLabel->SetFont(UI_TEXT_HALIGN::CENTER, UI_TEXT_VALIGN::MIDDLE, UI_TEXT_LINE::SINGLE, 22, RGB(255, 255, 255), "Bµ¸¿ò");
+
+	lpHeroHpBar = GameUI::Create<UIProgressBar>(this);
+	lpHeroHpBar->Init(UI_ANCHOR::RIGHT_TOP, { 20.0f * 2, 241.0f }, 75 * 2, 6 * 2, UI_BAR_TYPE::HORIZON, "", "battle_unit_statusbar_hp");
+	lpHeroHpBar->SetTrackingData(bind(&Unit::GetCurrHp, GameData::GetSingleton()->GetUnit()));
+	lpHeroHpBar->SetTrackingMaxData(bind(&Unit::GetStatus, GameData::GetSingleton()->GetUnit(), UNIT_STATUS::MAX_HP));
+
+	lpHeroHpLabel = GameUI::Create<UITextField>(this);
+	lpHeroHpLabel->Init(UI_ANCHOR::RIGHT_TOP, { 20.0f * 2, 234.0f }, 75 * 2, 6 * 2);
+	lpHeroHpLabel->SetFont(UI_TEXT_HALIGN::CENTER, UI_TEXT_VALIGN::MIDDLE, UI_TEXT_LINE::SINGLE, 11, RGB(255, 255, 255), "B³ª´®¹Ù¸¥°íµñ");
+	lpHeroHpLabel->SetStyle(UI_TEXT_STYLE::OUTLINE);
+	
+	lpHeroHpBar->SetLabel(lpHeroHpLabel);
+	
 	lpHeroEquip = GameUI::Create<UIGrid>(this);
 	lpHeroEquip->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ 5.0f * 2, 27.0f * 2 }, 104 * 2, 77 * 2, 3, 4, { 2, 2 });
 
 	Unit* lpUnit = GameData::GetSingleton()->GetUnit();
-	auto mSlotEquip = lpUnit->GetTrait()->GetUnitSlot();
 
+	auto mSlotEquip = lpUnit->GetTrait()->GetUnitSlot();
 	if (mSlotEquip.find(UNIT_SLOT::RIGHT_HAND) != mSlotEquip.end())
 	{
 		UIItemSlot* lpItemSlot1 = GameUI::Create<UIItemSlot>();
@@ -66,11 +83,6 @@ void InGameRightMenu::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int heig
 	lpHScroll->SetMultiLineType(HSCROLL_MULTILINE::ZIGZAG, 4);
 	lpHScroll->SetHScrollControl(HSCROLL_ITEM_CONTROL::DRAG_SWAP);
 
-	lpHeroHpBar = GameUI::Create<UIProgressBar>(this);
-	lpHeroHpBar->Init(UI_ANCHOR::RIGHT_TOP, { 20.0f * 2, 241.0f }, 75 * 2, 6 * 2, UI_BAR_TYPE::HORIZON, "", "battle_unit_statusbar_hp");
-	lpHeroHpBar->SetTrackingData(bind(&Unit::GetCurrHp, GameData::GetSingleton()->GetUnit()));
-	lpHeroHpBar->SetTrackingMaxData(bind(&Unit::GetStatus, GameData::GetSingleton()->GetUnit(), UNIT_STATUS::MAX_HP));
-
 	lpButton = GameUI::Create<UIButton>(this);
 	lpButton->Init(UI_ANCHOR::LEFT_BOTTOM, POINTFLOAT{ 3.0f * 2, 4.0f * 2 }, 35 * 2, 29 * 2, UI_BUTTON_TYPE::BUTTON);
 	lpButton->SetButtonImage("button_exit");
@@ -92,6 +104,8 @@ void InGameRightMenu::Update(float deltaTime)
 	{
 		DropEquip(GameData::GetSingleton()->GetUnit());
 	}
+
+	lpLoopLevelLabel->SetText(to_string(GameData::GetSingleton()->GetLoopLevel()));
 
 	GameUI::Update(deltaTime);
 }

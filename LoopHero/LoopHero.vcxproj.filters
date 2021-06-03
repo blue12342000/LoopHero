@@ -94,6 +94,9 @@
     <Filter Include="소스 파일\LoopHero\Animator\Super">
       <UniqueIdentifier>{dd4d29d4-0a75-489f-a69a-f30304a05695}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\LoopHero\UI\Debug">
+      <UniqueIdentifier>{5225a07a-4f06-427e-bf14-02afb6aa8d36}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -272,6 +275,9 @@
     </ClCompile>
     <ClCompile Include="UIAnimTickInfo.cpp">
       <Filter>소스 파일\LoopHero\UI\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="UIDebug.cpp">
+      <Filter>소스 파일\LoopHero\UI\Debug</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -475,6 +481,9 @@
     </ClInclude>
     <ClInclude Include="UIAnimTickInfo.h">
       <Filter>소스 파일\LoopHero\UI\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="UIDebug.h">
+      <Filter>소스 파일\LoopHero\UI\Debug</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

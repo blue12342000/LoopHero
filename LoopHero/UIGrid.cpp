@@ -31,18 +31,6 @@ void UIGrid::Update(float deltaTime)
 void UIGrid::Render(HDC hdc)
 {
 	GameUI::Render(hdc);
-
-	//int cWidth = (width - spacing.x * (cols - 1)) / cols;
-	//int cHeight = (height - spacing.y * (rows - 1)) / rows;
-	//for (int y = 0; y < rows; ++y)
-	//{
-	//	for (int x = 0; x < cols; ++x)
-	//	{
-	//		if (vCells[y][x].lpGameUI == nullptr) continue;
-	//
-	//		RenderRectangle(hdc, MakeRect({ rc.left + vCells[y][x].pos.x, rc.top + vCells[y][x].pos.y }, cWidth, cHeight));
-	//	}
-	//}
 }
 
 void UIGrid::Resize(int rows, int cols)

@@ -177,6 +177,7 @@
     <ClCompile Include="UIBattleUnit.cpp" />
     <ClCompile Include="UIBattleWindow.cpp" />
     <ClCompile Include="UIButton.cpp" />
+    <ClCompile Include="UIDebug.cpp" />
     <ClCompile Include="UIEditBox.cpp" />
     <ClCompile Include="UIGameUIInfo.cpp" />
     <ClCompile Include="UIHorizontalScroll.cpp" />
@@ -244,6 +245,7 @@
     <ClInclude Include="UIBattleUnit.h" />
     <ClInclude Include="UIBattleWindow.h" />
     <ClInclude Include="UIButton.h" />
+    <ClInclude Include="UIDebug.h" />
     <ClInclude Include="UIEditBox.h" />
     <ClInclude Include="UIGameUIInfo.h" />
     <ClInclude Include="UIHorizontalScroll.h" />

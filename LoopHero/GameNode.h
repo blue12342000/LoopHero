@@ -1,10 +1,11 @@
 #pragma once
+#include "ObserverHandler.h"
 #include <iostream>
 #include <string>
 
 using namespace std;
 
-class GameNode
+class GameNode : public ObserverHandler
 {
 public:
 	virtual string ToString()

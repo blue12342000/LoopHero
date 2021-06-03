@@ -61,6 +61,9 @@ private:
 	vector<EventTrigger*> vFindObjects;
 	EventTrigger* lpObjectFindTop;
 
+	vector<EventTrigger*> vDedugAllUI;
+	vector<EventTrigger*> vDedugAllObject;
+
 private:
 	// 이벤트 데이터 초기화
 	void InitEventData(EventData& data);
@@ -76,6 +79,8 @@ public:
 	void Release();
 	void Update(float deltaTime);
 	void Render(HDC hdc);
+
+	string ToString() override;
 
 	void SetGameUI(GameUI* lpGameUI) { this->lpGameUI = lpGameUI; }
 	void AddGameObject(GameObject* lpObject) { vGameObjects.push_back(lpObject); }

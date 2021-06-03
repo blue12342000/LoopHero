@@ -20,5 +20,7 @@ public:
 	virtual void Render(HDC hdc) override;
 
 	inline float GetBossTimer() { return bossTimer; }
+
+	void IncreaseBossTimer(ObserverHandler* lpCaller);
 };
 

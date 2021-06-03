@@ -167,21 +167,17 @@ void FieldTileMap::Render(HDC hdc)
 		{
 			if (tiles[y][x]->lpTile)
 			{
-				string str = tiles[y][x]->lpTile->name;
-				//TextOut(hdc, tiles[y][x]->rc.left, tiles[y][x]->rc.top, str.c_str(), str.length());
-				Rectangle(hdc, tiles[y][x]->rc.left, tiles[y][x]->rc.top, tiles[y][x]->rc.right, tiles[y][x]->rc.bottom);
+				//string str = tiles[y][x]->lpTile->name;
+				//Rectangle(hdc, tiles[y][x]->rc.left, tiles[y][x]->rc.top, tiles[y][x]->rc.right, tiles[y][x]->rc.bottom);
 				tiles[y][x]->Render(hdc);
 			}
 
 			if (isPossibleBuild[y][x])
 			{
-				//TextOut(hdc, tiles[y][x]->rc.left, tiles[y][x]->rc.top + 30, "O", 1);
 				ImageManager::GetSingleton()->FindImage("possible_tile")->Render(hdc, tiles[y][x]->rc.left, tiles[y][x]->rc.top);
 			}
 		}
 	}
-
-	//lpTileTable->Render(hdc);
 
 	if (lpSelectedTile)
 	{
@@ -196,12 +192,9 @@ void FieldTileMap::Render(HDC hdc)
 		{
 			lpSelectedTile->mLpImage[TILE_TYPE::SELECT]->Render(hdc, mPos.x, mPos.y, POINT{ 0, 0 }, IMAGE_ALIGN::CENTER);
 		}
-		//TextOut(hdc, 200, 10, lpSelectedTile->name.c_str(), lpSelectedTile->name.length());
 	}
 
 	if (lpHero) lpHero->Render(hdc);
-
-	//RenderRectangle(hdc, rc, RGB(255, 0, 255));
 
 	lpParticleSystem->Render(hdc);
 }
@@ -240,6 +233,7 @@ bool FieldTileMap::BuildTile(int x, int y, Tile* lpTile)
 					tiles[y][x]->vChilds.back()->Release();
 				}
 				ParticleManager::GetSingleton()->SpreadParticle("Tile_ParticleSystem", POINTFLOAT{ tiles[y][x]->GetWorldPos().x, tiles[y][x]->GetWorldPos().y + FIELD_TILE_SIZE / 2 }, POINT{ FIELD_TILE_SIZE, WINSIZE_HEIGHT }, bind(&FieldTileMap::BuildTileFinish, this, x, y));
+				ObserverManager::GetSingleton()->Notify("IncreaseBossTimer", this);
 				DeselectCard(this);
 				return true;
 			}
@@ -284,8 +278,10 @@ bool FieldTileMap::BuildTile(int x, int y, Tile* lpTile)
 					mBuildTiles[tiles[y][x]->lpTile->id].push_back(tiles[y][x]);
 					tiles[y][x]->vHistory.push_back("campsite");
 				}
+				if (lpHero->IsLoop()) lpHero->Loop(mBuildTiles["road"]);
 			}
 			ParticleManager::GetSingleton()->SpreadParticle("Tile_ParticleSystem", POINTFLOAT{ tiles[y][x]->GetWorldPos().x, tiles[y][x]->GetWorldPos().y + FIELD_TILE_SIZE / 2 }, POINT{ FIELD_TILE_SIZE, WINSIZE_HEIGHT }, bind(&FieldTileMap::BuildTileFinish, this, x, y));
+			ObserverManager::GetSingleton()->Notify("IncreaseBossTimer", this);
 			DeselectCard(this);
 			return true;
 		}

@@ -38,6 +38,8 @@ void EventSystem::InitEventData(EventData& data)
 	data.vlpTargets.clear();
 	vFindUIs.clear();
 	vFindObjects.clear();
+	vDedugAllUI.clear();
+	vDedugAllObject.clear();
 }
 
 GameUI* EventSystem::FindDispatcherUI(vector<EventTrigger*>& vTargets, GameUI* lpCurrUI, POINT point)
@@ -48,6 +50,7 @@ GameUI* EventSystem::FindDispatcherUI(vector<EventTrigger*>& vTargets, GameUI* l
 	GameUI* lpEventTarget = nullptr, *lpChildTarget;
 	if (PtInRect(&rc, point))
 	{
+		vDedugAllUI.push_back(lpCurrUI);
 		if (lpCurrUI->IsCanCatchEvent())
 		{
 			lpEventTarget = lpCurrUI;
@@ -77,6 +80,7 @@ GameObject* EventSystem::FindDispatcherObject(vector<EventTrigger*>& vTargets, G
 	GameObject* lpEventTarget = nullptr, * lpFindTarget;
 	if (PtInRect(&rc, point))
 	{
+		vDedugAllObject.push_back(lpCurrObject);
 		if (lpCurrObject->IsCanCatchEvent())
 		{
 			lpEventTarget = lpCurrObject;
@@ -264,6 +268,7 @@ void EventSystem::Update(float deltaTime)
 	{
 		FindDispatcherUI(vFindUIs, lpGameUI, eventData.point);
 		eventData.vlpTargets.insert(eventData.vlpTargets.end(), vFindUIs.crbegin(), vFindUIs.crend());
+
 	}
 
 	// 내 마우스 위치에서 최상위에 있는 Object를 Get
@@ -284,14 +289,60 @@ void EventSystem::Render(HDC hdc)
 	{
 		int lineHeight = 10;
 		string text = to_string(eventData.point.x) + ", " + to_string(eventData.point.y) + " : " + to_string(eventData.deltaTime);
-		TextOut(hdc, 300, lineHeight, text.c_str(), text.length());
+		TextOut(hdc, 10, lineHeight, text.c_str(), text.length());
 		lineHeight += 15;
 		for (int i = 0; i < eventData.vlpTargets.size(); ++i, lineHeight += 15)
 		{
 			text = string(typeid(*(eventData.vlpTargets[i])).name()) + ", " + to_string(eventData.vlpTargets[i]->IsCanPassEvent());
-			TextOut(hdc, 300, lineHeight, text.c_str(), text.length());
+			TextOut(hdc, 10, lineHeight, text.c_str(), text.length());
 		}
 	}
 	SetBkMode(hdc, TRANSPARENT);
+}
+
+string EventSystem::ToString()
+{
+	string logText = "";
+	if (!eventData.vlpTargets.empty())
+	{
+		logText += "Mouse\t:\t" + to_string(eventData.point.x) + ", " + to_string(eventData.point.y);
+		logText += "\nDeltaTime\t:\t" + to_string(eventData.deltaTime);
+		if (!vDedugAllUI.empty()) logText += "\n\n - UI -";
+		for (int i = vDedugAllUI.size() - 1; i > -1; --i)
+		{
+			logText += "\n" + string(typeid(*(vDedugAllUI[i])).name()) + " - ";
+			if (vDedugAllUI[i]->IsCanPassEvent())
+			{
+				logText += "Pass Event";
+			}
+			else if (vDedugAllUI[i]->IsAllCatchEvent())
+			{
+				logText += "Block Event";
+			}
+			else
+			{
+				logText += "BubbleUp Event";
+			}
+		}
+		if (!vDedugAllObject.empty()) logText += "\n\n - Object -";
+		for (int i = vDedugAllObject.size() - 1; i > -1; --i)
+		{
+			logText += "\n" + string(typeid(*(vDedugAllObject[i])).name()) + " - ";
+			if (vDedugAllObject[i]->IsCanPassEvent())
+			{
+				logText += "Pass Event";
+			}
+			else if (vDedugAllObject[i]->IsAllCatchEvent())
+			{
+				logText += "Block Event";
+			}
+			else
+			{
+				logText += "BubbleUp Event";
+			}
+		}
+	}
+
+	return logText;
 }
 

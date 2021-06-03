@@ -4,8 +4,6 @@
 #include <string>
 #include <map>
 
-#define FONT_SIZE_PT 1.7635f
-
 using namespace std;
 
 class FontManager : public Singleton<FontManager>

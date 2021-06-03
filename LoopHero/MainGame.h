@@ -1,6 +1,5 @@
 #pragma once
 #include "LoopHero.h"
-#include "Utill.h"
 
 class Timer;
 class MainGame

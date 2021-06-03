@@ -55,6 +55,8 @@ private:
 	};
 
 private:
+	bool isPossibleLevelUp;
+
 	UNIT_STATE state;
 	string name;
 	float currHp;
@@ -79,6 +81,9 @@ public:
 
 	string ToString() override;
 
+	void LevelUp(ObserverHandler* lpCaller);
+
+	inline void SetIsPossibleLevelUp(bool isPossibleLevelUp) { this->isPossibleLevelUp = isPossibleLevelUp; }
 	inline float GetCurrHp() { return currHp; }
 	inline Trait* GetTrait() { return lpTrait; }
 	inline float GetStatus(UNIT_STATUS status) { if (mStatus.find(status) == mStatus.end()) { return 0.0f; } else { return mStatus[status]; } }

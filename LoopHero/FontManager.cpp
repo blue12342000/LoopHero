@@ -3,7 +3,7 @@
 HRESULT FontManager::Init()
 {
 	LOGFONT logFont;
-	logFont.lfHeight = FONT_SIZE_PT;
+	logFont.lfHeight = 0;
 	logFont.lfWidth = 0;
 	logFont.lfWeight = 0;
 	logFont.lfUnderline = 0;
@@ -38,6 +38,13 @@ HRESULT FontManager::Init()
 	logFont.lfWeight = FW_LIGHT;
 	mLogFonts.insert(make_pair("L³ª´®¹Ù¸¥°íµñ", logFont));
 
+	strcpy_s(logFont.lfFaceName, "³ª´®¹Ù¸¥Ææ");
+	logFont.lfWeight = FW_BOLD;
+	mLogFonts.insert(make_pair("B³ª´®¹Ù¸¥Ææ", logFont));
+
+	logFont.lfWeight = FW_LIGHT;
+	mLogFonts.insert(make_pair("L³ª´®¹Ù¸¥Ææ", logFont));
+
 	return S_OK;
 }
 
@@ -57,6 +64,6 @@ HFONT FontManager::GetFont(string fontName, int fontSize)
 	if (mLogFonts.find(fontName) == mLogFonts.end()) return NULL;
 
 	LOGFONT logFont = mLogFonts[fontName];
-	logFont.lfHeight *= fontSize;
+	logFont.lfHeight = fontSize;
 	return (mHFonts.insert(make_pair(hFontKey, CreateFontIndirect(&logFont))).first)->second;
 }

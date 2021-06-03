@@ -293,7 +293,6 @@ POINTFLOAT GameUI::GetRealationPos(GameUI* lpOtherUI)
 void GameUI::SetAnchor(UI_ANCHOR anchor)
 {
 	if (this->anchor == anchor) return;
-
 	this->anchor = anchor;
 	Refresh();
 }

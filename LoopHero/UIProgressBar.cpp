@@ -1,6 +1,7 @@
 #include "UIProgressBar.h"
 #include "LoopHero.h"
 #include "Image.h"
+#include "UITextField.h"
 #include "Utill.h"
 
 void UIProgressBar::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height, UI_BAR_TYPE type, string back, string bar)
@@ -32,6 +33,8 @@ void UIProgressBar::Release()
 	lpMaxFunc = nullptr;
 	isDrag = false;
 	vChangedFuncs.clear();
+
+	lpLabel = nullptr;
 	GameUI::Release();
 }
 
@@ -44,6 +47,13 @@ void UIProgressBar::Update(float deltaTime)
 		{
 			onChangeFunc(var);
 		}
+	}
+
+	if (lpLabel)
+	{
+		char text[20];
+		sprintf_s(text, "%.2f / %.2f", GetVar(), GetMaxVar());
+		lpLabel->SetText(text);
 	}
 
 	GameUI::Update(deltaTime);
@@ -174,6 +184,31 @@ float UIProgressBar::GetVar()
 		case UI_BAR_TARGET::VARIABLE:
 		default:
 			if (lpTargetVar) targetVar = *lpTargetVar;
+			else targetVar = 1;
+			break;
+		}
+		return targetVar;
+	}
+}
+
+float UIProgressBar::GetMaxVar()
+{
+	if (type == UI_BAR_TYPE::RANGE)
+	{
+		return maxVar;
+	}
+	else
+	{
+		float targetVar;
+		switch (maxTarget)
+		{
+		case UI_BAR_TARGET::FUNC:
+			if (lpMaxFunc) targetVar = lpMaxFunc();
+			else targetVar = 1;
+			break;
+		case UI_BAR_TARGET::VARIABLE:
+		default:
+			if (lpMaxVar) targetVar = *lpMaxVar;
 			else targetVar = 1;
 			break;
 		}

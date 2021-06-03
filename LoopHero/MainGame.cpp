@@ -46,19 +46,21 @@ void MainGame::Release()
 	GameData::GetSingleton()->Release();
 	GameData::GetSingleton()->ReleaseSingleton();
 
+	ObserverManager::GetSingleton()->Release();
+	ObserverManager::GetSingleton()->ReleaseSingleton();
+
 	ReleaseDC(g_hWnd, hdc);
 }
 
 void MainGame::Update()
 {
 	timer->Tick();
-	SceneManager::GetSingleton()->Update(timer->GetDeltaTime());
+	SceneManager::GetSingleton()->Update(Timer::deltaTime);
 }
 
 void MainGame::Render()
 {
 	SceneManager::GetSingleton()->Render(hdc);
-	timer->Render(hdc);
 }
 
 LRESULT MainGame::WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)

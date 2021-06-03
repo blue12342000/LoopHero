@@ -8,16 +8,19 @@ class UIButton;
 class UIInGameInfo;
 class UIProgressBar;
 class UIItemInfo;
+class UITextField;
 class InGameRightMenu : public GameUI
 {
 private:
 	Image* lpBackground;
 
+	UITextField* lpLoopLevelLabel;
 	UIGrid* lpHeroEquip;
 	UIHorizontalScroll* lpHScroll;
 	UIButton* lpButton;
 	UIInGameInfo* lpGameInfo;
 	UIProgressBar* lpHeroHpBar;
+	UITextField* lpHeroHpLabel;
 
 	UIItemInfo* lpItemInfo;
 	vector<UIItemInfo*> vCompareItems;

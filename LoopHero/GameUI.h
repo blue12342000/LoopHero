@@ -1,7 +1,6 @@
 #pragma once
 #include "LoopHero.h"
 #include "EventTrigger.h"
-#include "ObserverHandler.h"
 #include "GameNode.h"
 
 enum class UI_ANCHOR
@@ -19,7 +18,7 @@ enum class UI_ANCHOR
 };
 
 class AnimationUIController;
-class GameUI : public GameNode, public EventTrigger, public ObserverHandler
+class GameUI : public GameNode, public EventTrigger
 {
 protected:
 	bool isVisible;

@@ -85,13 +85,6 @@ void UIHorizontalScroll::Update(float deltaTime)
 		{
 			if (i < 0 || i >= vChilds.size()) continue;
 
-			//currPos = vChilds[i]->GetPos();
-			//newPos = currPos;
-			//newPos.x += (vItemSlots[idx].pos.x - currPos.x) * 5.0f * deltaTime;
-			//if (abs(newPos.x - vItemSlots[idx].pos.x) < 0.01f) newPos.x = vItemSlots[idx].pos.x;
-			//newPos.y += (vItemSlots[idx].pos.y - currPos.y) * 5.0f * deltaTime;
-			//if (abs(newPos.y - vItemSlots[idx].pos.y) < 0.01f) newPos.y = vItemSlots[idx].pos.y;
-
 			vChilds[i]->SetPos(vItemSlots[idx].pos);
 			vChilds[i]->SetVisible(true);
 		}
@@ -102,8 +95,6 @@ void UIHorizontalScroll::Update(float deltaTime)
 
 void UIHorizontalScroll::Render(HDC hdc)
 {
-	RenderRectangle(hdc, rc, RGB(200, 200, 200));
-
 	GameUI::Render(hdc);
 }
 
@@ -201,7 +192,7 @@ void UIHorizontalScroll::OnClick(EventData& data)
 		{
 			lpSelected = vChilds[i];
 			lpSelected->SetAnchor(UI_ANCHOR::MIDDLE);
-			lpSelected->SetPos(lpSelected->GetRealationPos(this));
+			lpSelected->SetWorldPos(POINTFLOAT{ (childRc.left + childRc.right) / 2.0f, (childRc.top + childRc.bottom) / 2.0f });
 			selectedIndex = i;
 			dragNextIndex = i;
 			break;
@@ -251,18 +242,21 @@ void UIHorizontalScroll::OnEndDrag(EventData& data)
 
 	if (lpSelected)
 	{
+		RECT itemRc = lpSelected->GetRect();
+
 		switch (align)
 		{
 		case HSCROLL_ALIGN::LEFT:
 			if (cols > 0) lpSelected->SetAnchor(UI_ANCHOR::LEFT_TOP);
 			else lpSelected->SetAnchor(UI_ANCHOR::LEFT_MIDDLE);
+			lpSelected->SetWorldPos(POINTFLOAT{ (float)itemRc.left, (itemRc.top + itemRc.bottom) / 2.0f });
 			break;
 		case HSCROLL_ALIGN::RIGHT:
 			if (cols > 0) lpSelected->SetAnchor(UI_ANCHOR::RIGHT_TOP);
 			else lpSelected->SetAnchor(UI_ANCHOR::RIGHT_MIDDLE);
+			lpSelected->SetWorldPos(POINTFLOAT{ (float)itemRc.right, (itemRc.top + itemRc.bottom) / 2.0f });
 			break;
 		}
-		lpSelected->SetPos(lpSelected->GetRealationPos(this));
 
 		if (dragNextIndex < selectedIndex)
 		{

@@ -6,6 +6,7 @@
 #include "ImageManager.h"
 #include "Utill.h"
 #include "Image.h"
+#include "Text.h"
 
 void EquipItem::SetItemStatus(UNIT_STATUS status, int itemPower)
 {
@@ -40,6 +41,8 @@ void EquipItem::Init()
 	type = ITEM_TYPE::EQUIP;
 	level = GameData::GetSingleton()->GetLoopLevel();
 	lpItemImage = ImageManager::GetSingleton()->FindImage("item");
+	lpText = PoolingManager::GetSingleton()->GetClass<Text>();
+	lpText->Init("B³ª´®°íµñ", 14, RGB(255, 255, 255));
 
 	pos = { 0, 0 };
 }
@@ -47,6 +50,8 @@ void EquipItem::Init()
 void EquipItem::Release()
 {
 	mStatus.clear();
+	lpText->Release();
+	lpText = nullptr;
 	GameObject::Release();
 }
 
@@ -60,6 +65,11 @@ void EquipItem::Render(HDC hdc)
 	{
 		lpRankImage->Render(hdc, (int)pos.x, (int)pos.y, { (int)rank, 0 });
 		lpItemImage->Render(hdc, (int)pos.x, (int)pos.y, { no, (int)parts });
+
+		if (lpText)
+		{
+			lpText->Render(hdc, (int)pos.x + 3, (int)pos.y + 28);
+		}
 	}
 }
 
