@@ -13,7 +13,7 @@ void UIButton::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height, UI_
 	groupId = to_string((__int64)(this));
 	isOn = false;
 
-	AddEventHandler("__OnClick_" + to_string((__int64)(this)), bind(&UIButton::CallBack, this, placeholders::_1));
+	AddEventHandler("__OnClick_" + to_string((__int64)(this)), bind(&UIButton::ClickCallBack, this, placeholders::_1));
 	if (type == UI_BUTTON_TYPE::RADIO) AddEventHandler("__OnClick_button_" + groupId, bind(&UIButton::RadioCallBack, this, placeholders::_1));
 }
 
@@ -51,7 +51,7 @@ void UIButton::OnClick()
 	}
 }
 
-void UIButton::CallBack(ObserverHandler* lpCaller)
+void UIButton::ClickCallBack(ObserverHandler* lpCaller)
 {
 	OnClick();
 	state = UI_BUTTON_STATE::NORMAL;

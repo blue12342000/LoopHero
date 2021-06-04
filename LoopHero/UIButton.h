@@ -38,7 +38,7 @@ public:
 	void SetButtonImage(Image* lpImage);
 
 	void OnClick();
-	void CallBack(ObserverHandler* lpCaller);
+	void ClickCallBack(ObserverHandler* lpCaller);
 	void RadioCallBack(ObserverHandler* lpCaller);
 
 	void ClearFunc();
