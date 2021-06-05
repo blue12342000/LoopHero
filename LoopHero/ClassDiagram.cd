@@ -1,557 +1,821 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
-  <Class Name="GameData" Collapsed="true">
-    <Position X="0.5" Y="2.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>QACAgIwAgAQAAAIAAAAAAAAACACIAAAAAAACQBAAAAA=</HashCode>
-      <FileName>GameData.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="GameObject" Collapsed="true">
-    <Position X="12" Y="4.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AJwAIAAgAAAIkAAAIBIAIMgAAAIAAEAAAFACADAABAA=</HashCode>
-      <FileName>GameObject.h</FileName>
-    </TypeIdentifier>
-  </Class>
+  <Comment CommentText="">
+    <Position X="33.131" Y="10.502" Height="3.116" Width="5.82" />
+  </Comment>
+  <Comment CommentText="">
+    <Position X="31.964" Y="8.887" Height="1.106" Width="2.137" />
+  </Comment>
   <Class Name="MainGame" Collapsed="true">
-    <Position X="43" Y="0.5" Width="1.5" />
+    <Position X="41.25" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAABAAAAAAAAAAAAAAAAAAAABACQBAABAA=</HashCode>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABACQBAABAA=</HashCode>
       <FileName>MainGame.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="InGame" Collapsed="true">
-    <Position X="3.25" Y="6.25" Width="1.5" />
+  <Class Name="GameOver" Collapsed="true">
+    <Position X="1.25" Y="10.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAYAAAAAAQAAAAAAAAAgCAAAAAAAEBACCBAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameOver.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Title" Collapsed="true">
+    <Position X="3.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAQAAAAAAQAAAAAAAAAAAAAAAAAAEBACCBAAAAA=</HashCode>
+      <FileName>Title.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InGame" Collapsed="true">
+    <Position X="5.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAQAAAAAIQAAAAAAAAAgAAAAAAAAEBACCBAAAAA=</HashCode>
       <FileName>InGame.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="InGameEventTimer" Collapsed="true">
-    <Position X="20" Y="6.25" Width="1.5" />
+  <Class Name="UIBattleUnit" Collapsed="true">
+    <Position X="21" Y="11" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQQAAAAAAAIAAAAAAAAAAAAAAAAAAAAARACBAAAAAE=</HashCode>
+      <HashCode>AASABAAAAAAAAAEACAAAQAAAAAAAgCAAABGiABASAAA=</HashCode>
+      <FileName>UIBattleUnit.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UIBattleWindow" Collapsed="true">
+    <Position X="21" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQQAAAAAAAAAAAAAACCAEACAAAAAAQAABACABAgEAA=</HashCode>
+      <FileName>UIBattleWindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InGameEventTimer" Collapsed="true">
+    <Position X="21" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQQAAAAAAAMBAAAAAAAAAAAAAAAAAEAARACBAAAAAE=</HashCode>
       <FileName>InGameEventTimer.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="InGameHandCard" Collapsed="true">
-    <Position X="24.5" Y="6.25" Width="1.5" />
+    <Position X="21" Y="13" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAABAEAAEIAAAAABAAAAAAAAAAAAAABACABAEAAA=</HashCode>
       <FileName>InGameHandCard.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="InGameRightMenu" Collapsed="true">
-    <Position X="29" Y="6.25" Width="1.5" />
+    <Position X="22.75" Y="12" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQQAAAAAAAAAAAAAAAAAAAAAEAAAABAABACAAAAgEA=</HashCode>
+      <HashCode>AASQEAAEIAIAAAAAAAAAAABAAEAIgAAAABACAAAAgEA=</HashCode>
       <FileName>InGameRightMenu.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="UIItemSlot" Collapsed="true">
-    <Position X="31.25" Y="6.25" Width="1.5" />
+  <Class Name="UIInGameInfo" Collapsed="true">
+    <Position X="22.75" Y="14" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AASAAAAAAAABkAAACAAAAAAAAAAAgAAAABASAQAyAAA=</HashCode>
+      <HashCode>AAAAAAAEAAIAAAAAABAAAAAQAAAAAEAAARACAAAAAAA=</HashCode>
+      <FileName>UIInGameInfo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UIItemInfo" Collapsed="true">
+    <Position X="22.75" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQQQAAIAAEAAAABAABAAAAAAAAIAAACAABICABAAAAA=</HashCode>
+      <FileName>UIItemInfo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UIItemSlot" Collapsed="true">
+    <Position X="22.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AASQAAAAAAAAkAAAAABAAAAAAAIAgAAAABASAQAyAAA=</HashCode>
       <FileName>UIItemSlot.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GameUI" Collapsed="true">
-    <Position X="24.75" Y="4.25" Width="1.5" />
+    <Position X="16.5" Y="9" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>GYwIIBAgABBJEAQASBIAIMhAIEIAAAAABBACIHQARAA=</HashCode>
+      <HashCode>CYwJIBAgAABIkAQAYBIIIMhIIEIAAEAAABACIHQARAA=</HashCode>
       <FileName>GameUI.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="UIButton" Collapsed="true">
-    <Position X="27.75" Y="8" Width="1.5" />
+  <Class Name="UIButton">
+    <Position X="8.25" Y="10.5" Width="4.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAQEABAAgAAAACAAABAAAEABACAAISAEA=</HashCode>
+      <HashCode>AAAABAABAAAAVAABIggBAAACAQABAAAEABACABISAEA=</HashCode>
       <FileName>UIButton.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="UIHorizontalScroll" Collapsed="true">
-    <Position X="23.25" Y="8" Width="1.5" />
+  <Class Name="UIEditBox" Collapsed="true">
+    <Position X="12.75" Y="13" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QEQAEAAAAEhBBACAHABCGAgWAwSAiAAAgBACAARAAAA=</HashCode>
+      <HashCode>AAQAAAAIAAAAAAAAAAAAAAAAAAABAAAAAJACABAAAAA=</HashCode>
+      <FileName>UIEditBox.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UIHorizontalScroll" Collapsed="true">
+    <Position X="14.5" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QEQAEAAAAEhAFACAFABCOAAWAwaAiCAAgBACABRAAAA=</HashCode>
       <FileName>UIHorizontalScroll.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="UIProgressBar" Collapsed="true">
-    <Position X="30" Y="8" Width="1.5" />
+    <Position X="14.5" Y="11" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQQAAAAgAAAAAgAIAIAAAAAAAABACAAABACAAECAAA=</HashCode>
+      <HashCode>hAZYAIAAgAAAAAiAIApAEAAAAAgBAKIAgBACABESwEA=</HashCode>
       <FileName>UIProgressBar.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="UISprite" Collapsed="true">
-    <Position X="22.25" Y="6.25" Width="1.5" />
+    <Position X="14.5" Y="14" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAgAACAAAAAAAAAAAAAAAAIABgCgAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAgAACAAAAQAAAAACAAAAAIABgCgBASAAA=</HashCode>
       <FileName>UISprite.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="UIGrid" Collapsed="true">
-    <Position X="26.75" Y="6.25" Width="1.5" />
-    <NestedTypes>
-      <Struct Name="UIGrid::UICell" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>UIGrid.h</NewMemberFileName>
-        </TypeIdentifier>
-      </Struct>
-    </NestedTypes>
+    <Position X="14.5" Y="13" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAQAAAAAABAAAACABAAAAAAACAAAAAABACAAWAAEA=</HashCode>
+      <HashCode>AAQAQAAAAAAAEAAAAABAAAAAAAKAAAAAABACAAWAAEA=</HashCode>
       <FileName>UIGrid.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="UITextField" Collapsed="true">
-    <Position X="25.5" Y="8" Width="1.5" />
+    <Position X="12.75" Y="12" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAFAAAIAAAAABAACAICAAACAAAAEAACIAjACABAAAAA=</HashCode>
+      <HashCode>AAFAAQYAgAAABAAKAICAAACAAAAEAACIAjACABAAAAA=</HashCode>
       <FileName>UITextField.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Unit">
-    <Position X="14.25" Y="8.75" Width="1.75" />
+  <Class Name="UIAnimInspector" Collapsed="true">
+    <Position X="18.5" Y="12" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAABAUAAUQAAAAAIQAAAAgJAEAAAgCBACABAQAAA=</HashCode>
+      <HashCode>AAQQBABECAAAAAAAAIAAAQIAAAAgAAAkgDACIAA4AAk=</HashCode>
+      <FileName>UIAnimInspector.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UIAnimTickInfo" Collapsed="true">
+    <Position X="16.75" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAQAABAAQAAIQAAAIAAAAAAAAAAAAAAAhQCAAAAAAA=</HashCode>
+      <FileName>UIAnimTickInfo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UIGameUIInfo" Collapsed="true">
+    <Position X="21" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAASAAAAAQAAAAAAAAAAQAAAAAABAAAAADACAAAQAAA=</HashCode>
+      <FileName>UIGameUIInfo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UILogo" Collapsed="true">
+    <Position X="16.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAACAAAAAAAAABACABAAAAA=</HashCode>
+      <FileName>UILogo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UITimeTick" Collapsed="true">
+    <Position X="18.5" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQQAAAAAAAAAAAAAAAAAAAAAAQAAABAABBCAAAAQAA=</HashCode>
+      <FileName>UITimeTick.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UIDebug" Collapsed="true">
+    <Position X="25" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQQAAAAAAAACAAAAAAAAAACAAAIAAAAABACCBBAAAA=</HashCode>
+      <FileName>UIDebug.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameData" Collapsed="true">
+    <Position X="5.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QQEAkIAAhARAAAAAAAAAABUJDiQJQQYECgBCQBEFAAI=</HashCode>
+      <FileName>GameData.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameObject" Collapsed="true">
+    <Position X="32.25" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AJwAIAAgAAAIkAAAIBIAIMgIAAIAAEAAAFACADQABAA=</HashCode>
+      <FileName>GameObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FieldTile" Collapsed="true">
+    <Position X="33.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQQAAAAACBEAMAAkAAAAADAAAAABAAEAABBiIRlSAAA=</HashCode>
+      <FileName>FieldTile.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FieldTileMap" Collapsed="true">
+    <Position X="33.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABQIBAAAAAgAAAAAEQDAAEgCAgEAAAYAABASABA2EAA=</HashCode>
+      <FileName>FieldTileMap.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Unit" Collapsed="true">
+    <Position X="33.5" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQQAAAAAUAAUIABEAAIAAEAlAJAEAAAECBCCABAQAAA=</HashCode>
       <FileName>Unit.h</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Field Name="lpIcon" />
-      <Field Name="lpCharacter" />
-      <Field Name="lpTraits" />
-    </ShowAsAssociation>
   </Class>
-  <Class Name="TraitsTable" Collapsed="true">
-    <Position X="31.25" Y="2.5" Width="1.5" />
+  <Class Name="Trait" Collapsed="true">
+    <Position X="28.25" Y="13" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAACAAAAAAEAAAAAAAAAAAAACAAAAAA=</HashCode>
-      <FileName>TraitsTable.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Character" Collapsed="true">
-    <Position X="17.5" Y="9.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQAAABAAAAAAAAAAAIQAAAAAIBAAAAkABACABAAAAA=</HashCode>
-      <FileName>Character.h</FileName>
+      <HashCode>AQAAEAAAAAIAAAAAgAAgAEBAAAIAAAEACAAAABAIAAQ=</HashCode>
+      <FileName>Trait.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="EquipItem" Collapsed="true">
-    <Position X="16.5" Y="7.75" Width="1.5" />
+    <Position X="35.5" Y="11.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AQQAAAAAAAAQEAAAAAAgIAAAAIEAAAAAABACABAAAAA=</HashCode>
+      <HashCode>AQQAAAAAAAAQEAgEAAAAIAAEAIEAAAAAABACABAAAAA=</HashCode>
       <FileName>EquipItem.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="EquipTable" Collapsed="true">
-    <Position X="31.25" Y="1" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAUAACAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>EquipTable.h</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Item" Collapsed="true">
-    <Position X="16.5" Y="6.5" Width="1.5" />
+    <Position X="35.5" Y="10.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQgACAAAQAAAAAAAAAAAIAAAAAFAAAAABACABAAAAA=</HashCode>
       <FileName>Item.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Card" Collapsed="true">
-    <Position X="7.5" Y="6.5" Width="1.5" />
+  <Class Name="Hero" Collapsed="true">
+    <Position X="31" Y="12.75" Width="1.5" />
+    <NestedTypes>
+      <Struct Name="Hero::LoopIterator" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Hero.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAwQAEAAAQAABBQAQAAAAIAEAAAFAABAAjQCABAAAgA=</HashCode>
+      <HashCode>AAQAACAIgIAAAAAAAAAAAAAACAAAAAAUARACABAAAAA=</HashCode>
+      <FileName>Hero.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Card" Collapsed="true">
+    <Position X="37.25" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAwQAEAAAQAABBQEQAAAAIAEAAAFAABAAjQCABIAAgA=</HashCode>
       <FileName>Card.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Deck" Collapsed="true">
-    <Position X="9.75" Y="6.5" Width="1.5" />
+    <Position X="37.25" Y="10.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAEAABAAAAEAAAAACABAAAAABACCBAAQAQ=</HashCode>
+      <HashCode>AAQAAAAAAAAEAAAAAAAEAAAAACABAAAAABACCBAAQAA=</HashCode>
       <FileName>Deck.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FieldTileMap">
-    <Position X="12" Y="6.5" Width="1.5" />
+  <Class Name="BattleField" Collapsed="true">
+    <Position X="31" Y="10.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ABQIBAAAAAgAAgAAAQBAAAgCAgEAAAAAABASABAyAAA=</HashCode>
-      <FileName>FieldTileMap.h</FileName>
+      <HashCode>AAQCAAAAAABAgAAEAAAgBAAgAYAAAAAEEDACABAAAAA=</HashCode>
+      <FileName>BattleField.h</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Field Name="tiles" />
-    </ShowAsAssociation>
   </Class>
-  <Class Name="TileTable" Collapsed="true">
-    <Position X="31.25" Y="1.75" Width="1.5" />
+  <Class Name="BattleUnit" Collapsed="true">
+    <Position X="31" Y="11.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AQUgAAAAAAAAAAAAAAAAAAAAAIAAAAAAABACABEIAAA=</HashCode>
-      <FileName>TileTable.h</FileName>
+      <HashCode>AUQABAhAgABAAQAAAAIQAABACIBAABAkCBEDIFAAAQA=</HashCode>
+      <FileName>BattleUnit.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AnimationMove" Collapsed="true">
+    <Position X="27.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgBAIEAAAAAAAAAAABAAABAIABAAAAA=</HashCode>
+      <FileName>AnimationMove.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AnimationUIController" Collapsed="true">
+    <Position X="27.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQQQQAEAABwAAAAMUAIAAAQCAQhAQAApBQCABgQAAA=</HashCode>
+      <FileName>AnimationUIController.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AnimationHandler" Collapsed="true">
+    <Position X="27.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgBCIAAAAAAAAAAAABAAAAAIABAAAAA=</HashCode>
+      <FileName>AnimationHandler.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Animation" Collapsed="true">
-    <Position X="17.5" Y="10.5" Width="1.5" />
+    <Position X="33" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAQAgAAAAAAAAABAAIAAAAABAAAMoBACAQgAAAA=</HashCode>
+      <HashCode>AAQAAAQAgAAAAAQAQABAAIBAAAABAAAMoBACAVgAAAA=</HashCode>
       <FileName>Animation.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Image" Collapsed="true">
-    <Position X="41.25" Y="0.5" Width="1.5" />
+  <Class Name="GameNode">
+    <Position X="24.75" Y="6.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AABAAAAAAQAACAAAAAAAAABAgAAATAAEABACAFAAAYg=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameNode.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Text" Collapsed="true">
+    <Position X="31.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAABAACAIAAAAAACAAAAACIABACABAAAAA=</HashCode>
+      <FileName>Text.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Image" Collapsed="true">
+    <Position X="39.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAIAAIAAAAAAABAgAAACCAEABAGAFAAQIg=</HashCode>
       <FileName>Image.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Scene" Collapsed="true">
-    <Position X="3.25" Y="5" Width="1.5" />
+    <Position X="3.5" Y="9.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAQAAAAAAAABACABAAAAA=</HashCode>
       <FileName>Scene.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Singleton&lt;T&gt;" Collapsed="true">
-    <Position X="6" Y="1.5" Width="1.5" />
+    <Position X="5.5" Y="1" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAABAAAACAAAAAAAAAAIEAAAAAAAAIAAA=</HashCode>
       <FileName>Singleton.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Timer" Collapsed="true">
-    <Position X="37.75" Y="0.5" Width="1.5" />
+    <Position X="43" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAAAAAAAUAAQBAAAAQEgAQAAAAAAAAABACAEAAQAA=</HashCode>
+      <HashCode>AAIAAAAAAAUAAABAAAAAEgAQAAAAAAAAAAACAEAAQAA=</HashCode>
       <FileName>Timer.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DataManager" Collapsed="true">
-    <Position X="9.5" Y="2.75" Width="1.5" />
+    <Position X="8.75" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAEAAAAAAAEAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
       <FileName>DataManager.h</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="FontManager" Collapsed="true">
+    <Position X="1" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAAAgAAAgAAAAAAAACABAAAAA=</HashCode>
+      <FileName>FontManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ParticleManager" Collapsed="true">
+    <Position X="3.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAgAAEAAACAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ParticleManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PoolingManager" Collapsed="true">
+    <Position X="7.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgBAAAAACAAAAAAAAAQEABAAAAA=</HashCode>
+      <FileName>PoolingManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="ObserverManager" Collapsed="true">
-    <Position X="11.75" Y="2.75" Width="1.5" />
+    <Position X="10" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAgAAAAAAAAAAAAAAAAAZABAAAAAABAgAAA=</HashCode>
       <FileName>ObserverManager.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ImageManager" Collapsed="true">
-    <Position X="2.75" Y="2.75" Width="1.5" />
+    <Position X="2" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAAACAAAAAACABACAAA=</HashCode>
       <FileName>ImageManager.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="KeyManager" Collapsed="true">
-    <Position X="5" Y="2.75" Width="1.5" />
+    <Position X="4.25" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAQBAAAAAAAEBABAACABAAAAA=</HashCode>
       <FileName>KeyManager.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SceneManager" Collapsed="true">
-    <Position X="7.25" Y="2.75" Width="1.5" />
+    <Position X="6.5" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAMAAAAAAAAAEAAAAAQAAAAARADABAAAgA=</HashCode>
       <FileName>SceneManager.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="EventSystem" Collapsed="true">
-    <Position X="39.5" Y="0.5" Width="1.5" />
+    <Position X="25.25" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>EARAIAEAAAAAAACCAAAAAYACAAAAAAAAAFAGgxAAAAA=</HashCode>
+      <HashCode>EARAIgEBAAAAAACGAAAAAYACAAAAAAAAAFAGgxAAAAA=</HashCode>
       <FileName>EventSystem.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="EventTrigger" Collapsed="true">
-    <Position X="16" Y="2.5" Width="1.5" />
+    <Position X="25.25" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAUACAAAABAAABAAABAEAACAAQAACAAAAAQAAASAAA=</HashCode>
       <FileName>EventTrigger.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="IClickHandler" Collapsed="true">
-    <Position X="12.5" Y="0.5" Width="1.5" />
+    <Position X="21.75" Y="1" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IClickHandler.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="IDragHandler" Collapsed="true">
-    <Position X="14.75" Y="0.5" Width="1.5" />
+    <Position X="24" Y="1" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAABAEAAAAAAAACAAAAAAAAAAAAA=</HashCode>
       <FileName>IDragHandler.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="IDropHandler" Collapsed="true">
-    <Position X="17" Y="0.5" Width="1.5" />
+    <Position X="26.25" Y="1" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
       <FileName>IDropHandler.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="IHoverHandler" Collapsed="true">
-    <Position X="19.25" Y="0.5" Width="1.5" />
+    <Position X="28.5" Y="1" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAASAAA=</HashCode>
       <FileName>IHoverHandler.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ObserverHandler" Collapsed="true">
-    <Position X="20" Y="2.75" Width="1.5" />
+    <Position X="20.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAgAAAAAAAAAAAAIBAAAAAABABAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAQAAAAAAAAIIAAAAAAAARAAABAAAAAAAA=</HashCode>
       <FileName>ObserverHandler.h</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Particle" Collapsed="true">
+    <Position X="29.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAQAAQAAAAgAEABAAhAAAAAEAAAAQJACABAAAAA=</HashCode>
+      <FileName>Particle.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ParticleSystem" Collapsed="true">
+    <Position X="29.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQQAAAAAAAAAAAAAAAAAAAAAAAAAIAAQBASABAAAAA=</HashCode>
+      <FileName>ParticleSystem.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="EquipInfo" Collapsed="true">
+    <Position X="43" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAABAAAABAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameData.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Tile" Collapsed="true">
+    <Position X="39.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAKAAAAAAAAAAAAAAAAAAAGAgAEGAFAAIAAAAAAAgA=</HashCode>
+      <FileName>GameData.h</FileName>
+    </TypeIdentifier>
+  </Struct>
   <Struct Name="EquipSlot" Collapsed="true">
-    <Position X="17.5" Y="11.25" Width="1.5" />
+    <Position X="44.75" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
       <FileName>Unit.h</FileName>
     </TypeIdentifier>
   </Struct>
-  <Struct Name="Traits" Collapsed="true">
-    <Position X="17.5" Y="9" Width="1.5" />
+  <Struct Name="AnimVariable" Collapsed="true">
+    <Position X="41.25" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAIAACAAAAAAQABAAAAAAAAAAAAAAAAIAAA=</HashCode>
-      <FileName>TraitsTable.h</FileName>
+      <HashCode>CABAAAAAAQAAAAAAAAAAIAAAAAAAAAAAAQAAAAAEAAA=</HashCode>
+      <FileName>AnimationUIController.h</FileName>
     </TypeIdentifier>
   </Struct>
-  <Struct Name="EquipInfo" Collapsed="true">
-    <Position X="34.25" Y="2.75" Width="1.5" />
+  <Struct Name="AnimTick" Collapsed="true">
+    <Position X="39.5" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAEAAAABAAAABAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>EquipTable.h</FileName>
-    </TypeIdentifier>
-  </Struct>
-  <Struct Name="FieldTile" Collapsed="true">
-    <Position X="9.5" Y="7.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAgAAAAAAAAAAAAgAAAAAAAAAAAAgAAAAABgAQBAAAA=</HashCode>
-      <FileName>FieldTileMap.h</FileName>
-    </TypeIdentifier>
-  </Struct>
-  <Struct Name="Tile" Collapsed="true">
-    <Position X="29.25" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAKAAAAAAAAAAAAAAAAAAAEAgAEAAFAAIAAAAAAAgA=</HashCode>
-      <FileName>TileTable.h</FileName>
+      <HashCode>AABAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>AnimationUIController.h</FileName>
     </TypeIdentifier>
   </Struct>
   <Struct Name="NotifyMessage" Collapsed="true">
-    <Position X="13.5" Y="2.75" Width="1.5" />
+    <Position X="48.25" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAACA=</HashCode>
       <FileName>ObserverManager.h</FileName>
     </TypeIdentifier>
   </Struct>
   <Struct Name="EventData" Collapsed="true">
-    <Position X="37.75" Y="2.75" Width="1.5" />
+    <Position X="46.5" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAACSAQEABAAAAAEAAAAAAAgFAAAAAAAQEAAAACA=</HashCode>
       <FileName>EventSystem.h</FileName>
     </TypeIdentifier>
   </Struct>
+  <Struct Name="Transform" Collapsed="true">
+    <Position X="41.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAQAAAAIAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Particle.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ParticleInfo" Collapsed="true">
+    <Position X="50" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAQAAAAAAEAAAQAAAAAAAAAEQBAAAAAACAAABAAAA=</HashCode>
+      <FileName>ParticleSystem.h</FileName>
+    </TypeIdentifier>
+  </Struct>
   <Enum Name="UI_ANCHOR" Collapsed="true">
-    <Position X="43" Y="6.5" Width="1.5" />
+    <Position X="41.25" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>JAAAAABAAAAAAAAAgQAAAAAAAAAIABAAAAAAAAQCAIA=</HashCode>
       <FileName>GameUI.h</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="UI_BUTTON_STATE" Collapsed="true">
-    <Position X="37.75" Y="7.25" Width="1.5" />
+    <Position X="46.5" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAEAIACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
       <FileName>UIButton.h</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="UI_BUTTON_TYPE" Collapsed="true">
-    <Position X="39.5" Y="7.25" Width="1.5" />
+    <Position X="48.25" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAEAAAAAAAAAAAAAAgAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>UIButton.h</FileName>
     </TypeIdentifier>
   </Enum>
+  <Enum Name="INPUT_TYPE" Collapsed="true">
+    <Position X="46.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAACAA=</HashCode>
+      <FileName>UIEditBox.h</FileName>
+    </TypeIdentifier>
+  </Enum>
   <Enum Name="HSCROLL_ALIGN" Collapsed="true">
-    <Position X="39.5" Y="5.75" Width="1.5" />
+    <Position X="48.25" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
       <FileName>UIHorizontalScroll.h</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="HS_ARGS_INSERT" Collapsed="true">
-    <Position X="37.75" Y="5.75" Width="1.5" />
+    <Position X="46.5" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABABAAAAAAAA=</HashCode>
       <FileName>UIHorizontalScroll.h</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="HSCROLL_MULTILINE" Collapsed="true">
-    <Position X="34.25" Y="6.5" Width="1.5" />
+    <Position X="41.25" Y="6" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
       <FileName>UIHorizontalScroll.h</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="HSCROLL_ITEM_CONTROL" Collapsed="true">
-    <Position X="41.25" Y="5.75" Width="1.5" />
+    <Position X="50" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAABACAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>UIHorizontalScroll.h</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="HSCROLL_ITEM_ESCAPE" Collapsed="true">
-    <Position X="43" Y="5.75" Width="1.5" />
+    <Position X="39.5" Y="6" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAEAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>UIHorizontalScroll.h</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="UI_BAR_TYPE" Collapsed="true">
-    <Position X="36" Y="7.25" Width="1.5" />
+    <Position X="44.75" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAQAAAAAAAgAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
       <FileName>UIProgressBar.h</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="UI_BAR_TARGET" Collapsed="true">
-    <Position X="34.25" Y="7.25" Width="1.5" />
+    <Position X="43" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAQAAAAAAAAAAAEAAAAAAAAAAAA=</HashCode>
       <FileName>UIProgressBar.h</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="UI_TEXT_HALIGN" Collapsed="true">
-    <Position X="41.25" Y="7.25" Width="1.5" />
+    <Position X="50" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAgAAAAAAAAIAA=</HashCode>
       <FileName>UITextField.h</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="UI_TEXT_VALIGN" Collapsed="true">
-    <Position X="36" Y="8" Width="1.5" />
+    <Position X="43" Y="8.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAIAAAAABAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
       <FileName>UITextField.h</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="UI_TEXT_STYLE" Collapsed="true">
-    <Position X="34.25" Y="8" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAABACAAAAAAAAAAAACAAAAAAAAAAAAgAAAAAAA=</HashCode>
-      <FileName>UITextField.h</FileName>
-    </TypeIdentifier>
-  </Enum>
   <Enum Name="UI_TEXT_LINE" Collapsed="true">
-    <Position X="43" Y="7.25" Width="1.5" />
+    <Position X="39.5" Y="8.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAACAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>UITextField.h</FileName>
     </TypeIdentifier>
   </Enum>
+  <Enum Name="UI_TEXT_STYLE" Collapsed="true">
+    <Position X="41.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UITextField.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ANIM_INSPECTOR_STATE" Collapsed="true">
+    <Position X="39.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UIAnimInspector.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TILE_IMAGE_SEQ" Collapsed="true">
+    <Position X="50" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAQAAAAAAQgAAAAAAAAIAAAAACAAAAYAAoA=</HashCode>
+      <FileName>GameData.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TILE_TYPE" Collapsed="true">
+    <Position X="39.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAQAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>GameData.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TILE_DIRECTION" Collapsed="true">
+    <Position X="48.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAQAAAAAAAAICAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>FieldTile.h</FileName>
+    </TypeIdentifier>
+  </Enum>
   <Enum Name="UNIT_STATUS" Collapsed="true">
-    <Position X="39.5" Y="8" Width="1.5" />
+    <Position X="46.5" Y="8.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIACAAAACACAAAAAQOBAAAAAYAAAAEAAIAAAAAgAAA=</HashCode>
       <FileName>Unit.h</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="UNIT_SLOT" Collapsed="true">
-    <Position X="37.75" Y="8" Width="1.5" />
+    <Position X="44.75" Y="8.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAIAQAAAAAAEAAQAAAAAAAQAQAAAAAMCAAAIAAQA=</HashCode>
       <FileName>Unit.h</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="CARACTER_STATE" Collapsed="true">
-    <Position X="37.75" Y="5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAEAAAAAAAAAAAACQAAgAACEAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Character.h</FileName>
-    </TypeIdentifier>
-  </Enum>
   <Enum Name="EQUIP_PARTS" Collapsed="true">
-    <Position X="43" Y="5" Width="1.5" />
+    <Position X="39.5" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAIAQAAAAABEAAQAAAABAAQAQAAAAAEAAQAABAAA=</HashCode>
       <FileName>EquipItem.h</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="ITEM_TYPE" Collapsed="true">
-    <Position X="39.5" Y="6.5" Width="1.5" />
+    <Position X="50" Y="6" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAgAAAAIAAAACQAAAAEAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>Item.h</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="ITEM_RANK" Collapsed="true">
-    <Position X="37.75" Y="6.5" Width="1.5" />
+    <Position X="48.25" Y="6" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAAAAAAAQCABAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
       <FileName>Item.h</FileName>
     </TypeIdentifier>
   </Enum>
+  <Enum Name="HERO_STATE" Collapsed="true">
+    <Position X="44.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>Hero.h</FileName>
+    </TypeIdentifier>
+  </Enum>
   <Enum Name="CARD_TYPE" Collapsed="true">
-    <Position X="41.25" Y="5" Width="1.5" />
+    <Position X="50" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAgIIAQAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
       <FileName>Card.h</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="CARD_RARE" Collapsed="true">
-    <Position X="39.5" Y="5" Width="1.5" />
+    <Position X="48.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAAAAAAAQCABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Card.h</FileName>
     </TypeIdentifier>
   </Enum>
+  <Enum Name="BATTLE_FIELD_STATE" Collapsed="true">
+    <Position X="44.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAQAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BattleField.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="BATTLE_TEAM" Collapsed="true">
+    <Position X="46.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>BattleField.h</FileName>
+    </TypeIdentifier>
+  </Enum>
   <Enum Name="ANIMATION_STATE" Collapsed="true">
-    <Position X="34.25" Y="5" Width="1.5" />
+    <Position X="41.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Animation.h</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="ANIMATION_TYPE" Collapsed="true">
-    <Position X="36" Y="5" Width="1.5" />
+    <Position X="43" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAA=</HashCode>
       <FileName>Animation.h</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="IMAGE_ALIGN" Collapsed="true">
-    <Position X="36" Y="6.5" Width="1.5" />
+    <Position X="43" Y="6" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAEAAAAAIAA=</HashCode>
+      <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAAAIAAACAAEAAAAAIAA=</HashCode>
+      <FileName>Image.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="IMAGE_FRAME_TYPE" Collapsed="true">
+    <Position X="44.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAA=</HashCode>
       <FileName>Image.h</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="SCENE_KIND" Collapsed="true">
-    <Position X="41.25" Y="6.5" Width="1.5" />
+    <Position X="46.5" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAQAAAAAMAAAABAAAAAAAAAAAAAA=</HashCode>
       <FileName>SceneManager.h</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="EVENT_TYPE" Collapsed="true">
-    <Position X="36" Y="5.75" Width="1.5" />
+    <Position X="43" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAEAAABDAAAAACQAAAAAAQAAAAAAAAAAAAACAAAA=</HashCode>
       <FileName>EventSystem.h</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="EVENT_CATCH" Collapsed="true">
-    <Position X="34.25" Y="5.75" Width="1.5" />
+    <Position X="41.25" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAABAAAAAAABAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>EventTrigger.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="PARTICLE_MOVEMENT" Collapsed="true">
+    <Position X="41.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ParticleSystem.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="PATTICLE_TYPE" Collapsed="true">
+    <Position X="44.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ParticleSystem.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="PARTICLE_SPREAD" Collapsed="true">
+    <Position X="43" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ParticleSystem.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="PARTICLE_ALIGN" Collapsed="true">
+    <Position X="39.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAIAA=</HashCode>
+      <FileName>ParticleSystem.h</FileName>
     </TypeIdentifier>
   </Enum>
   <Font Name="맑은 고딕" Size="9" />
