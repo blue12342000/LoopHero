@@ -6,8 +6,8 @@
 enum class SCENE_KIND
 {
 	TITLE,
-	LOBBY,
 	INGAME,
+	ANIM_EDIT,
 	NONE
 };
 

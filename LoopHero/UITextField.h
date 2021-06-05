@@ -48,6 +48,8 @@ private:
 	string text;
 
 public:
+	virtual ~UITextField() {}
+
 	virtual void Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height) override;
 	virtual void Release() override;
 	virtual void Render(HDC hdc) override;

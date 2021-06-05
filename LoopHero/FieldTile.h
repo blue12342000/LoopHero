@@ -40,9 +40,9 @@ public:
 	virtual void Update(float deltaTime) override;
 	virtual void Render(HDC hdc) override;
 
+	void ClearMonster();
 	void DailySpawnMonster(ObserverHandler* lpCaller);
 	void DailyNearSpawnMonster(ObserverHandler* lpCaller);
-	void ClearMonster();
 
 	void OnMouseOver(EventData& data) override;
 	void OnMouseOut(EventData& data) override;

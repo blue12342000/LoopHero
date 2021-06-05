@@ -144,6 +144,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="AnimationEdit.cpp" />
     <ClCompile Include="AnimationMove.cpp" />
     <ClCompile Include="BattleField.cpp" />
     <ClCompile Include="Card.cpp" />
@@ -180,6 +181,8 @@
     <ClCompile Include="UIDebug.cpp" />
     <ClCompile Include="UIEditBox.cpp" />
     <ClCompile Include="UIGameUIInfo.cpp" />
+    <ClCompile Include="UIHierarchyItem.cpp" />
+    <ClCompile Include="UIHierarchy.cpp" />
     <ClCompile Include="UIHorizontalScroll.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageManager.cpp" />
@@ -206,6 +209,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="AnimationEdit.h" />
     <ClInclude Include="AnimationHandler.h" />
     <ClInclude Include="AnimationMove.h" />
     <ClInclude Include="BattleField.h" />
@@ -248,6 +252,8 @@
     <ClInclude Include="UIDebug.h" />
     <ClInclude Include="UIEditBox.h" />
     <ClInclude Include="UIGameUIInfo.h" />
+    <ClInclude Include="UIHierarchyItem.h" />
+    <ClInclude Include="UIHierarchy.h" />
     <ClInclude Include="UIHorizontalScroll.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageManager.h" />

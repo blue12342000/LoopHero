@@ -43,11 +43,11 @@ public:
 	bool BuildTile(int x, int y, Tile* lpTile);
 	void BuildTileFinish(int x, int y);
 	void SelectedTileValidation();
-	void SelectedCard(ObserverHandler* lpObserver);
-	void DeselectCard(ObserverHandler* lpObserver);
 
 	void SetTile(int x, int y, Tile* lpTile);
 
+	void SelectedCard(ObserverHandler* lpObserver);
+	void DeselectCard(ObserverHandler* lpObserver);
 	void BattleStart(ObserverHandler* lpCaller);
 	void BattleEnd(ObserverHandler* lpCaller);
 

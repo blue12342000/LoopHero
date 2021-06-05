@@ -76,9 +76,6 @@
     <Filter Include="소스 파일\LoopHero\Object\Battle">
       <UniqueIdentifier>{f3e92928-d8c3-40d5-a721-4a0576e284c8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\LoopHero\Object\Battle\Character">
-      <UniqueIdentifier>{f489a64b-67fe-4ef9-802b-677ce28a3313}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Engine\Particle">
       <UniqueIdentifier>{ecfc2cbd-d03e-464c-8254-a5ea32dc6608}</UniqueIdentifier>
     </Filter>
@@ -96,6 +93,12 @@
     </Filter>
     <Filter Include="소스 파일\LoopHero\UI\Debug">
       <UniqueIdentifier>{5225a07a-4f06-427e-bf14-02afb6aa8d36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\LoopHero\Object\Battle\BattleUnit">
+      <UniqueIdentifier>{f489a64b-67fe-4ef9-802b-677ce28a3313}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\LoopHero\UI\Edit">
+      <UniqueIdentifier>{c7e22930-9767-4932-a410-31a447812102}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -220,7 +223,7 @@
       <Filter>소스 파일\LoopHero\UI\InGame</Filter>
     </ClCompile>
     <ClCompile Include="BattleUnit.cpp">
-      <Filter>소스 파일\LoopHero\Object\Battle\Character</Filter>
+      <Filter>소스 파일\LoopHero\Object\Battle\BattleUnit</Filter>
     </ClCompile>
     <ClCompile Include="Hero.cpp">
       <Filter>소스 파일\LoopHero\Object\Hero</Filter>
@@ -278,6 +281,15 @@
     </ClCompile>
     <ClCompile Include="UIDebug.cpp">
       <Filter>소스 파일\LoopHero\UI\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationEdit.cpp">
+      <Filter>소스 파일\LoopHero\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="UIHierarchy.cpp">
+      <Filter>소스 파일\LoopHero\UI\Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="UIHierarchyItem.cpp">
+      <Filter>소스 파일\LoopHero\UI\Edit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -423,7 +435,7 @@
       <Filter>소스 파일\LoopHero\UI\InGame</Filter>
     </ClInclude>
     <ClInclude Include="BattleUnit.h">
-      <Filter>소스 파일\LoopHero\Object\Battle\Character</Filter>
+      <Filter>소스 파일\LoopHero\Object\Battle\BattleUnit</Filter>
     </ClInclude>
     <ClInclude Include="Hero.h">
       <Filter>소스 파일\LoopHero\Object\Hero</Filter>
@@ -484,6 +496,15 @@
     </ClInclude>
     <ClInclude Include="UIDebug.h">
       <Filter>소스 파일\LoopHero\UI\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationEdit.h">
+      <Filter>소스 파일\LoopHero\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="UIHierarchy.h">
+      <Filter>소스 파일\LoopHero\UI\Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="UIHierarchyItem.h">
+      <Filter>소스 파일\LoopHero\UI\Edit</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

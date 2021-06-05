@@ -2,7 +2,6 @@
 #include "GameUI.h"
 
 class UISprite;
-class AnimationUIController;
 class UILogo : public GameUI
 {
 private:

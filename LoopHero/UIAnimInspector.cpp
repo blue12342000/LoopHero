@@ -26,7 +26,7 @@ void UIAnimInspector::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int heig
 	lpTimeBar = GameUI::Create<UIProgressBar>(this);
 	lpTimeBar->Init(UI_ANCHOR::LEFT_TOP, { 30.0f, 30.0f }, width - 160, 30, UI_BAR_TYPE::RANGE, "time_axis_bar", "axis_bar_button");
 	lpTimeBar->SetRange(0.0f, 10.0f);
-	lpTimeBar->SetTick(0.1f);
+	lpTimeBar->SetTick(0.5f);
 	lpTimeBar->PushBackFunc(bind([](UITextField* lpTimeLabel, float var) { lpTimeLabel->SetText(to_string(var).substr(0, to_string(var).find('.') + 3) + "s"); }, lpTimeLabel, placeholders::_1));
 	lpTimeBar->PushBackFunc(bind(&UIAnimTickInfo::ViewAnimVariable, lpAnimTickInfo, placeholders::_1));
 	lpTimeBar->PushBackFunc(bind(&UIAnimInspector::MoveTarget, this, placeholders::_1));
@@ -140,17 +140,27 @@ void UIAnimInspector::AnimTimeTickRefreash()
 
 void UIAnimInspector::OpenAnimController(ObserverHandler* lpCaller)
 {
-	isVisible = !isVisible;
+	GameUI* lpTemp = dynamic_cast<GameUI*>(lpCaller);
+	if (lpTarget == lpTemp)
+	{
+		isVisible = !isVisible;
+	}
+	else
+	{
+		isVisible = true;
+	}
+
 	if (isVisible)
 	{
-		lpTarget = dynamic_cast<GameUI*>(lpCaller);
+		lpTarget = lpTemp;
 		if (isVisible = (lpTarget != nullptr))
 		{
 			state = ANIM_INSPECTOR_STATE::STOP;
-			lpUIInfo->OpenAnimController(lpTarget);
 			lpTargetAnim = lpTarget->GetAnimController();
-			if (lpTargetAnim)
+			if (isVisible = (lpTargetAnim != nullptr))
 			{
+				lpUIInfo->OpenAnimController(lpTarget);
+
 				lpSaveBtn->ClearFunc();
 				lpSaveBtn->PushBackFunc(bind([](AnimationUIController* lpTargetAnim, UIProgressBar* lpTimeBar) {lpTargetAnim->AddEventTime(lpTimeBar->GetVar()); }, lpTargetAnim, lpTimeBar));
 				lpSaveBtn->PushBackFunc(bind([](UIHorizontalScroll* lpAnimTimeScroll, UIProgressBar* lpTimeBar) {((UITimeTick*)lpAnimTimeScroll->GetChild(lpTimeBar->GetVarTick()))->SetUseTick(true); }, lpAnimTimeScroll, lpTimeBar));

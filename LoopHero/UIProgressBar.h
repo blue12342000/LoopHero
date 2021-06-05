@@ -29,10 +29,12 @@ private:
 	float tick;
 	float lastVar;
 
+	// Func
 	function<float()> lpTargetFunc;
-	float* lpTargetVar;
-	
 	function<float()> lpMaxFunc;
+
+	// Variable;
+	float* lpTargetVar;
 	float* lpMaxVar;
 
 	// Range 전용 변수

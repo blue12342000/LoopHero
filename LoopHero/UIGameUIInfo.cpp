@@ -57,6 +57,10 @@ void UIGameUIInfo::OpenAnimController(GameUI* lpGameUI)
 			{
 				lpRadioButton[i]->SetState(UI_BUTTON_STATE::PRESS);
 			}
+			else
+			{
+				lpRadioButton[i]->SetState(UI_BUTTON_STATE::NORMAL);
+			}
 		}
 		lpAxisXBar->SetVar(worldPos.x);
 		lpAxisYBar->SetVar(worldPos.y);

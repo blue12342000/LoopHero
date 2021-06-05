@@ -108,10 +108,23 @@ RECT MakeRect(POINTFLOAT pos, int width, int height)
 	return RECT{ x, y, x + width, y + height };
 }
 
-void RenderRectangle(HDC hdc, RECT rc, COLORREF color)
+void RenderRectangle(HDC hdc, RECT rc, COLORREF color, bool isTrans)
 {
-	HBRUSH hBrudh = CreateSolidBrush(color), hOldBrush;
-	hOldBrush = (HBRUSH)SelectObject(hdc, hBrudh);
-	Rectangle(hdc, rc.left, rc.top, rc.right, rc.bottom);
-	DeleteObject(SelectObject(hdc, hOldBrush));
+	if (!isTrans)
+	{
+		HBRUSH hBrudh = CreateSolidBrush(color), hOldBrush;
+		hOldBrush = (HBRUSH)SelectObject(hdc, hBrudh);
+		Rectangle(hdc, rc.left, rc.top, rc.right, rc.bottom);
+		DeleteObject(SelectObject(hdc, hOldBrush));
+	}
+	else
+	{
+		HPEN hPen = CreatePen(PS_SOLID, 3, color), hOldPen;
+		HBRUSH hBrudh = (HBRUSH)GetStockObject(NULL_BRUSH), hOldBrush;
+		hOldPen = (HPEN)SelectObject(hdc, hPen);
+		hOldBrush = (HBRUSH)SelectObject(hdc, hBrudh);
+		Rectangle(hdc, rc.left, rc.top, rc.right, rc.bottom);
+		DeleteObject(SelectObject(hdc, hOldBrush));
+		DeleteObject(SelectObject(hdc, hOldPen));
+	}
 }

@@ -142,6 +142,9 @@ HRESULT GameData::Init()
     lpDeck = PoolingManager::GetSingleton()->GetClass<Deck>();
     lpDeck->Init();
 
+	// 애니메이션 데이터 로드
+	DataManager::GetSingleton()->LoadIniFile("Ini/animation.ini", "animations");
+
 	// 일반 (내가 중앙일때)
 	mTileSeq.insert(make_pair(0x10, TILE_IMAGE_SEQ::BASIC));
 	mTileSeq.insert(make_pair(0x38, TILE_IMAGE_SEQ::HORIZON));

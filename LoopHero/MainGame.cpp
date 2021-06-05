@@ -1,6 +1,7 @@
 #include "MainGame.h"
 #include "InGame.h"
 #include "Title.h"
+#include "AnimationEdit.h"
 #include "Timer.h"
 
 HRESULT MainGame::Init()
@@ -19,8 +20,9 @@ HRESULT MainGame::Init()
     // 씬메니저 등록
 	SceneManager::GetSingleton()->AddScene(SCENE_KIND::TITLE, new Title());
 	SceneManager::GetSingleton()->AddScene(SCENE_KIND::INGAME , new InGame());
+	SceneManager::GetSingleton()->AddScene(SCENE_KIND::ANIM_EDIT, new AnimationEdit());
 
-	SceneManager::GetSingleton()->ChangeScene(SCENE_KIND::TITLE);
+	SceneManager::GetSingleton()->ChangeScene(SCENE_KIND::ANIM_EDIT);
     return S_OK;
 }
 

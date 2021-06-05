@@ -68,6 +68,8 @@ private:
 	map<UNIT_SLOT, EquipSlot> mEquip;
 
 public:
+	virtual ~Unit() {}
+
 	virtual void Init();
 	virtual void Release();
 	virtual void Update(float deltaTime);

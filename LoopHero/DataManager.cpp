@@ -36,3 +36,23 @@ void DataManager::LoadIniFile(string filePath, string tag)
 		ifs.close();
 	}
 }
+
+void DataManager::SaveIniFile(string filePath, string tag)
+{
+	ofstream ofs;
+	ofs.open(filePath, ios_base::out);
+	ofs.clear();
+
+	const auto& iniData = mDatas[tag];
+
+	for (const auto& section : iniData)
+	{
+		ofs << "[" << section.first << "]" << endl;
+		for (const auto& pair : section.second)
+		{
+			ofs << pair.first << "=\"" << pair.second << "\"" << endl;
+		}
+		ofs << endl;
+	}
+	ofs.close();
+}

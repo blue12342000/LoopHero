@@ -27,8 +27,6 @@ void InGameRightMenu::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int heig
 
 	lpHeroHpBar = GameUI::Create<UIProgressBar>(this);
 	lpHeroHpBar->Init(UI_ANCHOR::RIGHT_TOP, { 20.0f * 2, 241.0f }, 75 * 2, 6 * 2, UI_BAR_TYPE::HORIZON, "", "battle_unit_statusbar_hp");
-	lpHeroHpBar->SetTrackingData(bind(&Unit::GetCurrHp, GameData::GetSingleton()->GetUnit()));
-	lpHeroHpBar->SetTrackingMaxData(bind(&Unit::GetStatus, GameData::GetSingleton()->GetUnit(), UNIT_STATUS::MAX_HP));
 
 	lpHeroHpLabel = GameUI::Create<UITextField>(this);
 	lpHeroHpLabel->Init(UI_ANCHOR::RIGHT_TOP, { 20.0f * 2, 234.0f }, 75 * 2, 6 * 2);
@@ -41,41 +39,46 @@ void InGameRightMenu::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int heig
 	lpHeroEquip->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ 5.0f * 2, 27.0f * 2 }, 104 * 2, 77 * 2, 3, 4, { 2, 2 });
 
 	Unit* lpUnit = GameData::GetSingleton()->GetUnit();
+	if (lpUnit)
+	{
+		lpHeroHpBar->SetTrackingData(bind(&Unit::GetCurrHp, GameData::GetSingleton()->GetUnit()));
+		lpHeroHpBar->SetTrackingMaxData(bind(&Unit::GetStatus, GameData::GetSingleton()->GetUnit(), UNIT_STATUS::MAX_HP));
 
-	auto mSlotEquip = lpUnit->GetTrait()->GetUnitSlot();
-	if (mSlotEquip.find(UNIT_SLOT::RIGHT_HAND) != mSlotEquip.end())
-	{
-		UIItemSlot* lpItemSlot1 = GameUI::Create<UIItemSlot>();
-		lpItemSlot1->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ 0, 0 }, 25 * 2, 25 * 2, UNIT_SLOT::RIGHT_HAND, mSlotEquip[UNIT_SLOT::RIGHT_HAND]);
-		lpHeroEquip->SetItemObject(0, 0, lpItemSlot1);
-	} 
+		auto mSlotEquip = lpUnit->GetTrait()->GetUnitSlot();
+		if (mSlotEquip.find(UNIT_SLOT::RIGHT_HAND) != mSlotEquip.end())
+		{
+			UIItemSlot* lpItemSlot1 = GameUI::Create<UIItemSlot>();
+			lpItemSlot1->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ 0, 0 }, 25 * 2, 25 * 2, UNIT_SLOT::RIGHT_HAND, mSlotEquip[UNIT_SLOT::RIGHT_HAND]);
+			lpHeroEquip->SetItemObject(0, 0, lpItemSlot1);
+		} 
 
-	if (mSlotEquip.find(UNIT_SLOT::HELMET) != mSlotEquip.end())
-	{
-		UIItemSlot* lpItemSlot2 = GameUI::Create<UIItemSlot>();
-		lpItemSlot2->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ 0, 0 }, 25 * 2, 25 * 2, UNIT_SLOT::HELMET, mSlotEquip[UNIT_SLOT::HELMET]);
-		lpHeroEquip->SetItemObject(0, 1, lpItemSlot2);
-	}
+		if (mSlotEquip.find(UNIT_SLOT::HELMET) != mSlotEquip.end())
+		{
+			UIItemSlot* lpItemSlot2 = GameUI::Create<UIItemSlot>();
+			lpItemSlot2->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ 0, 0 }, 25 * 2, 25 * 2, UNIT_SLOT::HELMET, mSlotEquip[UNIT_SLOT::HELMET]);
+			lpHeroEquip->SetItemObject(0, 1, lpItemSlot2);
+		}
 	
-	if (mSlotEquip.find(UNIT_SLOT::LEFT_RING) != mSlotEquip.end())
-	{
-		UIItemSlot* lpItemSlot3 = GameUI::Create<UIItemSlot>();
-		lpItemSlot3->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ 0, 0 }, 25 * 2, 25 * 2, UNIT_SLOT::LEFT_RING, mSlotEquip[UNIT_SLOT::LEFT_RING]);
-		lpHeroEquip->SetItemObject(1, 0, lpItemSlot3);
-	}
+		if (mSlotEquip.find(UNIT_SLOT::LEFT_RING) != mSlotEquip.end())
+		{
+			UIItemSlot* lpItemSlot3 = GameUI::Create<UIItemSlot>();
+			lpItemSlot3->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ 0, 0 }, 25 * 2, 25 * 2, UNIT_SLOT::LEFT_RING, mSlotEquip[UNIT_SLOT::LEFT_RING]);
+			lpHeroEquip->SetItemObject(1, 0, lpItemSlot3);
+		}
 	
-	if (mSlotEquip.find(UNIT_SLOT::LEFT_HAND) != mSlotEquip.end())
-	{
-		UIItemSlot* lpItemSlot4 = GameUI::Create<UIItemSlot>();
-		lpItemSlot4->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ 0, 0 }, 25 * 2, 25 * 2, UNIT_SLOT::LEFT_HAND, mSlotEquip[UNIT_SLOT::LEFT_HAND]);
-		lpHeroEquip->SetItemObject(2, 0, lpItemSlot4);
-	}
+		if (mSlotEquip.find(UNIT_SLOT::LEFT_HAND) != mSlotEquip.end())
+		{
+			UIItemSlot* lpItemSlot4 = GameUI::Create<UIItemSlot>();
+			lpItemSlot4->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ 0, 0 }, 25 * 2, 25 * 2, UNIT_SLOT::LEFT_HAND, mSlotEquip[UNIT_SLOT::LEFT_HAND]);
+			lpHeroEquip->SetItemObject(2, 0, lpItemSlot4);
+		}
 	
-	if (mSlotEquip.find(UNIT_SLOT::ARMOR) != mSlotEquip.end())
-	{
-		UIItemSlot* lpItemSlot5 = GameUI::Create<UIItemSlot>();
-		lpItemSlot5->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ 0, 0 }, 25 * 2, 25 * 2, UNIT_SLOT::ARMOR, mSlotEquip[UNIT_SLOT::ARMOR]);
-		lpHeroEquip->SetItemObject(2, 1, lpItemSlot5);
+		if (mSlotEquip.find(UNIT_SLOT::ARMOR) != mSlotEquip.end())
+		{
+			UIItemSlot* lpItemSlot5 = GameUI::Create<UIItemSlot>();
+			lpItemSlot5->Init(UI_ANCHOR::RIGHT_TOP, POINTFLOAT{ 0, 0 }, 25 * 2, 25 * 2, UNIT_SLOT::ARMOR, mSlotEquip[UNIT_SLOT::ARMOR]);
+			lpHeroEquip->SetItemObject(2, 1, lpItemSlot5);
+		}
 	}
 
 	lpHScroll = GameUI::Create<UIHorizontalScroll>(this);
@@ -93,6 +96,8 @@ void InGameRightMenu::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int heig
 	lpItemInfo = nullptr;
 	vCompareItems.clear();
 
+	CreateAnimController("ingame_info");
+
 	AddEventHandler("DropEquip", bind(&InGameRightMenu::DropEquip, this, placeholders::_1));
 	AddEventHandler("ViewInfo", bind(&InGameRightMenu::OpenEquipLayer, this, placeholders::_1));
 	AddEventHandler("HideInfo", bind(&InGameRightMenu::CloseEquipLayer, this, placeholders::_1));
@@ -100,10 +105,10 @@ void InGameRightMenu::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int heig
 
 void InGameRightMenu::Update(float deltaTime)
 {
-	if (KeyManager::GetSingleton()->IsKeyOnceDown('P'))
-	{
-		DropEquip(GameData::GetSingleton()->GetUnit());
-	}
+	//if (KeyManager::GetSingleton()->IsKeyOnceDown('P'))
+	//{
+	//	DropEquip(GameData::GetSingleton()->GetUnit());
+	//}
 
 	lpLoopLevelLabel->SetText(to_string(GameData::GetSingleton()->GetLoopLevel()));
 

@@ -24,7 +24,6 @@ class Image;
 class Item : public GameObject
 {
 protected:
-	POINTFLOAT pos;
 	Image* lpRankImage;
 	Image* lpItemImage;
 	ITEM_TYPE type;

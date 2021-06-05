@@ -29,24 +29,24 @@ void InGameHandCard::Release()
 
 void InGameHandCard::Update(float deltaTime)
 {
-	if (KeyManager::GetSingleton()->IsKeyOnceDown('I'))
-	{
-		for (int i = 0; i < 20; ++i)
-		{
-			UISprite* lpSprite = GameUI::Create<UISprite>();
-			lpSprite->Init(UI_ANCHOR::LEFT_TOP, { 0.0f, 0.0f }, 41 * 2, 58 * 2);
-			lpSprite->SetGameObject(GameData::GetSingleton()->PickCard());
-			lpSprite->SetEventCatch(EVENT_CATCH::BLOCK_PASS);
-			lpSprite->SetWorldPos(POINT{ WINSIZE_WIDTH / 2, WINSIZE_HEIGHT / 2 });
-			lpSprite->Refresh();
-			lpHScrollView->AddChild(lpSprite);
-		}
-	}
-
-	if (KeyManager::GetSingleton()->IsKeyOnceDown('O'))
-	{
-		((UIHorizontalScroll*)lpHScrollView)->RemoveChild(rand() % 10);
-	}
+	//if (KeyManager::GetSingleton()->IsKeyOnceDown('I'))
+	//{
+	//	for (int i = 0; i < 20; ++i)
+	//	{
+	//		UISprite* lpSprite = GameUI::Create<UISprite>();
+	//		lpSprite->Init(UI_ANCHOR::LEFT_TOP, { 0.0f, 0.0f }, 41 * 2, 58 * 2);
+	//		lpSprite->SetGameObject(GameData::GetSingleton()->PickCard());
+	//		lpSprite->SetEventCatch(EVENT_CATCH::BLOCK_PASS);
+	//		lpSprite->SetWorldPos(POINT{ WINSIZE_WIDTH / 2, WINSIZE_HEIGHT / 2 });
+	//		lpSprite->Refresh();
+	//		lpHScrollView->AddChild(lpSprite);
+	//	}
+	//}
+	//
+	//if (KeyManager::GetSingleton()->IsKeyOnceDown('O'))
+	//{
+	//	((UIHorizontalScroll*)lpHScrollView)->RemoveChild(rand() % 10);
+	//}
 
 	if (PtInRect(&rc, KeyManager::GetSingleton()->GetMousePoint()))
 	{

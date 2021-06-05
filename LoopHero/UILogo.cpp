@@ -13,8 +13,7 @@ void UILogo::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
     lpLogo->SetTexture(ImageManager::GetSingleton()->FindImage("title_logo"));
     lpLogo->SetEventCatch(EVENT_CATCH::PASS);
 
-    lpAnimController = PoolingManager::GetSingleton()->GetClass<AnimationUIController>();
-    lpAnimController->Init(this);
+    CreateAnimController("logo_anim");
 }
 
 void UILogo::Release()
@@ -29,5 +28,5 @@ void UILogo::Render(HDC hdc)
 
 void UILogo::OnClick(EventData& data)
 {
-    ObserverManager::GetSingleton()->Notify("OpenAnimController", this);
+    //ObserverManager::GetSingleton()->Notify("OpenAnimController", this);
 }

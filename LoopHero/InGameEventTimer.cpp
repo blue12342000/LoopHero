@@ -11,7 +11,7 @@ void InGameEventTimer::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int hei
 	dailyTimer = 0.0f;
 	bossTimer = 0.0f;
 
-	maxDailyTimer = 3;
+	maxDailyTimer = 10;
 	maxBossTimer = 10;
 
 	lpDailyTimer = GameUI::Create<UIProgressBar>(this);
@@ -23,6 +23,8 @@ void InGameEventTimer::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int hei
 	lpBossTimer->Init(UI_ANCHOR::LEFT_TOP, { 17.0f * 2, 41.0f }, 200, 4, UI_BAR_TYPE::HORIZON, "", "battle_unit_statusbar_hp");
 	lpBossTimer->SetTrackingData(bind(&InGameEventTimer::GetBossTimer, this));
 	lpBossTimer->SetTrackingMaxData(maxBossTimer);
+
+	CreateAnimController("event_timer");
 
 	AddEventHandler("IncreaseBossTimer", bind(&InGameEventTimer::IncreaseBossTimer, this, placeholders::_1));
 }

@@ -27,14 +27,12 @@ private:
 	Image* lpIconImg;
 	Image* lpCardImg;
 
-	POINTFLOAT pos;
 	string id;
 	string name;
 	string desc;
 
 	string tileKey;
 
-	RECT rc;
 	int width;
 	int height;
 

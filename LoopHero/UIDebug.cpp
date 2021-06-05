@@ -14,7 +14,7 @@ void UIDebug::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
 	lpBackground = ImageManager::GetSingleton()->FindImage("layer_background");
 
 	lpLogText = GameUI::Create<UITextField>(this);
-	lpLogText->Init(UI_ANCHOR::LEFT_TOP, POINTFLOAT{ 20.0f, 25.0f }, width, 400);
+	lpLogText->Init(UI_ANCHOR::LEFT_TOP, POINTFLOAT{ 20.0f, 25.0f }, width, height - 50);
 	lpLogText->SetFont(UI_TEXT_HALIGN::LEFT, UI_TEXT_VALIGN::TOP, UI_TEXT_LINE::MULTI, 16, RGB(255, 255, 255), "B³ª´®¹Ù¸¥°íµñ");
 	lpLogText->SetEventCatch(EVENT_CATCH::BLOCK_PASS);
 
@@ -39,6 +39,8 @@ void UIDebug::Update(float deltaTime)
 	height = (rc.bottom - rc.top) + 50;
 	if (width < 250) width = 250;
 	if (height < 50) height = 50;
+
+	lpLogText->SetHeight(height - 50);
 
 	GameUI::Update(deltaTime);
 }

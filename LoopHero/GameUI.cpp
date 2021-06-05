@@ -146,6 +146,12 @@ void GameUI::Render(HDC hdc)
 	}
 }
 
+void GameUI::CreateAnimController(string anim)
+{
+	lpAnimController = PoolingManager::GetSingleton()->GetClass<AnimationUIController>();
+	lpAnimController->Init(this, anim);
+}
+
 void GameUI::InsertChild(GameUI* lpChild, int index)
 {
 	lpChild->SetParernt(this);
@@ -294,7 +300,52 @@ void GameUI::SetAnchor(UI_ANCHOR anchor)
 {
 	if (this->anchor == anchor) return;
 	this->anchor = anchor;
-	Refresh();
+	RECT parentRc;
+	if (lpParent) parentRc = lpParent->GetRect();
+	else parentRc = { 0, 0, WINSIZE_WIDTH, WINSIZE_HEIGHT };
+
+	POINTFLOAT worldPos;
+	switch (anchor)
+	{
+	case UI_ANCHOR::TOP_MIDDLE:
+		origin = { (parentRc.left + parentRc.right) * 0.5f, (float)parentRc.top};
+		worldPos = { (rc.left + rc.right) * 0.5f, (float)rc.top };
+		break;
+	case UI_ANCHOR::RIGHT_TOP:
+		origin = { (float)parentRc.right, (float)parentRc.top };
+		worldPos = { (float)rc.right, (float)rc.top };
+		break;
+	case UI_ANCHOR::LEFT_MIDDLE:
+		origin = { (float)parentRc.left, (parentRc.top + parentRc.bottom) * 0.5f };
+		worldPos = { (float)rc.left, (rc.top + rc.bottom)* 0.5f };
+		break;
+	case UI_ANCHOR::MIDDLE:
+		origin = { (parentRc.left + parentRc.right) * 0.5f, (parentRc.top + parentRc.bottom) * 0.5f };
+		worldPos = { (rc.left + rc.right) * 0.5f, (rc.top + rc.bottom) * 0.5f };
+		break;
+	case UI_ANCHOR::RIGHT_MIDDLE:
+		origin = { (float)parentRc.right, (parentRc.top + parentRc.bottom) * 0.5f };
+		worldPos = { (float)rc.right, (rc.top + rc.bottom) * 0.5f };
+		break;
+	case UI_ANCHOR::LEFT_BOTTOM:
+		origin = { (float)parentRc.left, (float)parentRc.bottom };
+		worldPos = { (float)rc.left, (float)rc.bottom };
+		break;
+	case UI_ANCHOR::BOTTOM_MIDDLE:
+		origin = { (parentRc.left + parentRc.right) * 0.5f, (float)parentRc.bottom };
+		worldPos = { (rc.left + rc.right) * 0.5f, (float)rc.bottom };
+		break;
+	case UI_ANCHOR::RIGHT_BOTTOM:
+		origin = { (float)parentRc.right, (float)parentRc.bottom };
+		worldPos = { (float)rc.right, (float)rc.bottom };
+		break;
+	case UI_ANCHOR::LEFT_TOP:
+	default:
+		origin = { (float)parentRc.left, (float)parentRc.top };
+		worldPos = { (float)rc.left, (float)rc.top };
+		break;
+	}
+	SetWorldPos(worldPos);
 }
 
 void GameUI::SetParernt(GameUI* lpParent)

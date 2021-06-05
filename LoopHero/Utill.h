@@ -24,7 +24,7 @@ inline void SetWindowSize(HWND hWnd, int width, int height)
 double StackCalculate(string text);
 vector<string> StringSplit(string str, char token);
 RECT MakeRect(POINTFLOAT pos, int width, int height);
-void RenderRectangle(HDC hdc, RECT rc, COLORREF color = RGB(255, 255, 255));
+void RenderRectangle(HDC hdc, RECT rc, COLORREF color = RGB(255, 255, 255), bool isTrans = false);
 
 template <typename T>
 inline int GetRandomArgs(const vector<T>& args, const set<T>& in)

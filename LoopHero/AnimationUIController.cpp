@@ -2,9 +2,42 @@
 #include "AnimationHandler.h"
 #include "AnimationMove.h"
 #include "PoolingManager.h"
+#include "DataManager.h"
 #include "GameUI.h"
+#include "Utill.h"
+#include <regex>
 
-void AnimationUIController::Init(GameUI* lpTarget)
+void AnimationUIController::AddEventTick(int timeTick, POINTFLOAT pos)
+{
+	if (-1 < timeTick && timeTick <= 10 / tickScale)
+	{
+		animVar.position = pos;
+		animVar.tick = timeTick;
+		animVar.elapsedTime = timeTick * tickScale;
+
+		auto fit = sAnimTick.find(timeTick);
+		if (fit == sAnimTick.end())
+		{
+			auto it = sAnimTick.insert(timeTick);
+			int index = distance(sAnimTick.begin(), it.first);
+			for (const auto& pair : mAnimHandler)
+			{
+				pair.second->AddEvent(index, animVar);
+			}
+		}
+		else
+		{
+			int index = distance(sAnimTick.begin(), fit);
+			for (const auto& pair : mAnimHandler)
+			{
+				pair.second->ReplaceEvent(index, animVar);
+			}
+		}
+		tickIter = sAnimTick.begin();
+	}
+}
+
+void AnimationUIController::Init(GameUI* lpTarget, string anim)
 {
 	vAnimVars.reserve(1000);
 	this->lpTarget = lpTarget;
@@ -14,7 +47,30 @@ void AnimationUIController::Init(GameUI* lpTarget)
 	animVar.isLinear = false;
 	animVar.sequence = 0;
 	AddAnimationHandler<AnimationMove>();
+	// 데이터가 없을경우를 대비한 초기데이터
 	AddEventTick(0);
+
+	map<string, string> mAnimDatas = DataManager::GetSingleton()->GetData("animations", anim);
+	if (!mAnimDatas.empty())
+	{
+		regex reg("^tick_event_[0-9]{1,}$");
+		vector<string> vTickEvent;
+		for (const auto& pair : mAnimDatas)
+		{
+			if (regex_match(pair.first, reg))
+			{
+				vTickEvent = move(StringSplit(pair.second, '|'));
+				if (vTickEvent.size() != 3) continue;
+
+				AddEventTick(stoi(vTickEvent[0]), POINTFLOAT{ stof(vTickEvent[1]), stof(vTickEvent[2]) });
+			}
+		}
+
+		if (mAnimDatas.find("anim_linear") != mAnimDatas.end())
+		{
+			animVar.isLinear = (mAnimDatas["anim_linear"] == "1");
+		}
+	}
 }
 
 void AnimationUIController::Release()

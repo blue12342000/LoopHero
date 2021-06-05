@@ -63,6 +63,8 @@ public:
 		return lpGameUI;
 	}
 
+	void CreateAnimController(string anim);
+
 	void InsertChild(GameUI* lpChild, int index);
 	virtual void AddChild(GameUI* lpChild);
 	virtual void RemoveChild(int index);
@@ -79,6 +81,7 @@ public:
 
 	virtual AnimationUIController* GetAnimController() { return lpAnimController; }
 
+	virtual inline void SetHeight(int height) final { this->height = height; }
 	virtual inline void SetPos(POINTFLOAT pos) final { this->pos = pos; }
 	virtual inline void SetVisible(bool isVisible) final { this->isVisible = isVisible; }
 	virtual inline POINTFLOAT GetPos() final { return pos; }

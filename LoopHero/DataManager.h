@@ -14,6 +14,7 @@ private:
 
 public:
 	void LoadIniFile(string filePath, string tag);
+	void SaveIniFile(string filePath, string tag);
 
 	inline string GetData(string tag, string group, string key)
 	{
@@ -41,6 +42,20 @@ public:
 			return fit->second;
 		}
 		return map<string, map<string, string>>();
+	}
+
+	inline map<string, string> GetData(string tag, string section)
+	{
+		auto fit = mDatas.find(tag);
+		if (fit != mDatas.end())
+		{
+			auto sit = fit->second.find(section);
+			if (sit != fit->second.end())
+			{
+				return sit->second;
+			}
+		}
+		return map<string, string>();
 	}
 };
 

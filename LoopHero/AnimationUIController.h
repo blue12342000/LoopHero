@@ -44,8 +44,12 @@ private:
 	set<int>::iterator tickIter;
 	vector<AnimVariable> vAnimVars;
 
+
+private:
+	void AddEventTick(int timeTick, POINTFLOAT pos);
+
 public:
-	void Init(GameUI* lpTarget);
+	void Init(GameUI* lpTarget, string anim);
 	void Release();
 	void Update(float deltaTime);
 	void Render(HDC hdc);
