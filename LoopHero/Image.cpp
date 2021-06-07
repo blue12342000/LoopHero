@@ -193,6 +193,14 @@ void Image::Fill()
     SelectObject(lpImageInfo->hMemDC, hOldBrush);
 }
 
+void Image::Fill(int x, int y, int width, int height, COLORREF color)
+{
+    HBRUSH hBrush = CreateSolidBrush(color);
+    HBRUSH hOldBrush = (HBRUSH)SelectObject(lpImageInfo->hMemDC, hBrush);
+    PatBlt(lpImageInfo->hMemDC, x, y, width, height, PATCOPY);
+    DeleteObject(SelectObject(lpImageInfo->hMemDC, hOldBrush));
+}
+
 void Image::Render(HDC hdc, int destX, int destY, int frame, IMAGE_ALIGN align)
 {
     frame %= lpImageInfo->totalFrame;
@@ -342,18 +350,18 @@ void Image::LoopRender(HDC hdc, POINT pos, int width, int height, int frame, IMA
 void Image::PatternRender(HDC hdc, int destX, int destY, int width, int height, int frame)
 {
     int limitX = destX + width;
-    int limitY = destY - height;
+    int limitY = destY + height;
     int drawX, drawY;
 
     if (lpImageInfo->isTransparent)
     {
-        for (int y = destY; y > limitY; y -= lpImageInfo->height)
+        for (int y = destY; y < limitY; y += lpImageInfo->height)
         {
             for (int x = destX; x < limitX; x += lpImageInfo->width)
             {
                 if (x + lpImageInfo->width <= limitX) { drawX = lpImageInfo->width; }
                 else { drawX = width % lpImageInfo->width; }
-                if (y - lpImageInfo->height >= limitY) { drawY = lpImageInfo->height; }
+                if (y + lpImageInfo->height <= limitY) { drawY = lpImageInfo->height; }
                 else { drawY = height % lpImageInfo->height; }
 
                 GdiTransparentBlt(hdc, x, y, drawX, drawY,
@@ -363,13 +371,13 @@ void Image::PatternRender(HDC hdc, int destX, int destY, int width, int height, 
     }
     else
     {
-        for (int y = destY; y > limitY; y -= lpImageInfo->height)
+        for (int y = destY; y < limitY; y += lpImageInfo->height)
         {
             for (int x = destX; x < limitX; x += lpImageInfo->width)
             {
                 if (x + lpImageInfo->width <= limitX) { drawX = lpImageInfo->width; }
                 else { drawX = width % lpImageInfo->width; }
-                if (y - lpImageInfo->height >= limitY) { drawY = lpImageInfo->height; }
+                if (y + lpImageInfo->height <= limitY) { drawY = lpImageInfo->height; }
                 else { drawY = height % lpImageInfo->height; }
 
                 StretchBlt(hdc, x, y, drawX, drawY,

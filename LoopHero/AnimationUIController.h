@@ -10,6 +10,13 @@
 
 using namespace std;
 
+enum class ANIMAION_STATE
+{
+	READY,
+	PLAY,
+	STOP
+};
+
 struct AnimVariable
 {
 	POINTFLOAT origin;
@@ -32,13 +39,14 @@ class AnimationHandler;
 class AnimationUIController : public GameNode
 {
 private:
-	bool isPlay;
+	ANIMAION_STATE state;
 	bool isLoop;
 	bool isRootChange;
 	float tickScale;
 	GameUI* lpTarget;
 	map<string, AnimationHandler*> mAnimHandler;
 	AnimVariable animVar;
+	string animKey;
 
 	set<int> sAnimTick;
 	set<int>::iterator tickIter;
@@ -72,6 +80,10 @@ public:
 		return lpAnimHandler;
 	}
 
+	void Load();
+	void Save();
+	void Reset();
+
 	void Play();
 	void Resume();
 	void Stop();
@@ -86,7 +98,7 @@ public:
 	inline bool IsEventExist(float time) { return sAnimTick.find((int)(time / tickScale + FLT_EPSILON)) != sAnimTick.end(); }
 	inline bool IsEventExist(int tick) { return sAnimTick.find(tick) != sAnimTick.end(); }
 	inline float GetElapsedTime() { return animVar.elapsedTime; }
-	inline bool IsPlay() { return isPlay; }
+	inline bool IsPlay() { return state == ANIMAION_STATE::PLAY; }
 	inline bool IsLinear() { return animVar.isLinear; }
 	inline void ToggleLinear() { animVar.isLinear = !animVar.isLinear; }
 };

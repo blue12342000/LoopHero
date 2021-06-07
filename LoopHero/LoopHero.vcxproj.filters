@@ -267,18 +267,6 @@
     <ClCompile Include="UIEditBox.cpp">
       <Filter>소스 파일\LoopHero\UI\Base</Filter>
     </ClCompile>
-    <ClCompile Include="UIAnimInspector.cpp">
-      <Filter>소스 파일\LoopHero\UI\Title</Filter>
-    </ClCompile>
-    <ClCompile Include="UIGameUIInfo.cpp">
-      <Filter>소스 파일\LoopHero\UI\Title</Filter>
-    </ClCompile>
-    <ClCompile Include="UITimeTick.cpp">
-      <Filter>소스 파일\LoopHero\UI\Title</Filter>
-    </ClCompile>
-    <ClCompile Include="UIAnimTickInfo.cpp">
-      <Filter>소스 파일\LoopHero\UI\Title</Filter>
-    </ClCompile>
     <ClCompile Include="UIDebug.cpp">
       <Filter>소스 파일\LoopHero\UI\Debug</Filter>
     </ClCompile>
@@ -290,6 +278,27 @@
     </ClCompile>
     <ClCompile Include="UIHierarchyItem.cpp">
       <Filter>소스 파일\LoopHero\UI\Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="UIEditMenu.cpp">
+      <Filter>소스 파일\LoopHero\UI\Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="UIAnimInspector.cpp">
+      <Filter>소스 파일\LoopHero\UI\Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="UIAnimTickInfo.cpp">
+      <Filter>소스 파일\LoopHero\UI\Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="UIGameUIInfo.cpp">
+      <Filter>소스 파일\LoopHero\UI\Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="UITimeTick.cpp">
+      <Filter>소스 파일\LoopHero\UI\Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="UITitleMenu.cpp">
+      <Filter>소스 파일\LoopHero\UI\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="FadeOutScene.cpp">
+      <Filter>소스 파일\LoopHero\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -482,18 +491,6 @@
     <ClInclude Include="UIEditBox.h">
       <Filter>소스 파일\LoopHero\UI\Base</Filter>
     </ClInclude>
-    <ClInclude Include="UIAnimInspector.h">
-      <Filter>소스 파일\LoopHero\UI\Title</Filter>
-    </ClInclude>
-    <ClInclude Include="UIGameUIInfo.h">
-      <Filter>소스 파일\LoopHero\UI\Title</Filter>
-    </ClInclude>
-    <ClInclude Include="UITimeTick.h">
-      <Filter>소스 파일\LoopHero\UI\Title</Filter>
-    </ClInclude>
-    <ClInclude Include="UIAnimTickInfo.h">
-      <Filter>소스 파일\LoopHero\UI\Title</Filter>
-    </ClInclude>
     <ClInclude Include="UIDebug.h">
       <Filter>소스 파일\LoopHero\UI\Debug</Filter>
     </ClInclude>
@@ -505,6 +502,27 @@
     </ClInclude>
     <ClInclude Include="UIHierarchyItem.h">
       <Filter>소스 파일\LoopHero\UI\Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="UIEditMenu.h">
+      <Filter>소스 파일\LoopHero\UI\Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="UIGameUIInfo.h">
+      <Filter>소스 파일\LoopHero\UI\Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="UIAnimInspector.h">
+      <Filter>소스 파일\LoopHero\UI\Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="UIAnimTickInfo.h">
+      <Filter>소스 파일\LoopHero\UI\Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="UITimeTick.h">
+      <Filter>소스 파일\LoopHero\UI\Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="UITitleMenu.h">
+      <Filter>소스 파일\LoopHero\UI\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="FadeOutScene.h">
+      <Filter>소스 파일\LoopHero\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -2,6 +2,7 @@
 #include "InGame.h"
 #include "Title.h"
 #include "AnimationEdit.h"
+#include "FadeOutScene.h"
 #include "Timer.h"
 
 HRESULT MainGame::Init()
@@ -21,6 +22,8 @@ HRESULT MainGame::Init()
 	SceneManager::GetSingleton()->AddScene(SCENE_KIND::TITLE, new Title());
 	SceneManager::GetSingleton()->AddScene(SCENE_KIND::INGAME , new InGame());
 	SceneManager::GetSingleton()->AddScene(SCENE_KIND::ANIM_EDIT, new AnimationEdit());
+
+	SceneManager::GetSingleton()->AddLoadingScene(new FadeOutScene());
 
 	SceneManager::GetSingleton()->ChangeScene(SCENE_KIND::ANIM_EDIT);
     return S_OK;

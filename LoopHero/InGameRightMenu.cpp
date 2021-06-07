@@ -26,7 +26,7 @@ void InGameRightMenu::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int heig
 	lpLoopLevelLabel->SetFont(UI_TEXT_HALIGN::CENTER, UI_TEXT_VALIGN::MIDDLE, UI_TEXT_LINE::SINGLE, 22, RGB(255, 255, 255), "Bµ¸¿ò");
 
 	lpHeroHpBar = GameUI::Create<UIProgressBar>(this);
-	lpHeroHpBar->Init(UI_ANCHOR::RIGHT_TOP, { 20.0f * 2, 241.0f }, 75 * 2, 6 * 2, UI_BAR_TYPE::HORIZON, "", "battle_unit_statusbar_hp");
+	lpHeroHpBar->Init(UI_ANCHOR::RIGHT_TOP, { 20.0f * 2, 232.0f }, 75 * 2, 7 * 2, UI_BAR_TYPE::HORIZON, "", "battle_unit_statusbar_hp");
 
 	lpHeroHpLabel = GameUI::Create<UITextField>(this);
 	lpHeroHpLabel->Init(UI_ANCHOR::RIGHT_TOP, { 20.0f * 2, 234.0f }, 75 * 2, 6 * 2);

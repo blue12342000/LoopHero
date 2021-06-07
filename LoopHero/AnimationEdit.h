@@ -1,31 +1,25 @@
 #pragma once
 #include "Scene.h"
 
-enum class EDIT_SCENE
-{
-	TITLE,
-	INGAME,
-	NONE
-};
-
 class Image;
 class GameUI;
 class EventSystem;
 class UIButton;
 class UIDebug;
 class UIHierarchy;
+class UIAnimInspector;
 class AnimationEdit : public Scene
 {
 private:
 	Image* lpBuffer;
 	Image* lpBackImage;
 
-	UIButton* lpButton[(int)EDIT_SCENE::NONE];
 
 	GameUI* lpCanvus;
 
 	UIDebug* lpUIDebug;
 	UIHierarchy* lpHierarchy;
+	UIAnimInspector* lpUIAnimInspector;
 
 	EventSystem* lpEventSystem;
 
@@ -35,6 +29,7 @@ public:
 	virtual void Update(float deltaTime) override;
 	virtual void Render(HDC hdc) override;
 
+	void ResetInit();
 	void LoadTitleUI();
 	void LoadInGameUI();
 };

@@ -154,6 +154,7 @@
     <ClCompile Include="EquipItem.cpp" />
     <ClCompile Include="EventSystem.cpp" />
     <ClCompile Include="EventTrigger.cpp" />
+    <ClCompile Include="FadeOutScene.cpp" />
     <ClCompile Include="FieldTile.cpp" />
     <ClCompile Include="FieldTileMap.cpp" />
     <ClCompile Include="FontManager.cpp" />
@@ -180,6 +181,7 @@
     <ClCompile Include="UIButton.cpp" />
     <ClCompile Include="UIDebug.cpp" />
     <ClCompile Include="UIEditBox.cpp" />
+    <ClCompile Include="UIEditMenu.cpp" />
     <ClCompile Include="UIGameUIInfo.cpp" />
     <ClCompile Include="UIHierarchyItem.cpp" />
     <ClCompile Include="UIHierarchy.cpp" />
@@ -204,6 +206,7 @@
     <ClCompile Include="UIGrid.cpp" />
     <ClCompile Include="UITextField.cpp" />
     <ClCompile Include="UITimeTick.cpp" />
+    <ClCompile Include="UITitleMenu.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="Utill.cpp" />
   </ItemGroup>
@@ -220,6 +223,7 @@
     <ClInclude Include="EquipItem.h" />
     <ClInclude Include="EventSystem.h" />
     <ClInclude Include="EventTrigger.h" />
+    <ClInclude Include="FadeOutScene.h" />
     <ClInclude Include="FieldTile.h" />
     <ClInclude Include="FieldTileMap.h" />
     <ClInclude Include="FontManager.h" />
@@ -251,6 +255,7 @@
     <ClInclude Include="UIButton.h" />
     <ClInclude Include="UIDebug.h" />
     <ClInclude Include="UIEditBox.h" />
+    <ClInclude Include="UIEditMenu.h" />
     <ClInclude Include="UIGameUIInfo.h" />
     <ClInclude Include="UIHierarchyItem.h" />
     <ClInclude Include="UIHierarchy.h" />
@@ -277,6 +282,7 @@
     <ClInclude Include="UIGrid.h" />
     <ClInclude Include="UITextField.h" />
     <ClInclude Include="UITimeTick.h" />
+    <ClInclude Include="UITitleMenu.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="Utill.h" />
   </ItemGroup>

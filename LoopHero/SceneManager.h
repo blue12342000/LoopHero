@@ -2,6 +2,10 @@
 #include "Singleton.h"
 #include <Windows.h>
 #include <map>
+#include <functional>
+#include <thread>
+
+using namespace std;
 
 enum class SCENE_KIND
 {
@@ -11,15 +15,23 @@ enum class SCENE_KIND
 	NONE
 };
 
+enum class LOAD_STYLE
+{
+	FADE_OUT,
+	NONE
+};
+
 class Scene;
 class SceneManager : public Singleton<SceneManager>
 {
 private:
-	Scene* lpLoadingScene;
-	std::map<SCENE_KIND, Scene*> mLpScenes;
+	map<LOAD_STYLE, Scene*> mLpLoadScenes;
+	map<SCENE_KIND, Scene*> mLpScenes;
+	DWORD loadingThreadId;
 
 public:
 	static Scene* lpCurrScene;
+	static Scene* lpLoadingScene;
 	static Scene* lpReadyScene;
 
 public:
@@ -32,5 +44,7 @@ public:
 	HRESULT AddLoadingScene(Scene*);
 
 	void ChangeScene(SCENE_KIND next, bool isLoading = false);
+
+	static DWORD CALLBACK LoadingThread(LPVOID lpThreadParameter);
 };
 

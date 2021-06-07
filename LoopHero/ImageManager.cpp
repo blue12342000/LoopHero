@@ -147,8 +147,22 @@ HRESULT ImageManager::Init()
     mLpImages.insert(make_pair("linear_button_27_17", new Image()));
     mLpImages["linear_button_27_17"]->Init("Image/UI/Title/linear_button_27_17.bmp", 27 * 4, 51 * 2, 2, 3, 6, true, RGB(0, 170, 255));
 
+    mLpImages.insert(make_pair("edit_menu_background", new Image()));
+    mLpImages["edit_menu_background"]->Init("Image/UI/Edit/edit_menu_background.bmp", 200 * 2, 27 * 2, 1, 1, 1, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("ingame_radio_button_50_17", new Image()));
+    mLpImages["ingame_radio_button_50_17"]->Init("Image/UI/Edit/ingame_radio_button_50_17.bmp", 50 * 4, 51 * 2, 2, 3, 6, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("title_radio_button_40_17", new Image()));
+    mLpImages["title_radio_button_40_17"]->Init("Image/UI/Edit/title_radio_button_40_17.bmp", 40 * 4, 51 * 2, 2, 3, 6, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("exit_button_40_17", new Image()));
+    mLpImages["exit_button_40_17"]->Init("Image/UI/Edit/exit_button_40_17.bmp", 40 * 2, 51 * 2, 1, 3, 3, true, RGB(0, 170, 255));
+
     mLpImages.insert(make_pair("button_27_17", new Image()));
-    mLpImages["button_27_17"]->Init("Image/UI/Common/button_27_17.bmp", 27 * 3, 51 * 3, 1, 3, 3, true, RGB(0, 170, 255));
+    mLpImages["button_27_17"]->Init("Image/UI/Common/button_27_17.bmp", 27 * 2, 51 * 2, 1, 3, 3, true,  RGB(0, 170, 255));
+    mLpImages.insert(make_pair("button_99_17", new Image()));
+    mLpImages["button_99_17"]->Init("Image/UI/Common/button_99_17.bmp", 99 * 2, 51 * 2, 1, 3, 3, true, RGB(0, 170, 255));
+
+    mLpImages.insert(make_pair("title_menubackground", new Image()));
+    mLpImages["title_menubackground"]->Init("Image/UI/Title/title_menubackground.bmp", 115 * 2, 376 * 2, 1, 1, 1, true, RGB(0, 170, 255));
 
     mLpImages.insert(make_pair("button_exit", new Image()));
     mLpImages["button_exit"]->Init("Image/UI/InGame/Button/button_exit.bmp", 35 * 2, 87 * 2, 1, 3, 3, true, RGB(0, 170, 255));

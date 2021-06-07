@@ -67,6 +67,7 @@ public:
 	HRESULT Reverse(const Image& target);
 
 	void Fill();
+	void Fill(int x, int y, int width, int height, COLORREF color = RGB(0, 0, 0));
 
 	void Render(HDC hdc, int destX = 0, int destY = 0, int frame = 0, IMAGE_ALIGN align = IMAGE_ALIGN::LEFT_TOP);
 	void Render(HDC hdc, int destX, int destY, POINT frame, IMAGE_ALIGN align = IMAGE_ALIGN::LEFT_TOP);

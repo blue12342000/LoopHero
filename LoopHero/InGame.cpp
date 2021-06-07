@@ -21,6 +21,7 @@ HRESULT InGame::Init()
 {
     Hero* lpHero = GameObject::Create<Hero>();
     lpHero->NewHero("Warrior");
+    lpHero->SetPos({ -100.0f, -100.0f });
 
     GameData::GetSingleton()->SetLoopLevel(1);
     GameData::GetSingleton()->SetHero(lpHero);

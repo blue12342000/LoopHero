@@ -3,6 +3,7 @@
 #include "UIProgressBar.h"
 #include "UIHorizontalScroll.h"
 #include "UIAnimInspector.h"
+#include "UIEditMenu.h"
 #include "UIDebug.h"
 #include "ImageManager.h"
 #include "Image.h"
@@ -19,7 +20,8 @@ void UIHierarchy::SetHierarchyItem(UIHierarchyItem* lpParentItem, GameUI* lpGame
 	{
 		if (typeid(*lpItem) == typeid(UIHierarchy)
 			|| typeid(*lpItem) == typeid(UIAnimInspector)
-			|| typeid(*lpItem) == typeid(UIDebug)) continue;
+			|| typeid(*lpItem) == typeid(UIDebug)
+			|| typeid(*lpItem) == typeid(UIEditMenu)) continue;
 
 		lpHirarchyItem = GameUI::Create<UIHierarchyItem>(lpParentItem);
 		lpHirarchyItem->Init(UI_ANCHOR::LEFT_TOP, { 0.0f, (float)lpParentItem->GetHeight() + 5 }, lpParentItem->GetWidth(), 20);

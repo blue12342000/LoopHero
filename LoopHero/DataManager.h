@@ -16,6 +16,25 @@ public:
 	void LoadIniFile(string filePath, string tag);
 	void SaveIniFile(string filePath, string tag);
 
+	inline void ReplaceData(string tag, string section, map<string, string> mData)
+	{
+		auto fit = mDatas.find(tag);
+		if (fit == mDatas.end())
+		{
+			fit = mDatas.insert(make_pair(tag, map<string, map<string, string>>())).first;
+		}
+		auto git = fit->second.find(section);
+		if (git == fit->second.end())
+		{
+			fit->second.insert(make_pair(section, move(mData)));
+		}
+		else
+		{
+			git->second.clear();
+			git->second.insert(mData.begin(), mData.end());
+		}
+	}
+
 	inline string GetData(string tag, string group, string key)
 	{
 		auto fit = mDatas.find(tag);

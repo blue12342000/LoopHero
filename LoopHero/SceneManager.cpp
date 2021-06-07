@@ -2,6 +2,7 @@
 #include "Scene.h"
 
 Scene* SceneManager::lpCurrScene = nullptr;
+Scene* SceneManager::lpLoadingScene = nullptr;
 Scene* SceneManager::lpReadyScene = nullptr;
 
 HRESULT SceneManager::Init()
@@ -45,9 +46,9 @@ HRESULT SceneManager::AddScene(SCENE_KIND kind, Scene* scene)
 	return S_OK;
 }
 
-HRESULT SceneManager::AddLoadingScene(Scene*)
+HRESULT SceneManager::AddLoadingScene(Scene* a)
 {
-
+	mLpLoadScenes[LOAD_STYLE::FADE_OUT] = a;
 	return S_OK;
 }
 
@@ -57,11 +58,26 @@ void SceneManager::ChangeScene(SCENE_KIND next, bool isLoading)
 	if (it == mLpScenes.end()) return;
 	if (isLoading)
 	{
-		// 스레드 사용
+		lpLoadingScene = it->second;
+
+		mLpLoadScenes[LOAD_STYLE::FADE_OUT]->Init();
+		if (lpCurrScene) lpCurrScene->Release();
+		lpCurrScene = mLpLoadScenes[LOAD_STYLE::FADE_OUT];
+
+		HANDLE hThread = CreateThread(nullptr, 0, LoadingThread/* 함수 */, (void*)this, 0, &loadingThreadId);
+		CloseHandle(hThread);
 		return;
 	}
 
 	if (lpCurrScene) lpCurrScene->Release();
 	lpCurrScene = it->second;
 	lpCurrScene->Init();
+}
+
+DWORD __stdcall SceneManager::LoadingThread(LPVOID lpThreadParameter)
+{
+	SceneManager* lpScene = (SceneManager*)(lpThreadParameter);
+
+
+	return 0;
 }

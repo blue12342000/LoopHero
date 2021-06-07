@@ -7,6 +7,7 @@
 #include "UILogo.h"
 #include "UIEditBox.h"
 #include "UIAnimInspector.h"
+#include "UITitleMenu.h"
 #include "UIDebug.h"
 
 HRESULT Title::Init()
@@ -16,6 +17,9 @@ HRESULT Title::Init()
 
     lpCanvus = GameUI::Create<GameUI>();
     lpCanvus->Init(UI_ANCHOR::LEFT_TOP, { 0.0f, 0.0f }, WINSIZE_WIDTH, WINSIZE_HEIGHT);
+
+    UITitleMenu* lpTitleMenu = GameUI::Create<UITitleMenu>(lpCanvus);
+    lpTitleMenu->Init(UI_ANCHOR::TOP_MIDDLE, { 0.0f, 0.0f }, 115 * 2, 376 * 2);
     
     UILogo* lpLogo = GameUI::Create<UILogo>(lpCanvus);
     lpLogo->Init(UI_ANCHOR::TOP_MIDDLE, { 0.0f, 0.0f }, 195 * 2, 195 * 2);

@@ -40,17 +40,77 @@ void AnimationUIController::AddEventTick(int timeTick, POINTFLOAT pos)
 void AnimationUIController::Init(GameUI* lpTarget, string anim)
 {
 	vAnimVars.reserve(1000);
+	this->state = ANIMAION_STATE::READY;
 	this->lpTarget = lpTarget;
-	this->isPlay = false;
 	this->tickScale = 0.01f;
 
 	animVar.isLinear = false;
 	animVar.sequence = 0;
 	AddAnimationHandler<AnimationMove>();
 	// 데이터가 없을경우를 대비한 초기데이터
-	AddEventTick(0);
 
-	map<string, string> mAnimDatas = DataManager::GetSingleton()->GetData("animations", anim);
+	animKey = anim;
+	AddEventTick(0);
+	Load();
+}
+
+void AnimationUIController::Release()
+{
+	lpTarget = nullptr;
+	state = ANIMAION_STATE::READY;
+	animVar.isLinear = false;
+	animVar.sequence = 0;
+	for (const auto& pair : mAnimHandler)
+	{
+		pair.second->Release();
+	}
+	mAnimHandler.clear();
+	sAnimTick.clear();
+	PoolingManager::GetSingleton()->AddClass(this);
+}
+
+void AnimationUIController::Update(float deltaTime)
+{
+	if (state == ANIMAION_STATE::READY)
+	{
+		animVar.elapsedTime = 0.0f;
+		animVar.tick = 0;
+		animVar.sequence = 0;
+		tickIter = sAnimTick.begin();
+
+		state = ANIMAION_STATE::PLAY;
+	}
+	else if (state == ANIMAION_STATE::PLAY)
+	{
+		if (*tickIter < animVar.tick)
+		{
+			++tickIter;
+			++animVar.sequence;
+		}
+
+		for (const auto& pair : mAnimHandler)
+		{
+			pair.second->Exec(animVar);
+		}
+		lpTarget->SetWorldPos(animVar.position);
+		if (animVar.tick > *sAnimTick.crbegin())
+		{
+			state = ANIMAION_STATE::STOP;
+		}
+
+		animVar.elapsedTime += deltaTime;
+		animVar.tick = (int)(animVar.elapsedTime / tickScale + FLT_EPSILON);
+	}
+}
+
+void AnimationUIController::Render(HDC hdc)
+{
+
+}
+
+void AnimationUIController::Load()
+{
+	map<string, string> mAnimDatas = DataManager::GetSingleton()->GetData("animations", animKey);
 	if (!mAnimDatas.empty())
 	{
 		regex reg("^tick_event_[0-9]{1,}$");
@@ -70,49 +130,52 @@ void AnimationUIController::Init(GameUI* lpTarget, string anim)
 		{
 			animVar.isLinear = (mAnimDatas["anim_linear"] == "1");
 		}
-	}
-}
-
-void AnimationUIController::Release()
-{
-	lpTarget = nullptr;
-	isPlay = false;
-	animVar.isLinear = false;
-	animVar.sequence = 0;
-	for (const auto& pair : mAnimHandler)
-	{
-		pair.second->Release();
-	}
-	mAnimHandler.clear();
-	sAnimTick.clear();
-	PoolingManager::GetSingleton()->AddClass(this);
-}
-
-void AnimationUIController::Update(float deltaTime)
-{
-	if (isPlay)
-	{
-		if (*tickIter < animVar.tick)
+		if (mAnimDatas.find("target_anchor") != mAnimDatas.end())
 		{
-			++tickIter;
-			++animVar.sequence;
+			lpTarget->SetAnchor((UI_ANCHOR)stoi(mAnimDatas["target_anchor"]));
 		}
+	}
+}
+
+void AnimationUIController::Save()
+{
+	map<string, string> mData;
+
+	AnimVariable animVariable;
+	animVariable.isLinear = animVar.isLinear;
+	animVariable.origin = animVar.origin;
+	animVariable.position = animVar.origin;
+	animVariable.elapsedTime = 0.0f;
+	animVariable.tick = 0;
+	animVariable.sequence = 0;
+
+	string key, value;
+	set<int>::iterator sit = sAnimTick.cbegin();
+	while (sit != sAnimTick.cend())
+	{
+		animVariable.tick = *sit;
 
 		for (const auto& pair : mAnimHandler)
 		{
-			pair.second->Exec(animVar);
+			pair.second->Exec(animVariable);
 		}
-		lpTarget->SetWorldPos(animVar.position);
-		animVar.elapsedTime += deltaTime;
-		animVar.tick = (int)(animVar.elapsedTime / tickScale + FLT_EPSILON);
-		if (animVar.tick > *sAnimTick.crbegin())
-		{
-			isPlay = false;
-		}
+
+		key = "tick_event_" + to_string(animVariable.sequence);
+		value = to_string(animVariable.tick) + "|" + to_string(animVariable.position.x) + "|" + to_string(animVariable.position.y);
+		mData.insert(make_pair(move(key), move(value)));
+
+		++sit;
+		++animVariable.sequence;
+		animVariable.elapsedTime += tickScale;
 	}
+	mData.insert(make_pair("anim_linear", to_string(animVar.isLinear)));
+	mData.insert(make_pair("target_anchor", to_string((int)lpTarget->GetAnchor())));
+
+	DataManager::GetSingleton()->ReplaceData("animations", animKey, mData);
+	DataManager::GetSingleton()->SaveIniFile("Ini/animation.ini", "animations");
 }
 
-void AnimationUIController::Render(HDC hdc)
+void AnimationUIController::Reset()
 {
 
 }
@@ -121,12 +184,7 @@ void AnimationUIController::Play()
 {
 	if (lpTarget)
 	{
-		animVar.elapsedTime = 0.0f;
-		animVar.tick = 0;
-		animVar.sequence = 0;
-		tickIter = sAnimTick.begin();
-
-		isPlay = true;
+		state = ANIMAION_STATE::READY;
 	}
 }
 
@@ -134,13 +192,13 @@ void AnimationUIController::Resume()
 {
 	if (lpTarget)
 	{
-		isPlay = true;
+		state = ANIMAION_STATE::PLAY;
 	}
 }
 
 void AnimationUIController::Stop()
 {
-	isPlay = false;
+	state = ANIMAION_STATE::STOP;
 }
 
 void AnimationUIController::ResetEvent()

@@ -165,6 +165,7 @@ void UIAnimInspector::OpenAnimController(ObserverHandler* lpCaller)
 				lpSaveBtn->PushBackFunc(bind([](AnimationUIController* lpTargetAnim, UIProgressBar* lpTimeBar) {lpTargetAnim->AddEventTime(lpTimeBar->GetVar()); }, lpTargetAnim, lpTimeBar));
 				lpSaveBtn->PushBackFunc(bind([](UIHorizontalScroll* lpAnimTimeScroll, UIProgressBar* lpTimeBar) {((UITimeTick*)lpAnimTimeScroll->GetChild(lpTimeBar->GetVarTick()))->SetUseTick(true); }, lpAnimTimeScroll, lpTimeBar));
 				lpSaveBtn->PushBackFunc(bind(&UIAnimInspector::AnimTimeTickRefreash, this));
+				lpSaveBtn->PushBackFunc(bind(&AnimationUIController::Save, lpTargetAnim));
 
 				lpPlayBtn->ClearFunc();
 				lpPlayBtn->PushBackFunc(bind(&AnimationUIController::Play, lpTargetAnim));
