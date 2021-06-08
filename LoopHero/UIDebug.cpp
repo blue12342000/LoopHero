@@ -24,30 +24,37 @@ void UIDebug::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
 void UIDebug::Release()
 {
 	ReleaseDC(g_hWnd, hDrawDC);
+	hDrawDC = NULL;
+	lpLogText = nullptr;
+	lpDebugNode = nullptr;
 	GameUI::Release();
 }
 
 void UIDebug::Update(float deltaTime)
 {
-	lpLogText->SetText("FPS\t:\t" + to_string(Timer::FPS));
-	if (lpDebugNode)
+	if (lpLogText)
 	{
-		lpLogText->AppendText("\n" + lpDebugNode->ToString());
-	}
-	DrawText(hDrawDC, lpLogText->GetText().c_str(), lpLogText->GetText().length(), &rc, DT_CALCRECT);
-	width = (rc.right - rc.left) + 50;
-	height = (rc.bottom - rc.top) + 50;
-	if (width < 250) width = 250;
-	if (height < 50) height = 50;
+		lpLogText->SetText("FPS\t:\t" + to_string(Timer::FPS));
+		if (lpDebugNode)
+		{
+			lpLogText->AppendText("\n" + lpDebugNode->ToString());
+		}
+		RECT inRect = {0, 0, 0, 0};
+		DrawText(hDrawDC, lpLogText->GetText().c_str(), lpLogText->GetText().length(), &inRect, DT_CALCRECT);
+		width = (inRect.right - inRect.left) + 50;
+		height = (inRect.bottom - inRect.top) + 50;
+		if (width < 250) width = 250;
+		if (height < 50) height = 50;
 
-	lpLogText->SetHeight(height - 50);
+		lpLogText->SetHeight(height - 50);
+	}
 
 	GameUI::Update(deltaTime);
 }
 
 void UIDebug::Render(HDC hdc)
 {
-	lpBackground->LoopRender(hdc, POINT{ rc.left, rc.top }, width, height, 0, IMAGE_ALIGN::LEFT_TOP);
+	if (lpBackground) lpBackground->LoopRender(hdc, POINT{ rc.left, rc.top }, width, height, 0, IMAGE_ALIGN::LEFT_TOP);
 
 	GameUI::Render(hdc);
 }

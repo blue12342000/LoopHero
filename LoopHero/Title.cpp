@@ -49,13 +49,13 @@ void Title::Update(float deltaTime)
 {
     if (KeyManager::GetSingleton()->IsKeyOnceDown('1'))
     {
-        SceneManager::GetSingleton()->ChangeScene(SCENE_KIND::TITLE);
+        SceneManager::GetSingleton()->ChangeScene(SCENE_KIND::TITLE, LOADING_STYLE::FADE_OUT);
         return;
     }
 
     if (KeyManager::GetSingleton()->IsKeyOnceDown('2'))
     {
-        SceneManager::GetSingleton()->ChangeScene(SCENE_KIND::INGAME);
+        SceneManager::GetSingleton()->ChangeScene(SCENE_KIND::INGAME, LOADING_STYLE::FADE_OUT);
         return;
     }
 

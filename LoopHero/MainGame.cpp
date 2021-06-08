@@ -23,7 +23,7 @@ HRESULT MainGame::Init()
 	SceneManager::GetSingleton()->AddScene(SCENE_KIND::INGAME , new InGame());
 	SceneManager::GetSingleton()->AddScene(SCENE_KIND::ANIM_EDIT, new AnimationEdit());
 
-	SceneManager::GetSingleton()->AddLoadingScene(new FadeOutScene());
+	SceneManager::GetSingleton()->AddLoadingScene(LOADING_STYLE::FADE_OUT, new FadeOutScene());
 
 	SceneManager::GetSingleton()->ChangeScene(SCENE_KIND::ANIM_EDIT);
     return S_OK;

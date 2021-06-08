@@ -100,6 +100,9 @@
     <Filter Include="소스 파일\LoopHero\UI\Edit">
       <UniqueIdentifier>{c7e22930-9767-4932-a410-31a447812102}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\LoopHero\Scene\Loading">
+      <UniqueIdentifier>{937ffb00-b3c4-45c1-839f-790d86ad36e7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -297,8 +300,11 @@
     <ClCompile Include="UITitleMenu.cpp">
       <Filter>소스 파일\LoopHero\UI\Title</Filter>
     </ClCompile>
+    <ClCompile Include="LoadingScene.cpp">
+      <Filter>소스 파일\Engine</Filter>
+    </ClCompile>
     <ClCompile Include="FadeOutScene.cpp">
-      <Filter>소스 파일\LoopHero\Scene</Filter>
+      <Filter>소스 파일\LoopHero\Scene\Loading</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -521,8 +527,11 @@
     <ClInclude Include="UITitleMenu.h">
       <Filter>소스 파일\LoopHero\UI\Title</Filter>
     </ClInclude>
+    <ClInclude Include="LoadingScene.h">
+      <Filter>소스 파일\Engine</Filter>
+    </ClInclude>
     <ClInclude Include="FadeOutScene.h">
-      <Filter>소스 파일\LoopHero\Scene</Filter>
+      <Filter>소스 파일\LoopHero\Scene\Loading</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

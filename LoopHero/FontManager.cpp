@@ -2,7 +2,10 @@
 
 HRESULT FontManager::Init()
 {
-	LOGFONT logFont;
+	FontInfo fontInfo;
+	fontInfo.type = FONT_LOAD_TYPE::DIRECT;
+	LOGFONT& logFont = fontInfo.logFont;
+
 	logFont.lfHeight = 0;
 	logFont.lfWidth = 0;
 	logFont.lfWeight = 0;
@@ -19,37 +22,37 @@ HRESULT FontManager::Init()
 	strcpy_s(logFont.lfFaceName, "µ¸¿ò");
 
 	logFont.lfWeight = FW_BOLD;
-	mLogFonts.insert(make_pair("Bµ¸¿ò", logFont));
+	mFontInfos.insert(make_pair("Bµ¸¿ò", fontInfo));
 	logFont.lfWeight = FW_LIGHT;
-	mLogFonts.insert(make_pair("Lµ¸¿ò", logFont));
+	mFontInfos.insert(make_pair("Lµ¸¿ò", fontInfo));
 	logFont.lfWeight = FW_BOLD;
 	logFont.lfWidth = 5;
-	mLogFonts.insert(make_pair("Uµ¸¿ò", logFont));
+	mFontInfos.insert(make_pair("Uµ¸¿ò", fontInfo));
 
 	logFont.lfWidth = 0;
 	strcpy_s(logFont.lfFaceName, "°íµñ");
-	mLogFonts.insert(make_pair("L°íµñ", logFont));
+	mFontInfos.insert(make_pair("L°íµñ", fontInfo));
 	logFont.lfWeight = FW_BOLD;
-	mLogFonts.insert(make_pair("B°íµñ", logFont));
+	mFontInfos.insert(make_pair("B°íµñ", fontInfo));
 
-	strcpy_s(logFont.lfFaceName, "³ª´®¹Ù¸¥°íµñ");
-	mLogFonts.insert(make_pair("B³ª´®¹Ù¸¥°íµñ", logFont));
-
-	logFont.lfWeight = FW_LIGHT;
-	mLogFonts.insert(make_pair("L³ª´®¹Ù¸¥°íµñ", logFont));
-
-	strcpy_s(logFont.lfFaceName, "³ª´®¹Ù¸¥Ææ");
-	logFont.lfWeight = FW_BOLD;
-	mLogFonts.insert(make_pair("B³ª´®¹Ù¸¥Ææ", logFont));
-
-	logFont.lfWeight = FW_LIGHT;
-	mLogFonts.insert(make_pair("L³ª´®¹Ù¸¥Ææ", logFont));
+	LoadFontFile("B³ª´®¹Ù¸¥°íµñ", "NanumBarunGothicBold");
+	LoadFontFile("L³ª´®¹Ù¸¥°íµñ", "NanumBarunGothicLight");
+	LoadFontFile("B³ª´®¹Ù¸¥Ææ", "NanumBarunpenB");
+	LoadFontFile("L³ª´®¹Ù¸¥Ææ", "NanumBarunpenR");
 
 	return S_OK;
 }
 
 void FontManager::Release()
 {
+	for (auto& pair : mFontInfos)
+	{
+		if (pair.second.type == FONT_LOAD_TYPE::FILE)
+		{
+			RemoveFontResource(pair.second.fontName.c_str());
+		}
+	}
+
 	for (auto& pair : mHFonts)
 	{
 		DeleteObject(pair.second);
@@ -57,13 +60,47 @@ void FontManager::Release()
 	mHFonts.clear();
 }
 
+void FontManager::LoadFontFile(string key, string fontName)
+{
+	char currDirectory[128];
+	GetCurrentDirectory(128, currDirectory);
+
+	string filePath = string(currDirectory) + "\\Font\\" + fontName + ".ttf";
+	AddFontResourceEx(filePath.c_str(), FR_PRIVATE, 0);
+
+	FontInfo fontInfo;
+	fontInfo.fontName = filePath;
+	fontInfo.logFont.lfHeight = 0;
+	fontInfo.logFont.lfWidth = 0;
+	fontInfo.logFont.lfWeight = 0;
+	fontInfo.logFont.lfUnderline = 0;
+	fontInfo.logFont.lfOrientation = 0;
+	fontInfo.logFont.lfStrikeOut = 0;
+	fontInfo.logFont.lfEscapement = 0;
+	fontInfo.logFont.lfClipPrecision = 0;
+	fontInfo.logFont.lfItalic = 0;
+	fontInfo.logFont.lfCharSet = HANGEUL_CHARSET;
+	fontInfo.logFont.lfQuality = DEFAULT_QUALITY;
+	fontInfo.logFont.lfOutPrecision = OUT_TT_ONLY_PRECIS;
+	fontInfo.logFont.lfPitchAndFamily = VARIABLE_PITCH | FF_ROMAN;
+	strcpy_s(fontInfo.logFont.lfFaceName, key.substr(1).c_str());
+	mFontInfos.insert(make_pair(key, fontInfo));
+}
+
 HFONT FontManager::GetFont(string fontName, int fontSize)
 {
 	string hFontKey = fontName + "_" + to_string(fontSize);
 	if (mHFonts.find(hFontKey) != mHFonts.end()) return mHFonts[hFontKey];
-	if (mLogFonts.find(fontName) == mLogFonts.end()) return NULL;
+	if (mFontInfos.find(fontName) == mFontInfos.end()) return NULL;
 
-	LOGFONT logFont = mLogFonts[fontName];
-	logFont.lfHeight = fontSize;
-	return (mHFonts.insert(make_pair(hFontKey, CreateFontIndirect(&logFont))).first)->second;
+	if (mFontInfos[fontName].type == FONT_LOAD_TYPE::DIRECT)
+	{
+		LOGFONT logFont = mFontInfos[fontName].logFont;
+		logFont.lfHeight = fontSize;
+		return (mHFonts.insert(make_pair(hFontKey, CreateFontIndirect(&logFont))).first)->second;
+	}
+	else
+	{
+		return (mHFonts.insert(make_pair(hFontKey, GetFont(mFontInfos[fontName].logFont.lfFaceName, fontSize))).first)->second;
+	}
 }

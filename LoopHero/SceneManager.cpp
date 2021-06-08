@@ -1,12 +1,13 @@
 #include "SceneManager.h"
+#include "LoadingScene.h"
 #include "Scene.h"
-
-Scene* SceneManager::lpCurrScene = nullptr;
-Scene* SceneManager::lpLoadingScene = nullptr;
-Scene* SceneManager::lpReadyScene = nullptr;
 
 HRESULT SceneManager::Init()
 {
+	lpCurrScene = nullptr;
+	lpReadyScene = nullptr;
+	lpLoadingScene = nullptr;
+
 	return S_OK;
 }
 
@@ -26,12 +27,14 @@ void SceneManager::Release()
 
 void SceneManager::Update(float deltaTime)
 {
-	if (lpCurrScene) lpCurrScene->Update(deltaTime);
+	if (lpLoadingScene && lpLoadingScene->IsLoading()) { lpLoadingScene->Update(deltaTime); }
+	else if (lpCurrScene && !lpLoadingScene) { lpCurrScene->Update(deltaTime); }
 }
 
 void SceneManager::Render(HDC hdc)
 {
-	if (lpCurrScene) lpCurrScene->Render(hdc);
+	if (lpLoadingScene && lpLoadingScene->IsLoading()) { lpLoadingScene->Render(hdc);  }
+	else if (lpCurrScene && !lpLoadingScene) { lpCurrScene->Render(hdc); }
 }
 
 HRESULT SceneManager::AddScene(SCENE_KIND kind, Scene* scene)
@@ -46,27 +49,35 @@ HRESULT SceneManager::AddScene(SCENE_KIND kind, Scene* scene)
 	return S_OK;
 }
 
-HRESULT SceneManager::AddLoadingScene(Scene* a)
+HRESULT SceneManager::AddLoadingScene(LOADING_STYLE style, LoadingScene* lpLoadingScene)
 {
-	mLpLoadScenes[LOAD_STYLE::FADE_OUT] = a;
+	if (mLpLoadScenes.find(style) != mLpLoadScenes.end())
+	{
+		return E_FAIL;
+	}
+
+	mLpLoadScenes.insert(std::make_pair(style, lpLoadingScene));
 	return S_OK;
 }
 
-void SceneManager::ChangeScene(SCENE_KIND next, bool isLoading)
+void SceneManager::ChangeScene(SCENE_KIND next, LOADING_STYLE loading)
 {
 	auto it = mLpScenes.find(next);
 	if (it == mLpScenes.end()) return;
-	if (isLoading)
+
+	if (loading != LOADING_STYLE::NONE)
 	{
-		lpLoadingScene = it->second;
+		auto loadIt = mLpLoadScenes.find(loading);
+		if (loadIt != mLpLoadScenes.end())
+		{
+			lpLoadingScene = loadIt->second;
+			lpLoadingScene->Init();
+			lpReadyScene = it->second;
 
-		mLpLoadScenes[LOAD_STYLE::FADE_OUT]->Init();
-		if (lpCurrScene) lpCurrScene->Release();
-		lpCurrScene = mLpLoadScenes[LOAD_STYLE::FADE_OUT];
-
-		HANDLE hThread = CreateThread(nullptr, 0, LoadingThread/* ÇÔ¼ö */, (void*)this, 0, &loadingThreadId);
-		CloseHandle(hThread);
-		return;
+			HANDLE hThread = CreateThread(nullptr, 0, LoadingThread, (void*)this, 0, &loadingThreadId);
+			CloseHandle(hThread);
+			return;
+		}
 	}
 
 	if (lpCurrScene) lpCurrScene->Release();
@@ -78,6 +89,18 @@ DWORD __stdcall SceneManager::LoadingThread(LPVOID lpThreadParameter)
 {
 	SceneManager* lpScene = (SceneManager*)(lpThreadParameter);
 
+	lpScene->lpCurrScene->Release();
+	lpScene->lpReadyScene->Init();
+
+	lpScene->lpCurrScene = lpScene->lpReadyScene;
+	lpScene->lpReadyScene = nullptr;
+
+	while (!lpScene->lpLoadingScene->IsFinished())
+	{
+		Sleep(100);
+	}
+	lpScene->lpLoadingScene->Release();
+	lpScene->lpLoadingScene = nullptr;
 
 	return 0;
 }

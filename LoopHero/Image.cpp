@@ -201,6 +201,12 @@ void Image::Fill(int x, int y, int width, int height, COLORREF color)
     DeleteObject(SelectObject(lpImageInfo->hMemDC, hOldBrush));
 }
 
+void Image::Fill(HDC copyDC, int x, int y, int width, int height)
+{
+    BitBlt(lpImageInfo->hMemDC, x, y, width, height,
+        copyDC, x, y, SRCCOPY);
+}
+
 void Image::Render(HDC hdc, int destX, int destY, int frame, IMAGE_ALIGN align)
 {
     frame %= lpImageInfo->totalFrame;

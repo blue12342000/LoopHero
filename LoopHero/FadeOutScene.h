@@ -1,5 +1,5 @@
 #pragma once
-#include "Scene.h"
+#include "LoadingScene.h"
 #include <vector>
 #include <algorithm>
 
@@ -9,7 +9,7 @@
 using namespace std;
 
 class Image;
-class FadeOutScene : public Scene
+class FadeOutScene : public LoadingScene
 {
 private:
 	enum class FADE_IN_OUT
@@ -21,11 +21,13 @@ private:
 private:
 	FADE_IN_OUT inOut;
 	Image* lpBuffer;
+	Image* lpInBuffer;
 	vector<int> splitView;
 	float elapsedTime;
 	int width;
 	int height;
 	int lastProcess;
+	float fadeSpeed;
 
 public:
 	virtual HRESULT Init() override;

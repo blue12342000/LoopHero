@@ -8,6 +8,9 @@
 
 void Hero::Init()
 {
+	pos = { 0.0f, 0.0f };
+	SetRect(&rc, pos.x, pos.y, pos.x, pos.y);
+
 	state = HERO_STATE::IDLE;
 	SetEventCatch(EVENT_CATCH::PASS);
 	AddEventHandler("Resume_Loop", bind(&Hero::Move, this, placeholders::_1));

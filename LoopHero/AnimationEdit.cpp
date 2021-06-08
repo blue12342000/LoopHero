@@ -17,7 +17,7 @@
 
 HRESULT AnimationEdit::Init()
 {
-    lpBuffer = ImageManager::GetSingleton()->AddImage("Title_Buffer", WINSIZE_WIDTH, WINSIZE_HEIGHT);
+    lpBuffer = ImageManager::GetSingleton()->AddImage("Eddit_Buffer", WINSIZE_WIDTH, WINSIZE_HEIGHT);
     lpBackImage = ImageManager::GetSingleton()->FindImage("title_background");
 
     DataManager::GetSingleton()->SaveIniFile("Ini/animation.ini", "animations");
@@ -29,7 +29,7 @@ HRESULT AnimationEdit::Init()
     lpUIEditMenu->Init(UI_ANCHOR::TOP_MIDDLE, { 0.0f, 0.0f }, 200 * 2, 27 * 2);
     lpUIEditMenu->SetEvent(EDIT_MENU::TITLE, bind(&AnimationEdit::LoadTitleUI, this));
     lpUIEditMenu->SetEvent(EDIT_MENU::INGAME, bind(&AnimationEdit::LoadInGameUI, this));
-    lpUIEditMenu->SetEvent(EDIT_MENU::EXIT, bind(&SceneManager::ChangeScene, SceneManager::GetSingleton(), SCENE_KIND::TITLE, true));
+    lpUIEditMenu->SetEvent(EDIT_MENU::EXIT, bind(&SceneManager::ChangeScene, SceneManager::GetSingleton(), SCENE_KIND::TITLE, LOADING_STYLE::FADE_OUT));
 
     lpUIAnimInspector = GameUI::Create<UIAnimInspector>(lpCanvus);
     lpUIAnimInspector->Init(UI_ANCHOR::RIGHT_BOTTOM, { 0.0f, 0.0f }, 600, 300);
@@ -107,7 +107,6 @@ void AnimationEdit::LoadTitleUI()
 {
     ResetInit();
 
-    lpBuffer = ImageManager::GetSingleton()->AddImage("Title_Buffer", WINSIZE_WIDTH, WINSIZE_HEIGHT);
     lpBackImage = ImageManager::GetSingleton()->FindImage("title_background");
 
     UILogo* lpLogo = GameUI::Create<UILogo>();
@@ -125,7 +124,6 @@ void AnimationEdit::LoadInGameUI()
 {
     ResetInit();
 
-    lpBuffer = ImageManager::GetSingleton()->FindImage("ingame_backbuffer");
     lpBackImage = ImageManager::GetSingleton()->FindImage("InGame_BackGround");
 
     UIBattleWindow* lpBattleWindow = GameUI::Create<UIBattleWindow>();
