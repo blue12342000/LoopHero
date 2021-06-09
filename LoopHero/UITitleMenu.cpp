@@ -14,7 +14,7 @@ void UITitleMenu::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
 	lpStartBtn = GameUI::Create<UIButton>(this);
 	lpStartBtn->Init(UI_ANCHOR::BOTTOM_MIDDLE, { 0.0f, 260.0f }, 198, 34, UI_BUTTON_TYPE::BUTTON);
 	lpStartBtn->SetButtonImage("button_99_17");
-	lpStartBtn->PushBackFunc(bind(&SceneManager::ChangeScene, SceneManager::GetSingleton(), SCENE_KIND::INGAME, LOADING_STYLE::FADE_OUT));
+	if (GameData::GetSingleton()->IsPlayMode()) lpStartBtn->PushBackFunc(bind(&SceneManager::ChangeScene, SceneManager::GetSingleton(), SCENE_KIND::INGAME, LOADING_STYLE::FADE_OUT));
 
 	UITextField* lpStartText = GameUI::Create<UITextField>(lpStartBtn);
 	lpStartText->Init(UI_ANCHOR::MIDDLE, { 0.0f, 0.0f }, 198, 34);
@@ -25,7 +25,7 @@ void UITitleMenu::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
 	lpEditBtn = GameUI::Create<UIButton>(this);
 	lpEditBtn->Init(UI_ANCHOR::BOTTOM_MIDDLE, { 0.0f, 210.0f }, 198, 34, UI_BUTTON_TYPE::BUTTON);
 	lpEditBtn->SetButtonImage("button_99_17");
-	lpEditBtn->PushBackFunc(bind(&SceneManager::ChangeScene, SceneManager::GetSingleton(), SCENE_KIND::ANIM_EDIT, LOADING_STYLE::FADE_OUT));
+	if (GameData::GetSingleton()->IsPlayMode()) lpEditBtn->PushBackFunc(bind(&SceneManager::ChangeScene, SceneManager::GetSingleton(), SCENE_KIND::ANIM_EDIT, LOADING_STYLE::FADE_OUT));
 
 	UITextField* lpEditText = GameUI::Create<UITextField>(lpEditBtn);
 	lpEditText->Init(UI_ANCHOR::MIDDLE, { 0.0f, 0.0f }, 198, 34);
@@ -36,7 +36,7 @@ void UITitleMenu::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
 	lpExitBtn = GameUI::Create<UIButton>(this);
 	lpExitBtn->Init(UI_ANCHOR::BOTTOM_MIDDLE, { 0.0f, 160.0f }, 198, 34, UI_BUTTON_TYPE::BUTTON);
 	lpExitBtn->SetButtonImage("button_99_17");
-	lpExitBtn->PushBackFunc(bind(&PostQuitMessage, 0));
+	if (GameData::GetSingleton()->IsPlayMode()) lpExitBtn->PushBackFunc(bind(&PostQuitMessage, 0));
 
 	UITextField* lpExitText = GameUI::Create<UITextField>(lpExitBtn);
 	lpExitText->Init(UI_ANCHOR::MIDDLE, { 0.0f, 0.0f }, 198, 34);

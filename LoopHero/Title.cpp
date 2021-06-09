@@ -12,6 +12,8 @@
 
 HRESULT Title::Init()
 {
+    GameData::GetSingleton()->SetMode(GAME_MODE::PLAY);
+
 	lpBuffer = ImageManager::GetSingleton()->AddImage("Title_Buffer", WINSIZE_WIDTH, WINSIZE_HEIGHT);
 	lpBackImage = ImageManager::GetSingleton()->FindImage("title_background");
 

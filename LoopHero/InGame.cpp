@@ -19,6 +19,7 @@
 
 HRESULT InGame::Init()
 {
+    GameData::GetSingleton()->SetMode(GAME_MODE::PLAY);
     Hero* lpHero = GameObject::Create<Hero>();
     lpHero->NewHero("Warrior");
     lpHero->SetPos({ -100.0f, -100.0f });

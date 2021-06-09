@@ -9,6 +9,12 @@
 
 using namespace std;
 
+enum class GAME_MODE
+{
+	PLAY,
+	EDIT
+};
+
 enum class TILE_IMAGE_SEQ
 {
 	BASIC,
@@ -103,6 +109,8 @@ private:
 	Unit* lpUnit;
 	Hero* lpHero;
 
+	GAME_MODE mode;
+
 private:
 	void LoadTraits();
 	void LoadTiles();
@@ -141,5 +149,7 @@ public:
 	inline void SetHero(Hero* lpHero) { this->lpHero = lpHero; }
 	inline Hero* GetHero() { return lpHero; }
 	inline void LevelUp() { ++loopLevel; }
+	inline bool IsPlayMode() { return mode == GAME_MODE::PLAY; }
+	inline void SetMode(GAME_MODE mode) { this->mode = mode; }
 };
 

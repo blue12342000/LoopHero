@@ -17,6 +17,8 @@
 
 HRESULT AnimationEdit::Init()
 {
+    GameData::GetSingleton()->SetMode(GAME_MODE::EDIT);
+
     lpBuffer = ImageManager::GetSingleton()->AddImage("Eddit_Buffer", WINSIZE_WIDTH, WINSIZE_HEIGHT);
     lpBackImage = ImageManager::GetSingleton()->FindImage("title_background");
 

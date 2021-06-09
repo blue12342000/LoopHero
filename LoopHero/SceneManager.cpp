@@ -89,11 +89,12 @@ DWORD __stdcall SceneManager::LoadingThread(LPVOID lpThreadParameter)
 {
 	SceneManager* lpScene = (SceneManager*)(lpThreadParameter);
 
-	lpScene->lpCurrScene->Release();
 	lpScene->lpReadyScene->Init();
+	lpScene->lpCurrScene->Release();
 
 	lpScene->lpCurrScene = lpScene->lpReadyScene;
 	lpScene->lpReadyScene = nullptr;
+
 
 	while (!lpScene->lpLoadingScene->IsFinished())
 	{

@@ -139,6 +139,8 @@ void GameData::LoadEquipInfo()
 
 HRESULT GameData::Init()
 {
+	mode = GAME_MODE::PLAY;
+
     lpDeck = PoolingManager::GetSingleton()->GetClass<Deck>();
     lpDeck->Init();
 
