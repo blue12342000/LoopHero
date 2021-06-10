@@ -134,6 +134,9 @@ void AnimationUIController::Load()
 		{
 			lpTarget->SetAnchor((UI_ANCHOR)stoi(mAnimDatas["target_anchor"]));
 		}
+		GetAnimVariables();
+		this->lpTarget->SetWorldPos(vAnimVars.front().position);
+		this->lpTarget->Refresh();
 	}
 }
 

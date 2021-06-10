@@ -47,6 +47,7 @@ void UIHierarchy::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
 	lpBackground = ImageManager::GetSingleton()->FindImage("layer_background");
 
 	AddEventHandler("hilight_hierarchy_item", bind(&UIHierarchy::HilightHierarchyItem, this, placeholders::_1));
+	AddEventHandler("unhilight_hierarchy_item", bind(&UIHierarchy::UnHilightHierarchyItem, this, placeholders::_1));
 }
 
 void UIHierarchy::Release()
@@ -84,13 +85,13 @@ void UIHierarchy::SetCanvus(GameUI* lpCanvus)
 
 void UIHierarchy::HilightHierarchyItem(ObserverHandler* lpCaller)
 {
-	if (typeid(*lpCaller) == typeid(UIHierarchyItem))
+	if (lpCaller && typeid(*lpCaller) == typeid(UIHierarchyItem))
 	{
 		lpHilight = (UIHierarchyItem*)lpCaller;
 	}
 }
 
-void UIHierarchy::OnMouseOut(EventData& data)
+void UIHierarchy::UnHilightHierarchyItem(ObserverHandler* lpCaller)
 {
 	lpHilight = nullptr;
 }

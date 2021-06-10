@@ -8,6 +8,7 @@
 void UITitleMenu::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
 {
 	GameUI::Init(anchor, pos, width, height);
+	CreateAnimController("title_menu");
 
 	lpBackground = ImageManager::GetSingleton()->FindImage("title_menubackground");
 
@@ -43,8 +44,6 @@ void UITitleMenu::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
 	lpExitText->SetFont(UI_TEXT_HALIGN::CENTER, UI_TEXT_VALIGN::MIDDLE, UI_TEXT_LINE::SINGLE, 20, RGB(255, 255, 255), "B³ª´®¹Ù¸¥Ææ");
 	lpExitText->SetText("Exit");
 	lpExitText->SetEventCatch(EVENT_CATCH::PASS);
-
-	CreateAnimController("title_menu");
 }
 
 void UITitleMenu::Release()

@@ -18,6 +18,7 @@
 void InGameRightMenu::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
 {
 	GameUI::Init(anchor, pos, width, height);
+	CreateAnimController("ingame_info");
 
 	lpBackground = ImageManager::GetSingleton()->FindImage("ingame_info_background");
 
@@ -95,8 +96,6 @@ void InGameRightMenu::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int heig
 
 	lpItemInfo = nullptr;
 	vCompareItems.clear();
-
-	CreateAnimController("ingame_info");
 
 	AddEventHandler("DropEquip", bind(&InGameRightMenu::DropEquip, this, placeholders::_1));
 	AddEventHandler("ViewInfo", bind(&InGameRightMenu::OpenEquipLayer, this, placeholders::_1));

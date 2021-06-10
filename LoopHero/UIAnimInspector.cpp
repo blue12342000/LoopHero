@@ -9,6 +9,7 @@
 #include "ImageManager.h"
 #include "Image.h"
 #include "AnimationUIController.h"
+#include "Utill.h"
 
 void UIAnimInspector::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
 {
@@ -92,6 +93,14 @@ void UIAnimInspector::Render(HDC hdc)
 	if (lpBackground) lpBackground->LoopRender(hdc, POINT{ rc.left, rc.top }, width, height, 0);
 
 	GameUI::Render(hdc);
+
+	if (lpTarget)
+	{
+		POINTFLOAT worldPos = lpTarget->GetWorldPos();
+		RECT anchorRc = { (int)worldPos.x - 10, (int)worldPos.y - 10, (int)worldPos.x + 10, (int)worldPos.y + 10 };
+		RenderRectangle(hdc, lpTarget->GetRect(), RGB(255, 0, 170), true);
+		RenderRectangle(hdc, anchorRc, RGB(0, 170, 255));
+	}
 
 	if (vAnimVariables.size() > 1)
 	{

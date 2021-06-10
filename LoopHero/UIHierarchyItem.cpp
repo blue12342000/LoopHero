@@ -54,4 +54,5 @@ void UIHierarchyItem::OnMouseOver(EventData& data)
 void UIHierarchyItem::OnMouseOut(EventData& data)
 {
 	isHover = false;
+	ObserverManager::GetSingleton()->Notify("unhilight_hierarchy_item", this);
 }

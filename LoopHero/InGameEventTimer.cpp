@@ -5,6 +5,7 @@
 void InGameEventTimer::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int height)
 {
 	GameUI::Init(anchor, pos, width, height);
+	CreateAnimController("event_timer");
 
 	lpBackground = ImageManager::GetSingleton()->FindImage("ingame_bosstimer_background");
 
@@ -23,8 +24,6 @@ void InGameEventTimer::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int hei
 	lpBossTimer->Init(UI_ANCHOR::LEFT_TOP, { 17.0f * 2, 41.0f }, 200, 4, UI_BAR_TYPE::HORIZON, "", "battle_unit_statusbar_hp");
 	lpBossTimer->SetTrackingData(bind(&InGameEventTimer::GetBossTimer, this));
 	lpBossTimer->SetTrackingMaxData(maxBossTimer);
-
-	CreateAnimController("event_timer");
 
 	AddEventHandler("IncreaseBossTimer", bind(&InGameEventTimer::IncreaseBossTimer, this, placeholders::_1));
 }

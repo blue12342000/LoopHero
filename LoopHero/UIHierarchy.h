@@ -28,7 +28,6 @@ public:
 	void SetCanvus(GameUI* lpCanvus);
 
 	void HilightHierarchyItem(ObserverHandler* lpCaller);
-
-	void OnMouseOut(EventData& data) override;
+	void UnHilightHierarchyItem(ObserverHandler* lpCaller);
 };
 
