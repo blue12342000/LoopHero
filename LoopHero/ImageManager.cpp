@@ -155,6 +155,8 @@ HRESULT ImageManager::Init()
     mLpImages["title_radio_button_40_17"]->Init("Image/UI/Edit/title_radio_button_40_17.bmp", 40 * 4, 51 * 2, 2, 3, 6, true, RGB(0, 170, 255));
     mLpImages.insert(make_pair("exit_button_40_17", new Image()));
     mLpImages["exit_button_40_17"]->Init("Image/UI/Edit/exit_button_40_17.bmp", 40 * 2, 51 * 2, 1, 3, 3, true, RGB(0, 170, 255));
+    mLpImages.insert(make_pair("visible_16_13", new Image()));
+    mLpImages["visible_16_13"]->Init("Image/UI/Edit/visible_16_13.bmp", 16 * 2, 13 * 3, 2, 3, 6, true, RGB(0, 170, 255));
 
     mLpImages.insert(make_pair("button_27_17", new Image()));
     mLpImages["button_27_17"]->Init("Image/UI/Common/button_27_17.bmp", 27 * 2, 51 * 2, 1, 3, 3, true,  RGB(0, 170, 255));

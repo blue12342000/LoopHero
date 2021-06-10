@@ -96,4 +96,5 @@ public:
 	virtual inline GameUI* GetParent() { return lpParent; }
 	virtual inline POINT GetCenter() final { return { (rc.left + rc.right) / 2, (rc.top + rc.bottom) / 2 }; }
 	virtual inline UI_ANCHOR GetAnchor() final { return anchor; }
+	virtual inline void ToggleVisible() { this->isVisible = !isVisible; }
 };

@@ -1,4 +1,5 @@
 #include "UIHierarchyItem.h"
+#include "UIButton.h"
 #include "AnimationUIController.h"
 #include "PoolingManager.h"
 #include "Text.h"
@@ -10,10 +11,16 @@ void UIHierarchyItem::Init(UI_ANCHOR anchor, POINTFLOAT pos, int width, int heig
 
 	lpText = PoolingManager::GetSingleton()->GetClass<Text>();
 	lpText->Init("Bµ¸¿ò", 16, RGB(255, 255, 255));
+
+	lpViewToggle = GameUI::Create<UIButton>(this);
+	lpViewToggle->Init(UI_ANCHOR::RIGHT_TOP, { 4.0f, 3.0f }, 16, 13, UI_BUTTON_TYPE::TOGGLE);
+	lpViewToggle->SetButtonImage("visible_16_13");
+	isViewButton = true;
 }
 
 void UIHierarchyItem::Release()
 {
+	isViewButton = true;
 	if (lpText)
 	{
 		lpText->Release();
@@ -34,6 +41,15 @@ void UIHierarchyItem::SetTarget(GameUI* lpTarget, int depth)
 {
 	this->lpTarget = lpTarget;
 	lpText->SetText(string((depth + 1) * 2, ' ') + "L " + typeid(*lpTarget).name());
+	lpViewToggle->ClearFunc();
+	lpViewToggle->PushBackFunc(bind(&GameUI::ToggleVisible, this->lpTarget));
+	lpViewToggle->SetOn(!lpTarget->IsVisible());
+}
+
+void UIHierarchyItem::SetViewButton(bool isViewButton)
+{
+	this->isViewButton = isViewButton;
+	lpViewToggle->SetVisible(isViewButton);
 }
 
 void UIHierarchyItem::OnClick(EventData& data)

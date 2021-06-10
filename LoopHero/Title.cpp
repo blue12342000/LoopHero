@@ -37,6 +37,7 @@ HRESULT Title::Init()
     lpEventSystem = PoolingManager::GetSingleton()->GetClass<EventSystem>();
     lpEventSystem->Init();
     lpEventSystem->SetGameUI(lpCanvus);
+    lpUIDebug->OpenDebugInfo(lpEventSystem);
 
 	return E_NOTIMPL;
 }

@@ -79,6 +79,7 @@ void UIHierarchy::SetCanvus(GameUI* lpCanvus)
 	lpRootItem = GameUI::Create<UIHierarchyItem>(this);
 	lpRootItem->Init(UI_ANCHOR::LEFT_TOP, { 20.0f, 35.0f }, width - 40, 20);
 	lpRootItem->SetTarget(lpCanvus, 0);
+	lpRootItem->SetViewButton(false);
 
 	SetHierarchyItem(lpRootItem, lpCanvus);
 }

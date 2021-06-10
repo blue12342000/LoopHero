@@ -65,7 +65,7 @@ void AnimationEdit::Update(float deltaTime)
 {
     if (KeyManager::GetSingleton()->IsKeyOnceDown('Q'))
     {
-        lpUIDebug->SetVisible(!lpUIDebug->IsVisible());
+        lpUIDebug->ToggleVisible();
     }
 
     if (KeyManager::GetSingleton()->IsKeyOnceDown(VK_SPACE))
