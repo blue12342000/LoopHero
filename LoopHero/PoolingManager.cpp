@@ -5,7 +5,7 @@ void PoolingManager::Release()
 {
 	for (auto& pair : mlLpClass)
 	{
-		for (GameNode*& node : pair.second)
+		for (GameNode* node : pair.second)
 		{
 			delete node;
 		}
