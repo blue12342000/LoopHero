@@ -23,6 +23,12 @@ void SceneManager::Release()
 		delete pair.second;
 	}
 	mLpScenes.clear();
+
+	for (auto pair : mLpLoadScenes)
+	{
+		delete pair.second;
+	}
+	mLpLoadScenes.clear();
 }
 
 void SceneManager::Update(float deltaTime)

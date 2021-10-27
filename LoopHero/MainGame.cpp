@@ -37,13 +37,9 @@ void MainGame::Release()
 	FontManager::GetSingleton()->Release();
 	FontManager::GetSingleton()->ReleaseSingleton();
 
-	PoolingManager::GetSingleton()->Release();
-	PoolingManager::GetSingleton()->ReleaseSingleton();
-
 	KeyManager::GetSingleton()->ReleaseSingleton();
 
-	ImageManager::GetSingleton()->Release();
-	ImageManager::GetSingleton()->ReleaseSingleton();
+	DataManager::GetSingleton()->ReleaseSingleton();
 
 	SceneManager::GetSingleton()->Release();
 	SceneManager::GetSingleton()->ReleaseSingleton();
@@ -53,6 +49,14 @@ void MainGame::Release()
 
 	ObserverManager::GetSingleton()->Release();
 	ObserverManager::GetSingleton()->ReleaseSingleton();
+
+	ParticleManager::GetSingleton()->ReleaseSingleton();
+
+	ImageManager::GetSingleton()->Release();
+	ImageManager::GetSingleton()->ReleaseSingleton();
+
+	PoolingManager::GetSingleton()->Release();
+	PoolingManager::GetSingleton()->ReleaseSingleton();
 
 	ReleaseDC(g_hWnd, hdc);
 }

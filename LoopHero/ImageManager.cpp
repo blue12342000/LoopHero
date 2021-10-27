@@ -24,8 +24,8 @@ HRESULT ImageManager::Init()
     mLpImages.insert(make_pair("battle_background", new Image()));
     mLpImages["battle_background"]->Init("Image/UI/InGame/battle_background.bmp", 301 * 2, 257 * 2, 1, 1, 1, true, RGB(0, 170, 255));
 
-    mLpImages.insert(make_pair("battle_background", new Image()));
-    mLpImages["battle_background"]->Init("Image/UI/InGame/battle_background.bmp", 301 * 2, 257 * 2, 1, 1, 1, true, RGB(0, 170, 255));
+    //mLpImages.insert(make_pair("battle_background", new Image()));
+    //mLpImages["battle_background"]->Init("Image/UI/InGame/battle_background.bmp", 301 * 2, 257 * 2, 1, 1, 1, true, RGB(0, 170, 255));
 
     mLpImages.insert(make_pair("battle_unit_statusbar", new Image()));
     mLpImages["battle_unit_statusbar"]->Init("Image/UI/InGame/battle_unit_statusbar.bmp", 37 * 2, 7 * 2, true, RGB(0, 170, 255));

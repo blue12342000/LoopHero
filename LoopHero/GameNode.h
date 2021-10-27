@@ -8,6 +8,8 @@ using namespace std;
 class GameNode : public ObserverHandler
 {
 public:
+	virtual ~GameNode() {}
+
 	virtual string ToString()
 	{
 		return typeid(*this).name();

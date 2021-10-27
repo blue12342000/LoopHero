@@ -1,3 +1,7 @@
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+
 #include "LoopHero.h"
 #include "MainGame.h"
 #include "Utill.h"
@@ -13,6 +17,9 @@ void SetWindowSize(HWND hWnd, int width, int height);
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPreInstance, LPSTR lpCmdLine, int nShowCmd)
 {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	//_CrtSetBreakAlloc(311);
+
 	g_hInstance = hInstance;
 	WNDCLASS wndClass;
 	wndClass.cbClsExtra = 0;
@@ -55,6 +62,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPreInstance, LPSTR lpCmdLin
 		}
 	}
 	g_mainGame.Release();
+
+	_CrtDumpMemoryLeaks();
+
 	return message.wParam;
 }
 
